@@ -1,3 +1,5 @@
+let bootbox = require('bootbox')
+
 define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
         '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
         'underscore', '../entities/queue', '../entities/queue_item', 'select2', 'select2-css'],
@@ -27,11 +29,17 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
                 clearButton: '.app-clear',
-                emptyNotice: '.app-empty-notice'
+                emptyNotice: '.app-empty-notice',
+                saveChangesModal: '.app-save-changes-confirmation',
+                saveChanges: '.app-save-changes',
+                discardChanges: '.app-discard-changes'
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage',
-                'click @ui.clearButton': 'clearClick'
+                'click @ui.clearButton': 'clearClick',
+                'click @ui.saveChanges': 'saveChanges',
+                'click @ui.discardChanges': 'discardChanges',
+                'hide.bs.modal @ui.saveChangesModal': 'saveChangesHide'
             },
             initialize: function(options) {
                 this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit',
@@ -155,24 +163,31 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 if (item) this.editItem(item)
             },
             editPrevious: function(item) {
-                if (this.timelinesView) {
-                    let i = this.queueCollection.findIndex(item)
-                    if (i > 0) this.editItem(this.queueCollection.at(i - 1))
-                }
+                let self = this
+                this.changeCheck(function() {
+                    let i = self.queueCollection.findIndex(item)
+                    if (i > 0) self.editItem(self.queueCollection.at(i - 1))
+                })
             },
             editNext: function(item) {
-                if (this.timelinesView) {
-                    let i = this.queueCollection.findIndex(item)
-                    if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
-                }
+                let self = this
+                this.changeCheck(function() {
+                    let i = self.queueCollection.findIndex(item)
+                    if (i >= 0 && i < self.queueCollection.length - 1) self.editItem(self.queueCollection.at(i + 1))
+                });
             },
             editItem: function(item) {
-                this.highlight(item)
-                this._showTimeline({
-                    model: item.get('performance'),
-                    queueItem: item,
-                    readonly: false
-                })
+                if (!this.timelinesView || this.timelinesView.readonly || item.get('performance') !== this.timelinesView.model) {
+                    let self = this
+                    this.changeCheck(function() {
+                        self.highlight(item)
+                        self._showTimeline({
+                            model: item.get('performance'),
+                            queueItem: item,
+                            readonly: false
+                        })
+                    })
+                }
             },
             play: function(item) {
                 if (!this.timelinesView || !this.timelinesView.readonly)
@@ -227,6 +242,31 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     this.ui.queueContainer.find('.app-performance').removeClass('active')
                     el.addClass('active')
                 }
+            },
+            changeCheck: function(callback, cancelCallback) {
+                if (this.timelinesView && !this.timelinesView.isDestroyed() && this.timelinesView.changed) {
+                    this.changeCheckModalCancelled = true
+                    this.changeCheckCallback = callback
+                    this.changeCheckCancelCallback = cancelCallback
+                    this.ui.saveChangesModal.modal()
+                } else
+                    callback(true);
+            },
+            saveChanges: function() {
+                this.timelinesView.model.save()
+                this.changeCheckCallback(true)
+                this.changeCheckModalCancelled = false
+                this.ui.saveChangesModal.modal('hide')
+            },
+            discardChanges: function() {
+                this.timelinesView.revert()
+                this.changeCheckCallback(false)
+                this.changeCheckModalCancelled = false
+                this.ui.saveChangesModal.modal('hide')
+            },
+            saveChangesHide: function() {
+                if (this.changeCheckModalCancelled && typeof this.changeCheckCancelCallback === 'function')
+                    this.changeCheckCancelCallback()
             },
             _getPerformanceIds: function() {
                 let ids = []

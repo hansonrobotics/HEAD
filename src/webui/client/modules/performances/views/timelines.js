@@ -1,6 +1,6 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'lib/extensions/animate_auto', 'jquery-ui', 'scrollbar',
+        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'jquery-ui', 'scrollbar',
         'scrollbar-css', 'scrollTo', 'font-awesome'],
     function(App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition,
              api, annyang, NodeConfig) {
@@ -33,9 +33,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis',
                 doneButton: '.app-done-button',
-                yesButton: '.app-yes-button',
-                noButton: '.app-no-button',
-                cancelButton: '.app-cancel-button',
                 editButton: '.app-edit-button',
                 previousButton: '.app-previous-button',
                 nextButton: '.app-next-button'
@@ -60,9 +57,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.deleteButton': 'deletePerformance',
                 'click @ui.doneButton': 'done',
                 'click @ui.loopButton': 'loop',
-                'click @ui.yesButton': 'confirm',
-                'click @ui.noButton': 'close',
-                'click @ui.cancelButton': 'hideConfirmButtons',
                 'click @ui.autoPauseButton': 'toggleAutoPause',
                 'click @ui.editButton': 'editCurrent',
                 'click @ui.previousButton': 'editPrevious',
@@ -75,6 +69,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 let self = this,
                     loadOptions = {
                         success: function() {
+                            self.backup()
                             if (self.autoplay) self.run()
 
                             if (self.readonly)
@@ -124,26 +119,20 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 return {performance: this.model, config: this.config}
             },
             done: function() {
-                if (this.changed)
-                    this.showConfirmButtons()
-                else
-                    this.close()
+                let self = this
+                this.layoutView.changeCheck(function() {
+                    self.close()
+                })
             },
-            confirm: function() {
-                this.savePerformances()
-                this.close()
+            backup: function() {
+                this.changed = false
+                this.performanceBackup = this.model.toJSON()
             },
-            showConfirmButtons: function() {
-                this.ui.yesButton.fadeIn()
-                this.ui.noButton.fadeIn()
-                this.ui.cancelButton.fadeIn()
-                this.ui.doneButton.hide()
-            },
-            hideConfirmButtons: function() {
-                this.ui.yesButton.hide()
-                this.ui.noButton.hide()
-                this.ui.cancelButton.hide()
-                this.ui.doneButton.fadeIn()
+            revert: function() {
+                if (this.performanceBackup) {
+                    this.model.clear({silent: true})
+                    this.model.set(this.performanceBackup)
+                }
             },
             close: function() {
                 this.trigger('close')
@@ -155,7 +144,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.layoutView.editPrevious(this.queueItem)
             },
             editNext: function() {
-                console.log('here')
                 this.layoutView.editNext(this.queueItem)
             },
             reconfigure: function() {
@@ -177,7 +165,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.readonly)
                     this.ui.editContainer.hide()
 
-                this.hideConfirmButtons()
+                this.ui.doneButton.fadeIn()
                 this.ui.scrollContainer.droppable({
                     accept: '[data-node-name], [data-node-id]',
                     tolerance: 'touch',
@@ -508,7 +496,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                 App.Utilities.showPopover(self.ui.saveButton, model.get('error'))
                                 model.unset('error')
                             } else {
-                                self.changed = false
+                                self.backup()
                                 App.Utilities.showPopover(self.ui.saveButton, 'Saved')
                             }
                         }
@@ -687,11 +675,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         })
                 })
             },
-            showEditNav: function() {
-                this.ui.editButton.fadeIn()
-                this.ui.previousButton.fadeIn()
-                this.ui.nextButton.fadeIn()
-            },
             hideEditNav: function() {
                 this.ui.editButton.fadeOut()
                 this.ui.previousButton.fadeOut()
@@ -699,14 +682,13 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             handleEvents: function(e) {
                 let duration = this.model.getDuration()
-                console.log(e)
                 if (e.event == 'paused') {
                     this.pauseIndicator(e.time)
                     this.model.b_pause(e)
-                    this.showEditNav()
+                    this.queueUpdated()
                 } else if (e.event == 'idle') {
                     this.stopIndicator()
-                    this.showEditNav()
+                    this.queueUpdated()
                 } else if (e.event == 'running') {
                     this.startIndicator(e.time, duration)
                     this.hideEditNav()
