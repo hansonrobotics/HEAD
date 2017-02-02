@@ -13,7 +13,7 @@ All services can by run with /performances prefix.
 
     Runs current loaded performance
 
-  * /run_by_name ([RunByName](/srv/RunByName.srv))
+  * /run_by_name ([RunByName](/src/performances/srv/RunByName.srv))
 
     Runs single performance by its path in performances folder
 
@@ -24,7 +24,7 @@ All services can by run with /performances prefix.
     `success`: True if performance started.
 
 
-  * /run_full_performance ([RunByName](/srv/RunByName.srv))
+  * /run_full_performance ([RunByName](/src/performances/srv/RunByName.srv))
 
     Runs all performances by their name in the specified performance
     folder. If Folder contains one or more folders it randomly picks one
@@ -36,7 +36,7 @@ All services can by run with /performances prefix.
 
     `success`: True if performance started.
 
-  * /resume ([Resume](/srv/Resume.srv))
+  * /resume ([Resume](/src/performances/srv/Resume.srv))
 
    Resumes currently loaded performance
 
@@ -46,7 +46,7 @@ All services can by run with /performances prefix.
 
    `time`: Time at which performance resumed.
 
-  * /stop ([Stop](/srv/Stop.srv))
+  * /stop ([Stop](/src/performances/srv/Stop.srv))
 
    Stops current performance
 
@@ -56,7 +56,7 @@ All services can by run with /performances prefix.
 
    `time`: Time at which performance was stopped.
 
-  * /pause ([Pause](/srv/Pause.srv))
+  * /pause ([Pause](/src/performances/srv/Pause.srv))
 
    Pauses current performance
 
@@ -66,7 +66,7 @@ All services can by run with /performances prefix.
 
    `time`: Time at which performance was paused.
 
-  * /load ([Load](/srv/Load.srv))
+  * /load ([Load](/src/performances/srv/Load.srv))
 
    Returns performance performance as JSON string from its id.
 
@@ -79,7 +79,7 @@ All services can by run with /performances prefix.
    `time`: Time at which performance was paused.
    `performance`: JSON string of the performance file
 
-  * /load ([Resume](/srv/Load.srv))
+  * /load ([Resume](/src/performances/srv/Load.srv))
 
    Returns performance performance as JSON string from its id.
 
@@ -91,7 +91,7 @@ All services can by run with /performances prefix.
 
    `performance`: JSON string of the performance file
 
-  * /load_performance ([Resume](/srv/LoadPerformance.srv))
+  * /load_performance ([Resume](/src/performances/srv/LoadPerformance.srv))
 
    Loads performance from string as the current performance.
 
@@ -101,7 +101,7 @@ All services can by run with /performances prefix.
 
    `success`: True if performance parsed and loaded.
 
-  * /load_sequence ([Resume](/srv/LoadSequence.srv))
+  * /load_sequence ([Resume](/src/performances/srv/LoadSequence.srv))
 
    Combines and loads multiple performances  as current and returns
    as single performance.
