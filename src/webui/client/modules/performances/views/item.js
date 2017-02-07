@@ -17,7 +17,7 @@ module.exports = Marionette.View.extend({
         'click @ui.playButton': 'play',
         'click @ui.editButton': 'edit',
         'click @ui.removeButton': 'remove',
-        'click': 'setTime'
+        'click': 'setItemTime'
     },
     modelEvents: {
         'change': 'render',
@@ -41,8 +41,8 @@ module.exports = Marionette.View.extend({
     remove: function() {
         this.layoutView.remove(this.model)
     },
-    setTime: function() {
-        this.layoutView.setTime(this.model)
+    setItemTime: function() {
+        this.layoutView.setItemTime(this.model)
     },
     enablePlay: function() {
         this.ui.playButton.fadeIn()

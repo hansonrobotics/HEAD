@@ -159,26 +159,22 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 })
             },
             editCurrent: function() {
-                let item = this.queueCollection.findItemByTime(this.time)
-                if (item) this.editItem(item)
+                let self = this,
+                    item = this.queueCollection.findItemByTime(this.time)
+
+                if (item) self.editItem(item)
             },
             editPrevious: function(item) {
-                let self = this
-                this.changeCheck(function() {
-                    let i = self.queueCollection.findIndex(item)
-                    if (i > 0) self.editItem(self.queueCollection.at(i - 1))
-                })
+                let i = this.queueCollection.findIndex(item)
+                if (i > 0) this.editItem(this.queueCollection.at(i - 1))
             },
             editNext: function(item) {
-                let self = this
-                this.changeCheck(function() {
-                    let i = self.queueCollection.findIndex(item)
-                    if (i >= 0 && i < self.queueCollection.length - 1) self.editItem(self.queueCollection.at(i + 1))
-                })
+                let i = this.queueCollection.findIndex(item)
+                if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
             },
             editItem: function(item) {
-                if (!this.timelinesView || this.timelinesView.readonly || item.get('performance') !== this.timelinesView.model) {
-                    let self = this
+                let self = this
+                if (!this.timelinesView || this.timelinesView.readonly || item !== this.timelinesView.queueItem) {
                     this.changeCheck(function() {
                         self.highlight(item)
                         self._showTimeline({
@@ -199,7 +195,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 if (!this.editting)
                     this.updateTimeline()
             },
-            setTime: function(item) {
+            setItemTime: function(item) {
                 if (this.editting) {
                     this.editItem(item)
                 } else {

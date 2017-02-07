@@ -50,6 +50,7 @@
                 <h4 class="modal-title">Would you like to save the changes?</h4>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 <button type="button" class="app-discard-changes btn btn-danger">No</button>
                 <button type="button" class="app-save-changes btn btn-primary">Yes</button>
             </div>
