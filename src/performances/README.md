@@ -90,7 +90,7 @@ Resume runner if paused.
 * `float64 time`
 	
 #### `/performances/pause`
-`performances.srv.Resume`
+`performances.srv.Pause`
 Pause runner if currently running.
 
 ##### Response
