@@ -431,7 +431,6 @@ class Runner:
                 self.variables[id] = {key: val}
 
     def get_variable(self, id, name):
-        rospy.logerr("id {} name {} ".format(id, name))
         if os.path.dirname(id) in self.variables and name in self.variables[os.path.dirname(id)]\
                 and self.variables[os.path.dirname(id)][name]:
             return self.variables[os.path.dirname(id)][name]
@@ -439,11 +438,12 @@ class Runner:
             val = None
             param_name = os.path.join('/', self.robot_name, 'webui/performances', os.path.dirname(id),
                                       'properties/variables', name)
-
             if rospy.has_param(param_name):
                 val = rospy.get_param(param_name)
                 if self.is_param(val):
-                    return rospy.get_param(val, None)
+                    if rospy.has_param(val):
+                        return str(rospy.get_param(val))
+                    return None
             return val
 
     def speech_callback(self, msg):
