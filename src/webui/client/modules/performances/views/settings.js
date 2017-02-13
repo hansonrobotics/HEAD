@@ -1,6 +1,6 @@
 define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fade_in', './attention_regions', 'lib/api'
         , 'path', '../entities/settings'],
-    function (App, Marionette, template, FadeInRegion, AttentionRegionsView, api, path, Settings) {
+    function(App, Marionette, template, FadeInRegion, AttentionRegionsView, api, path, Settings) {
         return Marionette.View.extend({
             template: template,
             ui: {
@@ -27,91 +27,91 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 'click @ui.removeVariableButton': 'removeVariable',
                 'click @ui.saveButton': 'save'
             },
-            initialize: function (options) {
-                this.mergeOptions(options, ['path']);
-                if (!this.model) this.model = new Settings({}, {path: this.path});
+            initialize: function(options) {
+                this.mergeOptions(options, ['path'])
+                if (!this.model) this.model = new Settings({}, {path: this.path})
             },
-            onRender: function () {
-                let self = this;
+            onRender: function() {
+                let self = this
                 this.model.fetch({
-                    success: function () {
-                        self.showKeywords();
-                        self.showVariables();
-                        self.showPauseBehavior();
+                    success: function() {
+                        self.showKeywords()
+                        self.showVariables()
+                        self.showPauseBehavior()
                     }
-                });
+                })
 
-                this.ui.tabs.on('shown.bs.tab', function (e) {
+                this.ui.tabs.on('shown.bs.tab', function(e) {
                     if ($(e.target).is(self.ui.attentionTab))
-                        self.getRegion('selectAreas').show(new AttentionRegionsView({path: self.path}));
-                });
+                        self.getRegion('selectAreas').show(new AttentionRegionsView({path: self.path}))
+                })
 
-                this.ui.settingsTab.tab('show');
+                this.ui.settingsTab.tab('show')
             },
-            save: function () {
-                let self = this;
+            save: function() {
+                let self = this
 
-                this.setVariables();
-                this.setKeywords();
+                this.setVariables()
+                this.setKeywords()
 
                 this.model.save({}, {
-                    success: function () {
-                        App.Utilities.showPopover(self.ui.saveButton, 'Saved', 'right');
+                    success: function() {
+                        App.Utilities.showPopover(self.ui.saveButton, 'Saved', 'right')
                     },
-                    error: function () {
-                        App.Utilities.showPopover(self.ui.saveButton, 'Unable to save', 'right');
+                    error: function() {
+                        App.Utilities.showPopover(self.ui.saveButton, 'Unable to save', 'right')
                     }
                 })
             },
-            showVariables: function () {
-                let self = this;
-                $.each(this.model.get('variables') || {}, function (key, value) {
-                    self.addVariable(key, value);
-                });
+            showVariables: function() {
+                let self = this
+                $.each(this.model.get('variables') || {}, function(key, value) {
+                    self.addVariable(key, value)
+                })
             },
-            showPauseBehavior: function () {
-                let pauseBehavior = this.model.get('pause_behavior');
-                this.ui.pauseBehaviorCheckbox.prop('checked', typeof pauseBehavior == 'undefined' ? true : pauseBehavior);
+            showPauseBehavior: function() {
+                let pauseBehavior = this.model.get('pause_behavior')
+                this.ui.pauseBehaviorCheckbox.prop('checked', typeof pauseBehavior == 'undefined' ? true : pauseBehavior)
             },
-            showKeywords: function () {
-                this.ui.keywords.val((this.model.get('keywords') || []).join(', '));
+            showKeywords: function() {
+                this.ui.keywords.val((this.model.get('keywords') || []).join(', '))
             },
-            setKeywords: function () {
-                let keywords = _.map(this.ui.keywords.val().split(','), function (k) {
-                    return k.trim();
-                });
+            setKeywords: function() {
+                let keywords = _.map(this.ui.keywords.val().split(','), function(k) {
+                    return k.trim()
+                })
 
-                this.model.set('keywords', keywords);
+                this.model.set('keywords', keywords)
             },
-            setVariables: function () {
+            setVariables: function() {
                 let variables = {},
-                    inputs = $('input', this.ui.variableContainer);
+                    inputs = $('input', this.ui.variableContainer)
 
                 for (let i = 0; i < inputs.length / 2; i++) {
                     let key = $(inputs[i * 2]).val(),
-                        val = $(inputs[i * 2 + 1]).val();
+                        val = $(inputs[i * 2 + 1]).val()
 
-                    if (key && val) variables[key] = val;
+                    if (key && val) variables[key] = val
                 }
 
-                this.model.set('variables', variables);
+                this.model.set('variables', variables)
             },
-            updatePauseBehavior: function () {
-                this.model.set('pause_behavior', this.ui.pauseBehaviorCheckbox.prop('checked'));
+            updatePauseBehavior: function() {
+                this.model.set('pause_behavior', this.ui.pauseBehaviorCheckbox.prop('checked'))
             },
-            addVariable: function (key, value) {
-                let field = this.ui.variableTemplate.clone().find('.form-group');
+            addVariable: function(key, value) {
+                let field = this.ui.variableTemplate.clone().find('.form-group')
                 if (key && value) {
-                    field.find('.app-key-input').val(key);
-                    field.find('.app-value-input').val(value);
+                    field.find('.app-key-input').val(key)
+                    field.find('.app-value-input').val(value)
                 }
 
-                this.ui.variableContainer.append(field);
+                this.ui.variableContainer.append(field)
             },
-            removeVariable: function (e) {
-                $(e.target).closest('.form-group').fadeOut(100, function () {
-                    $(this).remove();
-                });
+            removeVariable: function(e) {
+                $(e.target).closest('.form-group').fadeOut(100, function() {
+                    $(this).remove()
+                })
             }
-        });
-    });
+        })
+    })
