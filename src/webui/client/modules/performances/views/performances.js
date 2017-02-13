@@ -1,6 +1,6 @@
-define(['marionette', 'backbone', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
+define(['application', 'marionette', 'backbone', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
         'jquery', 'bootbox', 'lib/api', './settings', 'path', 'natural-sort', 'typeahead', 'jquery-ui'],
-    function(Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path,
+    function(app, Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path,
              naturalSort) {
         return Marionette.CompositeView.extend({
             template: template,
@@ -270,7 +270,14 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 return $('<li>').attr('data-path', dir).append(el)
             },
             switchDir: function(dir) {
-                if (this.nav) Backbone.history.navigate(path.join('#/performances', dir))
+                if (this.nav) {
+                    let url = path.join('/performances', dir)
+                    if (url !== Backbone.history.getHash()) {
+                        app.skipChangeCheck = true
+                        Backbone.history.navigate('#' + url)
+                    }
+                }
+
                 this.updateVisiblePerformances(dir)
                 this.currentPath = dir
                 this.collection.currentPath = dir

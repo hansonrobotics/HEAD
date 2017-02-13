@@ -1,9 +1,9 @@
 let bootbox = require('bootbox')
 
-define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
+define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
         '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
         'underscore', '../entities/queue', '../entities/queue_item', 'select2', 'select2-css'],
-    function(Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
+    function(app, Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
              QueueView, TimelinesView, $, _, QueueCollection, QueueItem) {
         return Marionette.View.extend({
             template: template,
@@ -39,7 +39,7 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 'click @ui.clearButton': 'clearClick',
                 'click @ui.saveChanges': 'saveChanges',
                 'click @ui.discardChanges': 'discardChanges',
-                'hide.bs.modal @ui.saveChangesModal': 'saveChangesHide'
+                'hidden.bs.modal @ui.saveChangesModal': 'saveChangesHide'
             },
             initialize: function(options) {
                 this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit',
@@ -48,6 +48,9 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 this.queueCollection = new QueueCollection()
             },
             onAttach: function() {
+                // set change check callback
+                app.changeCheck = _.bind(this.changeCheck, this)
+
                 // fluid by default
                 this.setFluidContainer(this.fluid || typeof this.fluid === 'undefined')
 
@@ -100,9 +103,10 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
             },
             onDestroy: function() {
                 if (this.readonly) this.runningPerformances.disableSync()
+                app.changeCheck = null
             },
             changeLanguage: function(e) {
-                var language = $(e.target).data('lang')
+                let language = $(e.target).data('lang')
 
                 this.ui.languageButton.removeClass('active')
                 $(e.target).addClass('active')
@@ -240,8 +244,8 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 }
             },
             changeCheck: function(callback, cancelCallback) {
-                if (this.timelinesView && !this.timelinesView.isDestroyed() && this.timelinesView.changed) {
-                    this.changeCheckModalCancelled = true
+                if (!this.isDestroyed() && this.timelinesView && !this.timelinesView.isDestroyed() && this.timelinesView.changed) {
+                    this.changeCheckResult = null
                     this.changeCheckCallback = callback
                     this.changeCheckCancelCallback = cancelCallback
                     this.ui.saveChangesModal.modal()
@@ -250,19 +254,20 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
             },
             saveChanges: function() {
                 this.timelinesView.model.save()
-                this.changeCheckCallback(true)
-                this.changeCheckModalCancelled = false
+                this.changeCheckResult = true
                 this.ui.saveChangesModal.modal('hide')
             },
             discardChanges: function() {
                 this.timelinesView.revert()
-                this.changeCheckCallback(false)
-                this.changeCheckModalCancelled = false
+                this.changeCheckResult = false
                 this.ui.saveChangesModal.modal('hide')
             },
             saveChangesHide: function() {
-                if (this.changeCheckModalCancelled && typeof this.changeCheckCancelCallback === 'function')
-                    this.changeCheckCancelCallback()
+                if (this.changeCheckResult === null) {
+                    if (typeof this.changeCheckCancelCallback === 'function')
+                        this.changeCheckCancelCallback()
+                } else
+                    this.changeCheckCallback(this.changeCheckResult)
             },
             _getPerformanceIds: function() {
                 let ids = []
