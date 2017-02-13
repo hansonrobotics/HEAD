@@ -1,5 +1,5 @@
 define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
-    function (App, Backbone, api, $, Supermodel) {
+    function(App, Backbone, api, $, Supermodel) {
         return Supermodel.Model.extend({
             config: {
                 emotion: {
@@ -58,9 +58,9 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 speech: {
                     label: 'Speech',
                     properties: ['language', 'speed', 'pitch', 'volume', 'text'],
-                    defaultValues: {speed: 0.7                                                                                                                                                                                                                                                                                                                                                              , pitch: 1, volume: 1, text: ''},
+                    defaultValues: {speed: 1, pitch: 1, volume: 1, text: ''},
                     settings: {
-                        speed: [0.3, 0.7],
+                        speed: [0.7, 1.2],
                         pitch: [0.8, 1.2]
                     }
                 },
@@ -101,89 +101,89 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                     properties: []
                 }
             },
-            initialize: function (options) {
-                Supermodel.Model.prototype.initialize.call(this, options);
-                this.set('id', this.cid);
-                this.on('change:el', this.updateEl);
-                this.on('change:name', this.setDefaultValues);
-                this.setDefaultValues();
+            initialize: function(options) {
+                Supermodel.Model.prototype.initialize.call(this, options)
+                this.set('id', this.cid)
+                this.on('change:el', this.updateEl)
+                this.on('change:name', this.setDefaultValues)
+                this.setDefaultValues()
             },
-            setDefaultValues: function () {
-                var defaultValues = this.getConfig().defaultValues;
-                if (defaultValues) this.set(_.extend(_.clone(defaultValues), this.attributes));
+            setDefaultValues: function() {
+                var defaultValues = this.getConfig().defaultValues
+                if (defaultValues) this.set(_.extend(_.clone(defaultValues), this.attributes))
             },
-            call: function () {
+            call: function() {
                 switch (this.get('name')) {
                     case 'look_at':
-                        api.setFaceTarget(this.get('x'), this.get('y'), this.get('z'));
-                        break;
+                        api.setFaceTarget(this.get('x'), this.get('y'), this.get('z'))
+                        break
                     case 'gaze_at':
-                        api.setGazeTarget(this.get('x'), this.get('y'), this.get('z'));
-                        break;
+                        api.setGazeTarget(this.get('x'), this.get('y'), this.get('z'))
+                        break
                     case 'head_rotation':
-                        api.set_head_rotation(this.get('angle'));
-                        break;
+                        api.set_head_rotation(this.get('angle'))
+                        break
                 }
             },
-            onDestroy: function () {
-                this.removeEl();
+            onDestroy: function() {
+                this.removeEl()
             },
-            getConfig: function () {
-                return this.config[this.get('name')] || this.config['default'];
+            getConfig: function() {
+                return this.config[this.get('name')] || this.config['default']
             },
-            getSettings: function () {
-                let config = this.getConfig();
-                return config.hasOwnProperty('settings') ? config.settings : {};
+            getSettings: function() {
+                let config = this.getConfig()
+                return config.hasOwnProperty('settings') ? config.settings : {}
             },
-            hasProperty: function (property) {
-                return _.includes(this.getConfig().properties, property);
+            hasProperty: function(property) {
+                return _.includes(this.getConfig().properties, property)
             },
-            getLabel: function () {
-                return this.getConfig().label;
+            getLabel: function() {
+                return this.getConfig().label
             },
 
-            getTitle: function () {
+            getTitle: function() {
                 var title = this.getLabel(),
-                    name = this.get('name');
+                    name = this.get('name')
 
                 if (name == 'speech')
-                    title = this.get('text');
+                    title = this.get('text')
                 else if (name === 'emotion')
-                    title = this.get('emotion');
+                    title = this.get('emotion')
                 else if (name === 'gesture')
-                    title = this.get('gesture');
+                    title = this.get('gesture')
                 else if (name === 'expression')
-                    title = this.get('expression');
+                    title = this.get('expression')
                 else if (name == 'animation' || name == 'kfanimation')
-                    title = this.get('animation');
+                    title = this.get('animation')
                 else if (name == 'gaze_at' || name == 'look_at')
-                    title = this.get('attention_region');
+                    title = this.get('attention_region')
 
-                return title || name;
+                return title || name
             },
-            updateEl: function () {
-                if (this.previous('el')) $(this.previous('el')).remove();
+            updateEl: function() {
+                if (this.previous('el')) $(this.previous('el')).remove()
             },
-            removeEl: function () {
-                if (this.get('el')) $(this.get('el')).remove();
+            removeEl: function() {
+                if (this.get('el')) $(this.get('el')).remove()
             },
-            toJSON: function () {
-                var el = this.get('el');
-                this.unset('el', {silent: true});
-                var json = Supermodel.Model.prototype.toJSON.call(this);
-                this.set('el', el, {silent: true});
-                return json;
+            toJSON: function() {
+                var el = this.get('el')
+                this.unset('el', {silent: true})
+                var json = Supermodel.Model.prototype.toJSON.call(this)
+                this.set('el', el, {silent: true})
+                return json
             },
-            destroy: function () {
+            destroy: function() {
                 // remove an associated element
-                if (this.collection) this.collection.remove(this);
-                if (this.get('el')) $(this.get('el')).remove();
-                this.unset('id');
-                Supermodel.Model.prototype.destroy.call(this);
+                if (this.collection) this.collection.remove(this)
+                if (this.get('el')) $(this.get('el')).remove()
+                this.unset('id')
+                Supermodel.Model.prototype.destroy.call(this)
             },
-            save: function (attrs, options) {
+            save: function(attrs, options) {
                 if (this.get('name') != 'settings')
-                    Supermodel.Model.prototype.save.call(this, attrs, options);
+                    Supermodel.Model.prototype.save.call(this, attrs, options)
             }
-        });
-    });
+        })
+    })

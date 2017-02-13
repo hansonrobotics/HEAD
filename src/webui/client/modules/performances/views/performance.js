@@ -1,4 +1,4 @@
-define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette, _, $) {
+define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function(Marionette, _, $) {
     return Marionette.View.extend({
         tagName: 'button',
         template: false,
@@ -12,10 +12,10 @@ define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette
         modelEvents: {
             'change:name change:path': 'update'
         },
-        initialize: function (options) {
-            this.mergeOptions(options, ['readonly']);
+        initialize: function(options) {
+            this.mergeOptions(options, ['readonly'])
         },
-        onRender: function () {
+        onRender: function() {
             if (!this.readonly)
                 this.$el.attr('data-cid', this.cid).draggable({
                     appendTo: 'body',
@@ -23,12 +23,12 @@ define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function (Marionette
                     revert: true,
                     helper: 'clone',
                     refreshPositions: true
-                });
-            this.update();
+                })
+            this.update()
         },
-        update: function () {
-            this.$el.html(this.model.get('name'));
-            this.$el.attr('data-path', this.model.get('path') || '');
+        update: function() {
+            this.$el.html(this.model.get('name'))
+            this.$el.attr('data-path', this.model.get('path') || '')
         }
-    });
-});
+    })
+})
