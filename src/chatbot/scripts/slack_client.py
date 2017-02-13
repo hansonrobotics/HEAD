@@ -6,6 +6,7 @@ import logging
 import re
 import sys
 import yaml
+import argparse
 
 from slackclient import SlackClient
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -22,8 +23,7 @@ URL_PREFIX = os.environ.get('URL_PREFIX', "http://localhost:8001")
 logger = logging.getLogger('hr.chatbot.slackclient')
 
 def format_trace(traces):
-    pattern = re.compile(
-        r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+    pattern = re.compile(r'(.*:)?\s*(.*\.aiml), (\(.*\)), (.*), (\(.*\))')
     line_pattern = re.compile(r'\(line (?P<line>\d+), column \d+\)')
     formated_traces = []
     for name, stage, trace in traces:
@@ -32,10 +32,7 @@ def format_trace(traces):
         for subtrace in subtraces:
             matchobj = pattern.match(subtrace)
             if matchobj:
-                fname = matchobj.groupdict()['fname']
-                tloc = matchobj.groupdict()['tloc']
-                pname = matchobj.groupdict()['pname']
-                ploc = matchobj.groupdict()['ploc']
+                other, fname, tloc, pname, ploc = matchobj.groups()
                 tline = line_pattern.match(tloc).group('line')
                 pline = line_pattern.match(ploc).group('line')
 
@@ -43,7 +40,10 @@ def format_trace(traces):
                     pname=pname, urlprefix=URL_PREFIX, fname=fname, pline=pline, ploc=ploc)
                 t = '<{urlprefix}/{fname}#L{tline}|{tloc}>'.format(
                     urlprefix=URL_PREFIX, fname=fname, tline=tline, tloc=tloc)
-                formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
+                if other:
+                    formated_trace = '{other}\n{p}, {t}, {fname}'.format(other=other, fname=fname, p=p, t=t)
+                else:
+                    formated_trace = '{p}, {t}, {fname}'.format(fname=fname, p=p, t=t)
                 formated_subtraces.append(formated_trace)
             else:
                 formated_subtraces.append(subtrace)
@@ -53,7 +53,7 @@ def format_trace(traces):
 
 class HRSlackBot(object):
 
-    def __init__(self, host, port, botname, config_file=None):
+    def __init__(self, host, port, botname, **kwargs):
         self.sc = SlackClient(SLACKBOT_API_TOKEN)
         self.sc.rtm_connect()
         self.botname = botname
@@ -62,16 +62,7 @@ class HRSlackBot(object):
         self.lang = 'en'
         self.icon_url = 'https://avatars.slack-edge.com/2016-05-30/46725216032_4983112db797f420c0b5_48.jpg'
         self.session_manager = SessionManager()
-        self.config = None
-        self.weights = None
-        if config_file is not None:
-            if os.path.isfile(config_file):
-                with open(config_file) as f:
-                    self.config = yaml.load(f)
-                    if 'weights' in self.config:
-                        self.weights = ','.join(['{}={}'.format(k,v) for k, v in self.config.get('weights').iteritems()])
-            else:
-                logger.warn("Config file {} is not found".format(config_file))
+        self.weights = kwargs.get('weights')
 
     def send_message(self, channel, attachments):
         self.sc.api_call(
@@ -126,7 +117,7 @@ class HRSlackBot(object):
                     client = Client(HR_CHATBOT_AUTHKEY, username=name,
                         botname=self.botname, host=self.host, port=self.port,
                         response_listener=self)
-                    if self.weights is not None:
+                    if self.weights:
                         client.set_weights(self.weights)
                     self.session_manager.add_session(name, self.botname, client.session)
                     session = self.session_manager.get_session(client.session)
@@ -225,18 +216,20 @@ if __name__ == '__main__':
     logging.basicConfig(format="%(asctime)s:%(levelname)s:%(name)s:%(message)s")
     logging.getLogger().setLevel(logging.INFO)
     logging.getLogger('urllib3').setLevel(logging.WARN)
-    host = 'localhost'
-    port = 8001
-    if len(sys.argv) < 2:
-        print "Usage:", sys.argv[0], "<botname>", "[config file]"
-        sys.exit(1)
-    botname = sys.argv[1]
-    if len(sys.argv) > 2:
-        config_file = sys.argv[2]
-    else:
-        config_file = None
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        'botname', help='Slack bot name')
+    parser.add_argument(
+        '--host', default='localhost', help='Host string of chatbot server')
+    parser.add_argument(
+        '--port', default='8001', help='Port string of chatbot server')
+    parser.add_argument(
+        '--weights', help='Chatbot tier weights')
+    args = parser.parse_args()
+
     while True:
         try:
-            HRSlackBot(host, port, botname, config_file).run()
+            HRSlackBot(args.host, args.port, args.botname, weights=args.weights).run()
         except Exception as ex:
             logger.error(ex)

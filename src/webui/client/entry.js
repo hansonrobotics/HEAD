@@ -9,6 +9,11 @@ require(['eventemitter2', 'application',
         'modules/start/router',
         'modules/settings/router'
     ],
-    function (EventEmitter2, app) {
-        app.start();
-    });
+    function(EventEmitter2, app) {
+        function requireAll(r) {
+            r.keys().forEach(r)
+        }
+
+        requireAll(require.context("./extensions", true, /.*/))
+        app.start()
+    })

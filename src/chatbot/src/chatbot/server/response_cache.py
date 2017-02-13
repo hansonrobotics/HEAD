@@ -36,19 +36,19 @@ class ResponseCache(object):
         time_elapsed = (dt.datetime.now() - same_answers[-1]['Datetime']
                         ).seconds if same_answers else 0
         if max(0, len(norm(answer)) - 10) * 30 <= time_elapsed:
-            logger.info("Allow repeat answer {}".format(answer))
-            logger.info("Answer length {}, time elapsed {}".format(
+            logger.debug("Allow repeat answer {}".format(answer))
+            logger.debug("Answer length {}, time elapsed {}".format(
                 len(norm(answer)), time_elapsed))
             return True
 
         if norm(answer) == norm(self.last_answer):
-            logger.info("Last answer repeat")
+            logger.debug("Last answer repeat")
             return False
         if not self.is_unique(answer):
-            logger.info("Non unique answer")
+            logger.debug("Non unique answer")
             return False
         if self.contain(question, answer):
-            logger.info("Repeat answer")
+            logger.debug("Repeat answer")
             return False
         return True
 

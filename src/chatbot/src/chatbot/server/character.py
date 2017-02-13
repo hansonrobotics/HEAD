@@ -236,7 +236,7 @@ class AIMLCharacter(Character):
             self.logger.info("Removed context {}".format(key))
             return True
         else:
-            self.logger.info("No such context {}".format(key))
+            self.logger.debug("No such context {}".format(key))
             return False
 
     def get_templates(self):
