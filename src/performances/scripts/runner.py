@@ -134,7 +134,7 @@ class Runner:
 
     def run_full_performance_callback(self, request):
         self.stop()
-        performances = self.load_folder(request.id)
+        performances = self.load_folder(request.id) or self.load_sequence([request.id])
         if not performances:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
@@ -424,14 +424,17 @@ class Runner:
 
     def set_variable(self, id, properties):
         for key, val in properties.iteritems():
+            rospy.logerr("id {} key {} val {}".format(id,key,val))
             if id in self.variables:
                 self.variables[id][key] = val
             else:
                 self.variables[id] = {key: val}
 
     def get_variable(self, id, name):
-        if id in self.variables and name in self.variables[id] and self.variables[id][name]:
-            return self.variables[id][name]
+        rospy.logerr("id {} name {} ".format(id, name))
+        if os.path.dirname(id) in self.variables and name in self.variables[os.path.dirname(id)]\
+                and self.variables[os.path.dirname(id)][name]:
+            return self.variables[os.path.dirname(id)][name]
         else:
             val = None
             param_name = os.path.join('/', self.robot_name, 'webui/performances', os.path.dirname(id),
