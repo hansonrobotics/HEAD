@@ -29,7 +29,6 @@ class Client(object):
                 try:
                     r = requests.post(
                         '{}/detect_face'.format(url), data=image_file, timeout=1, params=kwargs)
-                    ret = r.json().get('ret')
                     response = r.json().get('response')
                     if callable(callback):
                         callback(frame, response)
@@ -70,6 +69,6 @@ if __name__ == '__main__':
 
     for i in range(100):
         with open('obama.png', 'rb') as f:
-            client.detect_faces(i, f, callback)
+            client.detect_faces(i, f, callback, landmarks=True)
     client.q.join()
     print dt.datetime.now() - start

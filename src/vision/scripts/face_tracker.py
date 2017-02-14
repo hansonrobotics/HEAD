@@ -28,6 +28,13 @@ def callback(frame, response):
     faces = response['faces']
     for left, top, right, bottom in faces:
         cv2.rectangle(image, (left, top), (right, bottom), (255, 0, 0), 2)
+
+    all_landmarks = response.get('landmarks')
+    if all_landmarks:
+        for landmarks in all_landmarks:
+            for x, y in landmarks:
+                cv2.circle(image, (x,y), 1, (0, 255, 0), 1)
+
     imgpub.publish(bridge.cv2_to_imgmsg(image, 'bgr8'))
     del image_cache[frame]
     del processed_images[frame]
@@ -37,7 +44,7 @@ def cb(ros_image):
     image = bridge.imgmsg_to_cv2(ros_image, "bgr8")
     retval, buf = cv2.imencode('.png', image)
     f = BytesIO(buf)
-    client.detect_faces(frame, f, callback)
+    client.detect_faces(frame, f, callback, landmarks=True)
     image_cache[frame] = image
 
 rospy.Subscriber('/camera/image_raw', Image, cb)

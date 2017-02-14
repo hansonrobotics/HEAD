@@ -21,15 +21,13 @@ ROOT = '/{}'.format(VERSION)
 def _detect_face():
     image = request.data
     args = request.args.to_dict()
-    detected_faces = detect_face(image, **args)
-    response = {}
-    ret = False
-    response['faces'] = []
-    if detected_faces:
-        ret = True
-        for face in detected_faces:
-            response['faces'].append((face.left(),face.top(),face.right(),face.bottom()))
-    return Response(json_encode({'ret': ret, 'response': response}),
+    for k, v in args.iteritems():
+        if v.lower() == 'false':
+            args[k] = False
+        elif v.lower() == 'true':
+            args[k] = True
+    response = detect_face(image, **args)
+    return Response(json_encode({'response': response}),
                     mimetype="application/json")
 
 
