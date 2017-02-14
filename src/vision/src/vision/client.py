@@ -19,10 +19,9 @@ class Client(object):
 
     class Worker(Thread):
 
-        def __init__(self, incoming_queue, results):
+        def __init__(self, incoming_queue):
             super(Client.Worker, self).__init__()
             self.incoming_queue = incoming_queue
-            self.results = results
 
         def run(self):
             while True:
@@ -34,7 +33,6 @@ class Client(object):
                     response = r.json().get('response')
                     if callable(callback):
                         callback(frame, response)
-                    self.results.put((frame, response))
                     self.incoming_queue.task_done()
                 except Exception as ex:
                     print ex
@@ -44,12 +42,11 @@ class Client(object):
             self.hosts = [DEFAULT_HOST_URL]
         else:
             self.hosts = hosts
-        self.q = Queue()
-        self.results = Queue()
+        self.q = Queue(maxsize=10)
 
         self.workers = {}
         for host in self.hosts:
-            worker = Client.Worker(self.q, self.results)
+            worker = Client.Worker(self.q)
             worker.daemon = True
             worker.start()
             self.workers[host] = worker
