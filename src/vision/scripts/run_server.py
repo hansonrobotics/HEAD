@@ -27,7 +27,7 @@ def _detect_face():
     if detected_faces:
         ret = True
         for face in detected_faces:
-            response['faces'].append((face.top(),face.bottom(),face.left(),face.right()))
+            response['faces'].append((face.left(),face.top(),face.right(),face.bottom()))
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 

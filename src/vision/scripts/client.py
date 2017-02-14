@@ -24,7 +24,7 @@ class Client(object):
                 '{}/detect_face'.format(self.root_url), data=image_file)
             ret = r.json().get('ret')
             response = r.json().get('response')
-            print response
+            return response
         except Exception as ex:
             print ex
 
