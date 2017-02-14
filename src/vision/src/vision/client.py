@@ -33,9 +33,10 @@ class Client(object):
                     response = r.json().get('response')
                     if callable(callback):
                         callback(frame, response)
-                    self.incoming_queue.task_done()
                 except Exception as ex:
                     print ex
+                finally:
+                    self.incoming_queue.task_done()
 
     def __init__(self, hosts=None):
         if not hosts:
