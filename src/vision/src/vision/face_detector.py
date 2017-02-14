@@ -4,7 +4,7 @@ import cv2
 
 dlib_face_detector = dlib.get_frontal_face_detector()
 
-def dlib_detect_face(image, max_results=4):
+def dlib_detect_face(image, **kwargs):
     nparr = np.fromstring(image, np.uint8)
     image = cv2.imdecode(nparr, 1)
     if image is not None and image.any():

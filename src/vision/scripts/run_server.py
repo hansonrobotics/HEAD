@@ -20,7 +20,8 @@ ROOT = '/{}'.format(VERSION)
 @app.route(ROOT + '/detect_face', methods=['POST'])
 def _detect_face():
     image = request.data
-    detected_faces = detect_face(image)
+    args = request.args.to_dict()
+    detected_faces = detect_face(image, **args)
     response = {}
     ret = False
     response['faces'] = []

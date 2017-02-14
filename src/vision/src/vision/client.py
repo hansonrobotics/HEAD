@@ -25,10 +25,10 @@ class Client(object):
 
         def run(self):
             while True:
-                frame, image_file, url, callback = self.incoming_queue.get()
+                frame, image_file, url, callback, kwargs = self.incoming_queue.get()
                 try:
                     r = requests.post(
-                        '{}/detect_face'.format(url), data=image_file, timeout=1)
+                        '{}/detect_face'.format(url), data=image_file, timeout=1, params=kwargs)
                     ret = r.json().get('ret')
                     response = r.json().get('response')
                     if callable(callback):
@@ -52,14 +52,14 @@ class Client(object):
             worker.start()
             self.workers[host] = worker
 
-    def detect_faces(self, frame, image_file, callback=None):
+    def detect_faces(self, frame, image_file, callback, **kwargs):
         """
         image_file: file-like object
         """
         host = self.hosts[frame%len(self.hosts)]
         url = '{}/{}'.format(host, Client.VERSION)
         buf = BytesIO(image_file.read())
-        self.q.put((frame, buf, url, callback))
+        self.q.put((frame, buf, url, callback, kwargs))
 
 if __name__ == '__main__':
     hosts = ['http://localhost:9001', 'http://localhost:9002']
