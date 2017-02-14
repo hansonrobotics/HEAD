@@ -1,3 +1,0 @@
----
-string[] names
-sensor_msgs/Image[] image

@@ -11,7 +11,7 @@ from basic_head_api.srv import *
 from basic_head_api.msg import *
 from pau2motors.msg import pau
 from geometry_msgs.msg import Quaternion
-from pi_face_tracker.msg import Faces
+#from pi_face_tracker.msg import Faces
 import Quat
 from std_msgs.msg import String
 from std_msgs.msg import Float64

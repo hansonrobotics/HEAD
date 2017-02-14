@@ -16,7 +16,9 @@ define(['marionette', './templates/crosshairs.tpl', 'lib/api', 'lib/crosshair-sl
             buildHeadCrosshair: function () {
                 this.ui.headControl.crosshairsl({
                     change: function (e, ui) {
+                        api.setDynParam('/' + api.config.robot + '/chatbot', 'enable', true);
                         api.setFaceTarget(1, ui.xval / 50, ui.yval / -50);
+                        api.setGazeTarget(1, ui.xval / 50, ui.yval / -50);
                     }
                 });
             },
