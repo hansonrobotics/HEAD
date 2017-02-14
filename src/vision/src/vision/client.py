@@ -6,13 +6,16 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
+DEFAULT_HOST = 'http://localhost'
+DEFAULT_PORT = '9001'
+
 class Client(object):
 
     VERSION = 'v1.0'
 
-    def __init__(self):
-        self.host = 'http://localhost'
-        self.port = '9001'
+    def __init__(self, host=DEFAULT_HOST, port=DEFAULT_PORT):
+        self.host = host
+        self.port = port
         self.root_url = '{}:{}/{}'.format(self.host, self.port, Client.VERSION)
 
     def detect_faces(self, image_file):

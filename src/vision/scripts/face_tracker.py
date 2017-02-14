@@ -3,9 +3,14 @@
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image
 import rospy
-from client import Client
 from io import BytesIO
 import cv2
+import os
+import sys
+CWD = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(CWD, '../src'))
+
+from vision.client import Client
 
 bridge = CvBridge()
 client = Client()
