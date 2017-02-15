@@ -382,7 +382,7 @@ def _ask_characters(characters, question, lang, sid, query):
     if not answer:
         if sess.open_character in characters:
             answered, _answer, _response = _ask_character(
-                'question', sess.open_character, 1)
+                'question', sess.open_character, 1, good_match=True)
             if answered:
                 hit_character = sess.open_character
                 answer = _answer
@@ -391,19 +391,18 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        if c.id == botname:
-            answered, _answer, _response = _ask_character(  
-                'priority', c, weight, good_match=True)
-            if answered:
-                hit_character = c
-                answer = _answer
-                response = _response
+        answered, _answer, _response = _ask_character(
+            'priority', c, weight, good_match=True)
+        if answered:
+            hit_character = c
+            answer = _answer
+            response = _response
 
     # Select tier that is designed to be proper to answer the question
     if not answer:
         for c, weight in weighted_characters:
             if c.is_favorite(_question):
-                answered, _answer, _response = _ask_character(  
+                answered, _answer, _response = _ask_character(
                     'favorite', c, 1)
                 if answered:
                     hit_character = c
@@ -415,7 +414,7 @@ def _ask_characters(characters, question, lang, sid, query):
         if sess.last_used_character and sess.last_used_character.dynamic_level:
             for c, weight in weighted_characters:
                 if sess.last_used_character.id == c.id:
-                    answered, _answer, _response = _ask_character(  
+                    answered, _answer, _response = _ask_character(
                         'last used', c, weight)
                     if answered:
                         hit_character = c
@@ -565,11 +564,11 @@ def ask(question, lang, sid, query=False):
 
     sess.set_characters(responding_characters)
     if RESET_SESSION_BY_HELLO and question:
-        question = question.lower().strip()
-        if 'hi' in question or 'hello' in question:
+        question_tokens = question.lower().strip().split()
+        if 'hi' in question_tokens or 'hello' in question_tokens:
             session_manager.dump(sid)
             session_manager.reset_session(sid)
-            logger.info("Session is cleaned by hi")
+            logger.warn("Session is reset by greeting")
     if question and question.lower().strip() in ["what's new"]:
         sess.last_used_character = None
         sess.open_character = None
