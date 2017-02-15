@@ -12,6 +12,7 @@ import re
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
+from audio_stream.msg import audiodata
 from dynamic_reconfigure.server import Server
 from chatbot.cfg import ChatbotConfig
 from chatbot.client import Client
@@ -61,6 +62,7 @@ class Chatbot():
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
         rospy.Subscriber('speech_events', String, self._speech_event_callback)
+        rospy.Subscriber('audio_sensors', audiodata, self._audio_sensors_callback)
         self.tts_ctrl_pub = rospy.Publisher(
             'tts_control', String, queue_size=1)
 
@@ -125,6 +127,10 @@ class Chatbot():
         if msg.data == 'stop':
             rospy.sleep(2)
             self.speech = False
+
+    def _audio_sensors_callback(self, msg):
+        if msg.Speech:
+            self.client.cancel_timer()
 
     def _request_callback(self, chat_message):
         if not self.enable:
