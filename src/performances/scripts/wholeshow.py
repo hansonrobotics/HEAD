@@ -34,12 +34,13 @@ class WholeShow(HierarchicalMachine):
         # States for wholeshow
         states = [{'name': 'sleeping', 'children': ['shutting']},
                   {'name': 'interacting', 'children': ['nonverbal']},
-                  'performing', 'opencog']
+                  'performing', 'opencog', 'analysis']
         HierarchicalMachine.__init__(self, states=states, initial='interacting')
         # Transitions
         self.add_transition('wake_up', 'sleeping', 'interacting')
         # Transitions
         self.add_transition('perform', 'interacting', 'performing')
+        self.add_transition('interact', 'performing', 'interacting')
         self.add_transition('start_opencog', 'interacting', 'opencog')
         self.add_transition('shut', 'sleeping', 'sleeping_shutting')
         self.add_transition('be_quiet', 'interacting', 'interacting_nonverbal')
@@ -56,6 +57,7 @@ class WholeShow(HierarchicalMachine):
         self.btree_sub = rospy.Subscriber("/behavior_switch", String, self.btree_cb)
         self.soma_pub = rospy.Publisher('/blender_api/set_soma_state', SomaState, queue_size=10)
         self.look_pub = rospy.Publisher('/blender_api/set_face_target', Target, queue_size=10)
+        self.gaze_pub = rospy.Publisher('/blender_api/set_gaze_target', Target, queue_size=10)
         self.performance_runner = rospy.ServiceProxy('/performances/run_full_performance', srv.RunByName)
         # Wholeshow starts with behavior enabled, unless set otherwise
         rospy.set_param("/behavior_enabled", rospy.get_param("/behavior_enabled", True))
@@ -82,6 +84,11 @@ class WholeShow(HierarchicalMachine):
         # Dynamic reconfigure
         self.config = {}
         self.cfg_srv = Server(WholeshowConfig, self.config_cb)
+        # Behavior was paused entering into state
+        self.behavior_paused = False
+        # Chatbot was paused entering the state
+        self.chatbot_paused = False
+
 
     def start_sleeping(self):
         """States callbacks """
@@ -168,8 +175,28 @@ class WholeShow(HierarchicalMachine):
                 return False
             except:
                 pass
+        if 'go to analysis mode' in speech:
+            try:
+                self.to_analysis()
+                return True
+            except:
+                pass
+
+        if 'exit' in speech:
+            try:
+                rospy.logerr("Exiting interaction mode")
+                self.to_interacting()
+                return True
+            except:
+                pass
 
         performances = self.find_performance_by_speech(speech)
+
+        # Split between performances for general modes and analysis
+        analysis_performances = [p for p in performances if ('shared/analysis' in p or 'robot/analysis' in p)]
+        for a in analysis_performances:
+            performances.remove(a)
+
         if len(performances) > 0:
             try:
                 self.perform()
@@ -177,19 +204,32 @@ class WholeShow(HierarchicalMachine):
                 self.performance_runner(random.choice(performances))
             except:
                 pass
+
+        if self.state == 'analysis' and len(analysis_performances):
+            # Run performances explicitly in the analysis state (Only testing performances)
+            on = False
+            self.performance_runner(random.choice(analysis_performances))
         if on:
             self.speech_pub.publish(msg)
 
     def performances_cb(self, msg):
         if msg.event == 'running':
-            self.to_performing()
+            try:
+                # Only go to performance state if robot is in interaction state
+                self.perform()
+            except:
+                pass
         if msg.event == 'finished' \
                 or msg.event == 'idle':
             if self.after_performance:
                 self.after_performance()
                 self.after_performance = None
             else:
-                self.to_interacting()
+                try:
+                    # Return to interacting only if state was performing
+                    self.interact()
+                except:
+                    pass
 
 
     def do_wake_up(self):
@@ -247,20 +287,12 @@ class WholeShow(HierarchicalMachine):
 
     def on_enter_opencog(self):
         self.btree_pub.publish(String("opencog_on"))
-        try:
-            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
-            cl.update_configuration({"enable":False})
-            cl.close()
-        except:
-            pass
+        self.set_chatbot_enabled(False)
+
     def on_exit_opencog(self):
         self.btree_pub.publish(String("opencog_off"))
-        try:
-            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
-            cl.update_configuration({"enable":True})
-            cl.close()
-        except:
-            pass
+        self.set_chatbot_enabled(True)
+
 
     @staticmethod
     def check_keywords(keywords, input):
@@ -275,9 +307,7 @@ class WholeShow(HierarchicalMachine):
             if not keyword:
                 continue
             # Currently only simple matching
-            p = re.compile(r"\b{}\b".format(keyword))
-            if re.search(p, input):
-                rospy.logerr("Input {} is in keywords {}".format(input, keyword ))
+            if re.search(r"\b{}\b".format(keyword), input, flags=re.IGNORECASE):
                 return True
         return False
 
@@ -296,6 +326,55 @@ class WholeShow(HierarchicalMachine):
             rospy.set_param("/behavior_enabled", True)
         if msg.data == "btree_off":
             rospy.set_param("/behavior_enabled", False)
+
+
+    def set_keep_alive(self, keep_alive=True):
+        magnitude = 1.0 if keep_alive else 0.0
+        self.soma_pub.publish(self._get_soma('normal', magnitude))
+        self.soma_pub.publish(self._get_soma('breathing', magnitude))
+        self.soma_pub.publish(self._get_soma('normal-saccades', magnitude))
+
+    def on_enter_analysis(self):
+        self.enable_blinking(False)
+        self.set_keep_alive(False)
+        self.behavior_paused = rospy.get_param("/behavior_enabled", True)
+        if self.behavior_paused:
+            self.btree_pub.publish(String("btree_off"))
+        if self.is_chatbot_enabled():
+            self.set_chatbot_enabled(False)
+            self.chatbot_paused = True
+
+        # Reset head position
+        self.look_pub.publish(Target(1, 0, 0, 0.3))
+        self.gaze_pub.publish(Target(1, 0, 0, 0.3))
+
+    def on_exit_analysis(self):
+        self.enable_blinking(True)
+        self.set_keep_alive(True)
+        if self.behavior_paused:
+            self.behavior_paused = False
+            self.btree_pub.publish(String("btree_on"))
+        if self.chatbot_paused:
+            self.chatbot_paused = False
+            self.set_chatbot_enabled(True)
+
+    @staticmethod
+    def set_chatbot_enabled(enabled=True):
+        try:
+            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
+            cl.update_configuration({"enable": enabled})
+            cl.close()
+        except:
+            pass
+
+    @staticmethod
+    def is_chatbot_enabled():
+        try:
+            cl = dynamic_reconfigure.client.Client('chatbot', timeout=0.1)
+            config = cl.get_configuration()
+            return config['enable']
+        except:
+            return False
 
 if __name__ == '__main__':
     WholeShow()
