@@ -382,7 +382,7 @@ def _ask_characters(characters, question, lang, sid, query):
     if not answer:
         if sess.open_character in characters:
             answered, _answer, _response = _ask_character(
-                'question', sess.open_character, 1)
+                'question', sess.open_character, 1, good_match=True)
             if answered:
                 hit_character = sess.open_character
                 answer = _answer
@@ -391,19 +391,18 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        if c.id == botname:
-            answered, _answer, _response = _ask_character(  
-                'priority', c, weight, good_match=True)
-            if answered:
-                hit_character = c
-                answer = _answer
-                response = _response
+        answered, _answer, _response = _ask_character(
+            'priority', c, weight, good_match=True)
+        if answered:
+            hit_character = c
+            answer = _answer
+            response = _response
 
     # Select tier that is designed to be proper to answer the question
     if not answer:
         for c, weight in weighted_characters:
             if c.is_favorite(_question):
-                answered, _answer, _response = _ask_character(  
+                answered, _answer, _response = _ask_character(
                     'favorite', c, 1)
                 if answered:
                     hit_character = c
@@ -415,7 +414,7 @@ def _ask_characters(characters, question, lang, sid, query):
         if sess.last_used_character and sess.last_used_character.dynamic_level:
             for c, weight in weighted_characters:
                 if sess.last_used_character.id == c.id:
-                    answered, _answer, _response = _ask_character(  
+                    answered, _answer, _response = _ask_character(
                         'last used', c, weight)
                     if answered:
                         hit_character = c
