@@ -18,7 +18,6 @@ NO_PATTERN_MATCH = 2
 INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
-useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
@@ -44,9 +43,9 @@ OPERATOR_MAP = {
     '[pow]': pow,
 }
 
-def get_character(id, lang=None):
+def get_character(id, lang=None, ns=None):
     for character in CHARACTERS:
-        if character.id != id:
+        if (ns is not None and character.name != ns) or character.id != id:
             continue
         if lang is None:
             return character
@@ -96,7 +95,7 @@ def list_character(lang, sid):
         return []
     characters = get_responding_characters(lang, sid)
     weights = get_weights(characters, sess)
-    return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
+    return [(c.name, c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
 
 
 def list_character_names():
@@ -492,30 +491,11 @@ def get_responding_characters(lang, sid):
         botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
-    character = None
-    if responding_characters:
-        character = responding_characters[0]
-    else:
-        return []
-
-    if useSOLR:
-        solr_character = get_character('solr_bot', lang)
-        if solr_character:
-            if solr_character not in responding_characters:
-                responding_characters.append(solr_character)
-        else:
-            logger.warn("Solr character is not found")
-        solr_matcher = get_character('solr_matcher', lang)
-        if solr_matcher:
-            if solr_matcher not in responding_characters:
-                solr_matcher.set_character(character)
-                responding_characters.append(solr_matcher)
-        else:
-            logger.warn("Solr matcher is not found")
-
     generic = get_character('generic', lang)
     if generic:
         if generic not in responding_characters:
+            # get shared properties
+            character = get_character(botname)
             generic.set_properties(character.get_properties())
             responding_characters.append(generic)
     else:
@@ -544,6 +524,7 @@ def ask(question, lang, sid, query=False):
     return (response dict, return code)
     """
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+    response['yousaid'] = question
 
     sess = session_manager.get_session(sid)
     if sess is None:

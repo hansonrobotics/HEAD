@@ -134,6 +134,7 @@ class Chatbot():
 
     def _request_callback(self, chat_message):
         if not self.enable:
+            self.client.cancel_timer()
             logger.info("Chatbot is disabled")
             return
         if 'shut up' in chat_message.utterance.lower():
@@ -197,6 +198,10 @@ class Chatbot():
             return
 
         logger.info("Get response {}".format(response))
+
+        for k, v in response.iteritems():
+            rospy.set_param('{}/response/{}'.format(self.node_name, k), v)
+
         text = response.get('text')
         emotion = response.get('emotion')
 
