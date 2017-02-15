@@ -134,6 +134,7 @@ class Chatbot():
 
     def _request_callback(self, chat_message):
         if not self.enable:
+            self.client.cancel_timer()
             logger.info("Chatbot is disabled")
             return
         if 'shut up' in chat_message.utterance.lower():
