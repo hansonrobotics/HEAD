@@ -491,15 +491,11 @@ def get_responding_characters(lang, sid):
         botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
-    character = None
-    if responding_characters:
-        character = responding_characters[0]
-    else:
-        return []
-
     generic = get_character('generic', lang)
     if generic:
         if generic not in responding_characters:
+            # get shared properties
+            character = get_character(botname)
             generic.set_properties(character.get_properties())
             responding_characters.append(generic)
     else:
