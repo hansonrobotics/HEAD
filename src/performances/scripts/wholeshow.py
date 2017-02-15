@@ -176,14 +176,14 @@ class WholeShow(HierarchicalMachine):
                 return False
             except:
                 pass
-        if 'go to analysis mode' in speech:
+        if ('go to analysis mode' in speech) or ('analysis mode' in speech) or (speech == 'analysis'):
             try:
                 self.to_analysis()
                 return True
             except:
                 pass
 
-        if 'exit' in speech:
+        if ('exit' in speech) or ('return' in speech) or ('normal mode' in speech):
             try:
                 rospy.logerr("Exiting interaction mode")
                 self.to_interacting()

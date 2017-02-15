@@ -134,7 +134,6 @@ class Chatbot():
 
     def _request_callback(self, chat_message):
         if not self.enable:
-            self.client.cancel_timer()
             logger.info("Chatbot is disabled")
             return
         if 'shut up' in chat_message.utterance.lower():
@@ -266,6 +265,8 @@ class Chatbot():
         self.sentiment_active(config.sentiment)
         self.client.chatbot_url = config.chatbot_url
         self.enable = config.enable
+        if not self.enable:
+            self.client.cancel_timer()
         self.delay_response = config.delay_response
         self.delay_time = config.delay_time
         self.client.ignore_indicator = config.ignore_indicator
