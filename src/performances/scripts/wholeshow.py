@@ -304,8 +304,7 @@ class WholeShow(HierarchicalMachine):
             if not keyword:
                 continue
             # Currently only simple matching
-            p = re.compile(r"\b{}\b".format(keyword))
-            if re.search(p, input):
+            if re.search(r"\b{}\b".format(keyword), input, flags=re.IGNORECASE):
                 rospy.logerr("Input {} is in keywords {}".format(input, keyword ))
                 return True
         return False
