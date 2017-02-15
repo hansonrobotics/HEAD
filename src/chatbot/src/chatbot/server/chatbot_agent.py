@@ -44,9 +44,9 @@ OPERATOR_MAP = {
     '[pow]': pow,
 }
 
-def get_character(id, lang=None):
+def get_character(id, lang=None, ns=None):
     for character in CHARACTERS:
-        if character.id != id:
+        if (ns is not None and character.name != ns) or character.id != id:
             continue
         if lang is None:
             return character
