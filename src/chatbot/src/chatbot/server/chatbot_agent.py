@@ -564,11 +564,11 @@ def ask(question, lang, sid, query=False):
 
     sess.set_characters(responding_characters)
     if RESET_SESSION_BY_HELLO and question:
-        question = question.lower().strip()
-        if 'hi' in question or 'hello' in question:
+        question_tokens = question.lower().strip().split()
+        if 'hi' in question_tokens or 'hello' in question_tokens:
             session_manager.dump(sid)
             session_manager.reset_session(sid)
-            logger.info("Session is cleaned by hi")
+            logger.warn("Session is reset by greeting")
     if question and question.lower().strip() in ["what's new"]:
         sess.last_used_character = None
         sess.open_character = None
