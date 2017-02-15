@@ -18,7 +18,6 @@ NO_PATTERN_MATCH = 2
 INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
-useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
@@ -497,21 +496,6 @@ def get_responding_characters(lang, sid):
         character = responding_characters[0]
     else:
         return []
-
-    if useSOLR:
-        solr_character = get_character('solr_bot', lang)
-        if solr_character:
-            if solr_character not in responding_characters:
-                responding_characters.append(solr_character)
-        else:
-            logger.warn("Solr character is not found")
-        solr_matcher = get_character('solr_matcher', lang)
-        if solr_matcher:
-            if solr_matcher not in responding_characters:
-                solr_matcher.set_character(character)
-                responding_characters.append(solr_matcher)
-        else:
-            logger.warn("Solr matcher is not found")
 
     generic = get_character('generic', lang)
     if generic:
