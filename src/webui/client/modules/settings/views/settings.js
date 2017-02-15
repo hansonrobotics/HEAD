@@ -48,6 +48,17 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 let self = this,
                     config = this.model.toJSON()
 
+                config = _.each(config, function(val, key) {
+                    if (self.schema['properties'][key] && _.includes(['array', 'object'],
+                            self.schema['properties'][key]['type']) && typeof val === 'string') {
+                        try {
+                            config[key] = JSON.parse(val)
+                        } catch (err) {
+                            console.log(err)
+                        }
+                    }
+                })
+
                 delete config['node_schema']
                 if (typeof self.schemaModel.getGroupName === 'function')
                     _.each(config, function(val, key) {
@@ -57,11 +68,20 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     this.editor.setValue(this.model.toJSON())
             },
             update: function() {
+                let self = this
+
                 // Only valid settings could be saved in timeline
                 if (this.editor.validate().length === 0) {
                     let values = this.editor.getValue()
                     delete values['node_schema']
                     let attributes = this.getAttributes(values)
+
+                    _.each(attributes, function(val, key) {
+                        if (self.schema['properties'][key]
+                            && _.includes(['array', 'object'], self.schema['properties'][key]['type'])) {
+                            attributes[key] = JSON.stringify(val)
+                        }
+                    })
 
                     this.model.save(attributes, {
                         error: function() {
