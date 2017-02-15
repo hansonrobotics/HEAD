@@ -95,7 +95,7 @@ def list_character(lang, sid):
         return []
     characters = get_responding_characters(lang, sid)
     weights = get_weights(characters, sess)
-    return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
+    return [(c.name, c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
 
 
 def list_character_names():
