@@ -93,7 +93,11 @@ class AIMLCharacterLoader(object):
             try:
                 errors = []
                 root_dir = os.path.dirname(os.path.realpath(character_yaml))
-                for name in spec['name'].split(','):
+                if 'name' in spec:
+                    names = spec['name']
+                else:
+                    names = 'global'
+                for name in names.split(','):
                     name = name.strip()
                     character = AIMLCharacter(spec['id'], name)
                     if 'property_file' in spec:
