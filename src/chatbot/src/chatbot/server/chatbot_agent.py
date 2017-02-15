@@ -524,6 +524,7 @@ def ask(question, lang, sid, query=False):
     return (response dict, return code)
     """
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
+    response['yousaid'] = question
 
     sess = session_manager.get_session(sid)
     if sess is None:
