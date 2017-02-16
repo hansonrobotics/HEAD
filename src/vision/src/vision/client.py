@@ -44,12 +44,10 @@ class Client(object):
             self.hosts = hosts
         self.q = Queue(maxsize=10)
 
-        self.workers = {}
-        for host in self.hosts:
+        for host in self.hosts*2:
             worker = Client.Worker(self.q)
             worker.daemon = True
             worker.start()
-            self.workers[host] = worker
 
     def detect_faces(self, frame, image_file, callback, **kwargs):
         """
