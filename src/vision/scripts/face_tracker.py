@@ -58,10 +58,11 @@ def callback(frame, response):
 def cb(ros_image):
     frame = ros_image.header.seq
     image = bridge.imgmsg_to_cv2(ros_image, "bgr8")
-    retval, buf = cv2.imencode('.png', image)
-    f = BytesIO(buf)
-    client.detect_faces(frame, f, callback, landmarks=True)
-    image_cache[frame] = image
+    retval, buf = cv2.imencode('.jpeg', image, [cv2.IMWRITE_JPEG_QUALITY, 70])
+    if retval:
+        f = BytesIO(buf)
+        client.detect_faces(frame, f, callback, landmarks=True)
+        image_cache[frame] = image
 
 rospy.Subscriber('/camera/image_raw', Image, cb)
 
