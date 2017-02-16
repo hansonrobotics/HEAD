@@ -1104,8 +1104,6 @@ check_ws() {
         if [[ ${confirm} -eq 1 ]]; then
             HR_WORKSPACE=${rel_ws}
             set_env
-        else
-            exit 1
         fi
     fi
 }
