@@ -1,9 +1,19 @@
 # Robot Test Report
 
-## Description
-A few sentences describing the overall goals of the pull request's commits.
+*Delete the sections that are not applicable.*
 
-## Initialize
+- [Description] (#desc)
+- [Initialize] (#init)
+- [Hardware] (#hw)
+- [General Behavior] (#bhave)
+- [Authored Content] (#content)
+- [Shutdown] (#shutdown)
+
+## <a name="desc"></a>Description
+
+A few sentences describing the overall problems of the report.
+
+## <a name="init"></a>Initialize
 Switch robot on. Wait for everything to start up. The robot will be ‘sleeping’.
 
 - [ ] It works
@@ -14,7 +24,7 @@ Say “wake up”. The robot wakes up and does keepalive animations.
 - [ ] It works
 - [ ] It doesn’t work, comment:
 
-## Hardware
+## <a name="hw"></a>Hardware
 Say “analysis”. The robot stops animating and goes into analysis mode.
 
 - [ ] It works
@@ -45,7 +55,7 @@ Say “resume”. The robot will go back to normal mode and animate again.
 - [ ] It works
 - [ ] It doesn’t work, comment:
 
-## General Behavior
+## <a name="bhave"></a>General Behavior
 Hold your hand in front of the robot and slowly move it around. The robot will look at your hand and follow it.
 
 - [ ] It works
@@ -66,7 +76,7 @@ Smile to the robot. The robot should smile back.
 - [ ] It works
 - [ ] It doesn’t work, comment:
 
-## Authored Content
+## <a name="content"></a>Authored Content
 
 Say the following things to the robot, the answers should be sensible and satisfactory.
 [very small basic regression test, including basic reasoning questions for logic and NLP]
@@ -79,7 +89,7 @@ Go through the specific test questions for the customer/purpose (in second docum
 - [ ] It works
 - [ ] It doesn’t work, comment:
 
-## Shutdown
+## <a name="shutdown"></a>Shutdown
 
 Say “go to sleep”; the robot goes back to sleep.
 
