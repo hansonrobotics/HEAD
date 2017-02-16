@@ -65,8 +65,9 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     path: this.currentPath
                 })
 
-                this.collection.add(this.newestPerformance)
-                this.trigger('new', this.newestPerformance)
+                this.collection.add(this.newestPerformance);
+                this.trigger('new', this.newestPerformance);
+                this.ui.addAllButton.fadeIn();
             },
             getNextName: function(names, defaultPrefix) {
                 let self = this,
@@ -176,20 +177,38 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 let addNewTab = self.createTab(this.currentPath, $('<span>').addClass('glyphicon glyphicon-plus')
                     .attr('aria-hidden', 'true'), true)
 
-                addNewTab.click(function(e, ui) {
+                addNewTab.click(function (e, ui) {
+                    addNewTab.hide()
                     let input = $('<input>').addClass('form-control input-sm'),
-                        newTab = $('<li>').addClass('app-new-dir').html(input)
-                    input.focusout(function() {
-                        let dir = $(this).val()
+                        okButton = $('<button/>', {class: 'btn-sm btn btn-primary'}).html('OK'),
+                        container = $('<div/>', {class: 'form-inline'}).append($('<div/>', {class: 'form-group'})
+                            .append(input)).append(okButton),
+                        newTab = $('<li>').addClass('app-new-dir').html(container)
+                    input.focusout(function () {
+                        setTimeout(function () {
+                            if (!input.is(':focus')) {
+                                newTab.fadeOut(300, function () {
+                                    addNewTab.fadeIn(300);
+                                    $(newTab).remove();
+                                });
+                            }
+                        }, 500)
+                    });
+
+                    okButton.click(function () {
+                        let dir = $(input).val().trim()
                         if (dir) {
-                            self.createdDirs.push(self.joinPaths(self.currentPath, dir))
-                            self.updateTabs()
+                            dir = self.joinPaths(self.currentPath, dir)
+                            self.createdDirs.push(dir)
+                            self.switchDir(dir)
+                        } else {
+                            input.focus()
                         }
-                        newTab.remove()
-                    })
+                    });
+
                     $(this).before(newTab)
                     input.focus()
-                })
+                });
 
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
@@ -285,8 +304,14 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 this.newestPerformance = null
                 this.updateTabs()
             },
-            updateVisiblePerformances: function(dir) {
-                $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]').fadeIn()
+            updateVisiblePerformances: function (dir) {
+                let performances = $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]')
+                if (performances.length) {
+                    performances.fadeIn()
+                    this.ui.addAllButton.fadeIn()
+                } else {
+                    this.ui.addAllButton.hide()
+                }
             },
             joinPaths: function(path1, path2) {
                 return _.compact(_.union((path1 || '').split('/'), (path2 || '').split('/'))).join('/')
