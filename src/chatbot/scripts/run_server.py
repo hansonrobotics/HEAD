@@ -6,6 +6,7 @@ import logging
 import datetime as dt
 import json
 import shutil
+import argparse
 
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -379,13 +380,25 @@ def _stats():
                     mimetype="application/json")
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        port = int(sys.argv[1])
+    parser = argparse.ArgumentParser('Chatbot Server')
+
+    parser.add_argument(
+        '-p, --port',
+        dest='port', default=8001, help='Server port')
+    parser.add_argument(
+        '-v, --verbose',
+        dest='verbose', action='store_true', help='Verbose')
+
+    option = parser.parse_args()
+
+    if option.verbose:
+        root_logger.setLevel(logging.INFO)
     else:
-        port = 8001
+        root_logger.setLevel(logging.WARN)
+
     if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
         sys.path.insert(0, os.path.expanduser(
             os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
         import ext
         ext.load(app, ROOT)
-    app.run(host='0.0.0.0', debug=False, use_reloader=False, port=port)
+    app.run(host='0.0.0.0', debug=False, use_reloader=False, port=option.port)
