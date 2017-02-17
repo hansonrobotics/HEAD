@@ -12,7 +12,7 @@ CWD = os.path.abspath(os.path.dirname(__file__))
 os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 server_path = os.path.join(CWD, '../scripts')
 PORT = '8002'
-cmd = ['python', 'run_server.py', PORT]
+cmd = ['python', 'run_server.py', '-p', PORT]
 proc = subprocess.Popen(cmd, cwd=server_path, preexec_fn=os.setsid)
 
 from chatbot.client import Client
