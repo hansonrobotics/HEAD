@@ -1,8 +1,0 @@
-<launch>
-	<node pkg="manyears_ros" type="manyears_ros" name="many_ears" output="screen"> <!--launch-prefix="xterm -e gdb -\-args" -->
-		<param name="use_audio_stream" value="true"/>
-		<param name="raw_file" value="$(find manyears_ros)/data/debord.raw" />
-		<param name="config_file" value="$(find manyears_ros)/data/8sounds_cube.mes" />
-		<param name="enable_separation" value="true" />
-	</node>
-</launch>
