@@ -182,7 +182,7 @@ class WholeShow(HierarchicalMachine):
             except:
                 pass
 
-        if ('exit' in speech) or ('return' in speech) or ('normal mode' in speech):
+        if ('exit' in speech) or ('return' in speech) or ('resume' in speech) or ('normal mode' in speech):
             try:
                 rospy.logerr("Exiting interaction mode")
                 self.to_interacting()
