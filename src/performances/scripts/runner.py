@@ -443,6 +443,9 @@ class Runner:
                 if self.is_param(val):
                     if rospy.has_param(val):
                         return str(rospy.get_param(val))
+                    if rospy.has_param("/{}{}".format(self.robot_name,val)):
+                        return str(rospy.get_param("/{}{}".format(self.robot_name,val)))
+
                     return None
             return val
 
