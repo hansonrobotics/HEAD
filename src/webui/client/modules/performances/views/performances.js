@@ -10,7 +10,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 newButton: '.app-new-performance-button',
                 addAllButton: '.app-add-all-button',
                 tabs: '.app-performance-group-tabs',
-                container: '.app-performances'
+                container: '.app-performances',
+                dirHeader: '.app-performance-dir-header'
             },
             events: {
                 'click @ui.newButton': 'addNew',
@@ -213,7 +214,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
 
-                this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'))
+                this.ui.dirHeader.html('/' + this.currentPath)
 
                 if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function() {
