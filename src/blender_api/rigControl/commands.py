@@ -39,9 +39,9 @@ class EvaAPI(RigAPI):
         # 4 - head roll controlled by PAU
         # 8 - Eye Target controlled by PAU
         # 16 - Face shapekeys controlled by PAU
-        self.pauAnimationMode = 0
+        self.pauAnimationMode = 16
         # If 1 current shapekeys are controlled directly by PAU, otherwise by default drivers
-        self.shapekeysControl = 0
+        self.shapekeysControl = 1
         # Time for PAU controls to expire
         self.pauTimeout = 0
         pass

@@ -1,0 +1,6 @@
+<launch>
+<node pkg="facial_puppetry" name="dlib_core_node" type="dlib_core_node"/>
+<node pkg="facial_puppetry" name="pupeteery_core" type="pupeteery_core.py" output="screen" />
+<!--remap the topics if using multiple cameras -->
+<remap from="input_rgb_image" to="camera/image_raw" />
+</launch>

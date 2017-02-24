@@ -18,6 +18,8 @@ Usage: $0 [--cmt] [--oc] [--sa]
     Enable OpenCog NLP sentiment analysis, should run with --oc
   --st
     Enable saliency tracking.
+  --op
+    Enable Puppeteering.
 EOF
 }
 
@@ -38,6 +40,10 @@ while [[ $# > 0 ]]; do
             ;;
         --st)
             export ENABLE_SALIENCY_TRACKING=1
+            shift
+            ;;
+        --op)
+            export PUPPETEER=1
             shift
             ;;
         --help|-h)
@@ -138,12 +144,19 @@ if [[ $OC_CHATBOT == 1 ]]; then
   tmux new-window -n 'tel' "while true; do nc -zv localhost 17020 && break; sleep 1; done; expect $BASEDIR/load_scm.exp; $SHELL"
   tmux new-window -n 'oc-ctrl' "roslaunch opencog_control psi.launch; $SHELL"
 else
-  tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
+  if [[ $PUPPETEER == 0 ]]; then
+     tmux new-window -n 'cog' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/src; guile -l btree.scm; $SHELL"
+  fi
 fi
 
 tmux new-window -n 'orb' "export ROS_NAMESPACE=$NAME; cd $OCBHAVE/ros_bridge; ./main.py; $SHELL"
 
 sleep 4
 tmux new-window -n 'cmt' "roslaunch robots_config face_tracker.launch ${pi_arg}; $SHELL"
+sleep 3
+if [[ $PUPPETEER == 1 ]]; then
+    tmux new-window -n 'DLIB_puppeteering' "roslaunch facial_puppetry facial_puppetry.launch; $SHELL"
+fi
+
 tmux new-window -n 'bash' "cd $BASEDIR; $SHELL"
 tmux attach;
