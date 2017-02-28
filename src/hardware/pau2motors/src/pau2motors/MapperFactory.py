@@ -21,6 +21,8 @@ import copy
 import math
 import NeckKinematics
 import NeckVertical
+from scipy.interpolate import interp1d
+import rospy
 
 class MapperBase:
   """
@@ -173,6 +175,76 @@ class WeightedSum(MapperBase):
     self.termargs = args["terms"]
 
 # --------------------------------------------------------------
+
+class InterpSum(MapperBase):
+    """
+    This will sum up relative splines from y0 (neutral position), based on additional set of points defined.
+    x represents input of the mapping function (blendshapes, angles) and y is relative value of the motor
+    in range between min-max [0-1].
+    If input is outside defined range the closest value of the range will be added up
+    If a single point is defined the linear interpolation will be used and it is similar to WeightedSum function.
+
+    Example:
+            function:
+              - name: InterpSum
+                y0: 0.4
+                terms:
+                - {x0: 0, points: [[1,0]]}
+                - {x0: 0, points: [[0.6,0.2],[0.8, 0.0]]}
+                - {x0: 0.5, points: [[0.6,0.6],[0.7, 0.8],[0.9, 1]]}
+
+            Given inputs of t1,t2,t3 this function would return
+            y0 + sum(
+              interp_linear([0,0.4],[1,0]) (t1) - y0
+              interp_quadratic([0,0.4],[0.6,0.2],[0.8, 0.0]) (t2) - y0
+              interp_cubic([0.5,0.4],[0.6,0.6],[0.7, 0.8],[0.9, 1]) (t3) - y0
+            )
+            where result would be converted to angle
+    """
+
+    @staticmethod
+    def _saturated(val, interval):
+        # Returns value if value is within min max of the input, and closest extreme otherwise
+        return min(max(val, min(interval["x0"], interval["xmax"])), max(interval["x0"], interval["xmax"]))
+
+
+    def map(self, vals):
+        rospy.logerr(self.functions[1](vals[1]))
+        return (sum(
+            map(
+                lambda (val, function, term):
+                    function(self._saturated(val, term))-self.y0,
+                zip(vals, self.functions, self.termargs)
+            )
+        ) + self.y0) * self.range + self.motor_min
+
+
+    def __init__(self, args, motor_entry):
+        # Keep parameters to translate relative position to angle.
+        self.range = motor_entry["max"] - motor_entry["min"]
+        self.motor_min = motor_entry["min"]
+        # Neutral position
+        self.y0 = args['y0']
+        # Create interpolation functions:
+        self.functions = []
+        self.termargs = []
+        for term in args["terms"]:
+            # Neutral point
+            ax = [term['x0']]
+            ay = [self.y0]
+            # Additional points
+            for p in term["points"]:
+                ax.append(p[0])
+                ay.append(p[1])
+            # Use cubic interpolation for more than 3 points
+            method = 'cubic'
+            if len(ax) < 3:
+                method = 'linear'
+            elif len(ax) == 3:
+                method = 'quadratic'
+            term["xmax"] = ax[-1]
+            self.functions.append(interp1d(ax,ay, method))
+            self.termargs.append(term)
 
 class Quaternion2EulerYZX(MapperBase):
 
@@ -584,6 +656,7 @@ class Quaternion2Dual(MapperBase):
 _mapper_classes = {
   "linear": Linear,
   "weightedsum": WeightedSum,
+  "interpsum": InterpSum,
   "quaternion2euler": Quaternion2EulerYZX,
   "quaternion2upper": Quaternion2Upper,
   "quaternion2split": Quaternion2Split,
