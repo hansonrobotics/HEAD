@@ -22,7 +22,6 @@ import math
 import NeckKinematics
 import NeckVertical
 from scipy.interpolate import interp1d
-import rospy
 
 class MapperBase:
   """
@@ -209,7 +208,6 @@ class InterpSum(MapperBase):
 
 
     def map(self, vals):
-        rospy.logerr(self.functions[1](vals[1]))
         return (sum(
             map(
                 lambda (val, function, term):
