@@ -123,7 +123,7 @@ class Client(cmd.Cmd, object):
     def ask(self, question, query=False):
         self.cancel_timer()
         params = {
-            "question": "{}".format(question),
+            "question": question.strip(),
             "session": self.session,
             "lang": self.lang,
             "Auth": self.key,
