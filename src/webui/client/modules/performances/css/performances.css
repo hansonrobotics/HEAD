@@ -624,3 +624,11 @@ li.app-performance .app-edit {
 .app-performance .app-description-container .app-name {
     margin: 0 10px;
 }
+
+.app-performance-settings {
+    border: none;
+
+}
+.app-performance-settings:hover {
+    border: #5b6777 1px solid;
+}
