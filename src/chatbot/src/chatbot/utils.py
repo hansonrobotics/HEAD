@@ -3,6 +3,7 @@ import os
 import requests
 import subprocess
 import logging
+import threading
 
 logger = logging.getLogger('hr.chatbot.utils')
 
@@ -96,6 +97,19 @@ def check_online(url, port='80'):
         logger.error(ex)
         return False
     return True
+
+
+class Locker(object):
+
+    def __init__(self):
+        self._lock = threading.RLock()
+
+    def lock(self):
+        self._lock.acquire()
+
+    def unlock(self):
+        self._lock.release()
+
 
 if __name__ == '__main__':
     logging.basicConfig()
