@@ -1,6 +1,6 @@
 define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'underscore',
         'multilevelpushmenu', 'multilevelpushmenu-css'],
-    function (Marionette, template, FadeInRegion, $, api, _) {
+    function(Marionette, template, FadeInRegion, $, api, _) {
         return Marionette.View.extend({
             template: template,
             regions: {
@@ -17,16 +17,16 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
             events: {
                 'click @ui.navLinks': 'collapseNav'
             },
-            onDomRefresh: function () {
-                var self = this,
-                    updateNavHeight = function () {
+            onDomRefresh: function() {
+                let self = this,
+                    updateNavHeight = function() {
                         if (self.isDestroyed())
-                            $(window).off("resize", updateNavHeight);
+                            $(window).off("resize", updateNavHeight)
                         else {
-                            self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height());
-                            self.ui.navigation.multilevelpushmenu('redraw');
+                            self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height())
+                            self.ui.navigation.multilevelpushmenu('redraw')
                         }
-                    };
+                    }
 
                 this.ui.navigation.multilevelpushmenu({
                     container: this.ui.navigation,
@@ -34,33 +34,33 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
                     menuHeight: $(document).height(),
                     collapsed: true,
                     preventItemClick: false
-                });
+                })
 
-                $(window).on("resize", updateNavHeight);
-                this.nodeListInterval = setInterval(_.bind(this.updateNodeList, this), 10000);
-                this.updateNodeList();
+                $(window).on("resize", updateNavHeight)
+                this.nodeListInterval = setInterval(_.bind(this.updateNodeList, this), 10000)
+                this.updateNodeList()
             },
-            collapseNav: function () {
-                $(this.ui.navigation).multilevelpushmenu('collapse');
+            collapseNav: function(e) {
+                $(this.ui.navigation).multilevelpushmenu('collapse')
             },
-            updateNodeList: function () {
-                var self = this;
-                api.services.get_configurable_nodes.callService({}, function (response) {
-                    var container = $('<div>');
-                    $.each(response.nodes, function () {
-                        var link = $('<a>').prop({
+            updateNodeList: function() {
+                let self = this
+                api.services.get_configurable_nodes.callService({}, function(response) {
+                    let container = $('<div>')
+                    $.each(response.nodes, function() {
+                        let link = $('<a>').prop({
                             href: '#/admin/settings/node/' + encodeURIComponent(this)
-                        }).html(this);
-                        container.append($('<li>').append(link));
-                    });
-                    self.ui.nodeList.html(container.html());
-                }, function (error) {
-                    console.log(error);
-                });
+                        }).html(this)
+                        container.append($('<li>').append(link))
+                    })
+                    self.ui.nodeList.html(container.html())
+                }, function(error) {
+                    console.log(error)
+                })
             },
-            onDestroy: function () {
-                $(window).off("resize", this.updateNavHeight, this);
-                clearInterval(this.nodeListInterval);
+            onDestroy: function() {
+                $(window).off("resize", this.updateNavHeight, this)
+                clearInterval(this.nodeListInterval)
             }
-        });
-    });
+        })
+    })
