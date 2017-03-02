@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>Path: <span class="app-performance-dir-header"></span></h2>
+        <h2><i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;<span class="app-performance-dir-header"></span></h2>
 
         <ul class="app-performance-group-tabs nav nav-tabs" role="tablist"></ul>
         <div class="app-performances btn-group pull-left" role="group" aria-label="Performances">

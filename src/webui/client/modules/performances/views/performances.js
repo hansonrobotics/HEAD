@@ -214,7 +214,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
 
-                this.ui.dirHeader.html('/' + this.currentPath)
+                this.ui.dirHeader.html(this.currentPath || 'Performances')
 
                 if (!this.readonly)
                     self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function() {
