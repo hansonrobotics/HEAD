@@ -124,7 +124,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         max: 50,
                         value: this.model.get('angle') * 100,
                         slide: function(e, ui) {
-                            self.model.set('angle', 0 - parseFloat(ui.value) / 100.0)
+                            self.model.set('angle', parseFloat(ui.value) / 100.0)
                             self.model.call()
                             self.ui.hrAngleLabel.html(parseFloat(self.model.get('angle')).toFixed(2) + ' rad')
                         }
