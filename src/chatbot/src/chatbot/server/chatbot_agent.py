@@ -496,10 +496,11 @@ def get_responding_characters(lang, sid):
         if generic not in responding_characters:
             # get shared properties
             character = get_character(botname)
-            generic.set_properties(character.get_properties())
-            responding_characters.append(generic)
-    else:
-        logger.warn("Generic character is not found")
+            if character.type == TYPE_AIML:
+                generic.set_properties(character.get_properties())
+                responding_characters.append(generic)
+            else:
+                logger.warn("Generic properties are not set")
 
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
