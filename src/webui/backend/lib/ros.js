@@ -121,17 +121,16 @@ var self = module.exports = {
         }))
     },
     performances: {
-        reloadProperties: function() {
-            self.services.performances.reload_properties.callService()
+        reloadProperties: function () {
+            self.services.performances.reload_properties.callService();
         },
-        setProperties: function(id, properties) {
+        setProperties: function (id, properties, options) {
             self.services.performances.set_properties.callService({
                 id: id,
-                properties: properties
-            }, function(response) {
-                console.log(response)
-
-            })
+                properties: JSON.stringify(properties)
+            }, function (response) {
+                if (options.success) options.success(response);
+            });
         }
     },
     updateExpressions: function(robot_name) {

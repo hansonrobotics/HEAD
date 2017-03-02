@@ -22,6 +22,8 @@ class TTSData:
         self.wavout =  None
         self.phonemes = []
         self.visemes = []
+        self.markers = []
+        self.words = []
 
     def __repr__(self):
         return "<TTSData: wavout {}>".format(self.wavout)

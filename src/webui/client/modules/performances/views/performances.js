@@ -10,11 +10,14 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 newButton: '.app-new-performance-button',
                 addAllButton: '.app-add-all-button',
                 tabs: '.app-performance-group-tabs',
-                container: '.app-performances'
+                container: '.app-performances',
+                dirHeader: '.app-performance-dir-header',
+                settingsButton: '.app-performance-settings'
             },
             events: {
                 'click @ui.newButton': 'addNew',
-                'click @ui.addAllButton': 'addAll'
+                'click @ui.addAllButton': 'addAll',
+                'click @ui.settingsButton': 'showSettings'
             },
             collectionEvents: {
                 'change:path reset': 'updateTabs'
@@ -212,13 +215,13 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
 
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
-
-                this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'))
-
-                if (!this.readonly)
-                    self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function() {
-                        self.showSettings()
-                    }))
+                this.ui.dirHeader.html((this.currentPath || 'Performances').replace('/',' / '))
+                // Settings button only inside folder
+                if (!this.readonly && this.currentPath){
+                    this.ui.settingsButton.show()
+                }else{
+                    this.ui.settingsButton.hide()
+                }
             },
             getCurrentDirs: function() {
                 let self = this,
