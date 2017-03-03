@@ -510,6 +510,9 @@ install_test_deps() {
     # WebUI compatable webserver
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
     info "Installing test dependencies is done"
+
+    # for python test coverage
+    $SUDO pip install coverage
 }
 
 install_webui_deps() {
