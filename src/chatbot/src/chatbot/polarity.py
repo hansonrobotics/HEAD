@@ -77,7 +77,7 @@ class Polarity(object):
 if __name__ == '__main__':
     p = Polarity()
     try:
-        p.load_sentiment_csv('../aiml/senticnet3.props.csv')
+        p.load_sentiment_csv('../../scripts/aiml/senticnet3.props.csv')
     except Exception as ex:
         logger.error("Load sentiment file error {}".format(ex))
         print ex

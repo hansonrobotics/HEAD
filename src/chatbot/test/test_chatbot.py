@@ -138,5 +138,13 @@ class ChatbotTest(unittest.TestCase):
         names = [character.name for character in characters]
         self.assertEqual(names, ['dummy', 'generic', 'sophia'])
 
+    def test_polarity(self):
+        from chatbot.polarity import Polarity
+        p = Polarity()
+        p.load_sentiment_csv(os.path.join(
+                    self.cwd, '../scripts/aiml/senticnet3.props.csv'))
+        self.assertTrue(p.get_polarity("The dish is yucky") < 0)
+        self.assertTrue(p.get_polarity("The weather is nice") > 0)
+
 if __name__ == '__main__':
     unittest.main()
