@@ -161,5 +161,15 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(utils.check_online('google.com', 80))
         self.assertTrue(not utils.check_online('google.com', 81))
 
+    def test_words2num(self):
+        from chatbot.words2num import words2num
+        self.assertTrue(words2num('one hundred trillion and twelve') == 100000000000012)
+        self.assertTrue(words2num('one hundred trillion twelve hundred and 21') == 100000000001221)
+        self.assertTrue(words2num("one hundred and seventy nine") == 179)
+        self.assertTrue(words2num("thirteen hundred") == 1300)
+        self.assertTrue(words2num("nine thousand two hundred and ninety seven") == 9297)
+        self.assertTrue(words2num(None) is None)
+        self.assertTrue(words2num("zero") == 0)
+
 if __name__ == '__main__':
     unittest.main()
