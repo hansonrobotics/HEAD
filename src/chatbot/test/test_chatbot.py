@@ -3,40 +3,52 @@
 import unittest
 import os
 import sys
-import atexit
 import time
 import subprocess
+import signal
 
-CWD = os.path.abspath(os.path.dirname(__file__))
-
-os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
-server_path = os.path.join(CWD, '../scripts')
-PORT = '8002'
-cmd = ['python', 'run_server.py', '-p', PORT]
-proc = subprocess.Popen(cmd, cwd=server_path, preexec_fn=os.setsid)
+RCFILE = os.environ.get('COVERAGE_RCFILE', '.coveragerc')
 
 from chatbot.client import Client
 
-def shutdown():
-    if proc:
-        os.killpg(proc.pid, 2)
-atexit.register(shutdown)
-
-
 class ChatbotTest(unittest.TestCase):
 
+    @classmethod
+    def setUpClass(self):
+        self.port = '8002'
+        self.cwd = os.path.abspath(os.path.dirname(__file__))
+        os.environ['HR_CHARACTER_PATH'] = os.path.join(self.cwd, 'characters')
+        server = os.path.join(self.cwd, '../scripts/run_server.py')
+        cmd = ['coverage', 'run', '--rcfile', RCFILE, server, '-p', self.port]
+        self.proc = subprocess.Popen(cmd, preexec_fn=os.setsid)
+
+    @classmethod
+    def tearDownClass(self):
+        if self.proc:
+            while self.proc.poll() is None:
+                try:
+                    print "Shuting down"
+                    self.proc.send_signal(signal.SIGINT)
+                except OSError as ex:
+                    print ex
+                time.sleep(0.2)
+            try:
+                os.killpg(self.proc.pid, 2)
+            except OSError as ex:
+                print "Killed"
+
     def test_pyaiml(self):
-        script = os.path.join(CWD, os.path.sep.join(
+        script = os.path.join(self.cwd, os.path.sep.join(
             ['..', 'src', 'chatbot', 'aiml', 'Kernel.py']))
         cmd = 'python ' + script
         ret = os.system(cmd)
         self.assertTrue(ret == 0)
 
     def test_prologue(self):
-        cli = Client('AAAAB3NzaC', username='test_client', port=PORT, test=True)
+        cli = Client('AAAAB3NzaC', username='test_client', port=self.port, test=True)
         while not cli.ping():
             time.sleep(1)
-        cli.do_conn('localhost:' + PORT)
+        cli.do_conn('localhost:' + self.port)
         cli.do_select('generic')
         response = cli.ask('hello sophia')
         self.assertTrue(response.get('text') == 'Hi there from generic')
@@ -46,12 +58,12 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(response.get('text') == 'Hi there from sophia')
 
     def test_two_clients(self):
-        cli = Client('AAAAB3NzaC', botname='generic', port=PORT, test=True)
-        cli2 = Client('AAAAB3NzaC', botname='sophia', port=PORT, test=True)
+        cli = Client('AAAAB3NzaC', botname='generic', port=self.port, test=True)
+        cli2 = Client('AAAAB3NzaC', botname='sophia', port=self.port, test=True)
         while not cli.ping():
             time.sleep(1)
-        cli.do_conn('localhost:' + PORT)
-        cli2.do_conn('localhost:' + PORT)
+        cli.do_conn('localhost:' + self.port)
+        cli2.do_conn('localhost:' + self.port)
         response = cli.ask('hello sophia')
         self.assertTrue(response.get('text') == 'Hi there from generic')
 
