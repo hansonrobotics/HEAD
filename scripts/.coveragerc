@@ -1,0 +1,9 @@
+[run]
+parallel = true
+
+source =
+    src/chatbot/src
+
+[report]
+exclude_lines =
+    if __name__ == .__main__.:
