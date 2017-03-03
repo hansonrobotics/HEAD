@@ -146,5 +146,20 @@ class ChatbotTest(unittest.TestCase):
         self.assertTrue(p.get_polarity("The dish is yucky") < 0)
         self.assertTrue(p.get_polarity("The weather is nice") > 0)
 
+    def test_util(self):
+        import chatbot.utils as utils
+        text = '''My mind is built using Hanson Robotics' character engine, a simulated humanlike brain that runs inside a personal computer. Within this framework, Hanson has modelled Phil's personality and emotions, allowing you to talk with Phil through me, using speech recognition, natural language understanding, and computer vision such as face recognition, and animation of the robotic muscles in my face.'''
+        text2 = utils.shorten(text, 123)
+        self.assertTrue(len(text2) <= 123)
+        text2 = utils.shorten(text, 0)
+        self.assertTrue(len(text2) > 0)
+        self.assertTrue(utils.str_cleanup(' . ') == '')
+        self.assertTrue(utils.str_cleanup(' .ss ') == 'ss')
+        self.assertTrue(utils.str_cleanup(' s.ss ') == 's.ss')
+        self.assertTrue(utils.str_cleanup(None) is None)
+        self.assertTrue(utils.check_online('google.com'))
+        self.assertTrue(utils.check_online('google.com', 80))
+        self.assertTrue(not utils.check_online('google.com', 81))
+
 if __name__ == '__main__':
     unittest.main()
