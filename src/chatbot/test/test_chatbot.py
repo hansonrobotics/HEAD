@@ -138,5 +138,38 @@ class ChatbotTest(unittest.TestCase):
         names = [character.name for character in characters]
         self.assertEqual(names, ['dummy', 'generic', 'sophia'])
 
+    def test_polarity(self):
+        from chatbot.polarity import Polarity
+        p = Polarity()
+        p.load_sentiment_csv(os.path.join(
+                    self.cwd, '../scripts/aiml/senticnet3.props.csv'))
+        self.assertTrue(p.get_polarity("The dish is yucky") < 0)
+        self.assertTrue(p.get_polarity("The weather is nice") > 0)
+
+    def test_util(self):
+        import chatbot.utils as utils
+        text = '''My mind is built using Hanson Robotics' character engine, a simulated humanlike brain that runs inside a personal computer. Within this framework, Hanson has modelled Phil's personality and emotions, allowing you to talk with Phil through me, using speech recognition, natural language understanding, and computer vision such as face recognition, and animation of the robotic muscles in my face.'''
+        text2 = utils.shorten(text, 123)
+        self.assertTrue(len(text2) <= 123)
+        text2 = utils.shorten(text, 0)
+        self.assertTrue(len(text2) > 0)
+        self.assertTrue(utils.str_cleanup(' . ') == '')
+        self.assertTrue(utils.str_cleanup(' .ss ') == 'ss')
+        self.assertTrue(utils.str_cleanup(' s.ss ') == 's.ss')
+        self.assertTrue(utils.str_cleanup(None) is None)
+        self.assertTrue(utils.check_online('google.com'))
+        self.assertTrue(utils.check_online('google.com', 80))
+        self.assertTrue(not utils.check_online('google.com', 81))
+
+    def test_words2num(self):
+        from chatbot.words2num import words2num
+        self.assertTrue(words2num('one hundred trillion and twelve') == 100000000000012)
+        self.assertTrue(words2num('one hundred trillion twelve hundred and 21') == 100000000001221)
+        self.assertTrue(words2num("one hundred and seventy nine") == 179)
+        self.assertTrue(words2num("thirteen hundred") == 1300)
+        self.assertTrue(words2num("nine thousand two hundred and ninety seven") == 9297)
+        self.assertTrue(words2num(None) is None)
+        self.assertTrue(words2num("zero") == 0)
+
 if __name__ == '__main__':
     unittest.main()

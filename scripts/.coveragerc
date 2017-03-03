@@ -4,6 +4,9 @@ parallel = true
 source =
     src/chatbot/src
 
+omit =
+    src/chatbot/src/chatbot/aiml/*
+
 [report]
 exclude_lines =
     if __name__ == .__main__.:
