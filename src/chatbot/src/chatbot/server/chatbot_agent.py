@@ -125,7 +125,8 @@ def set_weights(param, lang, sid):
                 weights[characters[k].id] = v
             except ValueError:
                 weights[k] = v
-    except Exception:
+    except Exception as ex:
+        logger.error(ex)
         return False, "Wrong weight format"
 
     sess.sdata.weights = weights
