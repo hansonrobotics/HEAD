@@ -198,11 +198,12 @@ class Chatbot():
         rows = []
         columns = ['RequestID', 'Index', 'Source', 'AudioPath', 'Transcript']
         for i, msg in enumerate(chatmessages):
+            audio = os.path.basename(msg.extra)
             row = {
                 'RequestID': request_id,
                 'Index': i,
                 'Source': msg.source,
-                'AudioPath': msg.extra,
+                'AudioPath': audio,
                 'Transcript': msg.utterance
             }
             rows.append(row)
