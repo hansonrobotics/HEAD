@@ -200,7 +200,7 @@ def preprocessing(question, lang, session):
 
     return question
 
-def _ask_characters(characters, question, lang, sid, query):
+def _ask_characters(characters, question, lang, sid, query, **kwargs):
     sess = session_manager.get_session(sid)
     if sess is None:
         return
@@ -462,7 +462,8 @@ def _ask_characters(characters, question, lang, sid, query):
     if not query and hit_character is not None:
         sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
-                    Revision=REVISION, Lang=lang, ModQuestion=_question)
+                    Revision=REVISION, Lang=lang, ModQuestion=_question,
+                    RequestId=kwargs.get('request_id'))
 
         sess.last_used_character = hit_character
 
@@ -520,7 +521,7 @@ def rate_answer(sid, idx, rate):
     return True
 
 
-def ask(question, lang, sid, query=False):
+def ask(question, lang, sid, query=False, **kwargs):
     """
     return (response dict, return code)
     """
@@ -558,7 +559,7 @@ def ask(question, lang, sid, query=False):
 
     logger.info("Responding characters {}".format(responding_characters))
     _response = _ask_characters(
-        responding_characters, question, lang, sid, query)
+        responding_characters, question, lang, sid, query, **kwargs)
 
     if not query:
         # Sync session data
