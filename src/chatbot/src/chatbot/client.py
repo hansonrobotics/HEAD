@@ -77,11 +77,11 @@ class Client(cmd.Cmd, object):
     def retry(times):
         def wrap(f):
             @wraps(f)
-            def wrap_f(*args):
+            def wrap_f(*args, **kwargs):
                 error = None
                 for i in range(times):
                     try:
-                        return f(*args)
+                        return f(*args, **kwargs)
                     except Exception as ex:
                         logger.error(ex)
                         self = args[0]
