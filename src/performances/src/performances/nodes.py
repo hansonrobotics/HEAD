@@ -378,7 +378,7 @@ class chat_pause(Node):
     def start(self, run_time):
         if 'message' in self.data and self.data['message']:
             self.runner.pause()
-            self.runner.topics['chatbot'].publish(ChatMessage(self.data['message'], 100))
+            self.runner.topics['chatbot'].publish(ChatMessage(utterance=self.data['message'], confidence=100, source='performances'))
 
             def speech_event_callback(event):
                 if event.data == 'stop':
