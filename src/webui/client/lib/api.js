@@ -90,7 +90,8 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
 
             var message = new ROSLIB.Message({
                 utterance: text,
-                confidence: Math.round(0.9 * 100)
+                confidence: Math.round(0.9 * 100),
+                source: 'web'
             });
 
             api.topics.speech_topic.publish(message);

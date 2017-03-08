@@ -76,7 +76,8 @@ def _chat():
     lang = data.get('lang', 'en')
     query = data.get('query', 'false')
     query = query.lower() == 'true'
-    response, ret = ask(question, lang, session, query)
+    request_id = request.headers.get('X-Request-Id')
+    response, ret = ask(question, lang, session, query, request_id=request_id)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 
