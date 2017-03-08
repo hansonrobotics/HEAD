@@ -156,7 +156,8 @@ class Chatbot():
         cmd, arg, line = self.client.parseline(chat_message.utterance)
         func = None
         try:
-            func = getattr(self.client, 'do_' + cmd)
+            if cmd is not None:
+                func = getattr(self.client, 'do_' + cmd)
         except AttributeError as ex:
             pass
         if func:
