@@ -117,6 +117,7 @@ class HRSlackBot(object):
                     client = Client(HR_CHATBOT_AUTHKEY, username=name,
                         botname=self.botname, host=self.host, port=self.port,
                         response_listener=self)
+                    client.set_marker('Slack')
                     if self.weights:
                         client.set_weights(self.weights)
                     self.session_manager.add_session(name, self.botname, client.session)

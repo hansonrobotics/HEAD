@@ -54,6 +54,7 @@ class Client(cmd.Cmd, object):
                 callable(response_listener.on_response)
         self.response_listener = response_listener
         self.test = test
+        self.marker = 'default'
         self.prompt = '[me]: '
         self.botname = botname
         self.chatbot_ip = host
@@ -130,6 +131,7 @@ class Client(cmd.Cmd, object):
             "lang": self.lang,
             "Auth": self.key,
             "query": query,
+            "marker": self.marker,
         }
         headers = {
             'X-Request-ID': request_id or str(uuid.uuid1())
@@ -325,6 +327,10 @@ For example, port 8001
 
     def help_c(self):
         self.stdout.write("Clean the memory of the dialog\n")
+
+    def set_marker(self, marker):
+        if marker:
+            self.marker = marker
 
     def do_rw(self, line):
         try:
