@@ -22,7 +22,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     disable_collapse: true,
                     disable_edit_json: true,
                     disable_array_reorder: true,
-                    disable_properties: false,
+                    disable_properties: this.options.refresh,
                     iconlib: 'fontawesome4'
                 });
 
