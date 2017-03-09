@@ -3,6 +3,23 @@ parallel = true
 
 source =
     src/chatbot/src
+    src/hardware/basic_head_api/src
+    src/hardware/motors_safety/scripts
+    src/hardware/motors_safety/src
+    src/hardware/pau2motors/src
+    src/hardware/pololu-motors/pololu
+    src/hardware/ros_pololu/src
+    src/hardware/ros_pololu/scripts
+    src/opencog_control/src
+    src/performances/src
+    src/performances/scripts
+    src/sound/audio_stream/src
+    src/sound/audio_stream/scripts
+    src/speech2command/src
+    src/speech2command/scripts
+    src/vision/perception/nodes
+    src/vision/pi_vision/ros2opencv/src
+    src/vision/pi_vision/pi_face_tracker/scripts
 
 omit =
     src/chatbot/src/chatbot/aiml/*

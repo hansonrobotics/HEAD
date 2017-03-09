@@ -109,7 +109,7 @@ class ResponseCache(object):
                 writer.writeheader()
             writer.writerows(self.record[self.cursor:])
             self.cursor = len(self.record)
-            logger.info("Dumpped chat history to {}".format(fname))
+            logger.warn("Dumpped chat history to {}".format(fname))
             return True
         return False
 

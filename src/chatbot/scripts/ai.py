@@ -6,8 +6,11 @@ import logging
 import requests
 import json
 import time
+import datetime as dt
 import threading
 import re
+import uuid
+import pandas as pd
 
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
@@ -19,8 +22,8 @@ from chatbot.client import Client
 
 logger = logging.getLogger('hr.chatbot.ai')
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
-trace_pattern = re.compile(
-    r'../(?P<fname>.*), (?P<tloc>\(.*\)), (?P<pname>.*), (?P<ploc>\(.*\))')
+HR_CHATBOT_REQUEST_DIR = os.environ.get('HR_CHATBOT_REQUEST_DIR') or \
+    os.path.expanduser('~/.hr/chatbot/requests')
 
 class Console(object):
     def write(self, msg):
@@ -51,6 +54,12 @@ class Chatbot():
         self.enable = True
         self.mute = False
         self.node_name = rospy.get_name()
+        self.output_dir = os.path.join(HR_CHATBOT_REQUEST_DIR,
+            dt.datetime.strftime(dt.datetime.now(), '%Y%m%d'))
+        if not os.path.isdir(self.output_dir):
+            os.makedirs(self.output_dir)
+        self.requests_fname = os.path.join(
+            self.output_dir, '{}.csv'.format(str(uuid.uuid1())))
 
         self.input_stack = []
         self.condition = threading.Condition()
@@ -98,17 +107,10 @@ class Chatbot():
     def sentiment_active(self, active):
         self._sentiment_active = active
 
-    def ask(self, questions, query=False):
-        question = ' '.join(questions)
+    def ask(self, chatmessages, query=False):
         lang = rospy.get_param('lang', None)
         if lang:
             self.client.lang = lang
-
-        # XXX: replace his/her name -> my name
-        question = question.replace('his name', 'my name')
-        question = question.replace('her name', 'my name')
-        question = question.replace('His name', 'My name')
-        question = question.replace('Her name', 'My name')
 
         persons = rospy.get_param('/face_recognizer/current_persons', '')
         if persons:
@@ -119,7 +121,12 @@ class Chatbot():
         else:
             self.client.remove_context('queryname')
             logger.info("Remove queryname")
-        self.client.ask(question, query)
+
+        request_id = str(uuid.uuid1())
+        question = ' '.join([msg.utterance for msg in chatmessages])
+        self.client.ask(question, query, request_id=request_id)
+        logger.info("Sent request {}".format(request_id))
+        self.write_request(request_id, chatmessages)
 
     def _speech_event_callback(self, msg):
         if msg.data == 'start':
@@ -149,7 +156,8 @@ class Chatbot():
         cmd, arg, line = self.client.parseline(chat_message.utterance)
         func = None
         try:
-            func = getattr(self.client, 'do_' + cmd)
+            if cmd is not None:
+                func = getattr(self.client, 'do_' + cmd)
         except AttributeError as ex:
             pass
         if func:
@@ -169,7 +177,7 @@ class Chatbot():
                 self.input_stack.append((time.clock(), chat_message))
                 self.condition.notify_all()
         else:
-            self.ask([chat_message.utterance])
+            self.ask([chat_message])
 
     def process_input(self):
         while True:
@@ -184,8 +192,30 @@ class Chatbot():
                 self.condition.wait(max(1, self.delay_time-len(self.input_stack)))
                 if len(self.input_stack) > num_input:
                     continue
-                self.ask(questions)
+                self.ask([i[1] for i in self.input_stack])
                 del self.input_stack[:]
+
+    def write_request(self, request_id, chatmessages):
+        rows = []
+        columns = ['RequestID', 'Index', 'Source', 'AudioPath', 'Transcript']
+        for i, msg in enumerate(chatmessages):
+            audio = os.path.basename(msg.extra)
+            row = {
+                'RequestID': request_id,
+                'Index': i,
+                'Source': msg.source,
+                'AudioPath': audio,
+                'Transcript': msg.utterance
+            }
+            rows.append(row)
+        df = pd.DataFrame(rows)
+        if not os.path.isfile(self.requests_fname):
+            with open(self.requests_fname, 'w') as f:
+                f.write(','.join(columns))
+                f.write('\n')
+        df.to_csv(self.requests_fname, mode='a', index=False, header=False,
+            columns=columns)
+        logger.info("Write request to {}".format(self.requests_fname))
 
     def on_response(self, sid, response):
         if response is None:
@@ -276,6 +306,7 @@ class Chatbot():
 
         if config.set_context:
             self.client.set_context(config.set_context)
+        self.client.set_marker(config.marker)
         self.mute = config.mute
 
         return config

@@ -17,10 +17,11 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
                     App.LayoutInstance.setTitle('Interactions and Performances')
                     App.LayoutInstance.setFluid(true)
                     App.LayoutInstance.getRegion('content').show(this.layoutView)
-                }
+                } else
+                    this.layoutView.getRegion('performances').currentView.switchDir(dir || '')
             },
             attention_regions: function() {
-                var attentionRegionsView = new AttentionRegionsView()
+                let attentionRegionsView = new AttentionRegionsView()
                 api.disableInteractionMode()
 
                 // show page
