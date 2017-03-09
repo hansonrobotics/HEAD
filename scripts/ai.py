@@ -306,6 +306,7 @@ class Chatbot():
 
         if config.set_context:
             self.client.set_context(config.set_context)
+        self.client.set_marker(config.marker)
         self.mute = config.mute
 
         return config
