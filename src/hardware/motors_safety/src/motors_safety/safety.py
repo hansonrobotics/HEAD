@@ -2,7 +2,7 @@
 
 import rospy
 from ros_pololu.msg import MotorCommand
-from std_msgs.msg import Float64
+from std_msgs.msg import Float64, String
 from dynamixel_msgs.msg import MotorStateList
 import blendedNum
 from blendedNum.plumbing import Pipes
@@ -49,6 +49,9 @@ class Safety():
         self.corrections = {}
         # Subscribe motor states
         rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
+        # Pauses motor sync while in config mode
+        self.sync = True
+        rospy.Subscriber("pololu_sync", String, self.pause_sync)
         # Init timing rules
         for m, rules in self.rules.items():
             for i,r in enumerate(rules):
@@ -188,6 +191,8 @@ class Safety():
 
     # Scheduled tasks
     def timing(self):
+        if not self.sync:
+            return
         for m, rules in self.rules.items():
             for i,r in enumerate(rules):
                 # Process timing rules
@@ -291,6 +296,12 @@ class Safety():
             self.corrections[msg.joint_name] += msg.position
         else:
             self.corrections[msg.joint_name] = msg.position
+
+    def pause_sync(self, msg):
+        if msg.data == 'on':
+            self.sync = True
+        else:
+            self.sync = False
 
 
 if __name__ == '__main__':
