@@ -22,7 +22,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     disable_collapse: true,
                     disable_edit_json: true,
                     disable_array_reorder: true,
-                    disable_properties: true,
+                    disable_properties: false,
                     iconlib: 'fontawesome4'
                 });
 
@@ -59,14 +59,17 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 // Only valid settings could be saved in timeline
                 if (this.editor.validate().length === 0) {
                     var values = this.editor.getValue();
-
                     values = _.mapValues(values, function (val) {
                         if (val && self.model.get('node_schema') && _.includes([Array, Object], val.constructor))
                             return JSON.stringify(val);
                         else
                             return val;
                     });
-
+                    var attrs = this.model.attributes;
+                    // Remove values if they are not selected.
+                    _.each(_.difference(_.keys(attrs), _.keys(values)), function(e) {
+                        self.model.unset(e)
+                    });
                     this.model.save(values, {
                         error: function () {
                             console.log('error updating node configuration');
