@@ -18,7 +18,7 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
                     App.LayoutInstance.setFluid(true)
                     App.LayoutInstance.getRegion('content').show(this.layoutView)
                 } else
-                    this.layoutView.getRegion('performances').currentView.switchDir(dir || '')
+                    this.layoutView.getRegion('performances').currentView.navigate(dir || '')
             },
             attention_regions: function() {
                 let attentionRegionsView = new AttentionRegionsView()

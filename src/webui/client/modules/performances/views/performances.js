@@ -7,20 +7,22 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             childView: PerformanceView,
             childViewContainer: '.app-performances',
             ui: {
+                nav: '.app-navigation',
                 newButton: '.app-new-performance-button',
-                addAllButton: '.app-add-all-button',
                 tabs: '.app-performance-group-tabs',
                 container: '.app-performances',
                 dirHeader: '.app-performance-dir-header',
+                actionButtons: '.app-performance-actions',
+                backButton: '.app-back-btn',
                 settingsButton: '.app-performance-settings'
             },
             events: {
                 'click @ui.newButton': 'addNew',
-                'click @ui.addAllButton': 'addAll',
+                'click @ui.backButton': 'back',
                 'click @ui.settingsButton': 'showSettings'
             },
             collectionEvents: {
-                'change:path reset': 'updateTabs'
+                'change:path reset': 'reload'
             },
             initialize: function(options) {
                 this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir'])
@@ -31,7 +33,6 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         $('.app-current-path', self.ui.tabs).removeClass('highlight')
                     }
 
-                if (this.autoplay) this.ui.addAllButton.get(0).lastChild.nodeValue = ' Play All'
                 if (this.readonly) this.ui.newButton.hide()
 
                 this.ui.container.droppable({
@@ -53,8 +54,11 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     }
                 })
 
-                if (this.dir) this.switchDir(this.dir)
-                else this.updateTabs()
+                this.ui.nav.hide()
+                this.ui.actionButtons.hide()
+
+                if (this.dir) this.navigate(this.dir)
+                else this.reload()
             },
             childViewOptions: function() {
                 return this.options
@@ -68,9 +72,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     path: this.currentPath
                 })
 
-                this.collection.add(this.newestPerformance);
-                this.trigger('new', this.newestPerformance);
-                this.ui.addAllButton.fadeIn();
+                this.collection.add(this.newestPerformance)
+                this.trigger('new', this.newestPerformance)
             },
             getNextName: function(names, defaultPrefix) {
                 let self = this,
@@ -119,43 +122,11 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             escape: function(str) {
                 return str.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&")
             },
-            addAll: function() {
-                let self = this,
-                    added = false
-
-                if (this.autoplay) self.layoutView.clearQueue()
-
-                this.collection.each(function(performance) {
-                    if ((performance.get('path') || '') == self.currentPath) {
-                        self.layoutView.addPerformance(performance, true)
-                        added = true
-                    }
-                })
-
-                self.layoutView.updateTimeline({autoplay: this.autoplay})
-            },
             attachHtml: function(collectionView, childView) {
-                let self = this
-
-                // add performance to the queue on click
-                childView.on('click', function(data) {
-                    if (self.autoplay) {
-                        self.layoutView.clearQueue()
-                        self.layoutView.addPerformance(data.model, true)
-                        self.layoutView.updateTimeline({autoplay: true})
-                    } else {
-                        let timelinesView = self.layoutView.timelinesView
-                        self.layoutView.addPerformance(data.model, !timelinesView || timelinesView.changed)
-                    }
-
-                    if (!data.model.nodes.length)
-                        data.model.fetch()
-                })
-
                 this.ui.newButton.before(childView.el)
 
                 // hiding if not from current directory
-                if ((childView.model.get('path') || '') == this.currentPath)
+                if ((childView.model.get('path') || '') === this.currentPath)
                     childView.$el.show()
                 else
                     childView.$el.hide()
@@ -180,48 +151,42 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 let addNewTab = self.createTab(this.currentPath, $('<span>').addClass('glyphicon glyphicon-plus')
                     .attr('aria-hidden', 'true'), true)
 
-                addNewTab.click(function (e, ui) {
+                addNewTab.click(function(e, ui) {
                     addNewTab.hide()
                     let input = $('<input>').addClass('form-control input-sm'),
                         okButton = $('<button/>', {class: 'btn-sm btn btn-primary'}).html('OK'),
                         container = $('<div/>', {class: 'form-inline'}).append($('<div/>', {class: 'form-group'})
                             .append(input)).append(okButton),
                         newTab = $('<li>').addClass('app-new-dir').html(container)
-                    input.focusout(function () {
-                        setTimeout(function () {
+                    input.focusout(function() {
+                        setTimeout(function() {
                             if (!input.is(':focus')) {
-                                newTab.fadeOut(300, function () {
-                                    addNewTab.fadeIn(300);
-                                    $(newTab).remove();
-                                });
+                                newTab.fadeOut(300, function() {
+                                    addNewTab.fadeIn(300)
+                                    $(newTab).remove()
+                                })
                             }
                         }, 500)
-                    });
+                    })
 
-                    okButton.click(function () {
+                    okButton.click(function() {
                         let dir = $(input).val().trim()
                         if (dir) {
                             dir = self.joinPaths(self.currentPath, dir)
                             self.createdDirs.push(dir)
-                            self.switchDir(dir)
+                            self.navigate(dir)
                         } else {
                             input.focus()
                         }
-                    });
+                    })
 
                     $(this).before(newTab)
                     input.focus()
-                });
+                })
 
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
-                this.ui.dirHeader.html((this.currentPath || 'Performances').replace('/',' / '))
-                // Settings button only inside folder
-                if (!this.readonly && this.currentPath){
-                    this.ui.settingsButton.show()
-                }else{
-                    this.ui.settingsButton.hide()
-                }
+                this.ui.dirHeader.html((this.currentPath || 'Performances').replace('/', ' / '))
             },
             getCurrentDirs: function() {
                 let self = this,
@@ -273,14 +238,14 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
 
                 if (!disableEvents)
                     el.click(function() {
-                        self.switchDir(dir)
+                        self.navigate(dir)
                     }).droppable({
                         accept: '.app-performance-button',
                         tolerance: 'pointer',
                         over: function() {
                             $(this).parent().addClass('active')
                             timeout = setTimeout(function() {
-                                self.switchDir(dir)
+                                self.navigate(dir)
                             }, 600)
                         },
                         out: function() {
@@ -291,36 +256,50 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
 
                 return $('<li>').attr('data-path', dir).append(el)
             },
-            switchDir: function(dir) {
-                if (this.nav) {
-                    let url = path.join('/performances', dir)
-                    if (url !== Backbone.history.getHash()) {
-                        app.skipChangeCheck = true
-                        Backbone.history.navigate('#' + url)
-                    }
-                }
-
-                this.updateVisiblePerformances(dir)
-                this.currentPath = dir
-                this.collection.currentPath = dir
+            navigate: function(id) {
+                this.currentPath = id
+                this.collection.currentPath = id
                 // reset newest performance so that it's name isn't used for naming
                 this.newestPerformance = null
-                this.updateTabs()
-            },
-            updateVisiblePerformances: function (dir) {
-                let performances = $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]')
-                if (performances.length) {
-                    performances.fadeIn()
-                    this.ui.addAllButton.fadeIn()
-                } else {
-                    this.ui.addAllButton.hide()
+
+                if (this.collection.length) {
+                    if (this.nav) {
+                        let url = path.join('/performances', id)
+                        if (url !== Backbone.history.getHash()) {
+                            app.skipChangeCheck = true
+                            Backbone.history.navigate('#' + url)
+                        }
+                    }
+
+                    if (this.collection.get(id)) {
+                        this.ui.dirHeader.html(id)
+                        this.ui.nav.slideUp()
+                        if (!this.readonly && this.currentPath)
+                            this.ui.actionButtons.fadeIn()
+                    } else {
+                        this.ui.actionButtons.fadeOut()
+                        this.updateVisiblePerformances(id)
+                        this.updateTabs()
+                        this.ui.nav.slideDown()
+                    }
                 }
+            },
+            updateVisiblePerformances: function(dir) {
+                let performances = $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]')
+                if (performances.length) performances.show()
             },
             joinPaths: function(path1, path2) {
                 return _.compact(_.union((path1 || '').split('/'), (path2 || '').split('/'))).join('/')
             },
             getParentPath: function(path) {
                 return _.compact((path || '').split('/').slice(0, -1)).join('/')
+            },
+            back: function() {
+                let p = path.dirname(this.currentPath)
+                this.navigate(p === '.' ? '' : p)
+            },
+            reload: function() {
+                this.navigate(this.currentPath)
             }
         })
     })

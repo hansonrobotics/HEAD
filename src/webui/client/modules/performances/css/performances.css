@@ -13,7 +13,8 @@
     border-color: #5cb85c;
 }
 
-.app-performances button {
+.app-performances button,
+.app-performances a {
     margin: 0 5px 5px 0;
 }
 
@@ -625,10 +626,7 @@ li.app-performance .app-edit {
     margin: 0 10px;
 }
 
-.app-performance-settings {
-    border: none;
-
-}
-.app-performance-settings:hover {
-    border: #5b6777 1px solid;
+.app-performance-actions {
+    margin-right: 10px;
+    display: inline-block;
 }

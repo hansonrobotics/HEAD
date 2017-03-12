@@ -1,4 +1,4 @@
-var webpack = require('webpack'),
+let webpack = require('webpack'),
     path = require('path'),
     autoprefixer = require('autoprefixer'),
     argv = require('yargs').options({
@@ -8,7 +8,7 @@ var webpack = require('webpack'),
             type: 'boolean',
             default: false
         }
-    }).argv;
+    }).argv
 
 module.exports = {
     // the base path which will be used to resolve entry points
@@ -123,4 +123,4 @@ module.exports = {
     displayErrorDetails: argv.dev,
     outputPathinfo: argv.dev,
     devtool: argv.dev ? 'cheap-eval-source-map' : null
-};
+}

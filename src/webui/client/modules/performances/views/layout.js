@@ -48,13 +48,14 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 this.queueCollection = new QueueCollection()
             },
             onAttach: function() {
+                let self = this
+
                 // set change check callback
                 app.changeCheck = _.bind(this.changeCheck, this)
 
                 // fluid by default
                 this.setFluidContainer(this.fluid || typeof this.fluid === 'undefined')
 
-                let self = this
                 this.queueView = new QueueView({
                     collection: this.queueCollection,
                     readonly: this.readonly,
