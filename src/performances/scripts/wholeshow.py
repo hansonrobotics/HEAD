@@ -8,7 +8,7 @@ import rospkg
 import os
 import re
 import random
-from std_msgs.msg import String
+from std_msgs.msg import String, Bool
 from blender_api_msgs.msg import Target, SomaState
 from blender_api_msgs.srv import SetParam
 import time
@@ -88,6 +88,14 @@ class WholeShow(HierarchicalMachine):
         self.behavior_paused = False
         # Chatbot was paused entering the state
         self.chatbot_paused = False
+        self.sleeping = rospy.get_param('start_sleeping', False)
+        # Preferred speech source
+        self.speech_provider = rospy.get_param("active_stt", 'cloudpseech')
+        self.speech_provider_active = False
+        rospy.Subscriber('{}/status'.format(self.speech_provider), Bool, self.stt_status_cb)
+
+
+
 
 
     def start_sleeping(self):
@@ -209,7 +217,8 @@ class WholeShow(HierarchicalMachine):
             # Run performances explicitly in the analysis state (Only testing performances)
             on = False
             self.performance_runner(random.choice(analysis_performances))
-        if on:
+
+        if on and self.filter_stt(msg):
             self.speech_pub.publish(msg)
 
     def performances_cb(self, msg):
@@ -375,6 +384,21 @@ class WholeShow(HierarchicalMachine):
             return config['enable']
         except:
             return False
+
+    def stt_status_cb(self, msg):
+        self.speech_provider_active = msg.data
+
+    def filter_stt(self, msg):
+        # Always forward chat if its from prefered STT
+        if msg.source == self.speech_provider:
+            return True
+        # Forward regardles of the source if prefered STT inactive
+        if not self.speech_provider_active:
+            return True
+        # If source not specified forward msg anyway
+        if not msg.source:
+            return True
+
 
 if __name__ == '__main__':
     WholeShow()
