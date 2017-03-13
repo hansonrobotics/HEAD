@@ -22,7 +22,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 'click @ui.settingsButton': 'showSettings'
             },
             collectionEvents: {
-                'change:path reset': 'reload'
+                'reset': 'reload',
+                'change:path': 'updateTabs'
             },
             initialize: function(options) {
                 this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir'])
@@ -135,7 +136,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             createdDirs: [],
             updateTabs: function() {
                 let self = this,
-                    depth = (this.currentPath == '') ? 0 : this.currentPath.split('/').length,
+                    depth = (this.currentPath === '') ? 0 : this.currentPath.split('/').length,
                     currentDirs = this.getCurrentDirs()
 
                 // clear tabs
@@ -201,7 +202,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 })
 
                 dirs = _.filter(_.uniq(_.union(dirs, this.createdDirs)), function(dir) {
-                    return self.getParentPath(dir) == self.currentPath
+                    return self.getParentPath(dir) === self.currentPath
                 })
 
                 naturalSort.insensitive = true
@@ -271,11 +272,13 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         }
                     }
 
-                    if (this.collection.get(id)) {
+                    let performance = this.collection.get(id)
+                    if (performance) {
                         this.ui.dirHeader.html(id)
                         this.ui.nav.slideUp()
                         if (!this.readonly && this.currentPath)
                             this.ui.actionButtons.fadeIn()
+                        this.trigger('selected', performance)
                     } else {
                         this.ui.actionButtons.fadeOut()
                         this.updateVisiblePerformances(id)

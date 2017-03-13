@@ -42,8 +42,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 'hidden.bs.modal @ui.saveChangesModal': 'saveChangesHide'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit',
-                    'sequence'])
+                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit'])
                 this.performances = new PerformanceCollection()
                 this.queueCollection = new QueueCollection()
             },
@@ -70,6 +69,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     nav: this.nav
                 })
 
+                this.listenTo(this.queueView, 'reordered', this.updateTimelineOrder)
+
                 self.getRegion('queue').show(this.queueView)
                 self.getRegion('performances').show(this.performancesView)
 
@@ -80,31 +81,72 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     })
                 })
 
+                this.listenTo(this.performancesView, 'selected', function(p) {
+                    this.setCurrentPerformance(p)
+                })
+
                 this.performances.fetch({
                     reset: true,
                     success: function() {
-                        if (!self.sequence)
-                            self.showCurrent()
+                        self.showCurrent()
                     }
                 })
 
                 if (this.hideQueue)
                     this.ui.queueContainer.hide()
 
-                if (this.sequence)
-                    this.addSequence(this.sequence)
-
                 if (this.readonly) {
-                    this.runningPerformances = new Performance()
-                    this.runningPerformances.enableSync(function(performances) {
-                        self.clearQueue()
-                        self.addSequence(_.map(performances, 'id'), true)
-                    })
+                    let p = new Performance()
+                    self.setCurrentPerformance(p)
+                    p.enableSync()
                 }
             },
             onDestroy: function() {
-                if (this.readonly) this.runningPerformances.disableSync()
                 app.changeCheck = null
+                if (this.currentPerformance) this.currentPerformance.disableSync()
+            },
+            setCurrentPerformance: function(p, options) {
+                if (this.currentPerformance) {
+                    this.currentPerformance.disableSync()
+                    this.stopListening(this.currentPerformance)
+                }
+
+                this.currentPerformance = p
+                this.refreshCurrentPerformance(options)
+            },
+            refreshCurrentPerformance: function(options) {
+                let self = this
+                this.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
+                this.listenTo(this.currentPerformance, 'change:timelines', function() {
+                    self.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
+                })
+                this.updateTimeline(options)
+            },
+            setTimelineQueue: function(timelines) {
+                let items = []
+                this.clearQueue()
+                timelines.each(function(timeline) {
+                    items.push(new QueueItem({performance: timeline}))
+                })
+                this.queueCollection.set(items)
+            },
+            updateTimelineOrder: function() {
+                if (this.currentPerformance) {
+                    let self = this,
+                        timelines = new PerformanceCollection()
+                    this.queueCollection.each(function(item, i) {
+                        let p = item.get('performance')
+                        p.set('name', (i + 1).toString())
+                        timelines.push(p)
+                    })
+
+                    this.currentPerformance.set('timelines', timelines.toJSON())
+                    this.currentPerformance.save({
+                        success: function() {
+                            self.refreshCurrentPerformance()
+                        }
+                    })
+                }
             },
             changeLanguage: function(e) {
                 let language = $(e.target).data('lang')
@@ -120,37 +162,18 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 else
                     this.ui.container.removeClass('container-fluid').addClass('container')
             },
-            addSequence: function(sequence, skipTimelineUpdate) {
-                let self = this
-
-                if (!_.isEqual(this._getPerformanceIds(), sequence)) {
-                    if (sequence instanceof Array && this.performances) {
-                        _.each(sequence, function(id) {
-                            let model = self.performances.get(id)
-                            if (model) self.addPerformance(model, true)
-                        })
-                    }
-
-                    if (!skipTimelineUpdate) this.updateTimeline()
-                }
-            },
             showCurrent: function() {
                 let self = this,
                     current = new Performance()
 
                 current.fetchCurrent({
                     success: function(response) {
-                        self._showTimeline({
-                            model: current,
+                        self.setCurrentPerformance(current, {
                             running: response['running'],
                             paused: response['paused'],
                             current_time: response['current_time'],
                             readonly: true
                         })
-
-                        let ids = _.map(response['performances'], 'id')
-                        self.addSequence(ids, true)
-                        self.fetchPerformances(ids)
                     }
                 })
             },
@@ -208,17 +231,9 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     this.timelinesView.moveIndicator(item.getStartTime())
                 }
             },
-            addPerformance: function(performance, skipTimelineUpdate) {
-                let item = new QueueItem({performance: performance}, {silent: skipTimelineUpdate})
-                this.queueCollection.add(item)
-                this.fetchPerformances([performance.get('id')])
-                if (!skipTimelineUpdate && !this.editting) this.updateTimeline()
-                return item
-            },
             updateTimeline: function(options) {
-                let ids = this._getPerformanceIds()
                 this.timelinesView = this._showTimeline(_.extend({
-                    sequence: ids,
+                    model: this.currentPerformance,
                     readonly: true
                 }, options || {}))
             },
@@ -269,17 +284,6 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         this.changeCheckCancelCallback()
                 } else
                     this.changeCheckCallback(this.changeCheckResult)
-            },
-            _getPerformanceIds: function() {
-                let ids = []
-
-                this.queueCollection.each(function(item) {
-                    let performance = item.get('performance')
-                    if (performance instanceof Performance && performance.id)
-                        ids.push(performance.id)
-                })
-
-                return ids
             },
             _showTimeline: function(options) {
                 let self = this,

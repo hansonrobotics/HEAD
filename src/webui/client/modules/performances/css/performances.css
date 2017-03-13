@@ -62,8 +62,8 @@
     margin: 0 5px 0 0;
 }
 
-.app-clear-performance-queue {
-    margin: 0;
+.app-clear {
+    margin-bottom: 10px;
 }
 
 .app-timeline-nodes,

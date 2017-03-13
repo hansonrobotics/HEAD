@@ -123,8 +123,9 @@ let updatePerformance = function (req, res) {
     let name = req.params['id'].indexOf(shared_performances_folder) === 0 ? 'common' : req.params['name'],
         root = path.join(argv.config, name, 'performances');
 
-    if (performances.update(root, req.params['id'], _.cloneDeep(req.body)))
-        res.json(req.body);
+    let p = performances.update(root, req.params['id'], _.cloneDeep(req.body))
+    if (p)
+        res.json(p);
     else
         res.sendStatus(500);
 };

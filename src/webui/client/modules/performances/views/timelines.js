@@ -84,13 +84,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         }
                     }
 
-                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView', 'queue', 'allowEdit',
-                    'queueItem'])
+                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
+                    'queue', 'allowEdit', 'queueItem'])
 
-                if (options.sequence instanceof Array) {
-                    this.model = new Performance()
-                    this.model.loadSequence(options.sequence, loadOptions)
-                } else if (this.model) {
+                if (this.model) {
                     if (this.model.id && this.model.nodes.isEmpty()) {
                         this.model.load(loadOptions)
                     } else if (this.readonly)
@@ -250,8 +247,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             onDestroy: function() {
                 this.model.stop()
-
-                if (this.readonly) this.model.disableSync()
+                this.model.disableSync()
             },
             queueUpdated: function() {
                 if (!this.isDestroyed()) {

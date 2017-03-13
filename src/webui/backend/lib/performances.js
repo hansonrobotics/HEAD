@@ -4,7 +4,9 @@ let glob = require('glob'),
     yaml = require('js-yaml'),
     yamlIO = require('./yaml'),
     cp = require('child_process'),
-    _ = require('lodash')
+    _ = require('lodash'),
+    rimraf = require('rimraf'),
+    mv = require('mv')
 
 module.exports = {
     ext: '.yaml',
@@ -22,22 +24,8 @@ module.exports = {
             for (let i = 0; i < subDirs.length; i++) {
                 // filter out dirs containing other dirs on a sorted arrray
                 if (i === subDirs.length - 1 || subDirs[i + 1].indexOf(subDirs[i]) === -1) {
-                    let files = glob.sync(path.join(subDirs[i], '*.yaml')),
-                        id = subDirs[i].replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, ''),
-                        p = path.dirname(id),
-                        performance = {
-                            id: id,
-                            path: p === '.' ? '' : p,
-                            name: path.basename(id),
-                            timelines: []
-                        }
-
-                    for (let file of files) {
-                        let id = file.replace(dir, '').replace(this.ext, '').substr(1),
-                            timeline = this.get(dir, id, options)
-
-                        if (timeline) performance['timelines'].push(timeline)
-                    }
+                    let id = subDirs[i].replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, ''),
+                        performance = this.get(dir, id, options)
 
                     performances.push(performance)
                 }
@@ -48,50 +36,92 @@ module.exports = {
     },
     get: function(dir, id, options) {
         options = typeof options === 'object' ? options : {}
-        let performance = yamlIO.readFile(path.join(dir, id + this.ext))
+        let self = this,
+            performance = null,
+            p = path.join(dir, id)
 
-        if (performance) {
-            performance['id'] = id
-            performance['path'] = path.dirname(id)
-            performance['path'] = performance['path'] === '.' ? '' : performance['path']
-            performance['name'] = path.basename(id)
+        if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
+            let performancePath = path.dirname(id),
+                files = glob.sync(path.join(p, '*.yaml'))
 
-            if ('skip_nodes' in options && options['skip_nodes'])
-                delete performance['nodes']
+            performancePath = performancePath === '.' ? '' : performancePath
+            performance = {id: id, name: path.basename(id), path: performancePath, timelines: []}
+
+            files.forEach(function(filename) {
+                filename = p + filename
+                fs.readFile(filename, 'utf-8', function(err, content) {
+                    let id = filename.replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, '')
+                    if (!err) performance['timelines'].push(self.parseTimeline(id, content, options))
+                })
+            })
+        } else {
+            performance = yamlIO.readFile(p + this.ext)
+
+            if (performance)
+                performance = this.parseTimeline(id, performance, options)
         }
+
+
+        return performance
+    },
+    parseTimeline: function(id, performance, options) {
+        performance['id'] = id
+        performance['path'] = path.dirname(id)
+        performance['path'] = performance['path'] === '.' ? '' : performance['path']
+        performance['name'] = path.basename(id)
+
+        if ('skip_nodes' in options && options['skip_nodes'])
+            delete performance['nodes']
 
         return performance
     },
     update: function(dir, id, performance) {
-        let current
+        let self = this
 
-        if ('previous_id' in performance) {
-            current = this.get(dir, performance['previous_id'])
-            this.remove(dir, performance['previous_id'])
-            delete performance['previous_id']
+        if ('timelines' in performance) {
+            _.each(performance['timelines'], function(timeline) {
+                self.update(dir, timeline['id'], timeline)
+            })
+
+            if ('previous_id' in performance) {
+                mv(path.join(dir, performance['previous_id']), path.join(dir, id))
+            }
+
+            return true
+        } else {
+            let current
+
+            if ('previous_id' in performance) {
+                console.log(performance['previous_id'])
+                console.log(performance['id'])
+
+                current = this.get(dir, performance['previous_id'])
+                this.remove(dir, performance['previous_id'])
+                delete performance['previous_id']
+            }
+
+            if (!current) current = this.get(dir, id)
+
+            if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current) {
+                performance['nodes'] = current['nodes']
+                delete performance['ignore_nodes']
+            } else
+                for (let node of performance['nodes'])
+                    delete node['id'];
+
+            delete performance['id']
+            delete performance['path']
+
+            yamlIO.writeFile(path.join(dir, id + this.ext), performance)
+            return this.get(dir, id)
         }
-
-        if (!current) current = this.get(dir, id)
-
-        if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current) {
-            performance['nodes'] = current['nodes']
-            delete performance['ignore_nodes']
-        } else
-            for (let node of performance['nodes'])
-                delete node['id'];
-
-
-        delete performance['id']
-        delete performance['path']
-
-        return yamlIO.writeFile(path.join(dir, id + this.ext), performance)
     },
     remove: function(dir, id) {
-        try {
-            fs.unlinkSync(path.join(dir, id + this.ext))
-        } catch (e) {
-            return false
-        }
+        let p = path.join(dir, id)
+        if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
+            rimraf.sync(p, {}, function() {})
+        } else
+            fs.unlinkSync(p + this.ext)
         return true
     },
     run: function(id) {

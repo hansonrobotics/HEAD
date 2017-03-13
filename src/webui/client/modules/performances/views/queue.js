@@ -12,6 +12,9 @@ define(['marionette', 'backbone', './timelines', 'underscore', 'lib/regions/fade
             handle: ".app-drag-handle",
             placeholder: "ui-state-highlight",
         }],
+        events: {
+            'sortupdate': 'onSortUpdate'
+        },
         initialize: function(options) {
             this.mergeOptions(options, ['layoutView', 'readonly', 'playEnabled'])
         },
@@ -31,6 +34,9 @@ define(['marionette', 'backbone', './timelines', 'underscore', 'lib/regions/fade
                 this.children.each(function(item) {
                     item.disablePlay()
                 })
+        },
+        onSortUpdate: function() {
+            this.trigger('reordered')
         }
     })
 })

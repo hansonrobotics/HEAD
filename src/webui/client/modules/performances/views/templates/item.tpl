@@ -6,7 +6,6 @@
 </div>
 
 <span class="app-description-container">
-    <span class="app-name"></span>
     <span class="app-desc label label-alt"></span>
 </span>
 

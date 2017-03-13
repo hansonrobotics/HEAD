@@ -4,7 +4,6 @@ module.exports = Marionette.View.extend({
     className: 'app-performance list-group-item',
     ui: {
         playButton: '.app-play',
-        name: '.app-name',
         description: '.app-desc',
         duration: '.app-duration',
         editButton: '.app-edit-button',
@@ -25,7 +24,6 @@ module.exports = Marionette.View.extend({
     },
     onRender: function() {
         let performance = this.model.get('performance')
-        this.ui.name.html(performance.get('name'))
         this.ui.description.html(performance.getDescription())
         this.ui.duration.html(performance.getDuration().toFixed(2))
         if (!this.options.playEnabled)
