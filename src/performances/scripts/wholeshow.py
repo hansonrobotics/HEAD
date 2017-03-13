@@ -90,7 +90,7 @@ class WholeShow(HierarchicalMachine):
         self.chatbot_paused = False
         self.sleeping = rospy.get_param('start_sleeping', False)
         # Preferred speech source
-        self.speech_provider = rospy.get_param("active_stt", 'cloudpseech')
+        self.speech_provider = rospy.get_param("active_stt", 'cloudspeech')
         self.speech_provider_active = False
         rospy.Subscriber('{}/status'.format(self.speech_provider), Bool, self.stt_status_cb)
 
