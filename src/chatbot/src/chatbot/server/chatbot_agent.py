@@ -193,14 +193,14 @@ def preprocessing(question, lang, session):
 
     reduction = get_character('reduction')
     if reduction is not None:
-        response = reduction.respond(question, lang, session, query=True)
+        response = reduction.respond(question, lang, session, query=True, request_id=request_id)
         reducted_text = response.get('text')
         if reducted_text:
             question = reducted_text
 
     return question
 
-def _ask_characters(characters, question, lang, sid, query, **kwargs):
+def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs):
     sess = session_manager.get_session(sid)
     if sess is None:
         return
@@ -222,7 +222,7 @@ def _ask_characters(characters, question, lang, sid, query, **kwargs):
 
     control = get_character('control')
     if control is not None:
-        _response = control.respond(_question, lang, sess, query)
+        _response = control.respond(_question, lang, sess, query, request_id)
         _answer = _response.get('text')
         if _answer == '[tell me more]':
             cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
@@ -326,7 +326,7 @@ def _ask_characters(characters, question, lang, sid, query, **kwargs):
             cross_trace.append((character.id, stage, 'Disabled'))
             return False, None, None
 
-        response = character.respond(_question, lang, sess, query)
+        response = character.respond(_question, lang, sess, query, request_id)
         answer = str_cleanup(response.get('text', ''))
         trace = response.get('trace')
 
@@ -463,7 +463,7 @@ def _ask_characters(characters, question, lang, sid, query, **kwargs):
         sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
                     Revision=REVISION, Lang=lang, ModQuestion=_question,
-                    RequestId=kwargs.get('request_id'),Marker=kwargs.get('marker'))
+                    RequestId=request_id,Marker=kwargs.get('marker'))
 
         sess.last_used_character = hit_character
 
@@ -521,7 +521,7 @@ def rate_answer(sid, idx, rate):
     return True
 
 
-def ask(question, lang, sid, query=False, **kwargs):
+def ask(question, lang, sid, query=False, request_id=None, **kwargs):
     """
     return (response dict, return code)
     """
@@ -542,7 +542,7 @@ def ask(question, lang, sid, query=False, **kwargs):
 
     for c in responding_characters:
         if c.is_command(question):
-            response.update(c.respond(question, lang, sess, query))
+            response.update(c.respond(question, lang, sess, query, request_id))
             return response, SUCCESS
 
     sess.set_characters(responding_characters)
@@ -559,7 +559,7 @@ def ask(question, lang, sid, query=False, **kwargs):
 
     logger.info("Responding characters {}".format(responding_characters))
     _response = _ask_characters(
-        responding_characters, question, lang, sid, query, **kwargs)
+        responding_characters, question, lang, sid, query, request_id, **kwargs)
 
     if not query:
         # Sync session data
