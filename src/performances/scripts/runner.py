@@ -11,7 +11,7 @@ import os
 import fnmatch
 import random
 import copy
-
+from natsort import natsorted, ns
 from std_msgs.msg import String, Int32, Float32
 from std_srvs.srv import Trigger, TriggerResponse
 from chatbot.msg import ChatMessage
@@ -143,7 +143,8 @@ class Runner:
         dir_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id)
         if os.path.isdir(dir_path):
             root, dirs, files = next(os.walk(dir_path))
-            files = fnmatch.filter(sorted(files), "*.yaml")
+
+            files = fnmatch.filter(files, "*.yaml")
             if not files:
                 # If no folder is picked one directory
                 # Sub-directories are counted as sub-performances
@@ -173,7 +174,7 @@ class Runner:
 
         if os.path.isdir(p):
             root, dirs, files = next(os.walk(p))
-            files = fnmatch.filter(sorted(files), "*.yaml")
+            files = natsorted(fnmatch.filter(files, "*.yaml"), key=lambda f: f.lower())
             ids = ["{}/{}".format(id, f[:-5]) for f in files]
             timelines = [self.get_timeline(i) for i in ids]
             timelines = [t for t in timelines if t]

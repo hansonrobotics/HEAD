@@ -12,10 +12,6 @@
 <div class="button-container">
     <span class="label label-primary"><span class="app-duration"></span> sec</span>
 
-    <button type="button" class="app-edit-button btn btn-success">
-        <span class="glyphicon glyphicon-edit"></span>
-    </button>
-
     <button type="button" class="app-remove-button btn btn-danger">
         <span class="glyphicon glyphicon-trash"></span>
     </button>

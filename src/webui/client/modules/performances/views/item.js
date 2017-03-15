@@ -1,3 +1,5 @@
+let bootbox = require('bootbox')
+
 module.exports = Marionette.View.extend({
     template: require('./templates/item.tpl'),
     tagName: 'li',
@@ -6,7 +8,6 @@ module.exports = Marionette.View.extend({
         playButton: '.app-play',
         description: '.app-desc',
         duration: '.app-duration',
-        editButton: '.app-edit-button',
         removeButton: '.app-remove-button'
     },
     initialize: function(options) {
@@ -14,7 +15,6 @@ module.exports = Marionette.View.extend({
     },
     events: {
         'click @ui.playButton': 'play',
-        'click @ui.editButton': 'edit',
         'click @ui.removeButton': 'remove',
         'click': 'setItemTime'
     },
@@ -32,9 +32,6 @@ module.exports = Marionette.View.extend({
     play: function(e) {
         e.stopPropagation()
         this.layoutView.play(this.model)
-    },
-    edit: function() {
-        this.layoutView.editItem(this.model)
     },
     remove: function() {
         this.layoutView.remove(this.model)

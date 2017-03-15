@@ -18,7 +18,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 nodesContainer: '.app-nodes',
                 nodeSettings: '.app-node-settings-container',
                 scrollContainer: '.app-scroll-container',
-                performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
                 runButton: '.app-run-button',
                 stopButton: '.app-stop-button',
@@ -46,8 +45,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             events: {
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
-                'keyup @ui.performanceName': 'setPerformanceName',
-                'focusout @ui.performanceName': 'sortPerformances',
                 'click @ui.runButton': 'runAtIndicator',
                 'click @ui.stopButton': 'stop',
                 'click @ui.pauseButton': 'pause',
@@ -62,13 +59,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.previousButton': 'editPrevious',
                 'click @ui.nextButton': 'editNext',
             },
-            modelEvents: {
-                'change': 'modelChanged'
-            },
             initialize: function(options) {
                 let self = this,
                     loadOptions = {
-                        success: function() {
+                          success: function() {
                             self.backup()
                             if (self.autoplay) self.run()
 
@@ -195,7 +189,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.ui.editButton.hide()
                 }
 
-                this.modelChanged()
                 this.ui.scrollContainer.perfectScrollbar()
 
                 let eventCallback = function(msg) {
@@ -287,11 +280,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
 
                 this.model.nodes.add(node)
-            },
-            modelChanged: function() {
-                let name = this.model.get('name')
-                if (name != this.ui.performanceName.val())
-                    this.ui.performanceName.val(name)
             },
             initResizable: function(el) {
                 let self = this,
@@ -465,9 +453,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 this.ui.timelineContainer.find('.app-timeline-nodes').css('width', scaleWidth)
                 this.ui.scrollContainer.perfectScrollbar('update')
-            },
-            setPerformanceName: function() {
-                this.model.set('name', this.ui.performanceName.val())
             },
             sortPerformances: function() {
                 this.performances.sort()
@@ -667,7 +652,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (result)
                         self.$el.fadeOut(null, function() {
                             self.model.destroy()
-                            self.destroy()
+
+                            if (self.layoutView.queueCollection.length)
+                                self.layoutView.editCurrent()
+                            else
+                                self.layoutView.refreshCurrentPerformance()
                         })
                 })
             },

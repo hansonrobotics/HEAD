@@ -116,6 +116,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             },
             refreshCurrentPerformance: function(options) {
                 let self = this
+                this.currentPerformance.nodes.reset()
                 this.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
                 this.listenTo(this.currentPerformance, 'change:timelines', function() {
                     self.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
@@ -124,7 +125,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             },
             setTimelineQueue: function(timelines) {
                 let items = []
-                this.clearQueue()
+                this.queueCollection.reset()
                 timelines.each(function(timeline) {
                     items.push(new QueueItem({performance: timeline}))
                 })
@@ -140,9 +141,10 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         timelines.push(p)
                     })
 
-                    this.currentPerformance.set('timelines', timelines.toJSON())
-                    this.currentPerformance.save({
-                        success: function() {
+                    console.log('save')
+                    this.currentPerformance.save({'timelines': timelines.toJSON()}, {
+                        success: function(r) {
+                            console.log(r)
                             self.refreshCurrentPerformance()
                         }
                     })
@@ -187,10 +189,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 })
             },
             editCurrent: function() {
-                let self = this,
-                    item = this.queueCollection.findItemByTime(this.time)
-
-                if (item) self.editItem(item)
+                let item = this.queueCollection.findItemByTime(this.time)
+                if (item) this.editItem(item)
             },
             editPrevious: function(item) {
                 let i = this.queueCollection.findIndex(item)
@@ -219,9 +219,13 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 this.timelinesView.run(item.getStartTime())
             },
             remove: function(item) {
-                this.queueCollection.remove(item)
-                if (!this.editting)
-                    this.updateTimeline()
+                let self = this
+                bootbox.confirm("Are you sure?", function(result) {
+                    self.queueCollection.remove(item)
+                    item.get('performance').destroy()
+                    if (!self.editting)
+                        self.refreshCurrentPerformance()
+                })
             },
             setItemTime: function(item) {
                 if (this.editting) {
@@ -244,10 +248,16 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 }
             },
             clearClick: function() {
-                this.stop()
-                this.clearQueue()
-                this.updateTimeline()
-                this.ui.clearButton.blur()
+                let self = this
+                bootbox.confirm("Are you sure?", function(result) {
+                    self.stop()
+                    self.ui.clearButton.blur()
+                    self.currentPerformance.save({'timelines': []}, {
+                        success: function() {
+                            self.refreshCurrentPerformance()
+                        }
+                    })
+                })
             },
             clearQueue: function() {
                 this.queueCollection.reset()
@@ -285,6 +295,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 } else
                     this.changeCheckCallback(this.changeCheckResult)
             },
+            time: 0,
             _showTimeline: function(options) {
                 let self = this,
                     playButtons = this.ui.queue.find('.app-play')
@@ -309,10 +320,9 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 }, options))
 
                 this.listenTo(this.timelinesView, 'close', function() {
-                    self.updateTimeline()
+                    self.refreshCurrentPerformance()
                 })
 
-                self.time = 0
                 this.listenTo(this.timelinesView, 'change:time', function(time) {
                     if (!this.editting) {
                         self.time = time

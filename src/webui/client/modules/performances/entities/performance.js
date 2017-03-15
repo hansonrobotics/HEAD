@@ -102,6 +102,10 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                     delete response[attr]
                     this.unset(attr)
                 }
+
+                if ('timelines' in response && this.nodes)
+                    this.nodes.reset()
+
                 return response
             },
             updateId: function() {

@@ -46,13 +46,13 @@ module.exports = {
 
             performancePath = performancePath === '.' ? '' : performancePath
             performance = {id: id, name: path.basename(id), path: performancePath, timelines: []}
-
             files.forEach(function(filename) {
-                filename = p + filename
-                fs.readFile(filename, 'utf-8', function(err, content) {
-                    let id = filename.replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, '')
-                    if (!err) performance['timelines'].push(self.parseTimeline(id, content, options))
-                })
+                let id = filename.replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, '').replace(self.ext, ''),
+                    timeline = self.get(dir, id, options)
+
+                if (timeline) {
+                    performance['timelines'].push(timeline)
+                }
             })
         } else {
             performance = yamlIO.readFile(p + this.ext)
@@ -60,7 +60,6 @@ module.exports = {
             if (performance)
                 performance = this.parseTimeline(id, performance, options)
         }
-
 
         return performance
     },
@@ -76,52 +75,57 @@ module.exports = {
         return performance
     },
     update: function(dir, id, performance) {
-        let self = this
+        let self = this,
+            timelines = []
 
         if ('timelines' in performance) {
-            _.each(performance['timelines'], function(timeline) {
-                self.update(dir, timeline['id'], timeline)
-            })
-
-            if ('previous_id' in performance) {
-                mv(path.join(dir, performance['previous_id']), path.join(dir, id))
-            }
-
-            return true
+            timelines = performance['timelines']
+            // if ('previous_id' in performance)
+            //     mv(path.join(dir, performance['previous_id']), path.join(dir, id))
         } else {
+            timelines = [performance]
+        }
+
+        _.each(timelines, function(timeline, i) {
             let current
 
-            if ('previous_id' in performance) {
-                console.log(performance['previous_id'])
-                console.log(performance['id'])
-
-                current = this.get(dir, performance['previous_id'])
-                this.remove(dir, performance['previous_id'])
-                delete performance['previous_id']
+            if ('previous_id' in timeline) {
+                current = self.get(dir, timeline['previous_id'])
+                self.remove(dir, timeline['previous_id'])
+                delete timeline['previous_id']
             }
 
-            if (!current) current = this.get(dir, id)
+            if (!current) current = self.get(dir, timeline['id'])
 
-            if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current) {
-                performance['nodes'] = current['nodes']
-                delete performance['ignore_nodes']
+            if ('ignore_nodes' in timeline && timeline['ignore_nodes'] && 'nodes' in current) {
+                timeline['nodes'] = current['nodes']
+                delete timeline['ignore_nodes']
             } else
-                for (let node of performance['nodes'])
+                for (let node of timeline['nodes'])
                     delete node['id'];
 
-            delete performance['id']
-            delete performance['path']
+            delete timeline['path']
+            timelines[i] = timeline
+        })
 
-            yamlIO.writeFile(path.join(dir, id + this.ext), performance)
-            return this.get(dir, id)
-        }
+        _.each(timelines, function(timeline) {
+            let id = timeline['id']
+            delete timeline['id']
+            yamlIO.writeFile(path.join(dir, id + self.ext), timeline)
+        })
+
+        return this.get(dir, id)
     },
     remove: function(dir, id) {
         let p = path.join(dir, id)
         if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
             rimraf.sync(p, {}, function() {})
         } else
-            fs.unlinkSync(p + this.ext)
+            try {
+                fs.unlinkSync(p + this.ext)
+            } catch (e) {
+                console.log(e)
+            }
         return true
     },
     run: function(id) {
