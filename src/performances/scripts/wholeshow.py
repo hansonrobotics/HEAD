@@ -125,7 +125,9 @@ class WholeShow(HierarchicalMachine):
 
     def speech_cb(self, msg):
         """ ROS Callbacks """
-        speech = msg.utterance
+        if not self.filter_stt(msg):
+            return
+        speech = str(msg.utterance).lower()
         on = (self.state == 'interacting') or (self.state == 'performing' and self.config['chat_during_performance'])
         # Special states keywords
         if self.state == 'opencog':
@@ -154,7 +156,8 @@ class WholeShow(HierarchicalMachine):
                 return False
             except:
                 pass
-        if 'shutdown' in speech:
+        if 'shutdown' in speech or \
+                'shut down' in speech:
             try:
                 self.shut()
                 return False
@@ -218,7 +221,7 @@ class WholeShow(HierarchicalMachine):
             on = False
             self.performance_runner(random.choice(analysis_performances))
 
-        if on and self.filter_stt(msg):
+        if on:
             self.speech_pub.publish(msg)
 
     def performances_cb(self, msg):
@@ -395,8 +398,8 @@ class WholeShow(HierarchicalMachine):
         # Forward regardles of the source if prefered STT inactive
         if not self.speech_provider_active:
             return True
-        # If source not specified forward msg anyway
-        if not msg.source:
+        # If source not specified or its from web forward it
+        if msg.source == 'web' or not msg.source:
             return True
 
 
