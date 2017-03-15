@@ -8,6 +8,7 @@ from config import HISTORY_DIR, TEST_HISTORY_DIR, SESSION_REMOVE_TIMEOUT
 from response_cache import ResponseCache
 from collections import defaultdict
 from chatbot.server.character import TYPE_AIML
+from chatbot.utils import Locker
 
 logger = logging.getLogger('hr.chatbot.server.session')
 
@@ -118,18 +119,6 @@ class Session(object):
     def __repr__(self):
         return "<Session {} created {} active {}>".format(
             self.sid, self.created, self.cache.last_time)
-
-
-class Locker(object):
-
-    def __init__(self):
-        self._lock = threading.RLock()
-
-    def lock(self):
-        self._lock.acquire()
-
-    def unlock(self):
-        self._lock.release()
 
 
 class SessionManager(object):
