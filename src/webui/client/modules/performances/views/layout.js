@@ -28,7 +28,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 queue: '.app-performance-queue',
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
-                clearButton: '.app-clear',
+                addNewButton: '.app-add-new-button',
                 emptyNotice: '.app-empty-notice',
                 saveChangesModal: '.app-save-changes-confirmation',
                 saveChanges: '.app-save-changes',
@@ -36,7 +36,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage',
-                'click @ui.clearButton': 'clearClick',
+                'click @ui.addNewButton': 'addNewTimeline',
                 'click @ui.saveChanges': 'saveChanges',
                 'click @ui.discardChanges': 'discardChanges',
                 'hidden.bs.modal @ui.saveChangesModal': 'saveChangesHide'
@@ -75,20 +75,16 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 self.getRegion('performances').show(this.performancesView)
 
                 this.listenTo(this.performancesView, 'new', function(p) {
-                    this._showTimeline({
-                        model: p,
-                        readonly: false
-                    })
-                })
-
-                this.listenTo(this.performancesView, 'selected', function(p) {
-                    this.setCurrentPerformance(p)
+                    self.performances.add(p)
+                    self.performancesView.navigate(p.get('id'))
+                    self.editItem(self.queueCollection.first())
                 })
 
                 this.performances.fetch({
                     reset: true,
                     success: function() {
-                        self.showCurrent()
+                        if (!self.performances.get(self.dir))
+                            self.showCurrent()
                     }
                 })
 
@@ -101,6 +97,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     p.enableSync()
                 }
             },
+
             onDestroy: function() {
                 app.changeCheck = null
                 if (this.currentPerformance) this.currentPerformance.disableSync()
@@ -111,8 +108,18 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     this.stopListening(this.currentPerformance)
                 }
 
-                this.currentPerformance = p
-                this.refreshCurrentPerformance(options)
+                if (p) {
+                    this.currentPerformance = p
+                    this.refreshCurrentPerformance(options)
+                } else {
+                    this.currentPerformance = null
+                    this.destroyTimeline()
+                    this.queueCollection.reset()
+                }
+            },
+            destroyTimeline: function() {
+              if (this.timelinesView)
+                  this.timelinesView.destroy()
             },
             refreshCurrentPerformance: function(options) {
                 let self = this
@@ -141,10 +148,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         timelines.push(p)
                     })
 
-                    console.log('save')
                     this.currentPerformance.save({'timelines': timelines.toJSON()}, {
                         success: function(r) {
-                            console.log(r)
                             self.refreshCurrentPerformance()
                         }
                     })
@@ -200,16 +205,17 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 let i = this.queueCollection.findIndex(item)
                 if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
             },
-            editItem: function(item) {
+            editItem: function(item, options) {
                 let self = this
+                options = options || {}
                 if (!this.timelinesView || this.timelinesView.readonly || item !== this.timelinesView.queueItem) {
                     this.changeCheck(function() {
                         self.highlight(item)
-                        self._showTimeline({
+                        self._showTimeline(_.extend(options, {
                             model: item.get('performance'),
                             queueItem: item,
                             readonly: false
-                        })
+                        }))
                     })
                 }
             },
@@ -231,7 +237,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 if (this.editting) {
                     this.editItem(item)
                 } else {
-                    if (!this.timelinesView) this.updateTimeline()
+                    if (!this.timelinesView) this.refreshCurrentPerformance()
                     this.timelinesView.moveIndicator(item.getStartTime())
                 }
             },
@@ -247,16 +253,21 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     this.timelinesView = null
                 }
             },
-            clearClick: function() {
-                let self = this
-                bootbox.confirm("Are you sure?", function(result) {
-                    self.stop()
-                    self.ui.clearButton.blur()
-                    self.currentPerformance.save({'timelines': []}, {
-                        success: function() {
-                            self.refreshCurrentPerformance()
-                        }
+            addNewTimeline: function() {
+                let self = this,
+                    current = this.currentPerformance,
+                    performance = new Performance({
+                        path: current.get('id'),
+                        name: (current.get('timelines').length + 1).toString()
+                    }),
+                    item = new QueueItem({
+                        performance: performance
                     })
+                performance.save({}, {
+                    success: function() {
+                        self.queueCollection.add(item)
+                        self.editItem(item)
+                    }
                 })
             },
             clearQueue: function() {
@@ -297,8 +308,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             },
             time: 0,
             _showTimeline: function(options) {
-                let self = this,
-                    playButtons = this.ui.queue.find('.app-play')
+                let self = this
 
                 this.editting = !options.readonly
                 if (this.editting)
@@ -306,10 +316,10 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 else
                     this.queueView.enablePlay()
 
-                if (this.editting)
-                    playButtons.fadeOut()
-                else
-                    playButtons.fadeIn()
+                if (this.timelinesView) {
+                    this.stopListening(this.timelinesView)
+                    this.timelinesView.destroy()
+                }
 
                 this.timelinesView = new TimelinesView(_.extend({
                     performances: this.performances,
@@ -320,7 +330,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 }, options))
 
                 this.listenTo(this.timelinesView, 'close', function() {
-                    self.refreshCurrentPerformance()
+                    this.refreshCurrentPerformance()
                 })
 
                 this.listenTo(this.timelinesView, 'change:time', function(time) {

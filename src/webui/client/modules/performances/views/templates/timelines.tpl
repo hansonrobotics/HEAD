@@ -2,24 +2,25 @@
 
 <div class="app-edit-container clearfix">
     <div class="pull-left">
-        <button class="app-save-button btn btn-primary"><i
-                class="glyphicon glyphicon-floppy-save"></i> Save
-        </button>
-        <button class="app-delete-button btn btn-danger" title="Delete">
-            <i class="glyphicon glyphicon-trash"></i> Delete
-        </button>
-        <button class="app-clear-button btn btn-warning" title="Clear">
-            <i class="fa fa-eraser"></i>
-            Clear
-        </button>
-    </div>
-
-    <div class="performance-action-buttons">
         <div class="btn-group">
             <button class="app-previous-button btn btn-default">Previous</button>
             <button class="app-next-button btn btn-default">Next</button>
         </div>
-        <button class="app-done-button btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Done</button>
+
+        <button class="app-add-new-button btn btn-info"><i
+                class="glyphicon glyphicon-plus-sign"></i> Add New
+        </button>
+
+        <button class="app-save-button btn btn-primary"><i
+                class="glyphicon glyphicon-floppy-save"></i> Save
+        </button>
+        <button class="app-done-button btn btn-warning"><i class="glyphicon glyphicon-ok"></i> Done</button>
+    </div>
+
+    <div class="performance-action-buttons">
+        <button class="app-delete-button btn btn-danger" title="Delete">
+            <i class="glyphicon glyphicon-trash"></i> Delete
+        </button>
     </div>
 </div>
 

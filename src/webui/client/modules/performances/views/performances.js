@@ -65,16 +65,28 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 return this.options
             },
             addNew: function() {
-                let performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
-                    names = performances.pluck('name')
+                let self = this
+                bootbox.prompt("Enter performance name", function(name) {
+                    if (name) {
+                        self.newestPerformance = new Performance({
+                            path: self.currentPath,
+                            name: name,
+                            timelines: []
+                        })
 
-                this.newestPerformance = new Performance({
-                    name: this.getNextName(names, path.basename(this.currentPath) || 'Performance'),
-                    path: this.currentPath
+                        self.newestPerformance.get('timelines').push(new Performance({
+                            path: self.newestPerformance.get('id'),
+                            name: '1',
+                        }))
+
+                        self.collection.add(self.newestPerformance)
+                        self.newestPerformance.save({}, {
+                            success: function() {
+                                self.trigger('new', self.newestPerformance)
+                            }
+                        })
+                    }
                 })
-
-                this.collection.add(this.newestPerformance)
-                this.trigger('new', this.newestPerformance)
             },
             getNextName: function(names, defaultPrefix) {
                 let self = this,
@@ -258,6 +270,9 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 return $('<li>').attr('data-path', dir).append(el)
             },
             navigate: function(id) {
+                if (this.collection.get(this.currentPath))
+                    this.layoutView.setCurrentPerformance(null)
+
                 this.currentPath = id
                 this.collection.currentPath = id
                 // reset newest performance so that it's name isn't used for naming
@@ -267,7 +282,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     if (this.nav) {
                         let url = path.join('/performances', id)
                         if (url !== Backbone.history.getHash()) {
-                            app.skipChangeCheck = true
+                            app.skipPerformanceNav = true
                             Backbone.history.navigate('#' + url)
                         }
                     }
@@ -278,7 +293,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         this.ui.nav.slideUp()
                         if (!this.readonly && this.currentPath)
                             this.ui.actionButtons.fadeIn()
-                        this.trigger('selected', performance)
+
+                        this.layoutView.setCurrentPerformance(performance)
                     } else {
                         this.ui.actionButtons.fadeOut()
                         this.updateVisiblePerformances(id)

@@ -19,12 +19,12 @@ define(['marionette', 'backbone', './timelines', 'underscore', 'lib/regions/fade
             this.mergeOptions(options, ['layoutView', 'readonly', 'playEnabled'])
         },
         childViewOptions: function() {
-            return _.extend(this.options, {playEnabled: this.playEnabled})
+            return _.extend(this.options, {queueView: this})
         },
         enablePlay: function() {
             this.playEnabled = true
             if (this.collection.length)
-                this.children.each(function(item, a2) {
+                this.children.each(function(item) {
                     item.enablePlay()
                 })
         },

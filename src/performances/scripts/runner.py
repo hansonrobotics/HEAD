@@ -181,7 +181,7 @@ class Runner:
             performance = {'id': id, 'path': os.path.dirname(id), 'timelines': timelines,
                            'nodes': self.get_merged_timeline_nodes(timelines)}
         else:
-            performance = self.get_timeline(p)
+            performance = self.get_timeline(id)
 
         if performance:
             self.load_performance(performance)
@@ -201,7 +201,6 @@ class Runner:
                 timeline['path'] = os.path.dirname(id)
                 if 'nodes' not in timeline or not isinstance(timeline['nodes'], list):
                     timeline['nodes'] = []
-
         return timeline
 
     def get_timeline_duration(self, timeline):

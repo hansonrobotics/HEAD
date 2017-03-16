@@ -11,7 +11,7 @@ module.exports = Marionette.View.extend({
         removeButton: '.app-remove-button'
     },
     initialize: function(options) {
-        this.mergeOptions(options, ['layoutView', 'readonly'])
+        this.mergeOptions(options, ['layoutView', 'readonly', 'queueView'])
     },
     events: {
         'click @ui.playButton': 'play',
@@ -26,7 +26,7 @@ module.exports = Marionette.View.extend({
         let performance = this.model.get('performance')
         this.ui.description.html(performance.getDescription())
         this.ui.duration.html(performance.getDuration().toFixed(2))
-        if (!this.options.playEnabled)
+        if (!this.queueView.playEnabled)
             this.ui.playButton.hide()
     },
     play: function(e) {

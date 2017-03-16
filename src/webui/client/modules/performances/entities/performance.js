@@ -27,7 +27,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.on('change:nodes', function() {
                     if (this.get('nodes') !== this.nodes) {
                         // updating collection
-                        this.nodes.set(this.get('nodes'))
+                        this.nodes.reset(this.get('nodes'))
                         this.set({nodes: this.nodes}, {silent: true})
                     }
                 })

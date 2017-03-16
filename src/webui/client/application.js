@@ -17,7 +17,7 @@ define(['backbone', 'marionette', 'modules/layout/layout', 'lib/ros', 'lib/api',
 
                     ros.connect(function() {
                         if (Backbone.history)
-                            Backbone.history.start()
+                            Backbone.history.start({pushState: false})
                     })
                 },
                 language: 'en',

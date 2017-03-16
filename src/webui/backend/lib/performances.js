@@ -6,6 +6,7 @@ let glob = require('glob'),
     cp = require('child_process'),
     _ = require('lodash'),
     rimraf = require('rimraf'),
+    mkdirp = require('mkdirp'),
     mv = require('mv')
 
 module.exports = {
@@ -82,6 +83,7 @@ module.exports = {
             timelines = performance['timelines']
             // if ('previous_id' in performance)
             //     mv(path.join(dir, performance['previous_id']), path.join(dir, id))
+            mkdirp.sync(path.join(dir, id))
         } else {
             timelines = [performance]
         }
@@ -97,7 +99,7 @@ module.exports = {
 
             if (!current) current = self.get(dir, timeline['id'])
 
-            if ('ignore_nodes' in timeline && timeline['ignore_nodes'] && 'nodes' in current) {
+            if (current && 'ignore_nodes' in timeline && timeline['ignore_nodes'] && 'nodes' in current) {
                 timeline['nodes'] = current['nodes']
                 delete timeline['ignore_nodes']
             } else
