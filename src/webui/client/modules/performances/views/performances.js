@@ -222,7 +222,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             },
             showSettings: function() {
                 let settingsView = new SettingsView({
-                    path: this.currentPath
+                    path: this.currentPath,
+                    collection: this.collection
                 })
 
                 bootbox.dialog({
@@ -270,6 +271,11 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 return $('<li>').attr('data-path', dir).append(el)
             },
             navigate: function(id) {
+                let self = this
+                if (this.currentPerformanc)
+                    this.stopListening(this.currentPerformance)
+                this.currentPerformance = this.collection.get(id)
+
                 if (this.collection.get(this.currentPath))
                     this.layoutView.setCurrentPerformance(null)
 
@@ -287,14 +293,16 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         }
                     }
 
-                    let performance = this.collection.get(id)
-                    if (performance) {
+                    if (this.currentPerformance) {
                         this.ui.dirHeader.html(id)
+                        this.listenTo(this.currentPerformance, 'change:id', function() {
+                            self.ui.dirHeader.html(self.currentPerformance.id)
+                        })
                         this.ui.nav.slideUp()
                         if (!this.readonly && this.currentPath)
                             this.ui.actionButtons.fadeIn()
 
-                        this.layoutView.setCurrentPerformance(performance)
+                        this.layoutView.setCurrentPerformance(this.currentPerformance)
                     } else {
                         this.ui.actionButtons.fadeOut()
                         this.updateVisiblePerformances(id)

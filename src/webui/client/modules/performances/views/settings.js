@@ -13,7 +13,9 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 variableContainer: '.app-variables-container',
                 addVariableButton: '.app-add-variable-btn',
                 saveButton: '.app-save-btn',
-                removeVariableButton: '.app-remove-variable-btn'
+                removeVariableButton: '.app-remove-variable-btn',
+                name: '.app-performance-name',
+                performanceNameContainer: '.app-performance-name-container'
             },
             regions: {
                 selectAreas: {
@@ -30,6 +32,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
             initialize: function(options) {
                 this.mergeOptions(options, ['path'])
                 if (!this.model) this.model = new Settings({}, {path: this.path})
+                this.performance = this.collection.get(this.path)
             },
             onRender: function() {
                 let self = this
@@ -41,6 +44,15 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                     }
                 })
 
+                if (this.performance) {
+                    this.updateName()
+                    this.listenTo(this.performance, 'change:name', function() {
+                        self.updateName()
+                    })
+                } else {
+                    this.ui.performanceNameContainer.hide()
+                }
+
                 this.ui.tabs.on('shown.bs.tab', function(e) {
                     if ($(e.target).is(self.ui.attentionTab))
                         self.getRegion('selectAreas').show(new AttentionRegionsView({path: self.path}))
@@ -48,11 +60,23 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
 
                 this.ui.settingsTab.tab('show')
             },
+            updateName: function() {
+                this.ui.name.val(path.basename(this.performance.get('id')))
+            },
             save: function() {
-                let self = this
+                let self = this,
+                    name = this.ui.name.val()
 
                 this.setVariables()
                 this.setKeywords()
+
+                if (this.performance && this.performance.get('name') !== name) {
+                    this.performance.save({name: name}, {
+                        error: function() {
+                            App.Utilities.showPopover(self.ui.name, 'Error saving performance', 'right')
+                        }
+                    })
+                }
 
                 this.model.save({}, {
                     success: function() {
