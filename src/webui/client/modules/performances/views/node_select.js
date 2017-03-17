@@ -308,11 +308,15 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }))
 
                 nodeConfig.on('change', updateValues)
-                nodeConfig.fetch({
-                    success: function() {
-                        nodeConfig.set(values)
-                    }
-                })
+                if (values){
+                    nodeConfig.set(values)
+                }else{
+                    nodeConfig.fetch({
+                        success: function() {
+                            nodeConfig.set(values)
+                        }
+                    })
+                }
             },
             setText: function() {
                 this.model.set('text', this.ui.textInput.val())
@@ -322,7 +326,6 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             setTextDuration: function() {
                 let self = this
-                console.log('update')
                 api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function(response) {
                     self.model.set('duration', response.length)
                 })
