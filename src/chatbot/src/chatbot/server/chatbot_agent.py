@@ -501,7 +501,7 @@ def get_responding_characters(lang, sid):
             generic.set_properties(character.get_properties())
             responding_characters.append(generic)
     else:
-        logger.warn("Generic character is not found")
+        logger.info("Generic character is not found")
 
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
@@ -526,7 +526,6 @@ def ask(question, lang, sid, query=False, request_id=None, **kwargs):
     return (response dict, return code)
     """
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
-    response['yousaid'] = question
 
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -540,10 +539,17 @@ def ask(question, lang, sid, query=False, request_id=None, **kwargs):
         logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
 
+    # Handle commands
+    if question == ':reset':
+        session_manager.dump(sid)
+        session_manager.reset_session(sid)
+        logger.warn("Session {} is reset by :reset".format(sid))
     for c in responding_characters:
         if c.is_command(question):
             response.update(c.respond(question, lang, sess, query, request_id))
             return response, SUCCESS
+
+    response['yousaid'] = question
 
     sess.set_characters(responding_characters)
     if RESET_SESSION_BY_HELLO and question:
@@ -551,7 +557,7 @@ def ask(question, lang, sid, query=False, request_id=None, **kwargs):
         if 'hi' in question_tokens or 'hello' in question_tokens:
             session_manager.dump(sid)
             session_manager.reset_session(sid)
-            logger.warn("Session is reset by greeting")
+            logger.warn("Session {} is reset by greeting".format(sid))
     if question and question.lower().strip() in ["what's new"]:
         sess.last_used_character = None
         sess.open_character = None
