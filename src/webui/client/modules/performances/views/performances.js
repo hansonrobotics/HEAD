@@ -223,7 +223,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             showSettings: function() {
                 let settingsView = new SettingsView({
                     path: this.currentPath,
-                    collection: this.collection
+                    collection: this.collection,
+                    layoutView: this.layoutView
                 })
 
                 bootbox.dialog({

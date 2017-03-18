@@ -30,7 +30,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 'click @ui.saveButton': 'save'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['path'])
+                this.mergeOptions(options, ['path', 'layoutView'])
                 if (!this.model) this.model = new Settings({}, {path: this.path})
                 this.performance = this.collection.get(this.path)
             },
@@ -64,28 +64,36 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 this.ui.name.val(path.basename(this.performance.get('id')))
             },
             save: function() {
-                let self = this,
-                    name = this.ui.name.val()
+                let self = this
 
                 this.setVariables()
                 this.setKeywords()
 
-                if (this.performance && this.performance.get('name') !== name) {
-                    this.performance.save({name: name}, {
-                        error: function() {
-                            App.Utilities.showPopover(self.ui.name, 'Error saving performance', 'right')
-                        }
-                    })
-                }
-
                 this.model.save({}, {
                     success: function() {
+                        self.updatePerformanceName()
                         App.Utilities.showPopover(self.ui.saveButton, 'Saved', 'right')
                     },
                     error: function() {
                         App.Utilities.showPopover(self.ui.saveButton, 'Unable to save', 'right')
                     }
                 })
+            },
+            updatePerformanceName: function() {
+                let self = this,
+                    name = this.ui.name.val()
+
+                if (this.performance && this.performance.get('name') !== name) {
+                    this.performance.save({name: name}, {
+                        success: function(p) {
+                            self.model.path = p.id
+                            self.layoutView.performancesView.navigate(p.id)
+                        },
+                        error: function() {
+                            App.Utilities.showPopover(self.ui.name, 'Error saving performance', 'right')
+                        }
+                    })
+                }
             },
             showVariables: function() {
                 let self = this

@@ -66,8 +66,7 @@ module.exports = {
     },
     parseTimeline: function(id, performance, options) {
         performance['id'] = id
-        performance['path'] = path.dirname(id)
-        performance['path'] = performance['path'] === '.' ? '' : performance['path']
+        performance['path'] = path.dirname(id).replace('.', '')
         performance['name'] = path.basename(id)
 
         if ('skip_nodes' in options && options['skip_nodes'])
@@ -77,56 +76,82 @@ module.exports = {
     },
     update: function(dir, id, performance) {
         let self = this,
-            timelines = []
+            timelines = [],
+            // use this path for all timelines
+            p = id
 
         if ('timelines' in performance) {
             timelines = performance['timelines']
-            // if ('previous_id' in performance)
-            //     mv(path.join(dir, performance['previous_id']), path.join(dir, id))
             mkdirp.sync(path.join(dir, id))
+
+            // remove timelines not included in the current performances
+            let ids = timelines.map(t => t.id),
+                deleteIds = _.pullAll(
+                    glob.sync(path.join(dir, id, '*.yaml')).map(f => path.relative(dir, f).replace(this.ext, '')), ids)
+
+            deleteIds.forEach(function(id) {
+                self.remove(dir, id)
+            })
         } else {
             timelines = [performance]
+            p = path.dirname(performance['id']).replace('.', '')
         }
 
         _.each(timelines, function(timeline, i) {
-            let current
+            timeline['id'] = path.join(p, path.basename(timeline['id']))
+            let current,
+                ignoreNodes = 'ignore_nodes' in timeline && timeline['ignore_nodes']
 
             if ('previous_id' in timeline) {
-                current = self.get(dir, timeline['previous_id'])
+                if (ignoreNodes)
+                    current = self.get(dir, timeline['previous_id'])
+
+                // remove previous timeline
                 self.remove(dir, timeline['previous_id'])
-                delete timeline['previous_id']
             }
 
-            if (!current) current = self.get(dir, timeline['id'])
-
-            if (current && 'ignore_nodes' in timeline && timeline['ignore_nodes'] && 'nodes' in current) {
+            if (ignoreNodes && !current) current = self.get(dir, timeline['id'])
+            if (current && ignoreNodes && 'nodes' in current) {
                 timeline['nodes'] = current['nodes']
-                delete timeline['ignore_nodes']
-            } else
+            }
+
+            if ('nodes' in timeline)
                 for (let node of timeline['nodes'])
                     delete node['id'];
 
-            delete timeline['path']
+            for (let k of ['path', 'ignore_nodes', 'previous_id'])
+                delete timeline[k]
+
             timelines[i] = timeline
         })
 
+        // save performances separately so that all the obsolete file are already deleted
         _.each(timelines, function(timeline) {
             let id = timeline['id']
             delete timeline['id']
             yamlIO.writeFile(path.join(dir, id + self.ext), timeline)
         })
 
+        if ('previous_id' in performance && 'timelines' in performance) {
+            let propFilename = path.join(dir, performance['previous_id'], '.properties')
+            if (fs.existsSync(propFilename))
+                fs.renameSync(propFilename, path.join(dir, performance['id'], '.properties'))
+            this.remove(dir, performance['previous_id'])
+        }
+
         return this.get(dir, id)
     },
     remove: function(dir, id) {
         let p = path.join(dir, id)
         if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
-            rimraf.sync(p, {}, function() {})
+            rimraf.sync(p, {}, function(e) {
+                if (e) console.log(e)
+            })
         } else
             try {
                 fs.unlinkSync(p + this.ext)
             } catch (e) {
-                console.log(e)
+                console.log('Error: ', e)
             }
         return true
     },

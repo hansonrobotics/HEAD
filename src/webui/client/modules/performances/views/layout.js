@@ -42,7 +42,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 'hidden.bs.modal @ui.saveChangesModal': 'saveChangesHide'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit'])
+                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue',
+                    'disableSaving', 'allowEdit', 'queueHeight'])
                 this.performances = new PerformanceCollection()
                 this.queueCollection = new QueueCollection()
             },
@@ -58,7 +59,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 this.queueView = new QueueView({
                     collection: this.queueCollection,
                     readonly: this.readonly,
-                    layoutView: this
+                    layoutView: this,
+                    height: this.queueHeight
                 })
                 this.performancesView = new PerformancesView({
                     collection: self.performances,

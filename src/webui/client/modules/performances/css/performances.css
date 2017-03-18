@@ -30,6 +30,16 @@
     width: 390px;
 }
 
+.app-performance-queue {
+    position: relative;
+    overflow: hidden;
+}
+
+.app-performance-queue .ps-scrollbar-x-rail,
+.app-performance-queue .ps-scrollbar-y-rail {
+    z-index: 99999999;
+}
+
 .app-nodes,
 .performance-name-container,
 .performance-action-buttons,

@@ -28,6 +28,8 @@ module.exports = Marionette.View.extend({
         this.ui.duration.html(performance.getDuration().toFixed(2))
         if (!this.queueView.playEnabled)
             this.ui.playButton.hide()
+
+        if (this.readonly) this.ui.removeButton.hide()
     },
     play: function(e) {
         e.stopPropagation()
