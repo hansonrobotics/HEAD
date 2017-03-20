@@ -317,6 +317,7 @@ read_workspace() {
         exit 1;
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
+    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 ############# End of Common #############
