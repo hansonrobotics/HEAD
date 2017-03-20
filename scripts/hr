@@ -280,24 +280,11 @@ hr_build() {
     info "hr build $@"
 }
 
-_hr_list_install_components() {
-    local funcs=$(compgen -A function|grep -E "^install_.*")
+list_components() {
+    arg=$1
+    local funcs=$(compgen -A function|grep -E "^${1}_.*")
     for f in ${funcs[@]}; do
-        echo ${f#install_};
-    done
-}
-
-_hr_list_build_components() {
-    local funcs=$(compgen -A function|grep -E "^build_.*")
-    for f in ${funcs[@]}; do
-        echo ${f#build_};
-    done
-}
-
-_hr_list_clone_components() {
-    local funcs=$(compgen -A function|grep -E "^clone_.*")
-    for f in ${funcs[@]}; do
-        echo ${f#clone_};
+        echo ${f#${1}_};
     done
 }
 
