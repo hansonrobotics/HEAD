@@ -347,7 +347,11 @@ hr_install() {
 }
 
 hr_build() {
-    info "hr build $@"
+    read_workspace
+    for arg in $@; do
+        local func=build_${arg}
+        eval $func
+    done
 }
 
 hr_run() {
@@ -946,6 +950,39 @@ _get_models() {
     wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
     checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+}
+
+build_hr() {
+    cd $HR_WORKSPACE/HEAD
+    source /opt/ros/indigo/setup.bash
+    if [[ ! -d .catkin_tools ]]; then
+        catkin init
+    fi
+
+    catkin config --blacklist icog_face_tracker
+    catkin build --force-cmake -j$(nproc) --no-status --make-args install
+    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages/
+    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --upgrade --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --upgrade --no-deps
+    cd $HR_WORKSPACE/HEAD/src/webui
+    npm install
+}
+
+build_opencog() {
+    info "Building OpenCog"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        if [[ $repo != 'relex' && $repo != 'external-tools' ]]; then
+            if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
+                mkdir $HR_WORKSPACE/opencog/$repo/build
+            fi
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && $SUDO make install
+        fi
+        if [[ $repo == 'relex' ]]; then
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && $SUDO ant install
+        fi
+    done
+    info "Building OpenCog is done"
 }
 
 ############# End of Functions #############
