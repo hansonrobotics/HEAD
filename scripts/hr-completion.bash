@@ -34,6 +34,9 @@ _hr() {
     get)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
+    clean)
+      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
+      ;;
     run)
       COMPREPLY=()
       ;;

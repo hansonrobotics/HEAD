@@ -407,7 +407,11 @@ EOF
 }
 
 hr_clean() {
-    info "hr clean"
+    read_workspace
+    for arg in $@; do
+        local func=clean_${arg}
+        eval $func
+    done
 }
 
 hr_env() {
@@ -985,6 +989,38 @@ build_opencog() {
     info "Building OpenCog is done"
 }
 
+clean_hr() {
+    info "Cleaning up HR"
+    for repo in ${HR_REPOS[*]}; do
+        cd $HR_WORKSPACE/$repo
+        if [[ -d .catkin_tools ]]; then
+            catkin clean -y || catkin clean -a
+        fi
+    done
+    info "HR is cleaned"
+}
+
+clean_opencog() {
+    info "Cleaning up OpenCog"
+    rm -r ~/.cache/guile
+    rm -r ~/.hr/cache/oc_aiml
+    if [[ ! -z $HR_WORKSPACE ]]; then
+        for repo in ${OPENCOG_REPOS[*]}
+        do
+            if [[ $repo != 'relex' ]]; then
+                $SUDO rm -r $HR_WORKSPACE/opencog/$repo/build
+            fi
+        done
+    fi
+    $SUDO rm -r /usr/local/include/opencog
+    $SUDO rm -r /usr/local/lib/opencog
+    $SUDO rm -r /usr/local/share/opencog
+    $SUDO rm /usr/local/bin/cogserver
+    $SUDO rm /usr/local/etc/cogserver.conf
+    $SUDO rm /usr/local/etc/opencog.conf
+    $SUDO rm /usr/local/lib/libcogutil.so
+    info "OpenCog is cleaned"
+}
 ############# End of Functions #############
 
 ############# Main #############
