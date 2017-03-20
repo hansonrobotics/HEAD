@@ -11,9 +11,8 @@ BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 ############# Configurations #############
 HR_VERSION=0.1.2
 
-PROJECT=${PROJECT:-HEAD}
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
-HR_REPOS=($PROJECT)
+HR_REPOS=(HEAD)
 GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
 declare -A MD5SUMS
 
@@ -335,6 +334,37 @@ get_hr() {
     info "Cloning HR source code is done"
 }
 
+get_models() {
+    _get_models
+}
+
+_get_models() {
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    local old_dir=${HOME}/.hr/cache/models
+    if [[ -d ${old_dir} ]]; then
+        for f in ${old_dir}/*; do
+            [[ -f "$f" ]] || continue
+            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
+                mv ${f} ${HR_MODELS}/
+            fi
+        done
+    fi
+
+    # openface
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${HR_MODELS}
+    bunzip2 -f ${HR_MODELS}/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${HR_MODELS}
+
+    # markov
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+}
+
 check_or_create_ws() {
     [[ ! -z $1 ]]
     if [[ ! -d $1 ]]; then
@@ -485,6 +515,53 @@ install_ros() {
     info "Installing ROS is done"
 }
 
+install_opencog_deps() {
+    info "Installing OpenCog dependencies"
+    local pkgs=(
+        cmake ccache
+        binutils-dev
+        libboost-dev libboost-date-time-dev libboost-filesystem-dev
+        libboost-program-options-dev libboost-regex-dev
+        libboost-serialization-dev libboost-system-dev libboost-thread-dev
+        guile-2.0-dev cython
+    )
+    apt_get_install "${pkgs[@]}"
+
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
+    chmod +rx octool
+    ./octool -dpv
+    rm octool
+
+    # For sentiment analysis
+    $SUDO pip2 install ${PIP_OPTS} nltk
+    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
+
+    # For random sentence generator
+    install_marky_markov
+
+    install_relex_deps
+
+    info "Installing OpenCog dependencies is done"
+}
+
+install_marky_markov() {
+    info "Installing Marky Markov"
+    if [ ! -d $MARKY_MARKOV_DIR ]; then
+      git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
+    else
+      warn "Skipping marky_markov clone"
+    fi
+    MD5SUMS["markov_modeling.tar.gz"]=7d51bbcd4df89b2633bd9520fb99b2b7
+    wget_cache $GITHUB_STORAGE_URL/markov_modeling.tar.gz
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+
+    add_ppa ppa:brightbox/ruby-ng
+    apt_get_install ruby2.3 ruby2.3-dev
+    $SUDO gem install marky_markov
+    info "Installing Marky Markov is done"
+}
+
 install_link-grammar() {
     info "Installing Link-Grammar"
 
@@ -504,16 +581,384 @@ install_link-grammar() {
     cd $BASEDIR
     info "Installing Link-Grammar done"
 }
+
+install_relex_deps() {
+    info "Installing RelEX dependencies"
+    local pkgs=(
+        build-essential python-dev swig zlib1g-dev unzip wget
+        wordnet-dev wordnet-sense-index
+        openjdk-7-jdk
+        ant libcommons-logging-java libgetopt-java
+    )
+    apt_get_install "${pkgs[@]}"
+
+    if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
+        install_link_grammar
+    fi
+
+    # Java WordNet Library
+    if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
+        MD5SUMS["jwnl14-rc2.zip"]=c1c35ce1d1590938abe48d7785f87ae0
+        wget_cache $GITHUB_STORAGE_URL/jwnl14-rc2.zip
+        unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+        $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
+        $SUDO rm -r /tmp/jwnl14-rc2
+        $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    fi
+    info "Installing RelEX dependencies is done"
+}
+
+install_pocketsphinx() {
+    if [[ -f /opt/hansonrobotics/lib/pkgconfig/pocketsphinx.pc && -f /opt/hansonrobotics/lib/pkgconfig/sphinxbase.pc ]]; then
+        info "Pocketsphinx is already installed."
+        return
+    fi
+    info "Installing Pocketsphinx"
+    apt_get_install bison automake
+    MD5SUMS["sphinxbase-1.0.0.tar.gz"]=df69f72b19abd943cfc4b51ec30a3b29
+    MD5SUMS["pocketsphinx-1.0.0.tar.gz"]=b94bf391c22b6dd4c86a8c112aa62f48
+    wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
+    wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
+
+    tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
+    cd /tmp/sphinxbase-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
+    $SUDO rm -r /tmp/sphinxbase-1.0.0
+
+    tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
+    cd /tmp/pocketsphinx-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
+    $SUDO rm -r /tmp/pocketsphinx-1.0.0
+    cd $BASEDIR
+    info "Installing Pocketsphinx is done"
+}
+
+install_blender() {
+    info "Installing blender"
+    add_ppa ppa:irie/blender
+    apt_get_install blender
+    info "Installing blender done"
+}
+
+install_ffmpeg() {
+    info "Installing ffmpeg"
+    # For blender_api_test
+    add_ppa ppa:mc3man/trusty-media
+    apt_get_install ffmpeg
+    info "Installing ffmpeg done"
+}
+
+install_other_deps() {
+    info "Installing other dependencies"
+    local pkgs=()
+
+    # For rosbridge_server
+    pkgs+=(python-bson)
+
+    # For pololu-motors
+    # DO NOT UPGRADE WITH PIP
+    pkgs+=(python-serial)
+
+    # For Blender
+    pkgs+=(python3-numpy)
+
+    # For running scripts
+    pkgs+=(tmux)
+
+    # For tts playing audio
+    pkgs+=(python-pyglet)
+
+    # For chatbot
+    pkgs+=(python-yaml)
+
+    # Swig for iflytek SDK
+    pkgs+=(swig)
+
+    # For rospy to run with python3
+    pkgs+=(python3-yaml)
+
+    # For telnet automation
+    pkgs+=(expect)
+
+    # For audio recording
+    pkgs+=(pulseaudio python-pyaudio)
+
+    # For window layout
+    pkgs+=(xdotool)
+
+    apt_get_install "${pkgs[@]}"
+
+    # For chatbot
+    $SUDO pip2 install num2words
+
+    # For Chinese tts
+    $SUDO pip2 install ${PIP_OPTS} pinyin==0.2.5
+
+    # For speech2command
+    $SUDO pip2 install ${PIP_OPTS} pyparsing
+
+    # For performances
+    $SUDO pip2 install transitions
+
+    # For webui
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
+
+    info "Installing other dependencies is done"
+}
+
+install_manyears_deps() {
+    info "Installing Manyears dependencies"
+    if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
+        # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+        MD5SUMS["manyears.tar.gz"]=cf8688959e6d6a7ea9cdd1167814862a
+        wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+        mkdir -p $MANYEARSLIB_PREFIX
+        tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
+        mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+    else
+        info "Manyears is already installed"
+    fi
+    info "Installing Manyears dependencies is done"
+}
+
+install_test_deps() {
+    info "Installing test dependencies"
+    apt_get_install socat
+
+    # WebUI compatable webserver
+    $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
+    info "Installing test dependencies is done"
+
+    # for python test coverage
+    $SUDO pip install coverage
+}
+
+install_webui_deps() {
+    # Remove npm and nodejs if needed
+    # sudo npm uninstall -g npm
+    # sudo apt-get remove nodejs
+
+    # See https://github.com/nodesource/distributions#debinstall
+    if ! hash nodejs; then
+        info "Installing nodejs"
+        curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
+        apt_get_install nodejs
+        info "Installing nodejs done"
+    fi
+    if ! npm ls -g webpack >/dev/null; then
+        $SUDO npm install -g webpack
+    fi
+    if ! npm ls -g nodemon >/dev/null; then
+        $SUDO npm install -g nodemon
+    fi
+}
+
+install_opencv() {
+    if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
+        MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
+        wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
+        $SUDO rm -rf /tmp/opencv-2.4.11
+        unzip ${HR_CACHE}/opencv-2.4.11.zip -d /tmp
+        cd /tmp/opencv-2.4.11
+        mkdir build
+        cd build
+        cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        $SUDO rm -rf /tmp/opencv-2.4.11
+        cd ${HR_WORKSPACE}
+    fi
+}
+
+install_openbiometrics() {
+    apt_get_install --force-yes qt5-default libqt5svg5-dev
+    install_opencv
+    if [[ ! -f ${HR_PREFIX}/lib/libopenbr.so ]]; then
+        if [ ! -d ${OPENBR_SRC_DIR} ]; then
+            info "Cloning openbr"
+            git clone https://github.com/biometrics/openbr.git ${OPENBR_SRC_DIR}
+        fi
+        cd ${OPENBR_SRC_DIR}
+        git checkout v1.1.0
+        git submodule init
+        git submodule update
+
+        mkdir -p ${OPENBR_SRC_DIR}/build
+        cd ${OPENBR_SRC_DIR}/build
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        cd ${HR_WORKSPACE}
+    fi
+}
+
+install_dlib() {
+    if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
+      info "Installing dlib"
+      # The dlib DNS server sometimes times out. Pinging it first
+      # makes it much more likely that the wget will succeed.
+      ping -c 5 dlib.net
+      MD5SUMS["dlib-${DLIB_VERSION}.tar.bz2"]=da930a35c2aa88612dd2ebf893f48f60
+      wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
+      mkdir -p $DLIB_PATH
+      tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
+      cd $DLIB_PATH && python setup.py build
+      info "Installing dlib is done"
+    else
+      warn "Skipping dlib installation"
+    fi
+
+}
+
+install_clandmarks() {
+    # Install clandmarks
+    if [ ! -d $CLANDMARK_DIR ]; then
+      info "Installing clandmarks"
+      MD5SUMS["clandmark.tar.bz2"]=0d1eb90bad2c02fb38aed4e464555f02
+      wget_cache $GITHUB_STORAGE_URL/clandmark.tar.bz2
+      mkdir -p $CLANDMARK_DIR
+      tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
+      info "Installing clandmarks is done"
+    else
+      warn "Skipping clandmark downloading"
+    fi
+}
+
+install_torch() {
+    if [ ! -d $TORCH_DIR ]; then
+        info "Installing torch"
+        git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
+
+        cd $TORCH_DIR
+        bash install-deps
+        echo no | ./install.sh
+
+        # Install lua packages in the torch file in scripts directory.
+        info "Installing lua packages"
+        cd $TORCH_DIR/install/bin
+        ./luarocks install nn
+        ./luarocks install dpnn
+        ./luarocks install image
+        ./luarocks install optim
+        ./luarocks install csvigo
+        ./luarocks install sys
+        info "Installing lua packages is done"
+        info "Installing torch is done"
+        cd $BASEDIR
+    else
+        warn "Skipping Torch installation"
+    fi
+}
+
+install_openface() {
+    info "Installing openface"
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+    apt_get_install python-skimage
+    $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
+
+    if [ ! -d $OPENFACE_DIR ]; then
+      info "Cloning openface"
+      git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
+    else
+      warn "Skipping openface clone"
+    fi
+    info "Installing openface is done"
+
+    # $OPENFACE_DIR/models/get-models.sh
+    MD5SUMS["nn4.small2.v1.t7"]=c95bfd8cc1adf05210e979ff623013b6
+    MD5SUMS["celeb-classifier.nn4.small2.v1.pkl"]=199a2c0d32fd0f22f14ad2d248280475
+    MD5SUMS["shape_predictor_68_face_landmarks.dat.bz2"]=677a91476056de0507f1915adc7ef86a
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
+        wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+        bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
+    fi
+    checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
+    mkdir -p $OPENFACE_DIR/models/dlib
+    mkdir -p $OPENFACE_DIR/models/openface
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ${OPENFACE_DIR}/models/dlib
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
+    cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
+}
+
+install_cmt() {
+    if [ ! -d $CPPMT_DIR ]; then
+        info "Cloning CppMT"
+        git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+        cd $CPPMT_DIR
+        git checkout wrapper
+    else
+        warn "Skipping CppMT clone"
+    fi
+
+    if [ ! -f $CPPMT_DIR/cmt ]; then
+        cd $CPPMT_DIR
+        cmake .
+        make -j$(nproc)
+    fi
+    cd $BASEDIR
+}
+
+install_emotime() {
+    if [ ! -d $EMOTIME_DIR ]; then
+      info "Cloning emotime"
+      git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
+    else
+      warn "Skipping emotime clone"
+    fi
+    cd $EMOTIME_DIR/build
+    cmake ..
+    make -j$(nproc)
+}
+
+install_vision_deps() {
+    info "Installing vision dependencies"
+    mkdir -p $VISION_TOOL_PREFIX
+    apt_get_install libopencv-dev ros-indigo-opencv-apps
+
+    # Tkinter error other wise.
+    $SUDO pip2 install ${PIP_OPTS} -I Pillow
+    $SUDO pip2 install ${PIP_OPTS} imgurpython
+
+    install_dlib
+    install_clandmarks
+    install_torch
+    install_openface
+    install_cmt
+    install_emotime
+    install_openbiometrics
+
+    info "Installing vision dependencies is done"
+}
+
+install_calib_tools() {
+    MD5SUMS["maestro-linux-150116.tar.gz"]=84feed740c0695bb0eea13ccf7988b97
+    wget_cache $GITHUB_STORAGE_URL/maestro-linux-150116.tar.gz
+    mkdir -p ${HR_PREFIX}/maestro
+    tar zxf ${HR_CACHE}/maestro-linux-150116.tar.gz -C ${HR_PREFIX}/maestro --strip-components 1
+    apt_get_install libusb-1.0-0-dev mono-runtime libmono-winforms2.0-cil
+    $SUDO cp ${HR_PREFIX}/maestro/99-pololu.rules /etc/udev/rules.d/
+    #$SUDO udevadm control --reload-rules
+
+    MD5SUMS["mx_calib"]=5e34a64564df92c116f027a9ff48a11b
+    wget_cache $GITHUB_STORAGE_URL/mx_calib
+    if [[ ! -f ${HR_PREFIX}/bin/mx_calib ]]; then
+        $SUDO cp ${HR_CACHE}/mx_calib ${HR_PREFIX}/bin
+        $SUDO chmod +x ${HR_PREFIX}/bin/mx_calib
+    fi
+}
+
 ############# End of Functions #############
 
 ############# Main #############
 show_help() {
 cat << EOF
-Usage: $0 <command> [<args>]
+Hanson Robotics Software Management Tool
+
+Usage: hr <command> [<args>]
 
   Supported commands:
+
     install <component> [<component>] ...
-        install components
 
     build <component> [<component>] ...
 
@@ -525,7 +970,6 @@ Usage: $0 <command> [<args>]
     run <function> [<args>]
 
     env
-        show env
 EOF
 }
 
