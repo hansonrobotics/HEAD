@@ -1,0 +1,392 @@
+#!/usr/bin/env bash
+#
+# hr.sh
+#
+# Hanson Robotics software stack management tool
+
+set -e
+
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+
+############# Configurations #############
+HR_VERSION=0.1.2
+
+PROJECT=${PROJECT:-HEAD}
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
+INSTALL_COMPONENTS=(all basic ros link-grammar)
+BUILD_COMPONENTS=(opencog head)
+HR_REPOS=($PROJECT)
+GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
+declare -A MD5SUMS
+
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
+HR_PREFIX=/opt/hansonrobotics
+HR_CACHE=$HOME/.hr/cache
+HR_MODELS=$HOME/.hr/models
+if [[ -z $APT_CACHE ]]; then
+    APT_CACHE=0
+fi
+if [[ -z $PIP_CACHE ]]; then
+    PIP_CACHE=0
+fi
+APT_CACHE_DIR=$HR_CACHE/archives
+PIP_CACHE_DIR=$HR_CACHE/pip
+LOG_DIR="$HOME/.hr/log"
+VISION_TOOL_PREFIX=$HR_PREFIX/vision
+DLIB_DIR=$VISION_TOOL_PREFIX/dlib
+TORCH_DIR=$VISION_TOOL_PREFIX/torch
+OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
+CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+OPENBR_SRC_DIR=$VISION_TOOL_PREFIX/openbr
+CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
+MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
+DLIB_VERSION=19.0
+
+export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
+
+# Needed for compiling
+export OpenBR_DIR=$HR_PREFIX/share/openbr/cmake
+export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$HR_PREFIX
+export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_PREFIX/lib:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
+
+INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
+
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
+export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export PATH=/usr/lib/ccache:$PATH
+
+ASSUME_YES=0
+
+APT_GET_OPTS="-y"
+if [[ $APT_CACHE == 1 ]]; then
+    APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
+fi
+
+PIP_OPTS=""
+if [[ $PIP_CACHE == 1 ]]; then
+    PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
+fi
+############# End of Configurations #############
+
+############# Common #############
+COLOR_INFO='\033[32m'
+COLOR_WARN='\033[33m'
+COLOR_ERROR='\033[31m'
+COLOR_RESET='\033[0m'
+info() {
+    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n"
+}
+warn() {
+    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n"
+}
+error() {
+    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
+}
+
+SUDO=""
+if [[ $(id -u) != 0 ]]; then
+    SUDO="sudo"
+fi
+
+md5str() {
+  local FNAME=$1
+  case $(uname) in
+    "Linux")
+      echo $(md5sum "$FNAME" | cut -d ' ' -f 1)
+      ;;
+    "Darwin")
+      echo $(md5 -q "$FNAME")
+      ;;
+  esac
+}
+
+checkmd5() {
+    local FNAME=$1
+    if [[ ! -f $FNAME ]]; then
+        error "$FNAME is not a file"
+        return 1
+    fi
+    local EXPECTED=$2
+    local ACTUAL=$(md5str "$FNAME")
+    if [ $EXPECTED = $ACTUAL ]; then
+        info "$FNAME: successfully checked"
+        return 0
+    else
+        error "$FNAME md5sum did not match."
+        error "Expected: $EXPECTED"
+        error "Actual: $ACTUAL"
+        mv ${FNAME} ${FNAME}.old && warn "$FNAME is removed"
+        return 1
+    fi
+}
+
+timeit() {
+    local start=$(date +%s.%N)
+    $@
+    local elapsed=$(echo "$(date +%s.%N)-$start" | bc)
+    info "Time used $elapsed"
+}
+
+check_apt_installed() {
+    # Check if the given debian packages are installed
+    local pkgs=$@
+    local s
+    local v
+    local ver
+    local pkg
+    for pkg in $pkgs; do
+        if [[ ${pkg} =~ .*"=".* ]]; then
+            ver=${pkg##*=}
+            pkg=${pkg%=*}
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}=${Version}' "$pkg")
+            v=${s##*=}
+            s=${s%=*}
+            if [[ $ver != $v || ${#s} != 3 || ${s:1:1} != 'i' ]]; then
+                return 1
+            else
+                info "$pkg=$ver is already installed"
+            fi
+        else
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}' "$pkg")
+            if [[ ${#s} != 3 || ${s:1:1} != 'i' ]]; then
+                return 1
+            else
+                info "$pkg is already installed"
+            fi
+        fi
+    done
+}
+
+apt_get_install() {
+    if ! check_apt_installed "$@"; then
+        $SUDO apt-get ${APT_GET_OPTS} install "$@" || (
+            $SUDO apt-get ${APT_GET_OPTS} update &&
+            $SUDO apt-get ${APT_GET_OPTS} install "$@")
+    fi
+}
+
+add_ppa() {
+    user=$(echo $1|cut -d: -f2|cut -d/ -f1)
+    ppa=$(echo $1|cut -d: -f2|cut -d/ -f2)
+    for file in `find /etc/apt/ -name \*.list`; do
+        set +e
+        item=$(grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $file)
+        set -e
+        USER=`echo $item | cut -d/ -f4`
+        PPA=`echo $item | cut -d/ -f5`
+        if [[ $USER == $user && $PPA == $ppa ]]; then
+            info "PPA $1 is already added"
+            return 0
+        fi
+    done
+    info $SUDO add-apt-repository -y $1
+    $SUDO add-apt-repository -y $1
+}
+
+curl_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                curl -L ${url} -o ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
+    info "Downloading $1 is done"
+}
+
+wget_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                wget ${url} -O ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
+    info "Downloading $1 is done"
+}
+############# End of Common #############
+
+############# Entries #############
+hr_install() {
+    # validate arguments
+    local funcs=$(compgen -A function|grep -E "^install_*")
+    for arg in $@; do
+        local func=install_${arg}
+        local found=0
+        for f in $funcs; do
+            if [[ $f == $func ]]; then
+                found=1
+            fi
+        done
+        if [[ $found == 0 ]]; then
+            error "Invalid argument $arg"
+            exit 1
+        fi
+    done
+
+    # execute
+    for arg in $@; do
+        local func=install_${arg}
+        eval $func
+    done
+}
+
+hr_build() {
+    info "hr build $@"
+}
+
+_hr_list_install_components() {
+    echo ${INSTALL_COMPONENTS[@]}
+}
+
+_hr_list_build_components() {
+    echo ${BUILD_COMPONENTS[@]}
+}
+
+hr_run() {
+    local func=$1
+    shift
+    $func $@
+}
+############# End of Entries #############
+
+############# Functions #############
+install_all() {
+    install_basic
+    install_ros
+}
+
+install_basic() {
+    info "Installing basic dependencies"
+    local pkgs=(git wget telnet python3-pip python-pip build-essential
+            software-properties-common)
+    apt_get_install "${pkgs[@]}"
+    info "Installing basic dependencies is done"
+}
+
+install_ros() {
+    info "Installing ROS"
+    $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
+    local pkgs=(
+        ros-indigo-desktop
+        ros-indigo-tf
+        ros-indigo-driver-common
+        ros-indigo-cv-bridge
+        ros-indigo-image-transport
+        ros-indigo-openni-camera
+        ros-indigo-mjpeg-server
+        ros-indigo-usb-cam
+        ros-indigo-dynamixel-motor
+        ros-indigo-robot-state-publisher
+        ros-indigo-joint-state-publisher
+        ros-indigo-rosbridge-server
+        python-catkin-tools
+    )
+
+    # for camera calibration
+    pkgs+=(ros-indigo-image-proc)
+
+    apt_get_install "${pkgs[@]}"
+
+    # for blender to find ros packages
+    $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
+
+    if [[ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]]; then
+        $SUDO rosdep init -q
+        rosdep update -q
+    fi
+    info "Installing ROS is done"
+}
+
+install_link-grammar() {
+    info "Installing Link-Grammar"
+
+    MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
+    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
+
+    $SUDO rm -rf /tmp/link-grammar-5.3.13
+    tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
+    mkdir -p /tmp/link-grammar-5.3.13/build
+    cd /tmp/link-grammar-5.3.13/build
+    JAVA_HOME=/usr/lib/jvm/default-java
+    ../configure
+    make -j$(nproc)
+    $SUDO make install
+    $SUDO ldconfig
+    $SUDO rm -rf /tmp/link-grammar-5.3.13
+    cd $BASEDIR
+    info "Installing Link-Grammar done"
+}
+############# End of Functions #############
+
+############# Main #############
+show_help() {
+cat << EOF
+Usage: $0 <command> [<args>]
+  Supported commands:
+    install <component> [<component>] ...
+    build <component> [<component>] ...
+    run <function> [<args>]
+EOF
+}
+
+execute() {
+    case "$1" in
+        install)
+            shift
+            hr_install $@
+            ;;
+        build)
+            shift
+            hr_build $@
+            ;;
+        run)
+            shift
+            hr_run $@
+            ;;
+        *)
+            warn "Unknown argument $1"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+if [[ ! $BASH_SOURCE == $0 ]]; then return; fi
+if [[ $# == 0 ]]; then show_help; exit 0; fi
+execute $@
+############# End of Main #############
