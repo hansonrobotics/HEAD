@@ -249,6 +249,19 @@ _get_confirm() {
     confirm=$?
 }
 
+clone() {
+    owner=$1
+    repo=$2
+    dest=${3-"."}/$repo
+    # if ssh clone failed, then try https clone
+    if [[ -d $dest ]]; then
+        info "$dest already exists"
+    else
+        info "Cloning $repo"
+        git clone git@github.com:$owner/$repo.git $dest || git clone https://github.com/$owner/$repo.git $dest
+        info "Cloning $repo is done"
+    fi
+}
 ############# End of Common #############
 
 ############# Entries #############
@@ -294,7 +307,15 @@ hr_run() {
     $func $@
 }
 
-hr_repo() {
+hr_get() {
+    read_workspace
+    for arg in $@; do
+        local func=get_${arg}
+        eval $func
+    done
+}
+
+get_opencog() {
     info "Cloning OpenCog source code"
     for repo in ${OPENCOG_REPOS[*]}
     do
@@ -302,6 +323,16 @@ hr_repo() {
         clone hansonrobotics $repo opencog
     done
     info "Cloning OpenCog source code is done"
+}
+
+get_hr() {
+    info "Cloning HR source code"
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo
+    done
+    info "Cloning HR source code is done"
 }
 
 check_or_create_ws() {
@@ -512,9 +543,9 @@ execute() {
             shift
             hr_run $@
             ;;
-        repo)
+        get)
             shift
-            hr_repo $@
+            hr_get $@
             ;;
         init)
             shift
