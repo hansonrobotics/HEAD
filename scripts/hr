@@ -237,6 +237,20 @@ wget_cache() {
 
     info "Downloading $1 is done"
 }
+
+_get_confirm() {
+    local message="${1:-Are you sure?}"
+    local answer
+    if [ "$ASSUME_YES" -eq 1 ] ; then
+        confirm=1
+        return
+    fi
+    printf '%s ' "$message"
+    read -r answer
+    ! printf '%s\n' "$answer" | grep -Eq "$(locale yesexpr)"
+    confirm=$?
+}
+
 ############# End of Common #############
 
 ############# Entries #############
@@ -281,6 +295,88 @@ hr_run() {
     shift
     $func $@
 }
+
+hr_repo() {
+    info "Cloning OpenCog source code"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo opencog
+    done
+    info "Cloning OpenCog source code is done"
+}
+
+check_or_create_ws() {
+    [[ ! -z $1 ]]
+    if [[ ! -d $1 ]]; then
+        local confirm
+        _get_confirm "The workspace ${1} does not exist, create? [y/N]"
+        if [[ ${confirm} -eq 1 ]]; then
+            mkdir -p ${1}
+            info "Workspace directory ${1} is created"
+        fi
+    fi
+}
+
+set_workspace() {
+    HR_WORKSPACE=${1:-$DEFAULT_HR_WORKSPACE}
+    if [[ ! "$HR_WORKSPACE" = /* ]]; then
+        HR_WORKSPACE=$(pwd)/$HR_WORKSPACE
+    fi
+    check_or_create_ws $HR_WORKSPACE
+    if [[ ! -d $HR_WORKSPACE ]]; then
+        error "HR_WORKSPACE is incorrect, exit"
+        exit 1;
+    fi
+    if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
+    if [[ $HR_WORKSPACE != '/' ]]; then
+        HR_WORKSPACE=${HR_WORKSPACE%/}
+    fi
+    export HR_WORKSPACE=$HR_WORKSPACE
+}
+
+hr_init() {
+    set_workspace $@
+    echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+cat <<EOF >>$HR_ENVFILE_PATH
+export HR_VERSION=$HR_VERSION
+export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export HR_PREFIX=$HR_PREFIX
+export HR_CACHE=$HR_CACHE
+
+export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
+export DLIB_DIR=$DLIB_DIR
+export TORCH_DIR=$TORCH_DIR
+export OPENFACE_DIR=$OPENFACE_DIR
+export CPPMT_DIR=$CPPMT_DIR
+export EMOTIME_DIR=$EMOTIME_DIR
+
+export MARKY_MARKOV_DIR=$MARKY_MARKOV_DIR
+export HR_MODELS=$HR_MODELS
+
+export ROS_LOG_DIR="$HOME/.hr/log"
+export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export LIBRARY_PATH=$LIBRARY_PATH
+export DLIB_PATH=$DLIB_PATH
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
+
+export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
+export OpenBR_DIR=$OpenBR_DIR
+
+if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
+  source $TORCH_DIR/install/bin/torch-activate
+fi
+EOF
+}
+
+hr_clean() {
+    info "hr clean"
+}
+
 ############# End of Entries #############
 
 ############# Functions #############
@@ -357,9 +453,17 @@ install_link-grammar() {
 show_help() {
 cat << EOF
 Usage: $0 <command> [<args>]
+
   Supported commands:
     install <component> [<component>] ...
+
     build <component> [<component>] ...
+
+    repo <repository> [<repository>] ...
+
+    init [workspace]
+        default workspace is ~/hansonrobotics
+
     run <function> [<args>]
 EOF
 }
@@ -377,6 +481,18 @@ execute() {
         run)
             shift
             hr_run $@
+            ;;
+        repo)
+            shift
+            hr_repo $@
+            ;;
+        init)
+            shift
+            hr_init $@
+            ;;
+        clean)
+            shift
+            hr_clean $@
             ;;
         *)
             warn "Unknown argument $1"
