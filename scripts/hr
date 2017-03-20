@@ -333,6 +333,26 @@ set_workspace() {
     export HR_WORKSPACE=$HR_WORKSPACE
 }
 
+read_workspace() {
+    if [[ -f $HR_ENVFILE_PATH ]]; then
+        local str=$(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
+        if [[ -z $str ]]; then
+            error "HR_WORKSPACE is not found in ${HR_ENVFILE_PATH}. Please run \"hr init\" first"
+            exit 1
+        else
+            HR_WORKSPACE=${str#export HR_WORKSPACE=}
+        fi
+    else
+        error "Workspace is not set. Please run \"hr init\" first"
+        exit 1
+    fi
+    if [[ ! -d $HR_WORKSPACE ]]; then
+        error "HR_WORKSPACE doens't exist. Please rerun \"hr init\""
+        exit 1;
+    fi
+    export HR_WORKSPACE=$HR_WORKSPACE
+}
+
 hr_init() {
     set_workspace $@
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
@@ -373,6 +393,14 @@ EOF
 
 hr_clean() {
     info "hr clean"
+}
+
+hr_env() {
+    if [[ -f $HR_ENVFILE_PATH ]]; then
+        cat $HR_ENVFILE_PATH
+    else
+        error "Please run \"hr init\""
+    fi
 }
 
 ############# End of Entries #############
@@ -454,15 +482,19 @@ Usage: $0 <command> [<args>]
 
   Supported commands:
     install <component> [<component>] ...
+        install components
 
     build <component> [<component>] ...
 
-    repo <repository> [<repository>] ...
+    get <repository> [<repository>] ...
 
     init [workspace]
         default workspace is ~/hansonrobotics
 
     run <function> [<args>]
+
+    env
+        show env
 EOF
 }
 
@@ -491,6 +523,10 @@ execute() {
         clean)
             shift
             hr_clean $@
+            ;;
+        env)
+            shift
+            hr_env $@
             ;;
         *)
             warn "Unknown argument $1"

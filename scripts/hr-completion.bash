@@ -9,7 +9,7 @@
 
 _hr() {
   local command
-  local hr_commands="init repo install build clean run"
+  local hr_commands="init get install build clean run env"
   local cur=${COMP_WORDS[COMP_CWORD]}
   local words=${COMP_WORDS[@]}
   local cword=$COMP_CWORD
