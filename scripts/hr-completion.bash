@@ -25,12 +25,16 @@ _hr() {
 
   case ${command} in
     install)
-      local components=$(hr run _hr_list_install_components 2> /dev/null)
-      COMPREPLY=($(compgen -W "${components}" -- ${cur}))
+      local args=$(hr run _hr_list_install_components 2> /dev/null)
+      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
     build)
-      local components=$(hr run _hr_list_build_components 2> /dev/null)
-      COMPREPLY=($(compgen -W "${components}" -- ${cur}))
+      local args=$(hr run _hr_list_build_components 2> /dev/null)
+      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
+      ;;
+    clone)
+      local args=$(hr run _hr_list_clone_components 2> /dev/null)
+      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
     run)
       COMPREPLY=()

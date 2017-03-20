@@ -13,8 +13,6 @@ HR_VERSION=0.1.2
 
 PROJECT=${PROJECT:-HEAD}
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
-INSTALL_COMPONENTS=(all basic ros link-grammar)
-BUILD_COMPONENTS=(opencog head)
 HR_REPOS=($PROJECT)
 GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
 declare -A MD5SUMS
@@ -283,11 +281,24 @@ hr_build() {
 }
 
 _hr_list_install_components() {
-    echo ${INSTALL_COMPONENTS[@]}
+    local funcs=$(compgen -A function|grep -E "^install_.*")
+    for f in ${funcs[@]}; do
+        echo ${f#install_};
+    done
 }
 
 _hr_list_build_components() {
-    echo ${BUILD_COMPONENTS[@]}
+    local funcs=$(compgen -A function|grep -E "^build_.*")
+    for f in ${funcs[@]}; do
+        echo ${f#build_};
+    done
+}
+
+_hr_list_clone_components() {
+    local funcs=$(compgen -A function|grep -E "^clone_.*")
+    for f in ${funcs[@]}; do
+        echo ${f#clone_};
+    done
 }
 
 hr_run() {
