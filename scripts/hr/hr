@@ -14,11 +14,13 @@ HR_VERSION=0.1.2
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=(HEAD)
 GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
+GITHUB_HR_EXT_URL=https://$GITHUB_TOKEN@raw.githubusercontent.com/hansonrobotics/private_ws/master/scripts/hr
 declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
 HR_PREFIX=/opt/hansonrobotics
+DEFAULT_HRTOOL_PREFIX=/usr/local/bin
 HR_CACHE=$HOME/.hr/cache
 HR_MODELS=$HOME/.hr/models
 if [[ -z $APT_CACHE ]]; then
@@ -362,7 +364,6 @@ hr_run() {
 }
 
 hr_get() {
-    read_workspace
     for arg in $@; do
         local func=get_${arg}
         eval $func
@@ -906,7 +907,55 @@ install_calib_tools() {
     fi
 }
 
+install_self() {
+    local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
+    if [[ ! -d $prefix ]]; then
+        mkdir -p $prefix
+    fi
+
+    if [[ $BASEDIR == $prefix ]]; then
+        error "hr Can't install itself"
+        exit 1
+    fi
+    $SUDO cp $BASEDIR/hr $prefix/hr-base
+    $SUDO chmod +x $prefix/hr-base
+    info "Copied hr to $prefix/hr-base"
+
+    $SUDO ln -sf -T hr-base $prefix/hr
+    info "Linked hr to $prefix/hr-base"
+
+    $SUDO cp $BASEDIR/hr-completion.bash /etc/bash_completion.d
+    info "Copied hr-completion.bash to /etc/bash_completion.d"
+}
+
+install_hr-ext() {
+    local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
+    if [[ ! -d $prefix ]]; then
+        mkdir -p $prefix
+    fi
+    local ext_url=$GITHUB_HR_EXT_URL
+    info "Getting hr-ext with $ext_url"
+    cd /tmp
+    curl -L -O ${ext_url}
+
+    if ! $(file /tmp/hr-ext | grep bash); then
+        error "Can't get hr-ext"
+        exit 1
+    fi
+
+    $SUDO cp /tmp/hr $prefix/hr-ext
+    info "Copied hr to $prefix/hr-ext"
+    $SUDO chmod +x $prefix/hr-ext
+
+    $SUDO ln -sf -T hr-ext $prefix/hr
+    info "Linked hr to $prefix/hr-ext"
+
+    rm /tmp/hr-ext
+    cd -
+}
+
 get_opencog() {
+    read_workspace
     info "Cloning OpenCog source code"
     for repo in ${OPENCOG_REPOS[*]}
     do
@@ -917,6 +966,7 @@ get_opencog() {
 }
 
 get_hr() {
+    read_workspace
     info "Cloning HR source code"
     for repo in ${HR_REPOS[*]}
     do
@@ -957,7 +1007,7 @@ _get_models() {
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
-build_hr() {
+build_head() {
     cd $HR_WORKSPACE/HEAD
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
