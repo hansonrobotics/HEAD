@@ -261,36 +261,6 @@ clone() {
         info "Cloning $repo is done"
     fi
 }
-############# End of Common #############
-
-############# Entries #############
-hr_install() {
-    # validate arguments
-    local funcs=$(compgen -A function|grep -E "^install_*")
-    for arg in $@; do
-        local func=install_${arg}
-        local found=0
-        for f in $funcs; do
-            if [[ $f == $func ]]; then
-                found=1
-            fi
-        done
-        if [[ $found == 0 ]]; then
-            error "Invalid argument $arg"
-            exit 1
-        fi
-    done
-
-    # execute
-    for arg in $@; do
-        local func=install_${arg}
-        eval $func
-    done
-}
-
-hr_build() {
-    info "hr build $@"
-}
 
 list_components() {
     arg=$1
@@ -298,71 +268,6 @@ list_components() {
     for f in ${funcs[@]}; do
         echo ${f#${1}_};
     done
-}
-
-hr_run() {
-    local func=$1
-    shift
-    $func $@
-}
-
-hr_get() {
-    read_workspace
-    for arg in $@; do
-        local func=get_${arg}
-        eval $func
-    done
-}
-
-get_opencog() {
-    info "Cloning OpenCog source code"
-    for repo in ${OPENCOG_REPOS[*]}
-    do
-        cd $HR_WORKSPACE
-        clone hansonrobotics $repo opencog
-    done
-    info "Cloning OpenCog source code is done"
-}
-
-get_hr() {
-    info "Cloning HR source code"
-    for repo in ${HR_REPOS[*]}
-    do
-        cd $HR_WORKSPACE
-        clone hansonrobotics $repo
-    done
-    info "Cloning HR source code is done"
-}
-
-get_models() {
-    _get_models
-}
-
-_get_models() {
-    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
-    local old_dir=${HOME}/.hr/cache/models
-    if [[ -d ${old_dir} ]]; then
-        for f in ${old_dir}/*; do
-            [[ -f "$f" ]] || continue
-            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
-                mv ${f} ${HR_MODELS}/
-            fi
-        done
-    fi
-
-    # openface
-    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
-    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
-    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
-    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
-    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${HR_MODELS}
-    bunzip2 -f ${HR_MODELS}/shape_predictor_68_face_landmarks.dat.bz2
-    cp ${HR_CACHE}/nn4.small2.v1.t7 ${HR_MODELS}
-
-    # markov
-    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
-    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
-    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
 check_or_create_ws() {
@@ -412,6 +317,51 @@ read_workspace() {
         exit 1;
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
+}
+
+############# End of Common #############
+
+############# Entries #############
+hr_install() {
+    # validate arguments
+    local funcs=$(compgen -A function|grep -E "^install_*")
+    for arg in $@; do
+        local func=install_${arg}
+        local found=0
+        for f in $funcs; do
+            if [[ $f == $func ]]; then
+                found=1
+            fi
+        done
+        if [[ $found == 0 ]]; then
+            error "Invalid argument $arg"
+            exit 1
+        fi
+    done
+
+    # execute
+    for arg in $@; do
+        local func=install_${arg}
+        eval $func
+    done
+}
+
+hr_build() {
+    info "hr build $@"
+}
+
+hr_run() {
+    local func=$1
+    shift
+    $func $@
+}
+
+hr_get() {
+    read_workspace
+    for arg in $@; do
+        local func=get_${arg}
+        eval $func
+    done
 }
 
 hr_init() {
@@ -945,6 +895,57 @@ install_calib_tools() {
         $SUDO cp ${HR_CACHE}/mx_calib ${HR_PREFIX}/bin
         $SUDO chmod +x ${HR_PREFIX}/bin/mx_calib
     fi
+}
+
+get_opencog() {
+    info "Cloning OpenCog source code"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo opencog
+    done
+    info "Cloning OpenCog source code is done"
+}
+
+get_hr() {
+    info "Cloning HR source code"
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo
+    done
+    info "Cloning HR source code is done"
+}
+
+get_models() {
+    _get_models
+}
+
+_get_models() {
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    local old_dir=${HOME}/.hr/cache/models
+    if [[ -d ${old_dir} ]]; then
+        for f in ${old_dir}/*; do
+            [[ -f "$f" ]] || continue
+            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
+                mv ${f} ${HR_MODELS}/
+            fi
+        done
+    fi
+
+    # openface
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${HR_MODELS}
+    bunzip2 -f ${HR_MODELS}/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${HR_MODELS}
+
+    # markov
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
 ############# End of Functions #############
