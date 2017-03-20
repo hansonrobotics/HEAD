@@ -934,11 +934,11 @@ install_hr-ext() {
         mkdir -p $prefix
     fi
     local ext_url=$GITHUB_HR_EXT_URL
-    info "Getting hr-ext with $ext_url"
+    info "Getting hr-ext"
     cd /tmp
     curl -L -O ${ext_url}
-
-    if ! $(file /tmp/hr-ext | grep bash); then
+    bash_flag=$(file /tmp/hr | grep bash | wc -l)
+    if [[ $bash_flag != "1" ]]; then
         error "Can't get hr-ext"
         exit 1
     fi
@@ -950,7 +950,7 @@ install_hr-ext() {
     $SUDO ln -sf -T hr-ext $prefix/hr
     info "Linked hr to $prefix/hr-ext"
 
-    rm /tmp/hr-ext
+    rm /tmp/hr
     cd -
 }
 
