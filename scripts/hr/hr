@@ -15,7 +15,7 @@ OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-
 HR_REPOS=(HEAD)
 GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
 GITHUB_HRCOMP_URL=https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/hr-completion.bash
-GITHUB_HR_EXT_URL=https://$GITHUB_TOKEN@raw.githubusercontent.com/hansonrobotics/private_ws/master/scripts/hr/_hr
+GITHUB_HR_EXT_URL=https://$GITHUB_TOKEN@raw.githubusercontent.com/hansonrobotics/private_ws/master/scripts/_hr
 declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
