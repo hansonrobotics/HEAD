@@ -44,7 +44,11 @@ _hr() {
       COMPREPLY=()
       ;;
     *)
-      COMPREPLY=($(compgen -W "${hr_commands}" -- ${cur}))
+      if (( ${cword} >= 2 )); then
+        COMPREPLY=()
+      else
+        COMPREPLY=($(compgen -W "${hr_commands}" -- ${cur}))
+      fi
       ;;
   esac
 }
