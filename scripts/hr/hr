@@ -962,7 +962,7 @@ install_self() {
     echo "$prefix/hr" >> $HR_INSTALLED_FILE
 
     local tmp_file=/tmp/hrcomp
-    curl -L -o $tmp_file ${GITHUB_HRCOMP_URL}
+    curl -sLo $tmp_file ${GITHUB_HRCOMP_URL}
     bash_flag=$(file $tmp_file | grep bash | wc -l)
     if [[ $bash_flag != "1" ]]; then
         error "Can't get hr-ext"
@@ -1011,7 +1011,7 @@ install_hr-ext() {
     local ext_url=$GITHUB_HR_EXT_URL
     info "Getting hr-ext"
     local ext_file=/tmp/hrtmp
-    curl -L -o $ext_file ${ext_url}
+    curl -sLo $ext_file ${ext_url}
     bash_flag=$(file $ext_file | grep bash | wc -l)
     if [[ $bash_flag != "1" ]]; then
         error "Can't get hr-ext"
