@@ -935,23 +935,23 @@ install_hr-ext() {
     fi
     local ext_url=$GITHUB_HR_EXT_URL
     info "Getting hr-ext"
-    cd /tmp
-    curl -L -O ${ext_url}
-    bash_flag=$(file /tmp/hr | grep bash | wc -l)
+    local ext_file=/tmp/hrtmp
+    curl -L -o $ext_file ${ext_url}
+    bash_flag=$(file $ext_file | grep bash | wc -l)
     if [[ $bash_flag != "1" ]]; then
         error "Can't get hr-ext"
         exit 1
     fi
 
-    $SUDO cp /tmp/hr $prefix/hr-ext
+    $SUDO cp $ext_file $prefix/hr-ext
     info "Copied hr to $prefix/hr-ext"
+
     $SUDO chmod +x $prefix/hr-ext
 
     $SUDO ln -sf -T hr-ext $prefix/hr
     info "Linked hr to $prefix/hr-ext"
 
-    rm /tmp/hr
-    cd -
+    rm $ext_file
 }
 
 get_opencog() {
