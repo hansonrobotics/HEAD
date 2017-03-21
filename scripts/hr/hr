@@ -442,8 +442,17 @@ hr_env() {
 
 ############# Functions #############
 install_all() {
+    install_head_deps
+    install_opencog_deps
+}
+
+install_head_deps() {
     install_basic
     install_ros
+    install_blender
+    install_webui_deps
+    install_marky_markov
+    install_misc
 }
 
 install_basic() {
@@ -507,8 +516,7 @@ install_opencog_deps() {
     rm octool
 
     # For sentiment analysis
-    $SUDO pip2 install ${PIP_OPTS} nltk
-    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
+    install_nltk
 
     # For random sentence generator
     install_marky_markov
@@ -516,6 +524,13 @@ install_opencog_deps() {
     install_relex_deps
 
     info "Installing OpenCog dependencies is done"
+}
+
+install_nltk() {
+    info "Installing nltk"
+    $SUDO pip2 install ${PIP_OPTS} nltk
+    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
+    info "Installing nltk is done"
 }
 
 install_marky_markov() {
@@ -536,7 +551,7 @@ install_marky_markov() {
     info "Installing Marky Markov is done"
 }
 
-install_link-grammar() {
+install_link_grammar() {
     info "Installing Link-Grammar"
 
     MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
@@ -622,8 +637,8 @@ install_ffmpeg() {
     info "Installing ffmpeg done"
 }
 
-install_other_deps() {
-    info "Installing other dependencies"
+install_misc() {
+    info "Installing misc dependencies"
     local pkgs=()
 
     # For rosbridge_server
@@ -677,7 +692,7 @@ install_other_deps() {
     # For webui
     $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
 
-    info "Installing other dependencies is done"
+    info "Installing misc dependencies is done"
 }
 
 install_manyears_deps() {
@@ -779,7 +794,6 @@ install_dlib() {
     else
       warn "Skipping dlib installation"
     fi
-
 }
 
 install_clandmarks() {
@@ -1033,10 +1047,6 @@ get_hr() {
 }
 
 get_models() {
-    _get_models
-}
-
-_get_models() {
     [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     local old_dir=${HOME}/.hr/cache/models
     if [[ -d ${old_dir} ]]; then
@@ -1096,7 +1106,7 @@ build_opencog() {
     info "Building OpenCog is done"
 }
 
-clean_hr() {
+clean_head() {
     info "Cleaning up HR"
     for repo in ${HR_REPOS[*]}; do
         cd $HR_WORKSPACE/$repo
