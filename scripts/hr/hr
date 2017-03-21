@@ -280,7 +280,7 @@ list_components() {
 
 validate_component_args() {
     if [[ $# == 1 ]]; then
-        error "Wront $1 arguments"
+        error "Wrong $1 arguments"
         return 1
     fi
     local found_components=$(list_components $1)
