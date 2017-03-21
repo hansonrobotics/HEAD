@@ -88,8 +88,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
 
                 this.syncCallback = this.syncCallback.bind(this)
                 this.syncedPerformance = new Performance()
-                if (this.readonly)
-                    this.syncedPerformance.enableSync(this.syncCallback)
+                this.syncedPerformance.enableSync(this.syncCallback)
 
                 this.performances.fetch({
                     reset: true,
@@ -125,16 +124,20 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 }
             },
             syncCallback: function(p) {
-                if (p) {
-                    this.setCurrentPerformance(this.syncedPerformance, {
-                        skipLoading: true
-                    })
-                } else {
-                    this.destroyTimeline()
+                if (!this.timelinesView || this.timelinesView.readonly) {
+                    if (p) {
+                        if (!this.currentPerformance || p.id !== this.currentPerformance.id)
+                            this.setCurrentPerformance(new Performance(p), {
+                                skipLoading: true,
+                                allowEdit: false,
+                                readonly: true
+                            })
+                    } else {
+                        this.setCurrentPerformance(null)
+                    }
                 }
             },
             destroyTimeline: function() {
-                console.log('des')
                 if (this.timelinesView) {
                     this.timelinesView.destroy()
                     this.ui.queueContainer.hide()
@@ -201,6 +204,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                             paused: response['paused'],
                             current_time: response['current_time'],
                             readonly: true,
+                            allowEdit: false,
                             skipLoading: true
                         })
 

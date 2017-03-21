@@ -26,6 +26,11 @@
     width: 215px;
 }
 
+.performance-dir-header .btn-group {
+    position: relative;
+    top: -5px;
+}
+
 .performance-name-container {
     width: 390px;
 }

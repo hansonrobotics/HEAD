@@ -118,8 +118,9 @@ class Runner:
 
     def unload(self):
         with self.lock:
-            self.running_performance = None
-            self.topics['running_performance'].publish(String(json.dumps(None)))
+            if self.running_performance:
+                self.running_performance = None
+                self.topics['running_performance'].publish(String(json.dumps(None)))
 
     def set_properties_callback(self, request):
         self.set_variable(request.id, json.loads(request.properties))

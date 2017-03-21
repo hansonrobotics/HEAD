@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-md-12">
-        <h2>
+        <h2 class="performance-dir-header">
             <span class="btn-group">
                 <button type="button" class="btn btn-default app-back-btn"><span
                         class="glyphicon glyphicon-chevron-left"></span></button>

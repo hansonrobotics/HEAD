@@ -51,12 +51,9 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 })
             },
             enableSync: function(callback) {
-                let self = this
                 this.disableSync()
                 this.syncCallback = function(msg) {
                     let performance = JSON.parse(msg.data)
-                    self.clear()
-                    if (performance) self.set(performance)
                     if (typeof callback === 'function') callback(performance)
                 }
 
