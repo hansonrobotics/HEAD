@@ -111,7 +111,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
             },
             updateId: function() {
                 if (this.get('name')) {
-                    let name = this.get('name').toLowerCase().replace(/ /g, '_').replace(/[^\w-]+/g, ''),
+                    let name = this.get('name').replace(/ /g, '_').replace(/[^\w-]+/g, ''),
                         path = this.get('path') ? this.get('path').split('/') : []
 
                     path.push(name)
