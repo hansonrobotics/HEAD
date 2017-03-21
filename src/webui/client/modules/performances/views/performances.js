@@ -12,7 +12,6 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 tabs: '.app-performance-group-tabs',
                 container: '.app-performances',
                 dirHeader: '.app-performance-dir-header',
-                actionButtons: '.app-performance-actions',
                 backButton: '.app-back-btn',
                 settingsButton: '.app-performance-settings'
             },
@@ -34,10 +33,10 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         $('.app-current-path', self.ui.tabs).removeClass('highlight')
                     }
 
-                if (this.readonly) {
+                this.ui.settingsButton.hide()
+
+                if (this.readonly)
                     this.ui.newButton.hide()
-                    this.ui.settingsButton.hide()
-                }
 
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
@@ -59,7 +58,6 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 })
 
                 this.ui.nav.hide()
-                this.ui.actionButtons.hide()
 
                 if (this.dir) this.navigate(this.dir)
                 else this.reload()
@@ -84,7 +82,6 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                             name: '1',
                         }))
 
-                        self.collection.add(self.newestPerformance)
                         self.newestPerformance.save({}, {
                             success: function() {
                                 self.trigger('new', self.newestPerformance)
@@ -159,8 +156,10 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 // clear tabs
                 this.ui.tabs.html('')
 
-                // adding tab for parent dir if available
-                if (depth > 0) this.ui.tabs.append(this.createTab(this.getParentPath(this.currentPath), '..'))
+                if (depth === 0)
+                    this.ui.backButton.hide()
+                else
+                    this.ui.backButton.show()
 
                 _.each(currentDirs, function(dir) {
                     self.ui.tabs.append(self.createTab(dir))
@@ -278,7 +277,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             },
             navigate: function(id) {
                 let self = this
-                if (this.currentPerformanc)
+                if (this.currentPerformance)
                     this.stopListening(this.currentPerformance)
                 this.currentPerformance = this.collection.get(id)
 
@@ -300,16 +299,16 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     }
 
                     if (this.currentPerformance) {
+                        this.ui.settingsButton.show()
                         this.ui.dirHeader.html(id)
                         this.listenTo(this.currentPerformance, 'change:id', function() {
                             self.ui.dirHeader.html(self.currentPerformance.id)
                         })
                         this.ui.nav.slideUp()
-                        this.ui.actionButtons.fadeIn()
 
                         this.layoutView.setCurrentPerformance(this.currentPerformance)
                     } else {
-                        this.ui.actionButtons.fadeOut()
+                        this.ui.settingsButton.hide()
                         this.updateVisiblePerformances(id)
                         this.updateTabs()
                         this.ui.nav.slideDown()

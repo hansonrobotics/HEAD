@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-12">
         <h2>
-            <span class="app-performance-actions btn-group">
+            <span class="btn-group">
                 <button type="button" class="btn btn-default app-back-btn"><span
                         class="glyphicon glyphicon-chevron-left"></span></button>
                 <button type="button" class="btn btn-default app-performance-settings"><span
