@@ -1253,17 +1253,28 @@ Usage: hr <command> [<args>]
   Supported commands:
 
     install <component> [<component>] ...
+        install components
 
     build <component> [<component>] ...
+        build components
 
     get <repository> [<repository>] ...
+        clone repositories from GitHub
 
     init [workspace]
         default workspace is ~/hansonrobotics
 
     run <function> [<args>]
+        run any defined function
 
     env
+        show hansonrobotics environment variables
+
+    normal_opencog
+        checkout opencog forked repositories under hansonrobotics
+
+    dev_opencog
+        checkout opencog original repositories under opencog
 EOF
 }
 
