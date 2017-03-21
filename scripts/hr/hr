@@ -1166,37 +1166,10 @@ EOF
 
 execute() {
     case "$1" in
-        install)
+        install|uninstall|build|run|get|init|clean|env)
+            command=$1
             shift
-            hr_install $@
-            ;;
-        uninstall)
-            shift
-            hr_uninstall $@
-            ;;
-        build)
-            shift
-            hr_build $@
-            ;;
-        run)
-            shift
-            hr_run $@
-            ;;
-        get)
-            shift
-            hr_get $@
-            ;;
-        init)
-            shift
-            hr_init $@
-            ;;
-        clean)
-            shift
-            hr_clean $@
-            ;;
-        env)
-            shift
-            hr_env $@
+            hr_${command} $@
             ;;
         *)
             warn "Unknown argument $1"
