@@ -1179,25 +1179,23 @@ clean_head() {
 
 clean_opencog() {
     read_workspace
-    info "Cleaning up OpenCog"
-    rm -r ~/.cache/guile
-    rm -r ~/.hr/cache/oc_aiml
+    rm -rf ~/.cache/guile
+    rm -rf ~/.hr/cache/oc_aiml
     if [[ ! -z $HR_WORKSPACE ]]; then
         for repo in ${OPENCOG_REPOS[*]}
         do
-            if [[ $repo != 'relex' ]]; then
-                $SUDO rm -r $HR_WORKSPACE/opencog/$repo/build
+            if [[ $repo != 'relex' && $repo != 'external-tools' ]]; then
+                $SUDO rm -rf $HR_WORKSPACE/opencog/$repo/build
             fi
         done
     fi
-    $SUDO rm -r /usr/local/include/opencog
-    $SUDO rm -r /usr/local/lib/opencog
-    $SUDO rm -r /usr/local/share/opencog
-    $SUDO rm /usr/local/bin/cogserver
-    $SUDO rm /usr/local/etc/cogserver.conf
-    $SUDO rm /usr/local/etc/opencog.conf
-    $SUDO rm /usr/local/lib/libcogutil.so
-    info "OpenCog is cleaned"
+    $SUDO rm -rf /usr/local/include/opencog
+    $SUDO rm -rf /usr/local/lib/opencog
+    $SUDO rm -rf /usr/local/share/opencog
+    $SUDO rm -f /usr/local/bin/cogserver
+    $SUDO rm -f /usr/local/etc/cogserver.conf
+    $SUDO rm -f /usr/local/etc/opencog.conf
+    $SUDO rm -f /usr/local/lib/libcogutil.so
 }
 
 check_local_changes() {
