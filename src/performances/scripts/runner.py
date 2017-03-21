@@ -188,7 +188,7 @@ class Runner:
             ids = ["{}/{}".format(id, f[:-5]) for f in files]
             timelines = [self.get_timeline(i) for i in ids]
             timelines = [t for t in timelines if t]
-            performance = {'id': id, 'path': os.path.dirname(id), 'timelines': timelines,
+            performance = {'id': id, 'name': os.path.basename(id), 'path': os.path.dirname(id), 'timelines': timelines,
                            'nodes': self.get_merged_timeline_nodes(timelines)}
         else:
             performance = self.get_timeline(id)
