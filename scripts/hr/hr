@@ -293,7 +293,7 @@ set_workspace() {
     fi
     check_or_create_ws $HR_WORKSPACE
     if [[ ! -d $HR_WORKSPACE ]]; then
-        error "HR_WORKSPACE is incorrect, exit"
+        error "HR workspace is incorrect"
         exit 1;
     fi
     if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
@@ -301,6 +301,7 @@ set_workspace() {
         HR_WORKSPACE=${HR_WORKSPACE%/}
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
+    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 read_workspace() {
@@ -328,6 +329,10 @@ read_workspace() {
 
 ############# Entries #############
 hr_install() {
+    if [[ $# == 0 ]]; then
+        error "Nothing to install"
+        exit 1
+    fi
     # validate arguments
     local funcs=$(compgen -A function|grep -E "^install_*")
     for arg in $@; do
@@ -923,7 +928,7 @@ install_self() {
     fi
 
     if [[ $BASEDIR == $prefix ]]; then
-        error "hr Can't install itself"
+        error "Can't install itself"
         exit 1
     fi
     $SUDO cp $BASEDIR/hr $prefix/hr-base
@@ -946,6 +951,10 @@ install_self() {
     $SUDO cp $tmp_file /etc/bash_completion.d/hr-completion.bash
     info "Copied hr-completion.bash to /etc/bash_completion.d"
     echo "/etc/bash_completion.d/hr-completion.bash" >> $HR_INSTALLED_FILE
+
+    install_hr-ext
+
+    info "HR tool is installed"
 }
 
 uninstall_all() {
@@ -970,6 +979,10 @@ uninstall_all() {
 }
 
 install_hr-ext() {
+    if [[ -z $GITHUB_TOKEN ]]; then
+        info "GITHUB_TOKEN is not set"
+        return
+    fi
     local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
     if [[ ! -d $prefix ]]; then
         mkdir -p $prefix
