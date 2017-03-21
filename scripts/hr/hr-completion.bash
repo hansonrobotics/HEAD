@@ -9,7 +9,7 @@
 
 _hr() {
   local command
-  local hr_commands="init get install build clean run env"
+  local hr_commands="init get install uninstall build clean run env"
   local cur=${COMP_WORDS[COMP_CWORD]}
   local words=${COMP_WORDS[@]}
   local cword=$COMP_CWORD
@@ -26,6 +26,9 @@ _hr() {
   local args=$(hr run list_components ${command} 2> /dev/null)
   case ${command} in
     install)
+      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
+      ;;
+    uninstall)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
     build)

@@ -20,6 +20,7 @@ declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
+HR_INSTALLED_FILE=~/.hr/installed.txt
 HR_PREFIX=/opt/hansonrobotics
 DEFAULT_HRTOOL_PREFIX=/usr/local/bin
 HR_CACHE=$HOME/.hr/cache
@@ -346,6 +347,13 @@ hr_install() {
     # execute
     for arg in $@; do
         local func=install_${arg}
+        eval $func
+    done
+}
+
+hr_uninstall() {
+    for arg in $@; do
+        local func=uninstall_${arg}
         eval $func
     done
 }
@@ -921,9 +929,11 @@ install_self() {
     $SUDO cp $BASEDIR/hr $prefix/hr-base
     $SUDO chmod +x $prefix/hr-base
     info "Copied hr to $prefix/hr-base"
+    echo "$prefix/hr-base" >> $HR_INSTALLED_FILE
 
     $SUDO ln -sf -T hr-base $prefix/hr
     info "Linked hr to $prefix/hr-base"
+    echo "$prefix/hr" >> $HR_INSTALLED_FILE
 
     local tmp_file=/tmp/hrcomp
     curl -L -o $tmp_file ${GITHUB_HRCOMP_URL}
@@ -935,6 +945,28 @@ install_self() {
 
     $SUDO cp $tmp_file /etc/bash_completion.d/hr-completion.bash
     info "Copied hr-completion.bash to /etc/bash_completion.d"
+    echo "/etc/bash_completion.d/hr-completion.bash" >> $HR_INSTALLED_FILE
+}
+
+uninstall_all() {
+    if [[ -f $HR_INSTALLED_FILE ]]; then
+        local files=$(sort -u $HR_INSTALLED_FILE)
+        for f in $files; do
+            echo "> $f"
+        done
+        local confirm
+        _get_confirm "These files will be removed [y/N]"
+        if [[ ${confirm} != 1 ]]; then
+            exit
+        fi
+        for f in $files; do
+            if [[ -e $f || -L $f ]]; then
+                $SUDO rm $f
+                info "Removed $f"
+            fi
+        done
+        rm $HR_INSTALLED_FILE
+    fi
 }
 
 install_hr-ext() {
@@ -954,11 +986,13 @@ install_hr-ext() {
 
     $SUDO cp $ext_file $prefix/hr-ext
     info "Copied hr to $prefix/hr-ext"
+    echo "$prefix/hr-ext" >> $HR_INSTALLED_FILE
 
     $SUDO chmod +x $prefix/hr-ext
 
     $SUDO ln -sf -T hr-ext $prefix/hr
     info "Linked hr to $prefix/hr-ext"
+    echo "$prefix/hr" >> $HR_INSTALLED_FILE
 
     rm $ext_file
 }
@@ -1112,6 +1146,10 @@ execute() {
         install)
             shift
             hr_install $@
+            ;;
+        uninstall)
+            shift
+            hr_uninstall $@
             ;;
         build)
             shift
