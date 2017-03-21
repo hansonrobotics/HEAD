@@ -83,6 +83,7 @@ class Runner:
         rospy.Service('~set_properties', srv.SetProperties, self.set_properties_callback)
         rospy.Service('~load', srv.Load, self.load_callback)
         rospy.Service('~load_performance', srv.LoadPerformance, self.load_performance_callback)
+        rospy.Service('~unload', Trigger, self.unload_callback)
         rospy.Service('~run', srv.Run, self.run_callback)
         rospy.Service('~run_by_name', srv.RunByName, self.run_by_name_callback)
         rospy.Service('~run_full_performance', srv.RunByName, self.run_full_performance_callback)
@@ -110,6 +111,15 @@ class Runner:
     def reload_properties_callback(self, request):
         self.load_properties()
         return TriggerResponse(success=True)
+
+    def unload_callback(self, request):
+        self.unload()
+        return TriggerResponse(success=True)
+
+    def unload(self):
+        with self.lock:
+            self.running_performance = None
+            self.topics['running_performance'].publish(String(json.dumps(None)))
 
     def set_properties_callback(self, request):
         self.set_variable(request.id, json.loads(request.properties))

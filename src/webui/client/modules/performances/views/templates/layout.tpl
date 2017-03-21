@@ -1,5 +1,8 @@
 <div class="app-performances-region"></div>
-<div class="app-timeline-region"></div>
+
+<div class="app-timeline-container">
+    <div class="app-timeline-region"></div>
+</div>
 
 <div class="app-queue-container row">
     <div class="col-md-12">

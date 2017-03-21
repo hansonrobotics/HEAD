@@ -20,8 +20,13 @@ define(['marionette', 'backbone', './timelines', 'underscore', 'lib/regions/fade
                 this.mergeOptions(options, ['layoutView', 'readonly', 'playEnabled', 'height'])
             },
             onAttach: function() {
-                if (this.height)
-                    this.$el.css('height', this.height).perfectScrollbar()
+                if (this.height) {
+                    let self = this
+                    this.$el.css('maxHeight', this.height).perfectScrollbar()
+                    this.listenTo(this.collection, 'update reset', function() {
+                        self.$el.perfectScrollbar('update')
+                    })
+                }
             },
             childViewOptions: function() {
                 return _.extend(this.options, {queueView: this, readonly: this.readonly})

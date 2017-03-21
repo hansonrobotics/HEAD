@@ -10,7 +10,7 @@ define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function(Marionette,
             'change:name change:path': 'update'
         },
         initialize: function(options) {
-            this.mergeOptions(options, ['readonly'])
+            this.mergeOptions(options, ['readonly', 'nav', 'performancesView'])
         },
         onRender: function() {
             if (!this.readonly)
@@ -27,6 +27,14 @@ define(['marionette', 'underscore', 'jquery', 'jquery-ui'], function(Marionette,
             this.$el.html(this.model.get('name'))
             this.$el.attr('data-path', this.model.get('path') || '')
                 .attr('href', '#/performances/' + this.model.get('id'))
+
+            if (!this.nav) {
+                let self = this
+                this.$el.attr('href', 'javascript:void(0)').click(function() {
+                        self.performancesView.navigate(self.model.get('id'))
+                    }
+                )
+            }
         }
     })
 })

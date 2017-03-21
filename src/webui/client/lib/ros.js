@@ -214,9 +214,9 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                     name: '/performances/events',
                     messageType: 'performances/Event'
                 }),
-                running_performances: new ROSLIB.Topic({
+                running_performance: new ROSLIB.Topic({
                     ros: api.ros,
-                    name: '/performances/running_performances',
+                    name: '/performances/running_performance',
                     messageType: 'std_msgs/String',
                     queue_size: 1,
                     queue_length: 1
@@ -321,6 +321,11 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                     messageType: 'webui/MotorStates'
                 }),
                 performances: {
+                    unload: new ROSLIB.Service({
+                        ros: api.ros,
+                        name: '/performances/unload',
+                        messageType: 'std_msgs/Trigger'
+                    }),
                     load: new ROSLIB.Service({
                         ros: api.ros,
                         name: '/performances/load',

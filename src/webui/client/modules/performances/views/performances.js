@@ -26,7 +26,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 'change:path': 'updateTabs'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir'])
+                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir', 'urlPrefix'])
             },
             onRender: function() {
                 let self = this,
@@ -34,7 +34,10 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         $('.app-current-path', self.ui.tabs).removeClass('highlight')
                     }
 
-                if (this.readonly) this.ui.newButton.hide()
+                if (this.readonly) {
+                    this.ui.newButton.hide()
+                    this.ui.settingsButton.hide()
+                }
 
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
@@ -62,7 +65,9 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 else this.reload()
             },
             childViewOptions: function() {
-                return this.options
+                return _.extend(this.options, {
+                    performancesView: this
+                })
             },
             addNew: function() {
                 let self = this
@@ -249,7 +254,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     el = $('<a>').attr('href', 'javascript:void(0)').html(content)
 
                 if (this.nav)
-                    el.attr('href', path.join('/#/performances', dir))
+                    el.attr('href', path.join(/#/ + (this.urlPrefix ? this.urlPrefix : 'performances'), dir))
 
                 if (!disableEvents)
                     el.click(function() {
@@ -300,8 +305,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                             self.ui.dirHeader.html(self.currentPerformance.id)
                         })
                         this.ui.nav.slideUp()
-                        if (!this.readonly && this.currentPath)
-                            this.ui.actionButtons.fadeIn()
+                        this.ui.actionButtons.fadeIn()
 
                         this.layoutView.setCurrentPerformance(this.currentPerformance)
                     } else {

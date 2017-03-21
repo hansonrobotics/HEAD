@@ -32,7 +32,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 emptyNotice: '.app-empty-notice',
                 saveChangesModal: '.app-save-changes-confirmation',
                 saveChanges: '.app-save-changes',
-                discardChanges: '.app-discard-changes'
+                discardChanges: '.app-discard-changes',
+                timelineContainer: '.app-timeline-container'
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage',
@@ -43,12 +44,14 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             },
             initialize: function(options) {
                 this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue',
-                    'disableSaving', 'allowEdit', 'queueHeight'])
+                    'disableSaving', 'allowEdit', 'queueHeight', 'urlPrefix'])
                 this.performances = new PerformanceCollection()
                 this.queueCollection = new QueueCollection()
             },
             onAttach: function() {
                 let self = this
+
+                this.ui.queueContainer.hide()
 
                 // set change check callback
                 app.changeCheck = _.bind(this.changeCheck, this)
@@ -68,7 +71,8 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     readonly: this.readonly,
                     autoplay: this.autoplay,
                     dir: this.dir,
-                    nav: this.nav
+                    nav: this.nav,
+                    urlPrefix: this.urlPrefix
                 })
 
                 this.listenTo(this.queueView, 'reordered', this.updateTimelineOrder)
@@ -82,6 +86,11 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     self.editItem(self.queueCollection.first())
                 })
 
+                this.syncCallback = this.syncCallback.bind(this)
+                this.syncedPerformance = new Performance()
+                if (this.readonly)
+                    this.syncedPerformance.enableSync(this.syncCallback)
+
                 this.performances.fetch({
                     reset: true,
                     success: function() {
@@ -92,40 +101,50 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
 
                 if (this.hideQueue)
                     this.ui.queueContainer.hide()
-
-                if (this.readonly) {
-                    let p = new Performance()
-                    self.setCurrentPerformance(p)
-                    p.enableSync()
-                }
             },
-
             onDestroy: function() {
+                this.syncedPerformance.disableSync()
                 app.changeCheck = null
-                if (this.currentPerformance) this.currentPerformance.disableSync()
             },
             setCurrentPerformance: function(p, options) {
+                options = options || {}
+
                 if (this.currentPerformance) {
-                    this.currentPerformance.disableSync()
                     this.stopListening(this.currentPerformance)
                 }
 
                 if (p) {
                     this.currentPerformance = p
+                    this.ui.queueContainer.show()
                     this.refreshCurrentPerformance(options)
-                } else {
+                } else if (this.currentPerformance) {
+                    Performance.unload()
                     this.currentPerformance = null
                     this.destroyTimeline()
                     this.queueCollection.reset()
                 }
             },
+            syncCallback: function(p) {
+                if (p) {
+                    this.setCurrentPerformance(this.syncedPerformance, {
+                        skipLoading: true
+                    })
+                } else {
+                    this.destroyTimeline()
+                }
+            },
             destroyTimeline: function() {
-              if (this.timelinesView)
-                  this.timelinesView.destroy()
+                console.log('des')
+                if (this.timelinesView) {
+                    this.timelinesView.destroy()
+                    this.ui.queueContainer.hide()
+                }
             },
             refreshCurrentPerformance: function(options) {
+                options = options || {}
                 let self = this
-                this.currentPerformance.nodes.reset()
+                if (!options.skipLoading)
+                    this.currentPerformance.nodes.reset()
                 this.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
                 this.listenTo(this.currentPerformance, 'change:timelines', function() {
                     self.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
@@ -139,6 +158,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     items.push(new QueueItem({performance: timeline}))
                 })
                 this.queueCollection.set(items)
+                if (!this.hideQueue) this.ui.queueContainer.fadeIn()
             },
             updateTimelineOrder: function() {
                 if (this.currentPerformance) {
@@ -172,17 +192,21 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     this.ui.container.removeClass('container-fluid').addClass('container')
             },
             showCurrent: function() {
-                let self = this,
-                    current = new Performance()
+                let self = this
 
-                current.fetchCurrent({
+                this.syncedPerformance.fetchCurrent({
                     success: function(response) {
-                        self.setCurrentPerformance(current, {
+                        self.setCurrentPerformance(self.syncedPerformance, {
                             running: response['running'],
                             paused: response['paused'],
                             current_time: response['current_time'],
-                            readonly: true
+                            readonly: true,
+                            skipLoading: true
                         })
+
+                        if (!response.performance) {
+                            self.destroyTimeline()
+                        }
                     }
                 })
             },

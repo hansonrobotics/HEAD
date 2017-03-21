@@ -62,7 +62,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             initialize: function(options) {
                 let self = this
                 this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
-                    'queue', 'allowEdit', 'queueItem'])
+                    'queue', 'allowEdit', 'queueItem', 'skipLoading'])
                 this.nodeConfig = new NodeConfig('/performances')
                 this.listenTo(this.nodeConfig, 'change', this.reconfigure)
                 this.nodeConfig.fetch()
@@ -127,10 +127,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         success: function() {
                             self.backup()
                             if (self.autoplay) self.run()
-
-                            if (self.readonly)
-                                self.model.enableSync()
-                            else {
+                            if (!self.readonly) {
                                 let reload = function() {
                                     self.model.loadPerformance()
                                 }
@@ -141,11 +138,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     }
 
                 if (this.model) {
-                    if (this.model.id && this.model.nodes.isEmpty()) {
+                    if (this.skipLoading) {
+                        loadOptions.success()
+                    } else if (this.model.id && this.model.nodes.isEmpty()) {
                         this.model.load(loadOptions)
-                    } else if (this.readonly)
-                        this.model.enableSync()
-                    else
+                    } else if (!this.readonly)
                         this.model.loadPerformance(loadOptions)
                 } else {
                     this.model = new Performance()
@@ -156,7 +153,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 let self = this
 
                 this.loadPerformance()
-
                 if (this.readonly)
                     this.ui.editContainer.hide()
 
@@ -231,10 +227,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.startIndicator(this.options.current_time, this.model.getDuration())
                 else
                     this.stopIndicator()
-            },
-            onDestroy: function() {
-                this.model.stop()
-                this.model.disableSync()
             },
             queueUpdated: function() {
                 if (!this.isDestroyed()) {

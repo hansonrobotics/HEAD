@@ -55,14 +55,15 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.disableSync()
                 this.syncCallback = function(msg) {
                     let performance = JSON.parse(msg.data)
-                    self.clear.set(performance)
+                    self.clear()
+                    if (performance) self.set(performance)
                     if (typeof callback === 'function') callback(performance)
                 }
 
-                api.topics.running_performances.subscribe(this.syncCallback)
+                api.topics.running_performance.subscribe(this.syncCallback)
             },
             disableSync: function() {
-                if (this.syncCallback) api.topics.running_performances.unsubscribe(this.syncCallback)
+                if (this.syncCallback) api.topics.running_performance.unsubscribe(this.syncCallback)
             },
             load: function(options) {
                 let self = this
@@ -239,5 +240,20 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 })
                 return nodes
             }
+        }, {
+            // static methods
+            unload: function(options) {
+                options = options || {}
+                api.services.performances.unload.callService({}, function(response) {
+                    if (response.success) {
+                        if (typeof options.success === 'function')
+                            options.success(response)
+                    } else if (typeof options.error === 'function')
+                        options.error('Error unloading performance')
+                }, function(error) {
+                    if (typeof options.error === 'function')
+                        options.error(error)
+                })
+            },
         })
     })
