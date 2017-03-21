@@ -1102,13 +1102,61 @@ build_head() {
         catkin init
     fi
 
-    catkin config --blacklist icog_face_tracker
+    local blacklist=(
+        audio_tools
+        cmt_tracker
+        cmt_tracker_msgs
+        emotime
+        eva_behavior
+        eye_tracking
+        face_id
+        face_recognition
+        manyears_msgs
+        manyears_ros
+        robots_config
+        rt_audio_ros
+        speech2command
+        testing_tools
+        icog_face_tracker
+    )
+
+    catkin config --blacklist ${blacklist[@]}
     catkin build --force-cmake -j$(nproc) --no-status --make-args install
-    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages/
-    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --upgrade --no-deps
-    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --upgrade --no-deps
+
+    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages
+    rm -rf $TARGET/pololu*
+    rm -rf $TARGET/roscom*
+    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
+}
+
+build_webui_js() {
+    read_workspace
     cd $HR_WORKSPACE/HEAD/src/webui
     npm install
+}
+
+build_head_full() {
+    read_workspace
+    cd $HR_WORKSPACE/HEAD
+    source /opt/ros/indigo/setup.bash
+    if [[ ! -d .catkin_tools ]]; then
+        catkin init
+    fi
+
+    local blacklist=(
+        eva_behavior
+        speech2command
+        testing_tools
+        icog_face_tracker
+    )
+    catkin config --blacklist ${blacklist[@]}
+    catkin build --force-cmake -j$(nproc) --no-status --make-args install
+    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages
+    rm -rf $TARGET/pololu*
+    rm -rf $TARGET/roscom*
+    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
 }
 
 build_opencog() {
