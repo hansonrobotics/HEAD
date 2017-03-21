@@ -1,0 +1,1307 @@
+#!/usr/bin/env bash
+#
+# hr.sh
+#
+# Hanson Robotics software stack management tool
+
+set -e
+
+BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
+
+############# Configurations #############
+HR_VERSION=0.1.2
+
+OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
+HR_REPOS=(HEAD)
+GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
+GITHUB_HRCOMP_URL=https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/hr-completion.bash
+GITHUB_HR_EXT_URL=https://$GITHUB_TOKEN@raw.githubusercontent.com/hansonrobotics/private_ws/master/scripts/hr/_hr
+declare -A MD5SUMS
+
+DEFAULT_HR_WORKSPACE=~/hansonrobotics
+HR_ENVFILE_PATH=~/.hr/env.sh
+HR_INSTALLED_FILE=~/.hr/installed.txt
+HR_PREFIX=/opt/hansonrobotics
+DEFAULT_HRTOOL_PREFIX=/usr/local/bin
+HR_CACHE=$HOME/.hr/cache
+HR_MODELS=$HOME/.hr/models
+if [[ -z $APT_CACHE ]]; then
+    APT_CACHE=0
+fi
+if [[ -z $PIP_CACHE ]]; then
+    PIP_CACHE=0
+fi
+APT_CACHE_DIR=$HR_CACHE/archives
+PIP_CACHE_DIR=$HR_CACHE/pip
+LOG_DIR="$HOME/.hr/log"
+VISION_TOOL_PREFIX=$HR_PREFIX/vision
+DLIB_DIR=$VISION_TOOL_PREFIX/dlib
+TORCH_DIR=$VISION_TOOL_PREFIX/torch
+OPENFACE_DIR=$VISION_TOOL_PREFIX/openface
+CPPMT_DIR=$VISION_TOOL_PREFIX/CppMT
+EMOTIME_DIR=$VISION_TOOL_PREFIX/emotime
+OPENBR_SRC_DIR=$VISION_TOOL_PREFIX/openbr
+CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
+MARKY_MARKOV_DIR=$HR_PREFIX/marky_markov
+DLIB_VERSION=19.0
+
+export PKG_CONFIG_PATH=${HR_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+export DLIB_PATH=$DLIB_DIR/dlib-${DLIB_VERSION}
+
+# Needed for compiling
+export OpenBR_DIR=$HR_PREFIX/share/openbr/cmake
+export CMAKE_PREFIX_PATH=$CMAKE_PREFIX_PATH:$HR_PREFIX
+export MANYEARSLIB_PREFIX=$HR_PREFIX/manyears-C-1.0.0
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HR_PREFIX/lib:$CPPMT_DIR:$EMOTIME_DIR/build/src:$CLANDMARK_DIR/lib
+
+INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
+INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
+
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
+export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
+export PATH=/usr/lib/ccache:$PATH
+
+ASSUME_YES=0
+
+APT_GET_OPTS="-y"
+if [[ $APT_CACHE == 1 ]]; then
+    APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
+fi
+
+PIP_OPTS=""
+if [[ $PIP_CACHE == 1 ]]; then
+    PIP_OPTS="$PIP_OPTS --download-cache $PIP_CACHE_DIR"
+fi
+############# End of Configurations #############
+
+############# Common #############
+COLOR_INFO='\033[32m'
+COLOR_WARN='\033[33m'
+COLOR_ERROR='\033[31m'
+COLOR_RESET='\033[0m'
+info() {
+    printf "${COLOR_INFO}[INFO] ${1}${COLOR_RESET}\n"
+}
+warn() {
+    printf "${COLOR_WARN}[WARN] ${1}${COLOR_RESET}\n"
+}
+error() {
+    printf "${COLOR_ERROR}[ERROR] ${1}${COLOR_RESET}\n"
+}
+
+SUDO=""
+if [[ $(id -u) != 0 ]]; then
+    SUDO="sudo"
+fi
+
+md5str() {
+  local FNAME=$1
+  case $(uname) in
+    "Linux")
+      echo $(md5sum "$FNAME" | cut -d ' ' -f 1)
+      ;;
+    "Darwin")
+      echo $(md5 -q "$FNAME")
+      ;;
+  esac
+}
+
+checkmd5() {
+    local FNAME=$1
+    if [[ ! -f $FNAME ]]; then
+        error "$FNAME is not a file"
+        return 1
+    fi
+    local EXPECTED=$2
+    local ACTUAL=$(md5str "$FNAME")
+    if [ $EXPECTED = $ACTUAL ]; then
+        info "$FNAME: successfully checked"
+        return 0
+    else
+        error "$FNAME md5sum did not match."
+        error "Expected: $EXPECTED"
+        error "Actual: $ACTUAL"
+        mv ${FNAME} ${FNAME}.old && warn "$FNAME is removed"
+        return 1
+    fi
+}
+
+timeit() {
+    local start=$(date +%s.%N)
+    $@
+    local elapsed=$(echo "$(date +%s.%N)-$start" | bc)
+    info "Time used $elapsed"
+}
+
+check_apt_installed() {
+    # Check if the given debian packages are installed
+    local pkgs=$@
+    local s
+    local v
+    local ver
+    local pkg
+    for pkg in $pkgs; do
+        if [[ ${pkg} =~ .*"=".* ]]; then
+            ver=${pkg##*=}
+            pkg=${pkg%=*}
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}=${Version}' "$pkg")
+            v=${s##*=}
+            s=${s%=*}
+            if [[ $ver != $v || ${#s} != 3 || ${s:1:1} != 'i' ]]; then
+                return 1
+            else
+                info "$pkg=$ver is already installed"
+            fi
+        else
+            s=$(dpkg-query -W -f='${db:Status-Abbrev}' "$pkg")
+            if [[ ${#s} != 3 || ${s:1:1} != 'i' ]]; then
+                return 1
+            else
+                info "$pkg is already installed"
+            fi
+        fi
+    done
+}
+
+apt_get_install() {
+    if ! check_apt_installed "$@"; then
+        $SUDO apt-get ${APT_GET_OPTS} install "$@" || (
+            $SUDO apt-get ${APT_GET_OPTS} update &&
+            $SUDO apt-get ${APT_GET_OPTS} install "$@")
+    fi
+}
+
+add_ppa() {
+    user=$(echo $1|cut -d: -f2|cut -d/ -f1)
+    ppa=$(echo $1|cut -d: -f2|cut -d/ -f2)
+    for file in `find /etc/apt/ -name \*.list`; do
+        set +e
+        item=$(grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $file)
+        set -e
+        USER=`echo $item | cut -d/ -f4`
+        PPA=`echo $item | cut -d/ -f5`
+        if [[ $USER == $user && $PPA == $ppa ]]; then
+            info "PPA $1 is already added"
+            return 0
+        fi
+    done
+    info $SUDO add-apt-repository -y $1
+    $SUDO add-apt-repository -y $1
+}
+
+curl_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                curl -L ${url} -o ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
+    info "Downloading $1 is done"
+}
+
+wget_cache() {
+    url=$1
+    ofile=${2-${url##*/}}
+    info "Downloading $1"
+    [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
+
+    # check md5sum
+    local sum=${MD5SUMS[$ofile]}
+    local retry=1
+    if [[ ! -z $sum ]]; then
+        while (( $retry >= 0 )); do
+            if checkmd5 ${HR_CACHE}/${ofile} $sum; then
+                break
+            fi
+            retry=$((retry-1))
+            echo $retry
+            if (( $retry >= 0 )); then
+                wget ${url} -O ${HR_CACHE}/${ofile}
+            fi
+        done
+    fi
+
+    info "Downloading $1 is done"
+}
+
+_get_confirm() {
+    local message="${1:-Are you sure?}"
+    local answer
+    if [ "$ASSUME_YES" -eq 1 ] ; then
+        confirm=1
+        return
+    fi
+    printf '%s ' "$message"
+    read -r answer
+    ! printf '%s\n' "$answer" | grep -Eq "$(locale yesexpr)"
+    confirm=$?
+}
+
+clone() {
+    owner=$1
+    repo=$2
+    dest=${3-"."}/$repo
+    # if ssh clone failed, then try https clone
+    if [[ -d $dest ]]; then
+        info "$dest already exists"
+    else
+        info "Cloning $repo"
+        git clone git@github.com:$owner/$repo.git $dest || git clone https://github.com/$owner/$repo.git $dest
+        info "Cloning $repo is done"
+    fi
+}
+
+list_components() {
+    arg=$1
+    local funcs=$(compgen -A function|grep -E "^${1}_.*")
+    for f in ${funcs[@]}; do
+        echo ${f#${1}_};
+    done
+}
+
+check_or_create_ws() {
+    [[ ! -z $1 ]]
+    if [[ ! -d $1 ]]; then
+        local confirm
+        _get_confirm "The workspace ${1} does not exist, create? [y/N]"
+        if [[ ${confirm} -eq 1 ]]; then
+            mkdir -p ${1}
+            info "Workspace directory ${1} is created"
+        fi
+    fi
+}
+
+set_workspace() {
+    HR_WORKSPACE=${1:-$DEFAULT_HR_WORKSPACE}
+    if [[ ! "$HR_WORKSPACE" = /* ]]; then
+        HR_WORKSPACE=$(pwd)/$HR_WORKSPACE
+    fi
+    check_or_create_ws $HR_WORKSPACE
+    if [[ ! -d $HR_WORKSPACE ]]; then
+        error "HR workspace is incorrect"
+        exit 1;
+    fi
+    if [[ ! -d $(dirname $HR_ENVFILE_PATH) ]]; then mkdir -p $(dirname $HR_ENVFILE_PATH); fi
+    if [[ $HR_WORKSPACE != '/' ]]; then
+        HR_WORKSPACE=${HR_WORKSPACE%/}
+    fi
+    export HR_WORKSPACE=$HR_WORKSPACE
+    info HR_WORKSPACE=$HR_WORKSPACE
+}
+
+read_workspace() {
+    if [[ -f $HR_ENVFILE_PATH ]]; then
+        local str=$(cat $HR_ENVFILE_PATH|grep "export HR_WORKSPACE=")
+        if [[ -z $str ]]; then
+            error "HR_WORKSPACE is not found in ${HR_ENVFILE_PATH}. Please run \"hr init\" first"
+            exit 1
+        else
+            HR_WORKSPACE=${str#export HR_WORKSPACE=}
+        fi
+    else
+        error "Workspace is not set. Please run \"hr init\" first"
+        exit 1
+    fi
+    if [[ ! -d $HR_WORKSPACE ]]; then
+        error "HR_WORKSPACE doens't exist. Please rerun \"hr init\""
+        exit 1;
+    fi
+    export HR_WORKSPACE=$HR_WORKSPACE
+    info HR_WORKSPACE=$HR_WORKSPACE
+}
+
+############# End of Common #############
+
+############# Entries #############
+hr_install() {
+    if [[ $# == 0 ]]; then
+        error "Nothing to install"
+        exit 1
+    fi
+    # validate arguments
+    local funcs=$(compgen -A function|grep -E "^install_*")
+    for arg in $@; do
+        local func=install_${arg}
+        local found=0
+        for f in $funcs; do
+            if [[ $f == $func ]]; then
+                found=1
+            fi
+        done
+        if [[ $found == 0 ]]; then
+            error "Invalid argument $arg"
+            exit 1
+        fi
+    done
+
+    # execute
+    for arg in $@; do
+        local func=install_${arg}
+        eval $func
+    done
+}
+
+hr_uninstall() {
+    for arg in $@; do
+        local func=uninstall_${arg}
+        eval $func
+    done
+}
+
+hr_update() {
+    for arg in $@; do
+        local func=update_${arg}
+        eval $func
+    done
+}
+
+hr_build() {
+    read_workspace
+    for arg in $@; do
+        local func=build_${arg}
+        eval $func
+    done
+}
+
+hr_run() {
+    local func=$1
+    shift
+    $func $@
+}
+
+hr_get() {
+    for arg in $@; do
+        local func=get_${arg}
+        eval $func
+    done
+}
+
+hr_init() {
+    set_workspace $@
+    echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
+cat <<EOF >>$HR_ENVFILE_PATH
+export HR_VERSION=$HR_VERSION
+export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export HR_PREFIX=$HR_PREFIX
+export HR_CACHE=$HR_CACHE
+
+export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
+export DLIB_DIR=$DLIB_DIR
+export TORCH_DIR=$TORCH_DIR
+export OPENFACE_DIR=$OPENFACE_DIR
+export CPPMT_DIR=$CPPMT_DIR
+export EMOTIME_DIR=$EMOTIME_DIR
+
+export MARKY_MARKOV_DIR=$MARKY_MARKOV_DIR
+export HR_MODELS=$HR_MODELS
+
+export ROS_LOG_DIR="$HOME/.hr/log"
+export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
+export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export LIBRARY_PATH=$LIBRARY_PATH
+export DLIB_PATH=$DLIB_PATH
+export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH
+export MANYEARSLIB_PREFIX=$MANYEARSLIB_PREFIX
+
+export CLANDMARK_DIR=$VISION_TOOL_PREFIX/clandmark
+export OpenBR_DIR=$OpenBR_DIR
+
+if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
+  source $TORCH_DIR/install/bin/torch-activate
+fi
+EOF
+}
+
+hr_clean() {
+    read_workspace
+    for arg in $@; do
+        local func=clean_${arg}
+        eval $func
+    done
+}
+
+hr_env() {
+    if [[ -f $HR_ENVFILE_PATH ]]; then
+        cat $HR_ENVFILE_PATH
+    else
+        error "Please run \"hr init\""
+    fi
+}
+
+############# End of Entries #############
+
+############# Functions #############
+install_all() {
+    install_head_deps
+    install_opencog_deps
+}
+
+install_head_deps() {
+    install_basic
+    install_ros
+    install_blender
+    install_webui_deps
+    install_marky_markov
+    install_misc
+}
+
+install_basic() {
+    info "Installing basic dependencies"
+    local pkgs=(git wget telnet python3-pip python-pip build-essential
+            software-properties-common)
+    apt_get_install "${pkgs[@]}"
+    info "Installing basic dependencies is done"
+}
+
+install_ros() {
+    info "Installing ROS"
+    $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+    $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
+    local pkgs=(
+        ros-indigo-desktop
+        ros-indigo-tf
+        ros-indigo-driver-common
+        ros-indigo-cv-bridge
+        ros-indigo-image-transport
+        ros-indigo-openni-camera
+        ros-indigo-mjpeg-server
+        ros-indigo-usb-cam
+        ros-indigo-dynamixel-motor
+        ros-indigo-robot-state-publisher
+        ros-indigo-joint-state-publisher
+        ros-indigo-rosbridge-server
+        python-catkin-tools
+    )
+
+    # for camera calibration
+    pkgs+=(ros-indigo-image-proc)
+
+    apt_get_install "${pkgs[@]}"
+
+    # for blender to find ros packages
+    $SUDO pip3 install ${PIP_OPTS} rospkg catkin_pkg
+
+    if [[ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]]; then
+        $SUDO rosdep init -q
+        rosdep update -q
+    fi
+    info "Installing ROS is done"
+}
+
+install_opencog_deps() {
+    info "Installing OpenCog dependencies"
+    local pkgs=(
+        cmake ccache
+        binutils-dev
+        libboost-dev libboost-date-time-dev libboost-filesystem-dev
+        libboost-program-options-dev libboost-regex-dev
+        libboost-serialization-dev libboost-system-dev libboost-thread-dev
+        guile-2.0-dev cython
+    )
+    apt_get_install "${pkgs[@]}"
+
+    wget http://raw.github.com/opencog/ocpkg/master/ocpkg -qO octool
+    chmod +rx octool
+    ./octool -dpv
+    rm octool
+
+    # For sentiment analysis
+    install_nltk
+
+    # For random sentence generator
+    install_marky_markov
+
+    install_relex_deps
+
+    info "Installing OpenCog dependencies is done"
+}
+
+install_nltk() {
+    info "Installing nltk"
+    $SUDO pip2 install ${PIP_OPTS} nltk
+    $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
+    info "Installing nltk is done"
+}
+
+install_marky_markov() {
+    info "Installing Marky Markov"
+    if [ ! -d $MARKY_MARKOV_DIR ]; then
+      git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
+    else
+      warn "Skipping marky_markov clone"
+    fi
+    MD5SUMS["markov_modeling.tar.gz"]=7d51bbcd4df89b2633bd9520fb99b2b7
+    wget_cache $GITHUB_STORAGE_URL/markov_modeling.tar.gz
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+
+    add_ppa ppa:brightbox/ruby-ng
+    apt_get_install ruby2.3 ruby2.3-dev
+    $SUDO gem install marky_markov
+    info "Installing Marky Markov is done"
+}
+
+install_link_grammar() {
+    info "Installing Link-Grammar"
+
+    MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
+    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
+
+    $SUDO rm -rf /tmp/link-grammar-5.3.13
+    tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
+    mkdir -p /tmp/link-grammar-5.3.13/build
+    cd /tmp/link-grammar-5.3.13/build
+    JAVA_HOME=/usr/lib/jvm/default-java
+    ../configure
+    make -j$(nproc)
+    $SUDO make install
+    $SUDO ldconfig
+    $SUDO rm -rf /tmp/link-grammar-5.3.13
+    cd $BASEDIR
+    info "Installing Link-Grammar done"
+}
+
+install_relex_deps() {
+    info "Installing RelEX dependencies"
+    local pkgs=(
+        build-essential python-dev swig zlib1g-dev unzip wget
+        wordnet-dev wordnet-sense-index
+        openjdk-7-jdk
+        ant libcommons-logging-java libgetopt-java
+    )
+    apt_get_install "${pkgs[@]}"
+
+    if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
+        install_link_grammar
+    fi
+
+    # Java WordNet Library
+    if [[ ! -e /usr/local/share/java/jwnl.jar ]]; then
+        MD5SUMS["jwnl14-rc2.zip"]=c1c35ce1d1590938abe48d7785f87ae0
+        wget_cache $GITHUB_STORAGE_URL/jwnl14-rc2.zip
+        unzip -qo ${HR_CACHE}/jwnl14-rc2.zip -d /tmp jwnl14-rc2/jwnl.jar
+        $SUDO mv -v /tmp/jwnl14-rc2/jwnl.jar /usr/local/share/java/
+        $SUDO rm -r /tmp/jwnl14-rc2
+        $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
+    fi
+    info "Installing RelEX dependencies is done"
+}
+
+install_pocketsphinx() {
+    if [[ -f /opt/hansonrobotics/lib/pkgconfig/pocketsphinx.pc && -f /opt/hansonrobotics/lib/pkgconfig/sphinxbase.pc ]]; then
+        info "Pocketsphinx is already installed."
+        return
+    fi
+    info "Installing Pocketsphinx"
+    apt_get_install bison automake
+    MD5SUMS["sphinxbase-1.0.0.tar.gz"]=df69f72b19abd943cfc4b51ec30a3b29
+    MD5SUMS["pocketsphinx-1.0.0.tar.gz"]=b94bf391c22b6dd4c86a8c112aa62f48
+    wget_cache https://github.com/hansonrobotics/sphinxbase/archive/v1.0.0.tar.gz sphinxbase-1.0.0.tar.gz
+    wget_cache https://github.com/hansonrobotics/pocketsphinx/archive/v1.0.0.tar.gz pocketsphinx-1.0.0.tar.gz
+
+    tar zxf ${HR_CACHE}/sphinxbase-1.0.0.tar.gz -C /tmp
+    cd /tmp/sphinxbase-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
+    $SUDO rm -r /tmp/sphinxbase-1.0.0
+
+    tar zxf ${HR_CACHE}/pocketsphinx-1.0.0.tar.gz -C /tmp
+    cd /tmp/pocketsphinx-1.0.0
+    ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
+    $SUDO rm -r /tmp/pocketsphinx-1.0.0
+    cd $BASEDIR
+    info "Installing Pocketsphinx is done"
+}
+
+install_blender() {
+    info "Installing blender"
+    add_ppa ppa:irie/blender
+    apt_get_install blender
+    info "Installing blender done"
+}
+
+install_ffmpeg() {
+    info "Installing ffmpeg"
+    # For blender_api_test
+    add_ppa ppa:mc3man/trusty-media
+    apt_get_install ffmpeg
+    info "Installing ffmpeg done"
+}
+
+install_misc() {
+    info "Installing misc dependencies"
+    local pkgs=()
+
+    # For rosbridge_server
+    pkgs+=(python-bson)
+
+    # For pololu-motors
+    # DO NOT UPGRADE WITH PIP
+    pkgs+=(python-serial)
+
+    # For Blender
+    pkgs+=(python3-numpy)
+
+    # For running scripts
+    pkgs+=(tmux)
+
+    # For tts playing audio
+    pkgs+=(python-pyglet)
+
+    # For chatbot
+    pkgs+=(python-yaml)
+
+    # Swig for iflytek SDK
+    pkgs+=(swig)
+
+    # For rospy to run with python3
+    pkgs+=(python3-yaml)
+
+    # For telnet automation
+    pkgs+=(expect)
+
+    # For audio recording
+    pkgs+=(pulseaudio python-pyaudio)
+
+    # For window layout
+    pkgs+=(xdotool)
+
+    apt_get_install "${pkgs[@]}"
+
+    # For chatbot
+    $SUDO pip2 install num2words
+
+    # For Chinese tts
+    $SUDO pip2 install ${PIP_OPTS} pinyin==0.2.5
+
+    # For speech2command
+    $SUDO pip2 install ${PIP_OPTS} pyparsing
+
+    # For performances
+    $SUDO pip2 install transitions
+
+    # For webui
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
+
+    info "Installing misc dependencies is done"
+}
+
+install_manyears_deps() {
+    info "Installing Manyears dependencies"
+    if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
+        # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
+        MD5SUMS["manyears.tar.gz"]=cf8688959e6d6a7ea9cdd1167814862a
+        wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
+        mkdir -p $MANYEARSLIB_PREFIX
+        tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
+        mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+    else
+        info "Manyears is already installed"
+    fi
+    info "Installing Manyears dependencies is done"
+}
+
+install_test_deps() {
+    info "Installing test dependencies"
+    apt_get_install socat
+
+    # WebUI compatable webserver
+    $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
+    info "Installing test dependencies is done"
+
+    # for python test coverage
+    $SUDO pip install coverage
+}
+
+install_webui_deps() {
+    # Remove npm and nodejs if needed
+    # sudo npm uninstall -g npm
+    # sudo apt-get remove nodejs
+
+    # See https://github.com/nodesource/distributions#debinstall
+    if ! hash nodejs; then
+        info "Installing nodejs"
+        curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
+        apt_get_install nodejs
+        info "Installing nodejs done"
+    fi
+    if ! npm ls -g webpack >/dev/null; then
+        $SUDO npm install -g webpack
+    fi
+    if ! npm ls -g nodemon >/dev/null; then
+        $SUDO npm install -g nodemon
+    fi
+}
+
+install_opencv() {
+    if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
+        MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
+        wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
+        $SUDO rm -rf /tmp/opencv-2.4.11
+        unzip ${HR_CACHE}/opencv-2.4.11.zip -d /tmp
+        cd /tmp/opencv-2.4.11
+        mkdir build
+        cd build
+        cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        $SUDO rm -rf /tmp/opencv-2.4.11
+        cd ${HR_WORKSPACE}
+    fi
+}
+
+install_openbiometrics() {
+    apt_get_install --force-yes qt5-default libqt5svg5-dev
+    install_opencv
+    if [[ ! -f ${HR_PREFIX}/lib/libopenbr.so ]]; then
+        if [ ! -d ${OPENBR_SRC_DIR} ]; then
+            info "Cloning openbr"
+            git clone https://github.com/biometrics/openbr.git ${OPENBR_SRC_DIR}
+        fi
+        cd ${OPENBR_SRC_DIR}
+        git checkout v1.1.0
+        git submodule init
+        git submodule update
+
+        mkdir -p ${OPENBR_SRC_DIR}/build
+        cd ${OPENBR_SRC_DIR}/build
+        cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
+        $SUDO make install
+        cd ${HR_WORKSPACE}
+    fi
+}
+
+install_dlib() {
+    if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
+      info "Installing dlib"
+      # The dlib DNS server sometimes times out. Pinging it first
+      # makes it much more likely that the wget will succeed.
+      ping -c 5 dlib.net
+      MD5SUMS["dlib-${DLIB_VERSION}.tar.bz2"]=da930a35c2aa88612dd2ebf893f48f60
+      wget_cache http://dlib.net/files/dlib-${DLIB_VERSION}.tar.bz2
+      mkdir -p $DLIB_PATH
+      tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
+      cd $DLIB_PATH && python setup.py build
+      info "Installing dlib is done"
+    else
+      warn "Skipping dlib installation"
+    fi
+}
+
+install_clandmarks() {
+    # Install clandmarks
+    if [ ! -d $CLANDMARK_DIR ]; then
+      info "Installing clandmarks"
+      MD5SUMS["clandmark.tar.bz2"]=0d1eb90bad2c02fb38aed4e464555f02
+      wget_cache $GITHUB_STORAGE_URL/clandmark.tar.bz2
+      mkdir -p $CLANDMARK_DIR
+      tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
+      info "Installing clandmarks is done"
+    else
+      warn "Skipping clandmark downloading"
+    fi
+}
+
+install_torch() {
+    if [ ! -d $TORCH_DIR ]; then
+        info "Installing torch"
+        git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
+
+        cd $TORCH_DIR
+        bash install-deps
+        echo no | ./install.sh
+
+        # Install lua packages in the torch file in scripts directory.
+        info "Installing lua packages"
+        cd $TORCH_DIR/install/bin
+        ./luarocks install nn
+        ./luarocks install dpnn
+        ./luarocks install image
+        ./luarocks install optim
+        ./luarocks install csvigo
+        ./luarocks install sys
+        info "Installing lua packages is done"
+        info "Installing torch is done"
+        cd $BASEDIR
+    else
+        warn "Skipping Torch installation"
+    fi
+}
+
+install_openface() {
+    info "Installing openface"
+    # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
+    apt_get_install python-skimage
+    $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
+
+    if [ ! -d $OPENFACE_DIR ]; then
+      info "Cloning openface"
+      git clone https://github.com/hansonrobotics/openface.git $OPENFACE_DIR --recursive
+    else
+      warn "Skipping openface clone"
+    fi
+    info "Installing openface is done"
+
+    # $OPENFACE_DIR/models/get-models.sh
+    MD5SUMS["nn4.small2.v1.t7"]=c95bfd8cc1adf05210e979ff623013b6
+    MD5SUMS["celeb-classifier.nn4.small2.v1.pkl"]=199a2c0d32fd0f22f14ad2d248280475
+    MD5SUMS["shape_predictor_68_face_landmarks.dat.bz2"]=677a91476056de0507f1915adc7ef86a
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
+        wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+        bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
+    fi
+    checkmd5 ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl 199a2c0d32fd0f22f14ad2d248280475
+    mkdir -p $OPENFACE_DIR/models/dlib
+    mkdir -p $OPENFACE_DIR/models/openface
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ${OPENFACE_DIR}/models/dlib
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${OPENFACE_DIR}/models/openface
+    cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
+}
+
+install_cmt() {
+    if [ ! -d $CPPMT_DIR ]; then
+        info "Cloning CppMT"
+        git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
+        cd $CPPMT_DIR
+        git checkout wrapper
+    else
+        warn "Skipping CppMT clone"
+    fi
+
+    if [ ! -f $CPPMT_DIR/cmt ]; then
+        cd $CPPMT_DIR
+        cmake .
+        make -j$(nproc)
+    fi
+    cd $BASEDIR
+}
+
+install_emotime() {
+    if [ ! -d $EMOTIME_DIR ]; then
+      info "Cloning emotime"
+      git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
+    else
+      warn "Skipping emotime clone"
+    fi
+    cd $EMOTIME_DIR/build
+    cmake ..
+    make -j$(nproc)
+}
+
+install_vision_deps() {
+    info "Installing vision dependencies"
+    mkdir -p $VISION_TOOL_PREFIX
+    apt_get_install libopencv-dev ros-indigo-opencv-apps
+
+    # Tkinter error other wise.
+    $SUDO pip2 install ${PIP_OPTS} -I Pillow
+    $SUDO pip2 install ${PIP_OPTS} imgurpython
+
+    install_dlib
+    install_clandmarks
+    install_torch
+    install_openface
+    install_cmt
+    install_emotime
+    install_openbiometrics
+
+    info "Installing vision dependencies is done"
+}
+
+install_calib_tools() {
+    MD5SUMS["maestro-linux-150116.tar.gz"]=84feed740c0695bb0eea13ccf7988b97
+    wget_cache $GITHUB_STORAGE_URL/maestro-linux-150116.tar.gz
+    mkdir -p ${HR_PREFIX}/maestro
+    tar zxf ${HR_CACHE}/maestro-linux-150116.tar.gz -C ${HR_PREFIX}/maestro --strip-components 1
+    apt_get_install libusb-1.0-0-dev mono-runtime libmono-winforms2.0-cil
+    $SUDO cp ${HR_PREFIX}/maestro/99-pololu.rules /etc/udev/rules.d/
+    #$SUDO udevadm control --reload-rules
+
+    MD5SUMS["mx_calib"]=5e34a64564df92c116f027a9ff48a11b
+    wget_cache $GITHUB_STORAGE_URL/mx_calib
+    if [[ ! -f ${HR_PREFIX}/bin/mx_calib ]]; then
+        $SUDO cp ${HR_CACHE}/mx_calib ${HR_PREFIX}/bin
+        $SUDO chmod +x ${HR_PREFIX}/bin/mx_calib
+    fi
+}
+
+install_self() {
+    local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
+    if [[ ! -d $prefix ]]; then
+        mkdir -p $prefix
+    fi
+
+    if [[ $BASEDIR == $prefix ]]; then
+        error "Can't install itself"
+        exit 1
+    fi
+    $SUDO cp $BASEDIR/hr $prefix/hr-base
+    $SUDO chmod +x $prefix/hr-base
+    info "Copied hr to $prefix/hr-base"
+    echo "$prefix/hr-base" >> $HR_INSTALLED_FILE
+
+    $SUDO ln -sf -T hr-base $prefix/hr
+    info "Linked hr to $prefix/hr-base"
+    echo "$prefix/hr" >> $HR_INSTALLED_FILE
+
+    local tmp_file=/tmp/hrcomp
+    curl -L -o $tmp_file ${GITHUB_HRCOMP_URL}
+    bash_flag=$(file $tmp_file | grep bash | wc -l)
+    if [[ $bash_flag != "1" ]]; then
+        error "Can't get hr-ext"
+        exit 1
+    fi
+
+    $SUDO cp $tmp_file /etc/bash_completion.d/hr-completion.bash
+    info "Copied hr-completion.bash to /etc/bash_completion.d"
+    echo "/etc/bash_completion.d/hr-completion.bash" >> $HR_INSTALLED_FILE
+
+    install_hr-ext
+
+    info "HR tool is installed"
+}
+
+uninstall_all() {
+    if [[ -f $HR_INSTALLED_FILE ]]; then
+        local files=$(sort -u $HR_INSTALLED_FILE)
+        for f in $files; do
+            echo "> $f"
+        done
+        local confirm
+        _get_confirm "These files will be removed [y/N]"
+        if [[ ${confirm} != 1 ]]; then
+            exit
+        fi
+        for f in $files; do
+            if [[ -e $f || -L $f ]]; then
+                $SUDO rm $f
+                info "Removed $f"
+            fi
+        done
+        rm $HR_INSTALLED_FILE
+    fi
+}
+
+install_hr-ext() {
+    if [[ -z $GITHUB_TOKEN ]]; then
+        info "GITHUB_TOKEN is not set"
+        return
+    fi
+    local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
+    if [[ ! -d $prefix ]]; then
+        mkdir -p $prefix
+    fi
+    local ext_url=$GITHUB_HR_EXT_URL
+    info "Getting hr-ext"
+    local ext_file=/tmp/hrtmp
+    curl -L -o $ext_file ${ext_url}
+    bash_flag=$(file $ext_file | grep bash | wc -l)
+    if [[ $bash_flag != "1" ]]; then
+        error "Can't get hr-ext"
+        exit 1
+    fi
+
+    $SUDO cp $ext_file $prefix/hr-ext
+    info "Copied hr to $prefix/hr-ext"
+    echo "$prefix/hr-ext" >> $HR_INSTALLED_FILE
+
+    $SUDO chmod +x $prefix/hr-ext
+
+    $SUDO ln -sf -T hr-ext $prefix/hr
+    info "Linked hr to $prefix/hr-ext"
+    echo "$prefix/hr" >> $HR_INSTALLED_FILE
+
+    rm $ext_file
+}
+
+update_head() {
+    read_workspace
+    info "Updating HEAD source code"
+    local DEFAULT_BRANCH="master"
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE/$repo
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        if [[ $branch != $DEFAULT_BRANCH ]]; then
+            warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
+            continue
+        fi
+        info "Updating [${repo}]"
+        git pull origin $DEFAULT_BRANCH
+        info "Updating [${repo}] is done"
+    done
+    info "Updating HEAD source code is done"
+}
+
+update_opencog() {
+    read_workspace
+    info "Updating OpenCog source code"
+    local DEFAULT_BRANCH="master"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE/opencog/$repo
+        branch=$(git rev-parse --abbrev-ref HEAD)
+        if [[ $branch != $DEFAULT_BRANCH ]]; then
+            warn "[${repo}] Branch is not (${DEFAULT_BRANCH}) branch (${branch}). Skip."
+            continue
+        fi
+        info "Updating [${repo}]"
+        git pull origin $DEFAULT_BRANCH
+        info "Updating [${repo}] is done"
+    done
+    info "Updating OpenCog source code is done"
+}
+
+get_opencog() {
+    read_workspace
+    info "Cloning OpenCog source code"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo opencog
+    done
+    info "Cloning OpenCog source code is done"
+}
+
+get_hr() {
+    read_workspace
+    info "Cloning HR source code"
+    for repo in ${HR_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        clone hansonrobotics $repo
+    done
+    info "Cloning HR source code is done"
+}
+
+get_models() {
+    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
+    local old_dir=${HOME}/.hr/cache/models
+    if [[ -d ${old_dir} ]]; then
+        for f in ${old_dir}/*; do
+            [[ -f "$f" ]] || continue
+            if [[ ! -e ${HR_MODELS}/${f##*/} ]]; then
+                mv ${f} ${HR_MODELS}/
+            fi
+        done
+    fi
+
+    # openface
+    wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
+    wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
+    checkmd5 ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 677a91476056de0507f1915adc7ef86a
+    checkmd5 ${HR_CACHE}/nn4.small2.v1.t7 c95bfd8cc1adf05210e979ff623013b6
+    cp ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2 ${HR_MODELS}
+    bunzip2 -f ${HR_MODELS}/shape_predictor_68_face_landmarks.dat.bz2
+    cp ${HR_CACHE}/nn4.small2.v1.t7 ${HR_MODELS}
+
+    # markov
+    wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
+    checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+}
+
+build_head() {
+    cd $HR_WORKSPACE/HEAD
+    source /opt/ros/indigo/setup.bash
+    if [[ ! -d .catkin_tools ]]; then
+        catkin init
+    fi
+
+    catkin config --blacklist icog_face_tracker
+    catkin build --force-cmake -j$(nproc) --no-status --make-args install
+    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages/
+    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --upgrade --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --upgrade --no-deps
+    cd $HR_WORKSPACE/HEAD/src/webui
+    npm install
+}
+
+build_opencog() {
+    info "Building OpenCog"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        if [[ $repo != 'relex' && $repo != 'external-tools' ]]; then
+            if [[ ! -d $HR_WORKSPACE/opencog/$repo/build ]]; then
+                mkdir $HR_WORKSPACE/opencog/$repo/build
+            fi
+            cd $HR_WORKSPACE/opencog/$repo/build && cmake ..  && make -j$(nproc) && $SUDO make install
+        fi
+        if [[ $repo == 'relex' ]]; then
+            cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && $SUDO ant install
+        fi
+    done
+    info "Building OpenCog is done"
+}
+
+clean_head() {
+    info "Cleaning up HR"
+    for repo in ${HR_REPOS[*]}; do
+        cd $HR_WORKSPACE/$repo
+        if [[ -d .catkin_tools ]]; then
+            catkin clean -y || catkin clean -a
+        fi
+    done
+    info "HR is cleaned"
+}
+
+clean_opencog() {
+    info "Cleaning up OpenCog"
+    rm -r ~/.cache/guile
+    rm -r ~/.hr/cache/oc_aiml
+    if [[ ! -z $HR_WORKSPACE ]]; then
+        for repo in ${OPENCOG_REPOS[*]}
+        do
+            if [[ $repo != 'relex' ]]; then
+                $SUDO rm -r $HR_WORKSPACE/opencog/$repo/build
+            fi
+        done
+    fi
+    $SUDO rm -r /usr/local/include/opencog
+    $SUDO rm -r /usr/local/lib/opencog
+    $SUDO rm -r /usr/local/share/opencog
+    $SUDO rm /usr/local/bin/cogserver
+    $SUDO rm /usr/local/etc/cogserver.conf
+    $SUDO rm /usr/local/etc/opencog.conf
+    $SUDO rm /usr/local/lib/libcogutil.so
+    info "OpenCog is cleaned"
+}
+
+check_local_changes() {
+    read_workspace
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            cd $HR_WORKSPACE/opencog/$repo
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            if [[ $branch != 'master' ]]; then
+                warn "HEAD branch is not master $(pwd)" 1>&2
+                return 1
+            fi
+            if [[ $(git status -uno --porcelain|wc -c) != 0 ]]; then
+                warn "Plese commit the change(s) $(pwd)" 1>&2
+                warn $(git status --porcelain) 1>&2
+                return 1
+            fi
+            if [[ $(git diff --name-only master origin/master|wc -c) != 0 ]]; then
+                warn "Master branch is not synchronized with origin $(pwd)" 1>&2
+                return 1
+            fi
+        fi
+    done
+    cd $HR_WORKSPACE
+}
+
+switch_opencog_repo() {
+    read_workspace
+    DOMAIN=${1}
+    check_local_changes || exit 1
+    warn "Switching to $DOMAIN repositories"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            info "Set [$repo] origin to https://github.com/$DOMAIN/$repo"
+            cd opencog/$repo
+            git remote remove old || true
+            git remote rename origin old
+            git remote add -f origin https://github.com/$DOMAIN/$repo
+            git branch master -u origin/master
+            git reset --hard origin/master
+        else
+            clone $DOMAIN $repo opencog
+        fi
+    done
+}
+
+set_normal_opencog() {
+    switch_opencog_repo hansonrobotics
+    update_opencog
+}
+
+set_dev_opencog() {
+    switch_opencog_repo opencog
+    update_opencog
+}
+
+############# End of Functions #############
+
+############# Main #############
+show_help() {
+cat << EOF
+Hanson Robotics Software Management Tool
+
+Usage: hr <command> [<args>]
+
+  Supported commands:
+
+    install <component> [<component>] ...
+        install components
+
+    build <component> [<component>] ...
+        build components
+
+    get <repository> [<repository>] ...
+        clone repositories from GitHub
+
+    init [workspace]
+        default workspace is ~/hansonrobotics
+
+    run <function> [<args>]
+        run any defined function
+
+    env
+        show hansonrobotics environment variables
+
+    normal_opencog
+        checkout opencog forked repositories under hansonrobotics
+
+    dev_opencog
+        checkout opencog original repositories under opencog
+EOF
+}
+
+execute() {
+    case "$1" in
+        install|uninstall|build|run|get|init|clean|env|update)
+            command=$1
+            shift
+            hr_${command} $@
+            ;;
+        normal_opencog)
+            shift
+            set_normal_opencog
+            ;;
+        dev_opencog)
+            shift
+            set_dev_opencog
+            ;;
+        *)
+            warn "Unknown argument $1"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+if [[ ! $BASH_SOURCE == $0 ]]; then return; fi
+if [[ $# == 0 ]]; then show_help; exit 0; fi
+execute $@
+############# End of Main #############
