@@ -1183,6 +1183,64 @@ clean_opencog() {
     $SUDO rm /usr/local/lib/libcogutil.so
     info "OpenCog is cleaned"
 }
+
+check_local_changes() {
+    read_workspace
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            cd $HR_WORKSPACE/opencog/$repo
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            if [[ $branch != 'master' ]]; then
+                warn "HEAD branch is not master $(pwd)" 1>&2
+                return 1
+            fi
+            if [[ $(git status -uno --porcelain|wc -c) != 0 ]]; then
+                warn "Plese commit the change(s) $(pwd)" 1>&2
+                warn $(git status --porcelain) 1>&2
+                return 1
+            fi
+            if [[ $(git diff --name-only master origin/master|wc -c) != 0 ]]; then
+                warn "Master branch is not synchronized with origin $(pwd)" 1>&2
+                return 1
+            fi
+        fi
+    done
+    cd $HR_WORKSPACE
+}
+
+switch_opencog_repo() {
+    read_workspace
+    DOMAIN=${1}
+    check_local_changes || exit 1
+    warn "Switching to $DOMAIN repositories"
+    for repo in ${OPENCOG_REPOS[*]}
+    do
+        cd $HR_WORKSPACE
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            info "Set [$repo] origin to https://github.com/$DOMAIN/$repo"
+            cd opencog/$repo
+            git remote remove old || true
+            git remote rename origin old
+            git remote add -f origin https://github.com/$DOMAIN/$repo
+            git branch master -u origin/master
+            git reset --hard origin/master
+        else
+            clone $DOMAIN $repo opencog
+        fi
+    done
+}
+
+set_normal_opencog() {
+    switch_opencog_repo hansonrobotics
+    update_opencog
+}
+
+set_dev_opencog() {
+    switch_opencog_repo opencog
+    update_opencog
+}
+
 ############# End of Functions #############
 
 ############# Main #############
@@ -1215,6 +1273,14 @@ execute() {
             command=$1
             shift
             hr_${command} $@
+            ;;
+        normal_opencog)
+            shift
+            set_normal_opencog
+            ;;
+        dev_opencog)
+            shift
+            set_dev_opencog
             ;;
         *)
             warn "Unknown argument $1"

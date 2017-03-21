@@ -9,7 +9,7 @@
 
 _hr() {
   local command
-  local hr_commands="init get install uninstall build clean run env update"
+  local hr_commands="init get install uninstall build clean run env update normal_opencog dev_opencog"
   local cur=${COMP_WORDS[COMP_CWORD]}
   local words=${COMP_WORDS[@]}
   local cword=$COMP_CWORD
@@ -27,9 +27,6 @@ _hr() {
   case ${command} in
     install|uninstall|build|get|clean|update)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
-      ;;
-    run)
-      COMPREPLY=()
       ;;
     *)
       if (( ${cword} >= 2 )); then
