@@ -25,19 +25,7 @@ _hr() {
 
   local args=$(hr run list_components ${command} 2> /dev/null)
   case ${command} in
-    install)
-      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
-      ;;
-    uninstall)
-      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
-      ;;
-    build)
-      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
-      ;;
-    get)
-      COMPREPLY=($(compgen -W "${args}" -- ${cur}))
-      ;;
-    clean)
+    install|uninstall|build|get|clean|update)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
     run)
