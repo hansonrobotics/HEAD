@@ -63,6 +63,10 @@ export PATH=/usr/lib/ccache:$PATH
 
 ASSUME_YES=0
 
+if [[ ! -d $HOME/.hr ]]; then
+    mkdir -p $HOME/.hr
+fi
+
 APT_GET_OPTS="-y"
 if [[ $APT_CACHE == 1 ]]; then
     APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
