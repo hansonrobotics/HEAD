@@ -14,7 +14,8 @@ HR_VERSION=0.1.2
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=(HEAD)
 GITHUB_STORAGE_URL=https://raw.githubusercontent.com/hansonrobotics/binary_dependency/master
-GITHUB_HR_EXT_URL=https://$GITHUB_TOKEN@raw.githubusercontent.com/hansonrobotics/private_ws/master/scripts/hr
+GITHUB_HRCOMP_URL=https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/hr-completion.bash
+GITHUB_HR_EXT_URL=https://$GITHUB_TOKEN@raw.githubusercontent.com/hansonrobotics/private_ws/master/scripts/hr/_hr
 declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
@@ -924,7 +925,15 @@ install_self() {
     $SUDO ln -sf -T hr-base $prefix/hr
     info "Linked hr to $prefix/hr-base"
 
-    $SUDO cp $BASEDIR/hr-completion.bash /etc/bash_completion.d
+    local tmp_file=/tmp/hrcomp
+    curl -L -o $tmp_file ${GITHUB_HRCOMP_URL}
+    bash_flag=$(file $tmp_file | grep bash | wc -l)
+    if [[ $bash_flag != "1" ]]; then
+        error "Can't get hr-ext"
+        exit 1
+    fi
+
+    $SUDO cp $tmp_file /etc/bash_completion.d/hr-completion.bash
     info "Copied hr-completion.bash to /etc/bash_completion.d"
 }
 
