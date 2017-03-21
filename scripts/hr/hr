@@ -196,7 +196,7 @@ add_ppa() {
 curl_cache() {
     url=$1
     ofile=${2-${url##*/}}
-    info "Downloading $1"
+    info "Downloading $(basename $1)"
     [[ -f ${HR_CACHE}/${ofile} ]] || curl -L ${url} -o ${HR_CACHE}/${ofile}
 
     # check md5sum
@@ -215,13 +215,13 @@ curl_cache() {
         done
     fi
 
-    info "Downloading $1 is done"
+    info "Downloading $(basename $1) is done"
 }
 
 wget_cache() {
     url=$1
     ofile=${2-${url##*/}}
-    info "Downloading $1"
+    info "Downloading $(basename $1)"
     [[ -f ${HR_CACHE}/${ofile} ]] || wget ${url} -O ${HR_CACHE}/${ofile}
 
     # check md5sum
@@ -240,7 +240,7 @@ wget_cache() {
         done
     fi
 
-    info "Downloading $1 is done"
+    info "Downloading $(basename $1) is done"
 }
 
 _get_confirm() {
@@ -276,6 +276,29 @@ list_components() {
     for f in ${funcs[@]}; do
         echo ${f#${1}_};
     done
+}
+
+validate_component_args() {
+    if [[ $# == 1 ]]; then
+        error "Wront $1 arguments"
+        return 1
+    fi
+    local found_components=$(list_components $1)
+
+    shift
+    for arg in $@; do
+        local found=0
+        for f in $found_components; do
+            if [[ $f == $arg ]]; then
+                found=1
+            fi
+        done
+        if [[ $found == 0 ]]; then
+            error "Invalid argument $arg"
+            return 1
+        fi
+    done
+    return 0
 }
 
 check_or_create_ws() {
@@ -333,27 +356,7 @@ read_workspace() {
 
 ############# Entries #############
 hr_install() {
-    if [[ $# == 0 ]]; then
-        error "Nothing to install"
-        exit 1
-    fi
-    # validate arguments
-    local funcs=$(compgen -A function|grep -E "^install_*")
-    for arg in $@; do
-        local func=install_${arg}
-        local found=0
-        for f in $funcs; do
-            if [[ $f == $func ]]; then
-                found=1
-            fi
-        done
-        if [[ $found == 0 ]]; then
-            error "Invalid argument $arg"
-            exit 1
-        fi
-    done
-
-    # execute
+    validate_component_args install $@
     for arg in $@; do
         local func=install_${arg}
         eval $func
@@ -361,6 +364,7 @@ hr_install() {
 }
 
 hr_uninstall() {
+    validate_component_args uninstall $@
     for arg in $@; do
         local func=uninstall_${arg}
         eval $func
@@ -368,6 +372,7 @@ hr_uninstall() {
 }
 
 hr_update() {
+    validate_component_args update $@
     for arg in $@; do
         local func=update_${arg}
         eval $func
@@ -375,9 +380,25 @@ hr_update() {
 }
 
 hr_build() {
-    read_workspace
+    validate_component_args build $@
     for arg in $@; do
         local func=build_${arg}
+        eval $func
+    done
+}
+
+hr_get() {
+    validate_component_args get $@
+    for arg in $@; do
+        local func=get_${arg}
+        eval $func
+    done
+}
+
+hr_clean() {
+    validate_component_args clean $@
+    for arg in $@; do
+        local func=clean_${arg}
         eval $func
     done
 }
@@ -386,13 +407,6 @@ hr_run() {
     local func=$1
     shift
     $func $@
-}
-
-hr_get() {
-    for arg in $@; do
-        local func=get_${arg}
-        eval $func
-    done
 }
 
 hr_init() {
@@ -431,14 +445,6 @@ if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
   source $TORCH_DIR/install/bin/torch-activate
 fi
 EOF
-}
-
-hr_clean() {
-    read_workspace
-    for arg in $@; do
-        local func=clean_${arg}
-        eval $func
-    done
 }
 
 hr_env() {
@@ -741,7 +747,7 @@ install_webui_deps() {
     # See https://github.com/nodesource/distributions#debinstall
     if ! hash nodejs; then
         info "Installing nodejs"
-        curl -sL https://deb.nodesource.com/setup_6.x | $SUDO -E bash -
+        curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
         apt_get_install nodejs
         info "Installing nodejs done"
     fi
@@ -1084,7 +1090,7 @@ get_opencog() {
     info "Cloning OpenCog source code is done"
 }
 
-get_hr() {
+get_head() {
     read_workspace
     info "Cloning HR source code"
     for repo in ${HR_REPOS[*]}
@@ -1123,6 +1129,8 @@ get_models() {
 }
 
 build_head() {
+    read_workspace
+    info "Building HEAD"
     cd $HR_WORKSPACE/HEAD
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
@@ -1136,9 +1144,11 @@ build_head() {
     pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --upgrade --no-deps
     cd $HR_WORKSPACE/HEAD/src/webui
     npm install
+    info "Building HEAD is done"
 }
 
 build_opencog() {
+    read_workspace
     info "Building OpenCog"
     for repo in ${OPENCOG_REPOS[*]}
     do
@@ -1156,17 +1166,19 @@ build_opencog() {
 }
 
 clean_head() {
-    info "Cleaning up HR"
+    read_workspace
+    info "Cleaning up HEAD"
     for repo in ${HR_REPOS[*]}; do
         cd $HR_WORKSPACE/$repo
         if [[ -d .catkin_tools ]]; then
             catkin clean -y || catkin clean -a
         fi
     done
-    info "HR is cleaned"
+    info "HEAD is cleaned"
 }
 
 clean_opencog() {
+    read_workspace
     info "Cleaning up OpenCog"
     rm -r ~/.cache/guile
     rm -r ~/.hr/cache/oc_aiml
