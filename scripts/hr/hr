@@ -359,7 +359,9 @@ hr_install() {
     validate_component_args install $@
     for arg in $@; do
         local func=install_${arg}
+        info "Installing ${arg}"
         eval $func
+        info "${arg} is installed"
     done
 }
 
@@ -367,7 +369,9 @@ hr_uninstall() {
     validate_component_args uninstall $@
     for arg in $@; do
         local func=uninstall_${arg}
+        info "Uninstalling ${arg}"
         eval $func
+        info "${arg} is uninstalled"
     done
 }
 
@@ -391,7 +395,9 @@ hr_get() {
     validate_component_args get $@
     for arg in $@; do
         local func=get_${arg}
+        info "Getting ${arg}"
         eval $func
+        info "${arg} is got"
     done
 }
 
@@ -399,7 +405,9 @@ hr_clean() {
     validate_component_args clean $@
     for arg in $@; do
         local func=clean_${arg}
+        info "Cleaning up ${arg}"
         eval $func
+        info "${arg} is cleaned up"
     done
 }
 
@@ -473,15 +481,12 @@ install_head_deps() {
 }
 
 install_basic() {
-    info "Installing basic dependencies"
     local pkgs=(git wget telnet python3-pip python-pip build-essential
             software-properties-common)
     apt_get_install "${pkgs[@]}"
-    info "Installing basic dependencies is done"
 }
 
 install_ros() {
-    info "Installing ROS"
     $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
     $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
     local pkgs=(
@@ -512,11 +517,9 @@ install_ros() {
         $SUDO rosdep init -q
         rosdep update -q
     fi
-    info "Installing ROS is done"
 }
 
 install_opencog_deps() {
-    info "Installing OpenCog dependencies"
     local pkgs=(
         cmake ccache
         binutils-dev
@@ -539,19 +542,14 @@ install_opencog_deps() {
     install_marky_markov
 
     install_relex_deps
-
-    info "Installing OpenCog dependencies is done"
 }
 
 install_nltk() {
-    info "Installing nltk"
     $SUDO pip2 install ${PIP_OPTS} nltk
     $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
-    info "Installing nltk is done"
 }
 
 install_marky_markov() {
-    info "Installing Marky Markov"
     if [ ! -d $MARKY_MARKOV_DIR ]; then
       git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
     else
@@ -565,12 +563,9 @@ install_marky_markov() {
     add_ppa ppa:brightbox/ruby-ng
     apt_get_install ruby2.3 ruby2.3-dev
     $SUDO gem install marky_markov
-    info "Installing Marky Markov is done"
 }
 
 install_link_grammar() {
-    info "Installing Link-Grammar"
-
     MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
     wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
 
@@ -585,11 +580,9 @@ install_link_grammar() {
     $SUDO ldconfig
     $SUDO rm -rf /tmp/link-grammar-5.3.13
     cd $BASEDIR
-    info "Installing Link-Grammar done"
 }
 
 install_relex_deps() {
-    info "Installing RelEX dependencies"
     local pkgs=(
         build-essential python-dev swig zlib1g-dev unzip wget
         wordnet-dev wordnet-sense-index
@@ -611,7 +604,6 @@ install_relex_deps() {
         $SUDO rm -r /tmp/jwnl14-rc2
         $SUDO chmod -v 0644 /usr/local/share/java/jwnl.jar
     fi
-    info "Installing RelEX dependencies is done"
 }
 
 install_pocketsphinx() {
@@ -619,7 +611,6 @@ install_pocketsphinx() {
         info "Pocketsphinx is already installed."
         return
     fi
-    info "Installing Pocketsphinx"
     apt_get_install bison automake
     MD5SUMS["sphinxbase-1.0.0.tar.gz"]=df69f72b19abd943cfc4b51ec30a3b29
     MD5SUMS["pocketsphinx-1.0.0.tar.gz"]=b94bf391c22b6dd4c86a8c112aa62f48
@@ -636,26 +627,20 @@ install_pocketsphinx() {
     ./autogen.sh && ./configure --prefix=$HR_PREFIX && make && $SUDO make install
     $SUDO rm -r /tmp/pocketsphinx-1.0.0
     cd $BASEDIR
-    info "Installing Pocketsphinx is done"
 }
 
 install_blender() {
-    info "Installing blender"
     add_ppa ppa:irie/blender
     apt_get_install blender
-    info "Installing blender done"
 }
 
 install_ffmpeg() {
-    info "Installing ffmpeg"
     # For blender_api_test
     add_ppa ppa:mc3man/trusty-media
     apt_get_install ffmpeg
-    info "Installing ffmpeg done"
 }
 
 install_misc() {
-    info "Installing misc dependencies"
     local pkgs=()
 
     # For rosbridge_server
@@ -708,12 +693,9 @@ install_misc() {
 
     # For webui
     $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
-
-    info "Installing misc dependencies is done"
 }
 
 install_manyears_deps() {
-    info "Installing Manyears dependencies"
     if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
         # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
         MD5SUMS["manyears.tar.gz"]=cf8688959e6d6a7ea9cdd1167814862a
@@ -724,16 +706,13 @@ install_manyears_deps() {
     else
         info "Manyears is already installed"
     fi
-    info "Installing Manyears dependencies is done"
 }
 
 install_test_deps() {
-    info "Installing test dependencies"
     apt_get_install socat
 
     # WebUI compatable webserver
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
-    info "Installing test dependencies is done"
 
     # for python test coverage
     $SUDO pip install coverage
@@ -798,7 +777,6 @@ install_openbiometrics() {
 
 install_dlib() {
     if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
-      info "Installing dlib"
       # The dlib DNS server sometimes times out. Pinging it first
       # makes it much more likely that the wget will succeed.
       ping -c 5 dlib.net
@@ -807,7 +785,6 @@ install_dlib() {
       mkdir -p $DLIB_PATH
       tar -xf $HR_CACHE/dlib-${DLIB_VERSION}.tar.bz2 -C $DLIB_DIR
       cd $DLIB_PATH && python setup.py build
-      info "Installing dlib is done"
     else
       warn "Skipping dlib installation"
     fi
@@ -816,12 +793,10 @@ install_dlib() {
 install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
-      info "Installing clandmarks"
       MD5SUMS["clandmark.tar.bz2"]=0d1eb90bad2c02fb38aed4e464555f02
       wget_cache $GITHUB_STORAGE_URL/clandmark.tar.bz2
       mkdir -p $CLANDMARK_DIR
       tar -xf $HR_CACHE/clandmark.tar.bz2 -C $CLANDMARK_DIR --strip-components=1
-      info "Installing clandmarks is done"
     else
       warn "Skipping clandmark downloading"
     fi
@@ -829,7 +804,6 @@ install_clandmarks() {
 
 install_torch() {
     if [ ! -d $TORCH_DIR ]; then
-        info "Installing torch"
         git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
 
         cd $TORCH_DIR
@@ -846,7 +820,6 @@ install_torch() {
         ./luarocks install csvigo
         ./luarocks install sys
         info "Installing lua packages is done"
-        info "Installing torch is done"
         cd $BASEDIR
     else
         warn "Skipping Torch installation"
@@ -854,7 +827,6 @@ install_torch() {
 }
 
 install_openface() {
-    info "Installing openface"
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     apt_get_install python-skimage
     $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
@@ -865,7 +837,6 @@ install_openface() {
     else
       warn "Skipping openface clone"
     fi
-    info "Installing openface is done"
 
     # $OPENFACE_DIR/models/get-models.sh
     MD5SUMS["nn4.small2.v1.t7"]=c95bfd8cc1adf05210e979ff623013b6
@@ -916,7 +887,6 @@ install_emotime() {
 }
 
 install_vision_deps() {
-    info "Installing vision dependencies"
     mkdir -p $VISION_TOOL_PREFIX
     apt_get_install libopencv-dev ros-indigo-opencv-apps
 
@@ -931,8 +901,6 @@ install_vision_deps() {
     install_cmt
     install_emotime
     install_openbiometrics
-
-    info "Installing vision dependencies is done"
 }
 
 install_calib_tools() {
@@ -984,8 +952,6 @@ install_self() {
     echo "/etc/bash_completion.d/hr-completion.bash" >> $HR_INSTALLED_FILE
 
     install_hr-ext
-
-    info "HR tool is installed"
 }
 
 uninstall_all() {
@@ -1130,7 +1096,6 @@ get_models() {
 
 build_head() {
     read_workspace
-    info "Building HEAD"
     cd $HR_WORKSPACE/HEAD
     source /opt/ros/indigo/setup.bash
     if [[ ! -d .catkin_tools ]]; then
@@ -1144,12 +1109,10 @@ build_head() {
     pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --upgrade --no-deps
     cd $HR_WORKSPACE/HEAD/src/webui
     npm install
-    info "Building HEAD is done"
 }
 
 build_opencog() {
     read_workspace
-    info "Building OpenCog"
     for repo in ${OPENCOG_REPOS[*]}
     do
         if [[ $repo != 'relex' && $repo != 'external-tools' ]]; then
@@ -1162,19 +1125,16 @@ build_opencog() {
             cd $HR_WORKSPACE/opencog/$repo && JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8 ant build && $SUDO ant install
         fi
     done
-    info "Building OpenCog is done"
 }
 
 clean_head() {
     read_workspace
-    info "Cleaning up HEAD"
     for repo in ${HR_REPOS[*]}; do
         cd $HR_WORKSPACE/$repo
         if [[ -d .catkin_tools ]]; then
             catkin clean -y || catkin clean -a
         fi
     done
-    info "HEAD is cleaned"
 }
 
 clean_opencog() {
