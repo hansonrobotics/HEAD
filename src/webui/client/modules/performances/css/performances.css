@@ -113,9 +113,13 @@
     height: 20px;
     text-align: left;
     z-index: 999;
-    cursor: pointer;
+    cursor: move;
     border: 1px solid #182934;
     overflow: hidden;
+}
+
+.app-timelines.readonly .app-node {
+    cursor: default;
 }
 
 .app-node[data-name="expression"] {

@@ -34,8 +34,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 doneButton: '.app-done-button',
                 editButton: '.app-edit-button',
                 previousButton: '.app-previous-button',
-                nextButton: '.app-next-button',
-
+                nextButton: '.app-next-button'
             },
             regions: {
                 nodeSettings: {
@@ -153,8 +152,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 let self = this
 
                 this.loadPerformance()
-                if (this.readonly)
+                if (this.readonly) {
                     this.ui.editContainer.hide()
+                    this.ui.timelineContainer.addClass('readonly')
+                }
 
                 this.ui.doneButton.fadeIn()
                 this.ui.scrollContainer.droppable({
