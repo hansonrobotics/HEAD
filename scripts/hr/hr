@@ -67,6 +67,19 @@ if [[ ! -d $HOME/.hr ]]; then
     mkdir -p $HOME/.hr
 fi
 
+if [[ ! -d $HR_PREFIX ]]; then
+    sudo mkdir -p $HR_PREFIX
+    sudo chmod 777 $HR_PREFIX
+fi
+
+if [[ ! -d $HR_CACHE ]]; then
+    mkdir -p $HR_CACHE
+fi
+
+if [[ ! -d $HR_MODELS ]]; then
+    mkdir -p $HR_MODELS
+fi
+
 APT_GET_OPTS="-y"
 if [[ $APT_CACHE == 1 ]]; then
     APT_GET_OPTS="$APT_GET_OPTS -o dir::cache::archives=$APT_CACHE_DIR"
@@ -557,7 +570,6 @@ install_marky_markov() {
     fi
     MD5SUMS["markov_modeling.tar.gz"]=7d51bbcd4df89b2633bd9520fb99b2b7
     wget_cache $GITHUB_STORAGE_URL/markov_modeling.tar.gz
-    [[ ! -d $HR_MODELS ]] && mkdir -p $HR_MODELS
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 
     add_ppa ppa:brightbox/ruby-ng
