@@ -43,6 +43,7 @@ class Runner:
         self.lock = Lock()
         self.run_condition = Condition()
         self.running_performance = None
+        self.unload_finished = False
         # in memory set of properties with priority over params
         self.variables = {}
         # References to event subscribing node callbacks
@@ -144,7 +145,7 @@ class Runner:
         performances = self.load_folder(request.id) or self.load(request.id)
         if not performances:
             return srv.RunByNameResponse(False)
-        return srv.RunByNameResponse(self.run(0.0))
+        return srv.RunByNameResponse(self.run(0.0, unload_finished=True))
 
     def load_folder(self, id):
         if id.startswith('shared'):
@@ -252,13 +253,14 @@ class Runner:
     def run_callback(self, request):
         return srv.RunResponse(self.run(request.startTime))
 
-    def run(self, start_time):
+    def run(self, start_time, unload_finished=False):
         self.stop()
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
             success = len(self.running_performance) > 0
             if success:
+                self.unload_finished = unload_finished
                 self.running = True
                 self.start_time = start_time
                 self.start_timestamp = time.time()
@@ -394,6 +396,10 @@ class Runner:
 
             if not behavior:
                 self.topics['interaction'].publish('btree_on')
+
+            if self.unload_finished:
+                self.unload_finished = False
+                self.unload()
 
     def get_run_time(self):
         """
