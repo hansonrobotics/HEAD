@@ -226,6 +226,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             editCurrent: function() {
                 let item = this.queueCollection.findItemByTime(this.time)
                 if (item) this.editItem(item)
+                else this.addNewTimeline()
             },
             editPrevious: function(item) {
                 let i = this.queueCollection.findIndex(item)
