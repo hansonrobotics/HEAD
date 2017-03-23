@@ -283,6 +283,19 @@ clone() {
     fi
 }
 
+_list_robots() {
+    for f in $(find $1 -name config.yaml); do
+        if grep "botname" $f>/dev/null; then
+            echo $f | awk -F/ '{print $(NF-1)}'
+        fi
+    done
+}
+
+list_robots() {
+    read_workspace >/dev/null
+    _list_robots $HR_WORKSPACE/HEAD/src/robots_config
+}
+
 list_components() {
     arg=$1
     local funcs=$(compgen -A function|grep -E "^${1}_.*")

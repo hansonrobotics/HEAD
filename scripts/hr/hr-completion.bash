@@ -28,6 +28,12 @@ _hr() {
       local args=$(hr run list_components ${command} 2> /dev/null)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
+    robot)
+      if (( ${cword} == 2 )); then
+        local args=$(hr run list_robots 2> /dev/null)
+        COMPREPLY=($(compgen -W "${args}" -- ${cur}))
+      fi
+      ;;
     *)
       if (( ${cword} >= 2 )); then
         COMPREPLY=()
