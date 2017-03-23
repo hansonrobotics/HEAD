@@ -55,6 +55,7 @@ INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
 
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
+export CPATH=$CPLUS_INCLUDE_PATH
 export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export PATH=/usr/lib/ccache:$PATH
 
