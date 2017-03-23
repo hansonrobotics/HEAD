@@ -283,6 +283,19 @@ clone() {
     fi
 }
 
+_list_robots() {
+    for f in $(find $1 -name config.yaml); do
+        if grep "botname" $f>/dev/null; then
+            echo $f | awk -F/ '{print $(NF-1)}'
+        fi
+    done
+}
+
+list_robots() {
+    read_workspace >/dev/null
+    _list_robots $HR_WORKSPACE/HEAD/src/robots_config
+}
+
 list_components() {
     arg=$1
     local funcs=$(compgen -A function|grep -E "^${1}_.*")
@@ -474,6 +487,18 @@ hr_env() {
     else
         error "Please run \"hr init\""
     fi
+}
+
+hr_robot() {
+    read_workspace
+    cd $HR_WORKSPACE/HEAD/scripts
+    ./dev.sh
+}
+
+hr_stop() {
+    read_workspace
+    cd $HR_WORKSPACE/HEAD/scripts
+    ./stop.sh
 }
 
 ############# End of Entries #############
@@ -1301,6 +1326,12 @@ Usage: hr <command> [<args>]
     run <function> [<args>]
         run any defined function
 
+    robot [robot name] [launch arguments]
+        run robot
+
+    stop
+        stop robot
+
     env
         show hansonrobotics environment variables
 
@@ -1314,7 +1345,7 @@ EOF
 
 execute() {
     case "$1" in
-        install|uninstall|build|run|get|init|clean|env|update)
+        install|uninstall|build|run|get|init|clean|env|update|robot|stop)
             command=$1
             shift
             hr_${command} $@

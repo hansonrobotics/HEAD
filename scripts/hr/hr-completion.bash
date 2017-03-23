@@ -9,7 +9,7 @@
 
 _hr() {
   local command
-  local hr_commands="init get install uninstall build clean run env update normal_opencog dev_opencog"
+  local hr_commands="init get install uninstall build clean run env update normal_opencog dev_opencog robot stop"
   local cur=${COMP_WORDS[COMP_CWORD]}
   local words=${COMP_WORDS[@]}
   local cword=$COMP_CWORD
@@ -23,10 +23,16 @@ _hr() {
     fi
   done
 
-  local args=$(hr run list_components ${command} 2> /dev/null)
   case ${command} in
     install|uninstall|build|get|clean|update)
+      local args=$(hr run list_components ${command} 2> /dev/null)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
+      ;;
+    robot)
+      if (( ${cword} == 2 )); then
+        local args=$(hr run list_robots 2> /dev/null)
+        COMPREPLY=($(compgen -W "${args}" -- ${cur}))
+      fi
       ;;
     *)
       if (( ${cword} >= 2 )); then
