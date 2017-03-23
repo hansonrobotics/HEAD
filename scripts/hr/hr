@@ -476,6 +476,18 @@ hr_env() {
     fi
 }
 
+hr_robot() {
+    read_workspace
+    cd $HR_WORKSPACE/HEAD/scripts
+    ./dev.sh
+}
+
+hr_stop() {
+    read_workspace
+    cd $HR_WORKSPACE/HEAD/scripts
+    ./stop.sh
+}
+
 ############# End of Entries #############
 
 ############# Functions #############
@@ -1314,7 +1326,7 @@ EOF
 
 execute() {
     case "$1" in
-        install|uninstall|build|run|get|init|clean|env|update)
+        install|uninstall|build|run|get|init|clean|env|update|robot|stop)
             command=$1
             shift
             hr_${command} $@
