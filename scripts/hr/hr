@@ -1326,6 +1326,12 @@ Usage: hr <command> [<args>]
     run <function> [<args>]
         run any defined function
 
+    robot [robot name] [launch arguments]
+        run robot
+
+    stop
+        stop robot
+
     env
         show hansonrobotics environment variables
 
