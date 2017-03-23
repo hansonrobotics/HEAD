@@ -437,7 +437,7 @@ hr_clean() {
     done
 }
 
-hr_run() {
+hr_cmd() {
     local func=$1
     shift
     $func $@
@@ -489,10 +489,10 @@ hr_env() {
     fi
 }
 
-hr_robot() {
+hr_run() {
     read_workspace
     cd $HR_WORKSPACE/HEAD/scripts
-    ./dev.sh
+    ./dev.sh $@
 }
 
 hr_stop() {
@@ -1323,10 +1323,10 @@ Usage: hr <command> [<args>]
     init [workspace]
         default workspace is ~/hansonrobotics
 
-    run <function> [<args>]
+    cmd <function> [<args>]
         run any defined function
 
-    robot [robot name] [launch arguments]
+    run [robot name] [launch arguments]
         run robot
 
     stop
@@ -1345,7 +1345,7 @@ EOF
 
 execute() {
     case "$1" in
-        install|uninstall|build|run|get|init|clean|env|update|robot|stop)
+        install|uninstall|build|cmd|get|init|clean|env|update|run|stop)
             command=$1
             shift
             hr_${command} $@
