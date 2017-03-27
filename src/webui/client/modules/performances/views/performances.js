@@ -281,7 +281,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     this.stopListening(this.currentPerformance)
                 this.currentPerformance = this.collection.get(id)
 
-                if (this.collection.get(this.currentPath))
+                if (this.collection.get(this.currentPath) && !this.currentPerformance)
                     this.layoutView.setCurrentPerformance(null)
 
                 this.currentPath = id
@@ -305,7 +305,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                             self.ui.dirHeader.html(self.currentPerformance.id)
                         })
                         this.ui.nav.slideUp()
-
+                        this.ui.backButton.show()
                         this.layoutView.setCurrentPerformance(this.currentPerformance)
                     } else {
                         this.ui.settingsButton.hide()

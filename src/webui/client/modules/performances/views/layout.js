@@ -109,6 +109,9 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 options = options || {}
 
                 if (this.currentPerformance) {
+                    if (p && p.id && p.id === this.currentPerformance.id)
+                        return
+
                     this.stopListening(this.currentPerformance)
                 }
 
@@ -126,12 +129,16 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             syncCallback: function(p) {
                 if (!this.timelinesView || this.timelinesView.readonly) {
                     if (p) {
-                        if (!this.currentPerformance || p.id !== this.currentPerformance.id)
+                        if (!this.currentPerformance || p.id !== this.currentPerformance.id) {
                             this.setCurrentPerformance(new Performance(p), {
                                 skipLoading: true,
                                 allowEdit: false,
                                 readonly: true
                             })
+
+                            if (p.id)
+                                this.performancesView.navigate(p.id)
+                        }
                     } else {
                         this.setCurrentPerformance(null)
                     }
@@ -207,6 +214,9 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                             allowEdit: false,
                             skipLoading: true
                         })
+
+                        if (self.syncedPerformance.id)
+                            self.performancesView.navigate(self.syncedPerformance.id)
 
                         if (!response.performance) {
                             self.destroyTimeline()
