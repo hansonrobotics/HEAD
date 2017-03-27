@@ -131,7 +131,7 @@ class Runner:
         return srv.LoadResponse(success=True, performance=json.dumps(self.load(request.id)))
 
     def load_performance_callback(self, request):
-        self.load_timeline(json.loads(request.performance))
+        self.load_performance(json.loads(request.performance))
         return srv.LoadPerformanceResponse(True)
 
     def run_by_name_callback(self, request):
@@ -196,7 +196,7 @@ class Runner:
             performance = self.get_timeline(id)
 
         if performance:
-            self.load_timeline(performance)
+            self.load_performance(performance)
             return performance
         else:
             return None
@@ -243,6 +243,15 @@ class Runner:
 
         return merged
 
+    def validate_performance(self, performance):
+        self.validate_timeline(performance)
+        if 'timelines' in performance:
+            for timeline in performance['timelines']:
+                self.validate_timeline(timeline)
+        else:
+            performance['timelines'] = []
+        return performance
+
     def validate_timeline(self, timeline):
         if 'nodes' not in timeline or not isinstance(timeline['nodes'], list):
             timeline['nodes'] = []
@@ -257,11 +266,11 @@ class Runner:
 
         return timeline
 
-    def load_timeline(self, timeline):
+    def load_performance(self, performance):
         with self.lock:
-            self.validate_timeline(timeline)
-            self.running_performance = timeline
-            self.topics['running_performance'].publish(String(json.dumps(timeline)))
+            self.validate_performance(performance)
+            self.running_performance = performance
+            self.topics['running_performance'].publish(String(json.dumps(performance)))
 
     def run_callback(self, request):
         return srv.RunResponse(self.run(request.startTime))
@@ -358,10 +367,10 @@ class Runner:
             behavior = True
             offset = 0
 
-            for i, performance in enumerate(
-                    self.running_performance['timelines'] if 'timelines' in self.running_performance else [
-                        self.running_performance]):
+            timelines = self.running_performance['timelines'] if 'timelines' in self.running_performance else [
+                self.running_performance]
 
+            for i, performance in enumerate(timelines):
                 nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
                          performance['nodes']]
                 pid = performance.get('id', '')
@@ -387,6 +396,7 @@ class Runner:
 
                 running = True
                 finished = None
+                run_time = 0
                 while running:
                     with self.lock:
                         run_time = self.get_run_time()
@@ -405,11 +415,12 @@ class Runner:
                         finished = not running
 
                 with self.lock:
-                    autopause = self.autopause and i < len(self.running_performance['timelines']) - 1
+                    autopause = self.autopause and i < len(timelines) - 1
 
                 offset += self.get_timeline_duration(performance)
 
-                if not finished and autopause:
+                # use 50ms threshold to check if the timeline has just started
+                if not finished and autopause and run_time - self.start_time > 0.05:
                     self.pause()
                     while self.paused:
                         continue
