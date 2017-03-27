@@ -131,7 +131,7 @@ class Runner:
         return srv.LoadResponse(success=True, performance=json.dumps(self.load(request.id)))
 
     def load_performance_callback(self, request):
-        self.load_performance(json.loads(request.performance))
+        self.load_timeline(json.loads(request.performance))
         return srv.LoadPerformanceResponse(True)
 
     def run_by_name_callback(self, request):
@@ -196,7 +196,7 @@ class Runner:
             performance = self.get_timeline(id)
 
         if performance:
-            self.load_performance(performance)
+            self.load_timeline(performance)
             return performance
         else:
             return None
@@ -230,13 +230,11 @@ class Runner:
 
         for timeline in timelines:
             duration = 0
-            nodes = copy.deepcopy(timeline.get('nodes', []))
+
+            timeline = self.validate_timeline(copy.deepcopy(timeline))
+            nodes = timeline.get('nodes', [])
 
             for node in nodes:
-                if 'start_time' not in node:
-                    node['start_time'] = 0
-                if node['name'] == 'pause':
-                    node['duration'] = 0.1
                 duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
                 node['start_time'] += offset
 
@@ -245,10 +243,25 @@ class Runner:
 
         return merged
 
-    def load_performance(self, performance):
+    def validate_timeline(self, timeline):
+        if 'nodes' not in timeline or not isinstance(timeline['nodes'], list):
+            timeline['nodes'] = []
+
+        for node in timeline['nodes']:
+            if 'start_time' not in node:
+                node['start_time'] = 0
+            if node['name'] == 'pause':
+                node['duration'] = 0.1
+            if 'duration' not in node:
+                node['duration'] = 0
+
+        return timeline
+
+    def load_timeline(self, timeline):
         with self.lock:
-            self.running_performance = performance
-            self.topics['running_performance'].publish(String(json.dumps(performance)))
+            self.validate_timeline(timeline)
+            self.running_performance = timeline
+            self.topics['running_performance'].publish(String(json.dumps(timeline)))
 
     def run_callback(self, request):
         return srv.RunResponse(self.run(request.startTime))
@@ -357,7 +370,14 @@ class Runner:
                 # pausing behavior if its not set)
                 if (pause or pause is None) and behavior:
                     # Only pause behavior if its already running. Otherwise Pause behavior have no effect
-                    if rospy.get_param("/behavior_enabled"):
+                    behavior_enabled = False
+
+                    try:
+                        behavior_enabled = rospy.get_param("/behavior_enabled")
+                    except KeyError:
+                        pass
+
+                    if behavior_enabled:
                         self.topics['interaction'].publish('btree_off')
                         behavior = False
 
