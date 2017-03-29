@@ -235,7 +235,7 @@ class Runner:
             nodes = timeline.get('nodes', [])
 
             for node in nodes:
-                duration = max(duration, (node['duration'] if 'duration' in node else 0) + node['start_time'])
+                duration = max(duration, node['duration'] + node['start_time'])
                 node['start_time'] += offset
 
             merged += nodes
@@ -371,7 +371,7 @@ class Runner:
                 self.running_performance]
 
             for i, performance in enumerate(timelines):
-                nodes = [Node.createNode(node, self, self.start_time, performance.get('id', '')) for node in
+                nodes = [Node.createNode(node, self, self.start_time - offset, performance.get('id', '')) for node in
                          performance['nodes']]
                 pid = performance.get('id', '')
                 pause = self.get_property(os.path.dirname(pid), 'pause_behavior')
@@ -413,11 +413,10 @@ class Runner:
                     if finished is None:
                         # true if all performance nodes are already finished
                         finished = not running
+                offset = run_time
 
                 with self.lock:
                     autopause = self.autopause and i < len(timelines) - 1
-
-                offset += self.get_timeline_duration(performance)
 
                 # use 50ms threshold to check if the timeline has just started
                 if not finished and autopause and run_time - self.start_time > 0.05:
