@@ -69,9 +69,10 @@ class ConfigFileLoader(object):
         characters = []
         with open(yaml_file) as f:
             config = yaml.load(f)
-            if 'tiers' not in config:
+            if 'tiers' not in config or 'name' not in config or 'properties' not in config:
                 logger.error("Wrong format of config file")
                 return []
+            properties = config['properties']
             for tier in config['tiers']:
                 _module, name = tier['type'].rsplit('.', 1)
                 try:
@@ -92,7 +93,20 @@ class ConfigFileLoader(object):
                 except TypeError as ex:
                     logger.error('Initialize {} error {}'.format(clazz, ex))
                     continue
+
+                if not properties.get('location'):
+                    location = dyn_properties.get('location')
+                    if location:
+                        properties['location'] = location
+                if not properties.get('weather'):
+                    weather = dyn_properties.get('weather')
+                    if weather:
+                        properties['weather'] = dyn_properties.get('weather')
+                        properties['temperature'] = dyn_properties.get('temperature')
                 characters.append(character)
+
+            for c in characters:
+                c.set_properties(properties)
         return characters
 
 class PyModuleCharacterLoader(object):
@@ -182,7 +196,7 @@ class AIMLCharacterZipLoader(object):
     @staticmethod
     def load(zipfile, output_dir, dirname):
         """
-        output_dir: directory the zip file is decompressed to. 
+        output_dir: directory the zip file is decompressed to.
         dirname: the name of the top level directory in the zip file.
         """
         with ZipFile(zipfile) as f:
