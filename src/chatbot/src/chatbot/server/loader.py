@@ -36,28 +36,64 @@ load_dyn_properties()
 
 def load_characters(character_path):
     characters = []
-    for path in character_path.split(','):
-        path = path.strip()
-        if not path:
-            continue
-        sys.path.insert(0, path)
-        module_names = [f for f in os.listdir(path) if f.endswith('.py')]
-        for module_name in module_names:
-            characters.extend(
-                PyModuleCharacterLoader.load(module_name))
+    if os.path.isfile(character_path) and character_path.endswith('.yaml'):
+        characters.extend(ConfigFileLoader.load(character_path))
+    else:
+        for path in character_path.split(','):
+            path = path.strip()
+            if not path:
+                continue
+            sys.path.insert(0, path)
+            module_names = [f for f in os.listdir(path) if f.endswith('.py')]
+            for module_name in module_names:
+                characters.extend(
+                    PyModuleCharacterLoader.load(module_name))
 
-        yaml_files = [f for f in os.listdir(path) if f.endswith('.yaml')]
-        for yaml_file in yaml_files:
-            characters.extend(
-                AIMLCharacterLoader.load(os.path.join(path, yaml_file)))
+            yaml_files = [f for f in os.listdir(path) if f.endswith('.yaml')]
+            for yaml_file in yaml_files:
+                characters.extend(
+                    AIMLCharacterLoader.load(os.path.join(path, yaml_file)))
 
-    for c in characters:
-        if c.type == TYPE_CS:
-            c.set_host(CS_HOST)
-            c.set_port(CS_PORT)
+        for c in characters:
+            if c.type == TYPE_CS:
+                c.set_host(CS_HOST)
+                c.set_port(CS_PORT)
+
     logger.info("Add characters \n{}".format(pprint.pformat(characters)))
     return characters
 
+class ConfigFileLoader(object):
+
+    @staticmethod
+    def load(yaml_file):
+        characters = []
+        with open(yaml_file) as f:
+            config = yaml.load(f)
+            if 'tiers' not in config:
+                logger.error("Wrong format of config file")
+                return []
+            for tier in config['tiers']:
+                _module, name = tier['type'].rsplit('.', 1)
+                try:
+                    module  = __import__(_module, fromlist=[name])
+                except ImportError as ex:
+                    logger.error(ex)
+                    continue
+                if hasattr(module, name):
+                    clazz = getattr(module, name)
+                else:
+                    logger.error("Module {} has no attribute {}".format(module, name))
+                    continue
+                try:
+                    if 'args' in tier:
+                        character = clazz(**tier['args'])
+                    else:
+                        character = clazz()
+                except TypeError as ex:
+                    logger.error('Initialize {} error {}'.format(clazz, ex))
+                    continue
+                characters.append(character)
+        return characters
 
 class PyModuleCharacterLoader(object):
 
