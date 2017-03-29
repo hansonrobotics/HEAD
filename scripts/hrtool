@@ -325,19 +325,19 @@ install_opencog_deps() {
 install_link_grammar() {
     info "Installing Link-Grammar"
 
-    MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
-    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
+    MD5SUMS["link-grammar-5.3.15.tar.gz"]=446078337753bfb1d39f80281acee70d
+    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.15.tar.gz
 
-    $SUDO rm -rf /tmp/link-grammar-5.3.13
-    tar -zxf ${HR_CACHE}/link-grammar-5.3.13.tar.gz -C /tmp
-    mkdir -p /tmp/link-grammar-5.3.13/build
-    cd /tmp/link-grammar-5.3.13/build
+    $SUDO rm -rf /tmp/link-grammar-5.3.15
+    tar -zxf ${HR_CACHE}/link-grammar-5.3.15.tar.gz -C /tmp
+    mkdir -p /tmp/link-grammar-5.3.15/build
+    cd /tmp/link-grammar-5.3.15/build
     JAVA_HOME=/usr/lib/jvm/default-java
     ../configure
     make -j$(nproc)
     $SUDO make install
     $SUDO ldconfig
-    $SUDO rm -rf /tmp/link-grammar-5.3.13
+    $SUDO rm -rf /tmp/link-grammar-5.3.15
     cd $BASEDIR
     info "Installing Link-Grammar done"
 }
@@ -352,7 +352,9 @@ install_relex_deps() {
     )
     apt_get_install "${pkgs[@]}"
 
-    if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
+    if [[ ! -e /usr/local/lib/liblink-grammar.so ||
+        ! $(readlink /usr/local/lib/liblink-grammar.so) = "liblink-grammar.so.5.3.15" ]];
+    then
         install_link_grammar
     fi
 
