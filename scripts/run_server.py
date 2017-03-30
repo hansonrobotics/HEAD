@@ -15,13 +15,13 @@ sys.path.insert(0, os.path.join(CWD, '../src'))
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
-from chatbot.server.config import CHATBOT_LOG_DIR, HISTORY_DIR
+from chatbot.server.config import CHATBOT_SERVER_LOG_DIR, HISTORY_DIR
 
-if not os.path.isdir(CHATBOT_LOG_DIR):
-    os.makedirs(CHATBOT_LOG_DIR)
-LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(CHATBOT_LOG_DIR,
+if not os.path.isdir(CHATBOT_SERVER_LOG_DIR):
+    os.makedirs(CHATBOT_SERVER_LOG_DIR)
+LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(CHATBOT_SERVER_LOG_DIR,
                                                     dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
-link_log_fname = os.path.join(CHATBOT_LOG_DIR, 'chatbot_server_latest.log')
+link_log_fname = os.path.join(CHATBOT_SERVER_LOG_DIR, 'chatbot_server_latest.log')
 if os.path.islink(link_log_fname):
     os.unlink(link_log_fname)
 os.symlink(LOG_CONFIG_FILE, link_log_fname)
