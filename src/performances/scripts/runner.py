@@ -248,8 +248,6 @@ class Runner:
         if 'timelines' in performance:
             for timeline in performance['timelines']:
                 self.validate_timeline(timeline)
-        else:
-            performance['timelines'] = []
         return performance
 
     def validate_timeline(self, timeline):
@@ -370,11 +368,11 @@ class Runner:
             timelines = self.running_performance['timelines'] if 'timelines' in self.running_performance else [
                 self.running_performance]
 
-            for i, performance in enumerate(timelines):
-                nodes = [Node.createNode(node, self, self.start_time - offset, performance.get('id', '')) for node in
-                         performance['nodes']]
-                pid = performance.get('id', '')
-                pause = self.get_property(os.path.dirname(pid), 'pause_behavior')
+            for i, timeline in enumerate(timelines):
+                nodes = [Node.createNode(node, self, self.start_time - offset, timeline.get('id', '')) for node in
+                         timeline['nodes']]
+                pid = timeline.get('id', '')
+                pause = pid and self.get_property(os.path.dirname(pid), 'pause_behavior')
                 # Pause must be either enabled or not set (by default all performances are
                 # pausing behavior if its not set)
                 if (pause or pause is None) and behavior:
@@ -397,6 +395,7 @@ class Runner:
                 running = True
                 finished = None
                 run_time = 0
+
                 while running:
                     with self.lock:
                         run_time = self.get_run_time()
@@ -410,19 +409,19 @@ class Runner:
                     for node in nodes:
                         running = node.run(run_time - offset) or running
 
+                    # true if all performance nodes are already finished
                     if finished is None:
-                        # true if all performance nodes are already finished
                         finished = not running
-                offset = run_time
+
+                offset += self.get_timeline_duration(timeline)
 
                 with self.lock:
-                    autopause = self.autopause and i < len(timelines) - 1
+                    autopause = not finished and self.autopause and i < len(
+                        timelines) - 1 and run_time
 
                 # use 50ms threshold to check if the timeline has just started
-                if not finished and autopause and run_time - self.start_time > 0.05:
+                if autopause:
                     self.pause()
-                    while self.paused:
-                        continue
 
             if not behavior:
                 self.topics['interaction'].publish('btree_on')
@@ -493,10 +492,7 @@ class Runner:
 
     def get_property(self, path, name):
         param_name = os.path.join('/', self.robot_name, 'webui/performances', path, 'properties', name)
-        if rospy.has_param(param_name):
-            return rospy.get_param(param_name)
-        else:
-            return None
+        return rospy.get_param(param_name, None)
 
     def set_variable(self, id, properties):
         for key, val in properties.iteritems():
