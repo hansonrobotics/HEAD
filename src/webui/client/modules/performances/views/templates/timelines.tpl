@@ -1,5 +1,3 @@
-<h2>Timeline</h2>
-
 <div class="app-edit-container clearfix">
     <div class="pull-left">
         <div class="btn-group">

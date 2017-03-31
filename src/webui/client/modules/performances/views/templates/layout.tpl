@@ -6,7 +6,7 @@
 
 <div class="app-queue-container row">
     <div class="col-md-12">
-        <h2>Event sequence</h2>
+        <h2>Timelines</h2>
 
         <div class="app-queue-region"></div>
     </div>

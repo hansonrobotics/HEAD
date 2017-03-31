@@ -299,7 +299,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                     }
 
                     if (this.currentPerformance) {
-                        this.ui.settingsButton.show()
+                        if (!this.readonly)
+                            this.ui.settingsButton.show()
                         this.ui.dirHeader.html(id)
                         this.listenTo(this.currentPerformance, 'change:id', function() {
                             self.ui.dirHeader.html(self.currentPerformance.id)

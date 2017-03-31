@@ -14,7 +14,7 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
                     api.disableInteractionMode()
 
                     // show page
-                    app.LayoutInstance.setTitle('Interactions and Performances')
+                    app.LayoutInstance.setTitle('Performances')
                     app.LayoutInstance.setFluid(true)
                     app.LayoutInstance.getRegion('content').show(this.layoutView)
                 } else if (!app.skipPerformanceNav) {

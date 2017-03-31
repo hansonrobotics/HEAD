@@ -8,7 +8,8 @@ module.exports = Marionette.View.extend({
         playButton: '.app-play',
         description: '.app-desc',
         duration: '.app-duration',
-        removeButton: '.app-remove-button'
+        removeButton: '.app-remove-button',
+        dragHandle: '.app-drag-handle'
     },
     initialize: function(options) {
         this.mergeOptions(options, ['layoutView', 'readonly', 'queueView'])
@@ -23,6 +24,9 @@ module.exports = Marionette.View.extend({
         'change:duration': 'render'
     },
     onRender: function() {
+        if (this.readonly)
+            this.ui.dragHandle.hide()
+
         let performance = this.model.get('performance')
         this.ui.description.html(performance.getDescription())
         this.ui.duration.html(performance.getDuration().toFixed(2))

@@ -211,8 +211,7 @@ class Runner:
                 timeline = yaml.load(f.read())
                 timeline['id'] = id
                 timeline['path'] = os.path.dirname(id)
-                if 'nodes' not in timeline or not isinstance(timeline['nodes'], list):
-                    timeline['nodes'] = []
+                self.validate_timeline(timeline)
         return timeline
 
     def get_timeline_duration(self, timeline):
@@ -230,9 +229,8 @@ class Runner:
 
         for timeline in timelines:
             duration = 0
-
-            timeline = self.validate_timeline(copy.deepcopy(timeline))
             nodes = timeline.get('nodes', [])
+            nodes = copy.deepcopy(nodes)
 
             for node in nodes:
                 duration = max(duration, node['duration'] + node['start_time'])
@@ -278,7 +276,7 @@ class Runner:
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
-            success = len(self.running_performance) > 0
+            success = self.running_performance and len(self.running_performance) > 0
             if success:
                 self.unload_finished = unload_finished
                 self.running = True
@@ -359,22 +357,26 @@ class Runner:
             self.run_condition.wait()
             self.topics['events'].publish(Event('running', self.start_time))
 
-            if not self.running_performance:
-                continue
+            with self.lock:
+                if not self.running_performance:
+                    continue
 
             behavior = True
             offset = 0
-
             timelines = self.running_performance['timelines'] if 'timelines' in self.running_performance else [
                 self.running_performance]
 
             for i, timeline in enumerate(timelines):
+                # check if performance is finished without starting
+                running = True
                 nodes = [Node.createNode(node, self, self.start_time - offset, timeline.get('id', '')) for node in
                          timeline['nodes']]
                 pid = timeline.get('id', '')
+                finished = None
                 pause = pid and self.get_property(os.path.dirname(pid), 'pause_behavior')
                 # Pause must be either enabled or not set (by default all performances are
                 # pausing behavior if its not set)
+
                 if (pause or pause is None) and behavior:
                     # Only pause behavior if its already running. Otherwise Pause behavior have no effect
                     behavior_enabled = False
@@ -392,10 +394,6 @@ class Runner:
                     if not self.running:
                         break
 
-                running = True
-                finished = None
-                run_time = 0
-
                 while running:
                     with self.lock:
                         run_time = self.get_run_time()
@@ -406,20 +404,17 @@ class Runner:
 
                     running = False
                     # checks if any nodes still running
-                    for node in nodes:
+                    for k, node in enumerate(nodes):
                         running = node.run(run_time - offset) or running
-
-                    # true if all performance nodes are already finished
                     if finished is None:
+                        # true if all performance nodes are already finished
                         finished = not running
 
                 offset += self.get_timeline_duration(timeline)
 
                 with self.lock:
-                    autopause = not finished and self.autopause and i < len(
-                        timelines) - 1 and run_time
+                    autopause = self.autopause and finished is False and i < len(timelines) - 1
 
-                # use 50ms threshold to check if the timeline has just started
                 if autopause:
                     self.pause()
 

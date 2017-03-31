@@ -6,7 +6,6 @@ define(['marionette', 'backbone', './timelines', 'underscore', 'lib/regions/fade
             emptyView: require('./empty_item'),
             tagName: 'ul',
             className: 'app-performance-queue list-group',
-            ui: {},
             behaviors: [{
                 behaviorClass: Marionette.SortableBehavior,
                 axis: "y",
