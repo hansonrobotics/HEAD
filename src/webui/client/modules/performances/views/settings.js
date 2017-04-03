@@ -13,7 +13,9 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 variableContainer: '.app-variables-container',
                 addVariableButton: '.app-add-variable-btn',
                 saveButton: '.app-save-btn',
-                removeVariableButton: '.app-remove-variable-btn'
+                removeVariableButton: '.app-remove-variable-btn',
+                name: '.app-performance-name',
+                performanceNameContainer: '.app-performance-name-container'
             },
             regions: {
                 selectAreas: {
@@ -28,8 +30,9 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                 'click @ui.saveButton': 'save'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['path'])
+                this.mergeOptions(options, ['path', 'layoutView'])
                 if (!this.model) this.model = new Settings({}, {path: this.path})
+                this.performance = this.collection.get(this.path)
             },
             onRender: function() {
                 let self = this
@@ -41,12 +44,24 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
                     }
                 })
 
+                if (this.performance) {
+                    this.updateName()
+                    this.listenTo(this.performance, 'change:name', function() {
+                        self.updateName()
+                    })
+                } else {
+                    this.ui.performanceNameContainer.hide()
+                }
+
                 this.ui.tabs.on('shown.bs.tab', function(e) {
                     if ($(e.target).is(self.ui.attentionTab))
                         self.getRegion('selectAreas').show(new AttentionRegionsView({path: self.path}))
                 })
 
                 this.ui.settingsTab.tab('show')
+            },
+            updateName: function() {
+                this.ui.name.val(path.basename(this.performance.get('id')))
             },
             save: function() {
                 let self = this
@@ -56,12 +71,29 @@ define(['application', 'marionette', './templates/settings.tpl', 'lib/regions/fa
 
                 this.model.save({}, {
                     success: function() {
+                        self.updatePerformanceName()
                         App.Utilities.showPopover(self.ui.saveButton, 'Saved', 'right')
                     },
                     error: function() {
                         App.Utilities.showPopover(self.ui.saveButton, 'Unable to save', 'right')
                     }
                 })
+            },
+            updatePerformanceName: function() {
+                let self = this,
+                    name = this.ui.name.val()
+
+                if (this.performance && this.performance.get('name') !== name) {
+                    this.performance.save({name: name}, {
+                        success: function(p) {
+                            self.model.path = p.id
+                            self.layoutView.performancesView.navigate(p.id)
+                        },
+                        error: function() {
+                            App.Utilities.showPopover(self.ui.name, 'Error saving performance', 'right')
+                        }
+                    })
+                }
             },
             showVariables: function() {
                 let self = this

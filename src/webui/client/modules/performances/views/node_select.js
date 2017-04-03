@@ -51,10 +51,18 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.ui.eventParamInput.val(this.model.get('event_param'))
             },
             onAttach: function() {
+                this.initTypes()
                 this.initFields()
             },
+            initTypes: function() {
+                switch (this.model.get('name')) {
+                    case 'speech':
+                        this.listenTo(this.model, 'change:start_time', this.setTextDuration)
+                        break;
+                }
+            },
             initFields: function() {
-                var self = this,
+                let self = this,
                     properties = this.model.getConfig().properties
 
                 // display node specific properties
@@ -116,7 +124,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         max: 50,
                         value: this.model.get('angle') * 100,
                         slide: function(e, ui) {
-                            self.model.set('angle', 0 - parseFloat(ui.value) / 100.0)
+                            self.model.set('angle', parseFloat(ui.value) / 100.0)
                             self.model.call()
                             self.ui.hrAngleLabel.html(parseFloat(self.model.get('angle')).toFixed(2) + ' rad')
                         }
@@ -189,13 +197,13 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             initList: function(list, attr, container, options) {
                 if (this.isDestroyed()) return
-                var self = this
+                let self = this
                 options = options || {}
                 container.html('')
                 _.each(list, function(label, val) {
                     if (list && list.constructor === Array) val = label
 
-                    var thumbnail = $('<div>').addClass('app-node-thumbnail')
+                    let thumbnail = $('<div>').addClass('app-node-thumbnail')
                         .attr('data-node-name', self.model.get('name')).attr('data-' + attr, val)
                         .html($('<span>').html(label)).click(function() {
                             self.model.set(attr, val)
@@ -204,10 +212,10 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                             if (options.change) options.change(val)
                         }).draggable({
                             helper: function() {
-                                var node = self.model
+                                let node = self.model
 
                                 if (self.collection && self.collection.contains(node)) {
-                                    var attributes = node.toJSON()
+                                    let attributes = node.toJSON()
                                     delete attributes['id']
                                     node = Node.create(attributes)
                                 }
@@ -230,7 +238,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     container.append(thumbnail)
                 })
 
-                var update = function() {
+                let update = function() {
                     if (self.model.get(attr)) {
                         $('[data-' + attr + ']', container).removeClass('active')
                         $('[data-' + attr + '="' + self.model.get(attr) + '"]', container).addClass('active')
@@ -244,7 +252,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.initList(emotions, 'emotion', this.ui.emotionList)
             },
             setKFAnimationDuration: function() {
-                var self = this
+                let self = this
                 api.getKFAnimationLength(this.model.get('animation'), function(response) {
                     self.animationFrames = response.frames
                     self.model.set('duration', 0.1 + self.animationFrames / self.model.get('fps'))
@@ -264,14 +272,14 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.initList(somas, 'soma', this.ui.somaList)
             },
             changeRosNode: function() {
-                var self = this,
+                let self = this,
                     rosnode = this.model.get('rosnode'),
                     schema = new NodeConfigSchema(rosnode)
 
                 this.model.set('values', {})
                 schema.fetch({
                     success: function(model) {
-                        var schema = model.toJSON()
+                        let schema = model.toJSON()
                         self.model.set('schema', schema)
                         self.showNodeSettings(schema)
                     },
@@ -281,12 +289,12 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 })
             },
             showNodeSettings: function(schema) {
-                var self = this,
+                let self = this,
                     nodeConfig = new NodeConfig(this.model.get('rosnode'), true),
                     values = self.model.get('values')
 
-                var updateValues = function() {
-                    var currentView = self.getRegion('settingsEditor').currentView
+                let updateValues = function() {
+                    let currentView = self.getRegion('settingsEditor').currentView
                     if (currentView && currentView.model === nodeConfig)
                         self.model.set('values', nodeConfig.toJSON())
                     else
@@ -300,11 +308,15 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }))
 
                 nodeConfig.on('change', updateValues)
-                nodeConfig.fetch({
-                    success: function() {
-                        nodeConfig.set(values)
-                    }
-                })
+                if (values){
+                    nodeConfig.set(values)
+                }else{
+                    nodeConfig.fetch({
+                        success: function() {
+                            nodeConfig.set(values)
+                        }
+                    })
+                }
             },
             setText: function() {
                 this.model.set('text', this.ui.textInput.val())
@@ -313,13 +325,13 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.model.set('lang', this.ui.langSelect.val())
             },
             setTextDuration: function() {
-                var self = this
+                let self = this
                 api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function(response) {
                     self.model.set('duration', response.length)
                 })
             },
             setGestureLength: function() {
-                var self = this
+                let self = this
                 api.getAnimationLength(this.model.get('gesture'), function(response) {
                     self.gestureDuration = response.length
                     self.model.set('duration', self.gestureDuration / self.model.get('speed'))
@@ -332,7 +344,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.model.set('event_param', this.ui.eventParamInput.val())
             },
             enableAttentionRegionSelect: function() {
-                var self = this
+                let self = this
 
                 api.getRosParam('/' + api.config.robot + '/webui/attention_regions', function(regions) {
                     regions = regions || {}
@@ -344,11 +356,11 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 })
             },
             initChatResponses: function() {
-                var self = this
+                let self = this
                 self.ui.listenResponseList.html('')
 
                 _.each(this.model.get('responses'), function(response) {
-                    var template = self.ui.listenResponseTemplate.clone(),
+                    let template = self.ui.listenResponseTemplate.clone(),
                         input = $('.app-chat-input', template),
                         output = $('.app-chat-output', template)
                     input.val(response['input'])
@@ -357,12 +369,12 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 })
             },
             updateChatResponses: function() {
-                var responses = [],
+                let responses = [],
                     inputs = $('input', this.ui.listenResponseList),
                     i
 
                 for (i = 0; i < inputs.length / 2; i++) {
-                    var input = $(inputs[i * 2]).val(),
+                    let input = $(inputs[i * 2]).val(),
                         output = $(inputs[i * 2 + 1]).val()
 
                     if (input && output) responses.push({input: input, output: output})
@@ -374,14 +386,14 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.ui.listenResponseList.append(this.ui.listenResponseTemplate.clone().hide().fadeIn())
             },
             removeListenResponse: function(e) {
-                var self = this
+                let self = this
                 $(e.target).closest('.app-listen-response-template').fadeOut(100, function() {
                     $(this).remove()
                     self.updateChatResponses()
                 })
             },
             setEnableChatbot: function() {
-                var checked = this.ui.enableChatbotCheckbox.is(':checked')
+                let checked = this.ui.enableChatbotCheckbox.is(':checked')
 
                 this.model.set('enable_chatbot', checked ? '1' : '')
 

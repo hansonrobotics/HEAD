@@ -17,6 +17,7 @@ class DxlController:
     def __init__(self):
         logger.info('Starting dynamixel interface node')
         self.motors = rospy.get_param('motors')
+        self.logging = rospy.get_param("logging", False)
         rospy.init_node('node_configuration')
         rospy.Service('set_dxl_torque', TorqueEnable, self.set_dxl_torque)
         self.last_state = []
@@ -42,7 +43,8 @@ class DxlController:
     def update_motor_states(self, req):
         self.last_state = req.motor_states
         self.last_state_time = time.time()
-        self.logStates(req.motor_states)
+        if self.logging:
+            self.logStates(req.motor_states)
 
     def logStates(self, states):
         for state in states:

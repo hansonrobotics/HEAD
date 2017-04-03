@@ -10,6 +10,11 @@ module.exports = Backbone.Model.extend({
             performance = this.get('performance'),
             previous = this.previous('performance')
 
+        this.stopListening(previous)
+        this.listenTo(performance, 'destroy', function() {
+            self.destroy()
+        })
+
         if (performance instanceof Performance)
             this.listenTo(performance, 'change', function() {
                 self.trigger('change')

@@ -25,7 +25,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     disable_collapse: true,
                     disable_edit_json: true,
                     disable_array_reorder: true,
-                    disable_properties: true,
+                    disable_properties: this.options.refresh,
                     iconlib: 'fontawesome4'
                 })
 
@@ -62,6 +62,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 delete config['node_schema']
                 if (typeof self.schemaModel.getGroupName === 'function')
                     _.each(config, function(val, key) {
+                        console.log(self.schemaModel.getGroupName(key))
                         self.editor.getEditor(self.schemaModel.getGroupName(key)).setValue(val)
                     })
                 else
@@ -73,17 +74,18 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 // Only valid settings could be saved in timeline
                 if (this.editor.validate().length === 0) {
                     let values = this.editor.getValue()
-                    delete values['node_schema']
-                    let attributes = this.getAttributes(values)
 
-                    _.each(attributes, function(val, key) {
+                    delete values['node_schema']
+                    values = this.getAttributes(values)
+
+                    _.each(values, function(val, key) {
                         if (self.schema['properties'][key]
                             && _.includes(['array', 'object'], self.schema['properties'][key]['type'])) {
-                            attributes[key] = JSON.stringify(val)
+                            values[key] = JSON.stringify(val)
                         }
                     })
 
-                    this.model.save(attributes, {
+                    this.model.save(values, {
                         error: function() {
                             console.log('error updating node configuration')
                         }

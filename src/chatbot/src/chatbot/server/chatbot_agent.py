@@ -18,7 +18,6 @@ NO_PATTERN_MATCH = 2
 INVALID_SESSION = 3
 INVALID_QUESTION = 4
 
-useSOLR = False
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
@@ -44,9 +43,9 @@ OPERATOR_MAP = {
     '[pow]': pow,
 }
 
-def get_character(id, lang=None):
+def get_character(id, lang=None, ns=None):
     for character in CHARACTERS:
-        if character.id != id:
+        if (ns is not None and character.name != ns) or character.id != id:
             continue
         if lang is None:
             return character
@@ -96,7 +95,7 @@ def list_character(lang, sid):
         return []
     characters = get_responding_characters(lang, sid)
     weights = get_weights(characters, sess)
-    return [(c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
+    return [(c.name, c.id, w, c.level, c.dynamic_level) for c, w in zip(characters, weights)]
 
 
 def list_character_names():
@@ -126,7 +125,8 @@ def set_weights(param, lang, sid):
                 weights[characters[k].id] = v
             except ValueError:
                 weights[k] = v
-    except Exception:
+    except Exception as ex:
+        logger.error(ex)
         return False, "Wrong weight format"
 
     sess.sdata.weights = weights
@@ -193,14 +193,14 @@ def preprocessing(question, lang, session):
 
     reduction = get_character('reduction')
     if reduction is not None:
-        response = reduction.respond(question, lang, session, query=True)
+        response = reduction.respond(question, lang, session, query=True, request_id=request_id)
         reducted_text = response.get('text')
         if reducted_text:
             question = reducted_text
 
     return question
 
-def _ask_characters(characters, question, lang, sid, query):
+def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs):
     sess = session_manager.get_session(sid)
     if sess is None:
         return
@@ -222,7 +222,7 @@ def _ask_characters(characters, question, lang, sid, query):
 
     control = get_character('control')
     if control is not None:
-        _response = control.respond(_question, lang, sess, query)
+        _response = control.respond(_question, lang, sess, query, request_id)
         _answer = _response.get('text')
         if _answer == '[tell me more]':
             cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
@@ -326,7 +326,7 @@ def _ask_characters(characters, question, lang, sid, query):
             cross_trace.append((character.id, stage, 'Disabled'))
             return False, None, None
 
-        response = character.respond(_question, lang, sess, query)
+        response = character.respond(_question, lang, sess, query, request_id)
         answer = str_cleanup(response.get('text', ''))
         trace = response.get('trace')
 
@@ -382,7 +382,7 @@ def _ask_characters(characters, question, lang, sid, query):
     if not answer:
         if sess.open_character in characters:
             answered, _answer, _response = _ask_character(
-                'question', sess.open_character, 1)
+                'question', sess.open_character, 1, good_match=True)
             if answered:
                 hit_character = sess.open_character
                 answer = _answer
@@ -391,19 +391,18 @@ def _ask_characters(characters, question, lang, sid, query):
     # Try the first tier to see if there is good match
     if not answer:
         c, weight = weighted_characters[0]
-        if c.id == botname:
-            answered, _answer, _response = _ask_character(  
-                'priority', c, weight, good_match=True)
-            if answered:
-                hit_character = c
-                answer = _answer
-                response = _response
+        answered, _answer, _response = _ask_character(
+            'priority', c, weight, good_match=True)
+        if answered:
+            hit_character = c
+            answer = _answer
+            response = _response
 
     # Select tier that is designed to be proper to answer the question
     if not answer:
         for c, weight in weighted_characters:
             if c.is_favorite(_question):
-                answered, _answer, _response = _ask_character(  
+                answered, _answer, _response = _ask_character(
                     'favorite', c, 1)
                 if answered:
                     hit_character = c
@@ -415,7 +414,7 @@ def _ask_characters(characters, question, lang, sid, query):
         if sess.last_used_character and sess.last_used_character.dynamic_level:
             for c, weight in weighted_characters:
                 if sess.last_used_character.id == c.id:
-                    answered, _answer, _response = _ask_character(  
+                    answered, _answer, _response = _ask_character(
                         'last used', c, weight)
                     if answered:
                         hit_character = c
@@ -463,7 +462,8 @@ def _ask_characters(characters, question, lang, sid, query):
     if not query and hit_character is not None:
         sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
-                    Revision=REVISION, Lang=lang, ModQuestion=_question)
+                    Revision=REVISION, Lang=lang, ModQuestion=_question,
+                    RequestId=request_id,Marker=kwargs.get('marker'))
 
         sess.last_used_character = hit_character
 
@@ -493,34 +493,15 @@ def get_responding_characters(lang, sid):
         botname, local=False, lang=lang, user=user)
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
-    character = None
-    if responding_characters:
-        character = responding_characters[0]
-    else:
-        return []
-
-    if useSOLR:
-        solr_character = get_character('solr_bot', lang)
-        if solr_character:
-            if solr_character not in responding_characters:
-                responding_characters.append(solr_character)
-        else:
-            logger.warn("Solr character is not found")
-        solr_matcher = get_character('solr_matcher', lang)
-        if solr_matcher:
-            if solr_matcher not in responding_characters:
-                solr_matcher.set_character(character)
-                responding_characters.append(solr_matcher)
-        else:
-            logger.warn("Solr matcher is not found")
-
     generic = get_character('generic', lang)
     if generic:
         if generic not in responding_characters:
+            # get shared properties
+            character = get_character(botname)
             generic.set_properties(character.get_properties())
             responding_characters.append(generic)
     else:
-        logger.warn("Generic character is not found")
+        logger.info("Generic character is not found")
 
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
@@ -540,7 +521,7 @@ def rate_answer(sid, idx, rate):
     return True
 
 
-def ask(question, lang, sid, query=False):
+def ask(question, lang, sid, query=False, request_id=None, **kwargs):
     """
     return (response dict, return code)
     """
@@ -558,18 +539,25 @@ def ask(question, lang, sid, query=False):
         logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
 
+    # Handle commands
+    if question == ':reset':
+        session_manager.dump(sid)
+        session_manager.reset_session(sid)
+        logger.warn("Session {} is reset by :reset".format(sid))
     for c in responding_characters:
         if c.is_command(question):
-            response.update(c.respond(question, lang, sess, query))
+            response.update(c.respond(question, lang, sess, query, request_id))
             return response, SUCCESS
+
+    response['yousaid'] = question
 
     sess.set_characters(responding_characters)
     if RESET_SESSION_BY_HELLO and question:
-        question = question.lower().strip()
-        if 'hi' in question or 'hello' in question:
+        question_tokens = question.lower().strip().split()
+        if 'hi' in question_tokens or 'hello' in question_tokens:
             session_manager.dump(sid)
             session_manager.reset_session(sid)
-            logger.info("Session is cleaned by hi")
+            logger.warn("Session {} is reset by greeting".format(sid))
     if question and question.lower().strip() in ["what's new"]:
         sess.last_used_character = None
         sess.open_character = None
@@ -577,7 +565,7 @@ def ask(question, lang, sid, query=False):
 
     logger.info("Responding characters {}".format(responding_characters))
     _response = _ask_characters(
-        responding_characters, question, lang, sid, query)
+        responding_characters, question, lang, sid, query, request_id, **kwargs)
 
     if not query:
         # Sync session data
@@ -598,12 +586,6 @@ def ask(question, lang, sid, query=False):
                     c.check_reset_topic(sid)
                 except Exception:
                     continue
-
-        if 'goodbye' in question.lower().split() or \
-            'see you' in question.lower().split() or \
-            'bye' in question.lower().split():
-            session_manager.remove_session(sid)
-            logger.info("Session {} is removed by goodbye".format(sid))
 
     if _response is not None and _response.get('text'):
         response.update(_response)

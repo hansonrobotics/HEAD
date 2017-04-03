@@ -1,9 +1,9 @@
 let bootbox = require('bootbox')
 
-define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
+define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
         '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
         'underscore', '../entities/queue', '../entities/queue_item', 'select2', 'select2-css'],
-    function(Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
+    function(app, Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
              QueueView, TimelinesView, $, _, QueueCollection, QueueItem) {
         return Marionette.View.extend({
             template: template,
@@ -28,34 +28,42 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 queue: '.app-performance-queue',
                 performances: '.app-performance-queue .app-performance',
                 performanceTemplate: '.app-performance-template',
-                clearButton: '.app-clear',
+                addNewButton: '.app-add-new-button',
                 emptyNotice: '.app-empty-notice',
                 saveChangesModal: '.app-save-changes-confirmation',
                 saveChanges: '.app-save-changes',
-                discardChanges: '.app-discard-changes'
+                discardChanges: '.app-discard-changes',
+                timelineContainer: '.app-timeline-container'
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage',
-                'click @ui.clearButton': 'clearClick',
+                'click @ui.addNewButton': 'addNewTimeline',
                 'click @ui.saveChanges': 'saveChanges',
                 'click @ui.discardChanges': 'discardChanges',
-                'hide.bs.modal @ui.saveChangesModal': 'saveChangesHide'
+                'hidden.bs.modal @ui.saveChangesModal': 'saveChangesHide'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue', 'disableSaving', 'allowEdit',
-                    'sequence'])
+                this.mergeOptions(options, ['editing', 'autoplay', 'dir', 'nav', 'readonly', 'hideQueue',
+                    'disableSaving', 'allowEdit', 'queueHeight', 'urlPrefix'])
                 this.performances = new PerformanceCollection()
                 this.queueCollection = new QueueCollection()
             },
             onAttach: function() {
+                let self = this
+
+                this.ui.queueContainer.hide()
+
+                // set change check callback
+                app.changeCheck = _.bind(this.changeCheck, this)
+
                 // fluid by default
                 this.setFluidContainer(this.fluid || typeof this.fluid === 'undefined')
 
-                let self = this
                 this.queueView = new QueueView({
                     collection: this.queueCollection,
                     readonly: this.readonly,
-                    layoutView: this
+                    layoutView: this,
+                    height: this.queueHeight
                 })
                 this.performancesView = new PerformancesView({
                     collection: self.performances,
@@ -63,46 +71,124 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     readonly: this.readonly,
                     autoplay: this.autoplay,
                     dir: this.dir,
-                    nav: this.nav
+                    nav: this.nav,
+                    urlPrefix: this.urlPrefix
                 })
+
+                this.listenTo(this.queueView, 'reordered', this.updateTimelineOrder)
 
                 self.getRegion('queue').show(this.queueView)
                 self.getRegion('performances').show(this.performancesView)
 
                 this.listenTo(this.performancesView, 'new', function(p) {
-                    this._showTimeline({
-                        model: p,
-                        readonly: false
-                    })
+                    self.performances.add(p)
+                    self.performancesView.navigate(p.get('id'))
+                    self.editItem(self.queueCollection.first())
                 })
+
+                this.syncCallback = this.syncCallback.bind(this)
+                this.syncedPerformance = new Performance()
+                this.syncedPerformance.enableSync(this.syncCallback)
 
                 this.performances.fetch({
                     reset: true,
                     success: function() {
-                        if (!self.sequence)
+                        if (!self.performances.get(self.dir))
                             self.showCurrent()
                     }
                 })
 
                 if (this.hideQueue)
                     this.ui.queueContainer.hide()
+            },
+            onDestroy: function() {
+                this.syncedPerformance.disableSync()
+                app.changeCheck = null
+            },
+            setCurrentPerformance: function(p, options) {
+                options = options || {}
 
-                if (this.sequence)
-                    this.addSequence(this.sequence)
+                if (this.currentPerformance) {
+                    if (p && p.id && p.id === this.currentPerformance.id)
+                        return
 
-                if (this.readonly) {
-                    this.runningPerformances = new Performance()
-                    this.runningPerformances.enableSync(function(performances) {
-                        self.clearQueue()
-                        self.addSequence(_.map(performances, 'id'), true)
+                    this.stopListening(this.currentPerformance)
+                }
+
+                if (p) {
+                    this.currentPerformance = p
+                    this.ui.queueContainer.show()
+                    this.refreshCurrentPerformance(options)
+                } else if (this.currentPerformance) {
+                    Performance.unload()
+                    this.currentPerformance = null
+                    this.destroyTimeline()
+                    this.queueCollection.reset()
+                }
+            },
+            syncCallback: function(p) {
+                if (!this.timelinesView || this.timelinesView.readonly) {
+                    if (p) {
+                        if (!this.currentPerformance || p.id !== this.currentPerformance.id) {
+                            this.setCurrentPerformance(new Performance(p), {
+                                skipLoading: true,
+                                allowEdit: false,
+                                readonly: true
+                            })
+
+                            if (p.id)
+                                this.performancesView.navigate(p.id)
+                        }
+                    } else {
+                        this.setCurrentPerformance(null)
+                    }
+                }
+            },
+            destroyTimeline: function() {
+                if (this.timelinesView) {
+                    this.timelinesView.destroy()
+                    this.ui.queueContainer.hide()
+                }
+            },
+            refreshCurrentPerformance: function(options) {
+                options = options || {}
+                let self = this
+                if (!options.skipLoading)
+                    this.currentPerformance.nodes.reset()
+                this.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
+                this.listenTo(this.currentPerformance, 'change:timelines', function() {
+                    self.setTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
+                })
+                this.updateTimeline(options)
+            },
+            setTimelineQueue: function(timelines) {
+                let items = []
+                this.queueCollection.reset()
+                timelines.each(function(timeline) {
+                    items.push(new QueueItem({performance: timeline}))
+                })
+                this.queueCollection.set(items)
+                if (!this.hideQueue) this.ui.queueContainer.fadeIn()
+            },
+            updateTimelineOrder: function() {
+                if (this.currentPerformance) {
+                    let self = this,
+                        timelines = new PerformanceCollection()
+                    this.queueCollection.each(function(item, i) {
+                        let p = item.get('performance')
+                        p.set('name', (i + 1).toString())
+                        timelines.push(p)
+                    })
+
+                    this.currentPerformance.save({'timelines': timelines.toJSON()}, {
+                        success: function(r) {
+                            self.refreshCurrentPerformance()
+                        }
                     })
                 }
             },
-            onDestroy: function() {
-                if (this.readonly) this.runningPerformances.disableSync()
-            },
             changeLanguage: function(e) {
-                var language = $(e.target).data('lang')
+                let language = $(e.target).data('lang')
 
                 this.ui.languageButton.removeClass('active')
                 $(e.target).addClass('active')
@@ -115,37 +201,26 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 else
                     this.ui.container.removeClass('container-fluid').addClass('container')
             },
-            addSequence: function(sequence, skipTimelineUpdate) {
+            showCurrent: function() {
                 let self = this
 
-                if (!_.isEqual(this._getPerformanceIds(), sequence)) {
-                    if (sequence instanceof Array && this.performances) {
-                        _.each(sequence, function(id) {
-                            let model = self.performances.get(id)
-                            if (model) self.addPerformance(model, true)
-                        })
-                    }
-
-                    if (!skipTimelineUpdate) this.updateTimeline()
-                }
-            },
-            showCurrent: function() {
-                let self = this,
-                    current = new Performance()
-
-                current.fetchCurrent({
+                this.syncedPerformance.fetchCurrent({
                     success: function(response) {
-                        self._showTimeline({
-                            model: current,
+                        self.setCurrentPerformance(self.syncedPerformance, {
                             running: response['running'],
                             paused: response['paused'],
                             current_time: response['current_time'],
-                            readonly: true
+                            readonly: true,
+                            allowEdit: false,
+                            skipLoading: true
                         })
 
-                        let ids = _.map(response['performances'], 'id')
-                        self.addSequence(ids, true)
-                        self.fetchPerformances(ids)
+                        if (self.syncedPerformance.id)
+                            self.performancesView.navigate(self.syncedPerformance.id)
+
+                        if (!response.performance) {
+                            self.destroyTimeline()
+                        }
                     }
                 })
             },
@@ -161,31 +236,27 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
             editCurrent: function() {
                 let item = this.queueCollection.findItemByTime(this.time)
                 if (item) this.editItem(item)
+                else this.addNewTimeline()
             },
             editPrevious: function(item) {
-                let self = this
-                this.changeCheck(function() {
-                    let i = self.queueCollection.findIndex(item)
-                    if (i > 0) self.editItem(self.queueCollection.at(i - 1))
-                })
+                let i = this.queueCollection.findIndex(item)
+                if (i > 0) this.editItem(this.queueCollection.at(i - 1))
             },
             editNext: function(item) {
-                let self = this
-                this.changeCheck(function() {
-                    let i = self.queueCollection.findIndex(item)
-                    if (i >= 0 && i < self.queueCollection.length - 1) self.editItem(self.queueCollection.at(i + 1))
-                })
+                let i = this.queueCollection.findIndex(item)
+                if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
             },
-            editItem: function(item) {
-                if (!this.timelinesView || this.timelinesView.readonly || item.get('performance') !== this.timelinesView.model) {
-                    let self = this
+            editItem: function(item, options) {
+                let self = this
+                options = options || {}
+                if (!this.timelinesView || this.timelinesView.readonly || item !== this.timelinesView.queueItem) {
                     this.changeCheck(function() {
                         self.highlight(item)
-                        self._showTimeline({
+                        self._showTimeline(_.extend(options, {
                             model: item.get('performance'),
                             queueItem: item,
                             readonly: false
-                        })
+                        }))
                     })
                 }
             },
@@ -195,29 +266,25 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 this.timelinesView.run(item.getStartTime())
             },
             remove: function(item) {
-                this.queueCollection.remove(item)
-                if (!this.editting)
-                    this.updateTimeline()
+                let self = this
+                bootbox.confirm("Are you sure?", function(result) {
+                    self.queueCollection.remove(item)
+                    item.get('performance').destroy()
+                    if (!self.editting)
+                        self.refreshCurrentPerformance()
+                })
             },
-            setTime: function(item) {
+            setItemTime: function(item) {
                 if (this.editting) {
                     this.editItem(item)
                 } else {
-                    if (!this.timelinesView) this.updateTimeline()
+                    if (!this.timelinesView) this.refreshCurrentPerformance()
                     this.timelinesView.moveIndicator(item.getStartTime())
                 }
             },
-            addPerformance: function(performance, skipTimelineUpdate) {
-                let item = new QueueItem({performance: performance}, {silent: skipTimelineUpdate})
-                this.queueCollection.add(item)
-                this.fetchPerformances([performance.get('id')])
-                if (!skipTimelineUpdate && !this.editting) this.updateTimeline()
-                return item
-            },
             updateTimeline: function(options) {
-                let ids = this._getPerformanceIds()
                 this.timelinesView = this._showTimeline(_.extend({
-                    sequence: ids,
+                    model: this.currentPerformance,
                     readonly: true
                 }, options || {}))
             },
@@ -227,11 +294,22 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                     this.timelinesView = null
                 }
             },
-            clearClick: function() {
-                this.stop()
-                this.clearQueue()
-                this.updateTimeline()
-                this.ui.clearButton.blur()
+            addNewTimeline: function() {
+                let self = this,
+                    current = this.currentPerformance,
+                    performance = new Performance({
+                        path: current.get('id'),
+                        name: (current.get('timelines').length + 1).toString()
+                    }),
+                    item = new QueueItem({
+                        performance: performance
+                    })
+                performance.save({}, {
+                    success: function() {
+                        self.queueCollection.add(item)
+                        self.editItem(item)
+                    }
+                })
             },
             clearQueue: function() {
                 this.queueCollection.reset()
@@ -244,8 +322,8 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 }
             },
             changeCheck: function(callback, cancelCallback) {
-                if (this.timelinesView && !this.timelinesView.isDestroyed() && this.timelinesView.changed) {
-                    this.changeCheckModalCancelled = true
+                if (!this.isDestroyed() && this.timelinesView && !this.timelinesView.isDestroyed() && this.timelinesView.changed) {
+                    this.changeCheckResult = null
                     this.changeCheckCallback = callback
                     this.changeCheckCancelCallback = cancelCallback
                     this.ui.saveChangesModal.modal()
@@ -254,34 +332,24 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
             },
             saveChanges: function() {
                 this.timelinesView.model.save()
-                this.changeCheckCallback(true)
-                this.changeCheckModalCancelled = false
+                this.changeCheckResult = true
                 this.ui.saveChangesModal.modal('hide')
             },
             discardChanges: function() {
                 this.timelinesView.revert()
-                this.changeCheckCallback(false)
-                this.changeCheckModalCancelled = false
+                this.changeCheckResult = false
                 this.ui.saveChangesModal.modal('hide')
             },
             saveChangesHide: function() {
-                if (this.changeCheckModalCancelled && typeof this.changeCheckCancelCallback === 'function')
-                    this.changeCheckCancelCallback()
+                if (this.changeCheckResult === null) {
+                    if (typeof this.changeCheckCancelCallback === 'function')
+                        this.changeCheckCancelCallback()
+                } else
+                    this.changeCheckCallback(this.changeCheckResult)
             },
-            _getPerformanceIds: function() {
-                let ids = []
-
-                this.queueCollection.each(function(item) {
-                    let performance = item.get('performance')
-                    if (performance instanceof Performance && performance.id)
-                        ids.push(performance.id)
-                })
-
-                return ids
-            },
+            time: 0,
             _showTimeline: function(options) {
-                let self = this,
-                    playButtons = this.ui.queue.find('.app-play')
+                let self = this
 
                 this.editting = !options.readonly
                 if (this.editting)
@@ -289,10 +357,10 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 else
                     this.queueView.enablePlay()
 
-                if (this.editting)
-                    playButtons.fadeOut()
-                else
-                    playButtons.fadeIn()
+                if (this.timelinesView) {
+                    this.stopListening(this.timelinesView)
+                    this.timelinesView.destroy()
+                }
 
                 this.timelinesView = new TimelinesView(_.extend({
                     performances: this.performances,
@@ -303,10 +371,9 @@ define(['marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in
                 }, options))
 
                 this.listenTo(this.timelinesView, 'close', function() {
-                    self.updateTimeline()
+                    this.refreshCurrentPerformance()
                 })
 
-                self.time = 0
                 this.listenTo(this.timelinesView, 'change:time', function(time) {
                     if (!this.editting) {
                         self.time = time

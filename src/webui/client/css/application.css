@@ -21,7 +21,13 @@ body {
     border: none;
     font-size: 16px;
     height: 39px;
-    padding: 7px 16px;
+    padding: 10px 16px;
+}
+
+.btn-sm {
+    height: 31px;
+    font-size: 13px;
+    line-height: 13px;
 }
 
 .input-group-addon,
@@ -31,13 +37,14 @@ body {
 }
 
 .btn-default:hover,
-.btn-default:active,
-.btn-default.active,
 .btn-default:focus {
     background-color: #1D262D;
     border-color: #6cadd3;
 }
 
+.btn-default.active {
+    border-color: #5cb85c;
+}
 
 .btn:active, .btn:focus, .btn:active, .btn.active {
     outline: none !important;

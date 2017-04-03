@@ -60,7 +60,6 @@ add_service_files(
   Resume.srv
   Current.srv
   Load.srv
-  LoadSequence.srv
   LoadPerformance.srv
   SetProperties.srv
 )

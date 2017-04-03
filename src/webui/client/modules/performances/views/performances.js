@@ -1,26 +1,31 @@
-define(['marionette', 'backbone', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
+define(['application', 'marionette', 'backbone', './templates/performances.tpl', './performance', '../entities/performance', 'underscore',
         'jquery', 'bootbox', 'lib/api', './settings', 'path', 'natural-sort', 'typeahead', 'jquery-ui'],
-    function(Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path,
+    function(app, Marionette, Backbone, template, PerformanceView, Performance, _, $, bootbox, api, SettingsView, path,
              naturalSort) {
         return Marionette.CompositeView.extend({
             template: template,
             childView: PerformanceView,
             childViewContainer: '.app-performances',
             ui: {
+                nav: '.app-navigation',
                 newButton: '.app-new-performance-button',
-                addAllButton: '.app-add-all-button',
                 tabs: '.app-performance-group-tabs',
-                container: '.app-performances'
+                container: '.app-performances',
+                dirHeader: '.app-performance-dir-header',
+                backButton: '.app-back-btn',
+                settingsButton: '.app-performance-settings'
             },
             events: {
                 'click @ui.newButton': 'addNew',
-                'click @ui.addAllButton': 'addAll'
+                'click @ui.backButton': 'back',
+                'click @ui.settingsButton': 'showSettings'
             },
             collectionEvents: {
-                'change:path reset': 'updateTabs'
+                'reset': 'reload',
+                'change:path': 'updateTabs'
             },
             initialize: function(options) {
-                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir'])
+                this.mergeOptions(options, ['readonly', 'nav', 'autoplay', 'layoutView', 'dir', 'urlPrefix'])
             },
             onRender: function() {
                 let self = this,
@@ -28,8 +33,10 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                         $('.app-current-path', self.ui.tabs).removeClass('highlight')
                     }
 
-                if (this.autoplay) this.ui.addAllButton.get(0).lastChild.nodeValue = ' Play All'
-                if (this.readonly) this.ui.newButton.hide()
+                this.ui.settingsButton.hide()
+
+                if (this.readonly)
+                    this.ui.newButton.hide()
 
                 this.ui.container.droppable({
                     accept: '.app-performance-button',
@@ -50,23 +57,38 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     }
                 })
 
-                if (this.dir) this.switchDir(this.dir)
-                else this.updateTabs()
+                this.ui.nav.hide()
+
+                if (this.dir) this.navigate(this.dir)
+                else this.reload()
             },
             childViewOptions: function() {
-                return this.options
+                return _.extend(this.options, {
+                    performancesView: this
+                })
             },
             addNew: function() {
-                let performances = new Backbone.Collection(this.collection.where({path: this.currentPath})),
-                    names = performances.pluck('name')
+                let self = this
+                bootbox.prompt("Enter performance name", function(name) {
+                    if (name) {
+                        self.newestPerformance = new Performance({
+                            path: self.currentPath,
+                            name: name,
+                            timelines: []
+                        })
 
-                this.newestPerformance = new Performance({
-                    name: this.getNextName(names, path.basename(this.currentPath) || 'Performance'),
-                    path: this.currentPath
+                        self.newestPerformance.get('timelines').push(new Performance({
+                            path: self.newestPerformance.get('id'),
+                            name: '1',
+                        }))
+
+                        self.newestPerformance.save({}, {
+                            success: function() {
+                                self.trigger('new', self.newestPerformance)
+                            }
+                        })
+                    }
                 })
-
-                this.collection.add(this.newestPerformance)
-                this.trigger('new', this.newestPerformance)
             },
             getNextName: function(names, defaultPrefix) {
                 let self = this,
@@ -115,43 +137,11 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
             escape: function(str) {
                 return str.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, "\\$&")
             },
-            addAll: function() {
-                let self = this,
-                    added = false
-
-                if (this.autoplay) self.layoutView.clearQueue()
-
-                this.collection.each(function(performance) {
-                    if ((performance.get('path') || '') == self.currentPath) {
-                        self.layoutView.addPerformance(performance, true)
-                        added = true
-                    }
-                })
-
-                self.layoutView.updateTimeline({autoplay: this.autoplay})
-            },
             attachHtml: function(collectionView, childView) {
-                let self = this
-
-                // add performance to the queue on click
-                childView.on('click', function(data) {
-                    if (self.autoplay) {
-                        self.layoutView.clearQueue()
-                        self.layoutView.addPerformance(data.model, true)
-                        self.layoutView.updateTimeline({autoplay: true})
-                    } else {
-                        let timelinesView = self.layoutView.timelinesView
-                        self.layoutView.addPerformance(data.model, !timelinesView || timelinesView.changed)
-                    }
-
-                    if (!data.model.nodes.length)
-                        data.model.fetch()
-                })
-
                 this.ui.newButton.before(childView.el)
 
                 // hiding if not from current directory
-                if ((childView.model.get('path') || '') == this.currentPath)
+                if ((childView.model.get('path') || '') === this.currentPath)
                     childView.$el.show()
                 else
                     childView.$el.hide()
@@ -160,14 +150,16 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
             createdDirs: [],
             updateTabs: function() {
                 let self = this,
-                    depth = (this.currentPath == '') ? 0 : this.currentPath.split('/').length,
+                    depth = (this.currentPath === '') ? 0 : this.currentPath.split('/').length,
                     currentDirs = this.getCurrentDirs()
 
                 // clear tabs
                 this.ui.tabs.html('')
 
-                // adding tab for parent dir if available
-                if (depth > 0) this.ui.tabs.append(this.createTab(this.getParentPath(this.currentPath), '..'))
+                if (depth === 0)
+                    this.ui.backButton.hide()
+                else
+                    this.ui.backButton.show()
 
                 _.each(currentDirs, function(dir) {
                     self.ui.tabs.append(self.createTab(dir))
@@ -177,29 +169,41 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     .attr('aria-hidden', 'true'), true)
 
                 addNewTab.click(function(e, ui) {
+                    addNewTab.hide()
                     let input = $('<input>').addClass('form-control input-sm'),
-                        newTab = $('<li>').addClass('app-new-dir').html(input)
+                        okButton = $('<button/>', {class: 'btn-sm btn btn-primary'}).html('OK'),
+                        container = $('<div/>', {class: 'form-inline'}).append($('<div/>', {class: 'form-group'})
+                            .append(input)).append(okButton),
+                        newTab = $('<li>').addClass('app-new-dir').html(container)
                     input.focusout(function() {
-                        let dir = $(this).val()
-                        if (dir) {
-                            self.createdDirs.push(self.joinPaths(self.currentPath, dir))
-                            self.updateTabs()
-                        }
-                        newTab.remove()
+                        setTimeout(function() {
+                            if (!input.is(':focus')) {
+                                newTab.fadeOut(300, function() {
+                                    addNewTab.fadeIn(300)
+                                    $(newTab).remove()
+                                })
+                            }
+                        }, 500)
                     })
+
+                    okButton.click(function() {
+                        let dir = $(input).val().trim()
+                        if (dir) {
+                            dir = self.joinPaths(self.currentPath, dir)
+                            self.createdDirs.push(dir)
+                            self.navigate(dir)
+                        } else {
+                            input.focus()
+                        }
+                    })
+
                     $(this).before(newTab)
                     input.focus()
                 })
 
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
-
-                this.ui.tabs.append(this.createTab(this.currentPath, '/' + this.currentPath, true).addClass('app-current-path active'))
-
-                if (!this.readonly)
-                    self.ui.tabs.append(this.createTab(this.currentPath, 'Settings', true).addClass('pull-right').click(function() {
-                        self.showSettings()
-                    }))
+                this.ui.dirHeader.html((this.currentPath || 'Performances').replace('/', ' / '))
             },
             getCurrentDirs: function() {
                 let self = this,
@@ -214,7 +218,7 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                 })
 
                 dirs = _.filter(_.uniq(_.union(dirs, this.createdDirs)), function(dir) {
-                    return self.getParentPath(dir) == self.currentPath
+                    return self.getParentPath(dir) === self.currentPath
                 })
 
                 naturalSort.insensitive = true
@@ -222,7 +226,9 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
             },
             showSettings: function() {
                 let settingsView = new SettingsView({
-                    path: this.currentPath
+                    path: this.currentPath,
+                    collection: this.collection,
+                    layoutView: this.layoutView
                 })
 
                 bootbox.dialog({
@@ -247,18 +253,18 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
                     el = $('<a>').attr('href', 'javascript:void(0)').html(content)
 
                 if (this.nav)
-                    el.attr('href', path.join('/#/performances', dir))
+                    el.attr('href', path.join(/#/ + (this.urlPrefix ? this.urlPrefix : 'performances'), dir))
 
                 if (!disableEvents)
                     el.click(function() {
-                        self.switchDir(dir)
+                        self.navigate(dir)
                     }).droppable({
                         accept: '.app-performance-button',
                         tolerance: 'pointer',
                         over: function() {
                             $(this).parent().addClass('active')
                             timeout = setTimeout(function() {
-                                self.switchDir(dir)
+                                self.navigate(dir)
                             }, 600)
                         },
                         out: function() {
@@ -269,23 +275,63 @@ define(['marionette', 'backbone', './templates/performances.tpl', './performance
 
                 return $('<li>').attr('data-path', dir).append(el)
             },
-            switchDir: function(dir) {
-                if (this.nav) Backbone.history.navigate(path.join('#/performances', dir))
-                this.updateVisiblePerformances(dir)
-                this.currentPath = dir
-                this.collection.currentPath = dir
+            navigate: function(id) {
+                let self = this
+                if (this.currentPerformance)
+                    this.stopListening(this.currentPerformance)
+                this.currentPerformance = this.collection.get(id)
+
+                if (this.collection.get(this.currentPath) && !this.currentPerformance)
+                    this.layoutView.setCurrentPerformance(null)
+
+                this.currentPath = id
+                this.collection.currentPath = id
                 // reset newest performance so that it's name isn't used for naming
                 this.newestPerformance = null
-                this.updateTabs()
+
+                if (this.collection.length) {
+                    if (this.nav) {
+                        let url = path.join('/performances', id)
+                        if (url !== Backbone.history.getHash()) {
+                            app.skipPerformanceNav = true
+                            Backbone.history.navigate('#' + url)
+                        }
+                    }
+
+                    if (this.currentPerformance) {
+                        if (!this.readonly)
+                            this.ui.settingsButton.show()
+                        this.ui.dirHeader.html(id)
+                        this.listenTo(this.currentPerformance, 'change:id', function() {
+                            self.ui.dirHeader.html(self.currentPerformance.id)
+                        })
+                        this.ui.nav.slideUp()
+                        this.ui.backButton.show()
+                        this.layoutView.setCurrentPerformance(this.currentPerformance)
+                    } else {
+                        this.ui.settingsButton.hide()
+                        this.updateVisiblePerformances(id)
+                        this.updateTabs()
+                        this.ui.nav.slideDown()
+                    }
+                }
             },
             updateVisiblePerformances: function(dir) {
-                $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]').fadeIn()
+                let performances = $('.app-performance-button:not(.ui-draggable-dragging)', this.$el).hide().filter('[data-path="' + dir + '"]')
+                if (performances.length) performances.show()
             },
             joinPaths: function(path1, path2) {
                 return _.compact(_.union((path1 || '').split('/'), (path2 || '').split('/'))).join('/')
             },
             getParentPath: function(path) {
                 return _.compact((path || '').split('/').slice(0, -1)).join('/')
+            },
+            back: function() {
+                let p = path.dirname(this.currentPath)
+                this.navigate(p === '.' ? '' : p)
+            },
+            reload: function() {
+                this.navigate(this.currentPath)
             }
         })
     })

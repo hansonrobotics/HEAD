@@ -32,7 +32,7 @@ class Character(object):
     def set_properties(self, props):
         self.properties.update(props)
 
-    def respond(self, question, lang, session=None, query=False):
+    def respond(self, question, lang, session=None, query=False, request_id=None):
         raise NotImplementedError
 
     def refresh(self, session):
@@ -150,7 +150,7 @@ class AIMLCharacter(Character):
         self.kernel.setPredicate('topic', '', session)
         self.logger.info("Topic is reset")
 
-    def respond(self, question, lang, session, query):
+    def respond(self, question, lang, session, query, request_id=None):
         ret = {}
         ret['text'] = ''
         ret['botid'] = self.id

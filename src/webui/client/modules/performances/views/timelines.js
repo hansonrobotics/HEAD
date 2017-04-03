@@ -11,6 +11,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 pxPerSec: 70
             },
             ui: {
+                addNewButton: '.app-add-new-button',
                 timelineContainer: '.app-timelines',
                 editContainer: '.app-edit-container',
                 timelineNodes: '.app-timeline-nodes .app-node',
@@ -18,7 +19,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 nodesContainer: '.app-nodes',
                 nodeSettings: '.app-node-settings-container',
                 scrollContainer: '.app-scroll-container',
-                performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
                 runButton: '.app-run-button',
                 stopButton: '.app-stop-button',
@@ -26,7 +26,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 autoPauseButton: '.app-auto-pause-button',
                 resumeButton: '.app-resume-button',
                 loopButton: '.app-loop-button',
-                clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
                 frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
@@ -46,14 +45,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             events: {
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
-                'keyup @ui.performanceName': 'setPerformanceName',
-                'focusout @ui.performanceName': 'sortPerformances',
                 'click @ui.runButton': 'runAtIndicator',
                 'click @ui.stopButton': 'stop',
                 'click @ui.pauseButton': 'pause',
                 'click @ui.resumeButton': 'resume',
                 'click @ui.timeAxis': 'moveIndicatorCallback',
-                'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
                 'click @ui.doneButton': 'done',
                 'click @ui.loopButton': 'loop',
@@ -62,45 +58,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.previousButton': 'editPrevious',
                 'click @ui.nextButton': 'editNext',
             },
-            modelEvents: {
-                'change': 'modelChanged'
-            },
             initialize: function(options) {
-                let self = this,
-                    loadOptions = {
-                        success: function() {
-                            self.backup()
-                            if (self.autoplay) self.run()
-
-                            if (self.readonly)
-                                self.model.enableSync()
-                            else {
-                                let reload = function() {
-                                    self.model.loadPerformance()
-                                }
-                                self.listenTo(self.model.nodes, 'change add remove', reload)
-                                self.listenTo(self.model.nodes, 'change', self.markChanged)
-                            }
-                        }
-                    }
-
-                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView', 'queue', 'allowEdit',
-                    'queueItem'])
-
-                if (options.sequence instanceof Array) {
-                    this.model = new Performance()
-                    this.model.loadSequence(options.sequence, loadOptions)
-                } else if (this.model) {
-                    if (this.model.id && this.model.nodes.isEmpty()) {
-                        this.model.load(loadOptions)
-                    } else if (this.readonly)
-                        this.model.enableSync()
-                    else
-                        this.model.loadPerformance(loadOptions)
-                } else {
-                    this.model = new Performance()
-                    this.model.fetchCurrent(loadOptions)
-                }
+                let self = this
+                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
+                    'queue', 'allowEdit', 'queueItem', 'skipLoading'])
                 this.nodeConfig = new NodeConfig('/performances')
                 this.listenTo(this.nodeConfig, 'change', this.reconfigure)
                 this.nodeConfig.fetch()
@@ -159,11 +120,42 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             setAutoPause: function(val) {
                 this.nodeConfig.save({autopause: val})
             },
+            loadPerformance: function() {
+                let self = this,
+                    loadOptions = {
+                        success: function() {
+                            self.backup()
+                            if (self.autoplay) self.run()
+                            if (!self.readonly) {
+                                let reload = function() {
+                                    self.model.loadPerformance()
+                                }
+                                self.listenTo(self.model.nodes, 'change add remove', reload)
+                                self.listenTo(self.model.nodes, 'change', self.markChanged)
+                            }
+                        }
+                    }
+
+                if (this.model) {
+                    if (this.skipLoading) {
+                        loadOptions.success()
+                    } else if (this.model.id && this.model.nodes.isEmpty()) {
+                        this.model.load(loadOptions)
+                    } else if (!this.readonly)
+                        this.model.loadPerformance(loadOptions)
+                } else {
+                    this.model = new Performance()
+                    this.model.fetchCurrent(loadOptions)
+                }
+            },
             onAttach: function() {
                 let self = this
 
-                if (this.readonly)
+                this.loadPerformance()
+                if (this.readonly) {
                     this.ui.editContainer.hide()
+                    this.ui.timelineContainer.addClass('readonly')
+                }
 
                 this.ui.doneButton.fadeIn()
                 this.ui.scrollContainer.droppable({
@@ -190,15 +182,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.readonly) {
                     this.ui.nodesContainer.hide()
                     this.ui.doneButton.hide()
-                    if (!this.queue.length)
-                        this.ui.editButton.hide()
                 } else {
                     this.nodeView = new NodeView({collection: this.model.nodes})
                     this.getRegion('nodeSettings').show(this.nodeView)
                     this.ui.editButton.hide()
                 }
 
-                this.modelChanged()
                 this.ui.scrollContainer.perfectScrollbar()
 
                 let eventCallback = function(msg) {
@@ -209,21 +198,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 }
                 api.topics.performance_events.subscribe(eventCallback)
 
-                let nodeListener = function() {
-                    if (self.model.nodes.isEmpty())
-                        self.ui.clearButton.fadeOut()
-                    else if (!self.readonly)
-                        self.ui.clearButton.fadeIn()
-                }
-
                 this.queueUpdated()
                 this.listenTo(this.queue, 'add remove reset', this.queueUpdated)
-                this.listenTo(this.model.nodes, 'add remove reset', nodeListener)
 
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id')) {
                     this.ui.deleteButton.hide()
-                    this.ui.clearButton.hide()
                 }
 
                 this.listenTo(this.model.nodes, 'add', this.addNode)
@@ -239,6 +219,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     else
                         self.updateTimelineWidth()
                 }
+
                 $(window).on('resize', updateWidth)
 
                 if (this.options.paused)
@@ -248,16 +229,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 else
                     this.stopIndicator()
             },
-            onDestroy: function() {
-                this.model.stop()
-
-                if (this.readonly) this.model.disableSync()
-            },
             queueUpdated: function() {
                 if (!this.isDestroyed()) {
                     if (this.readonly) {
                         $([this.ui.nextButton, this.ui.previousButton]).hide()
-                        if (this.allowEdit && this.queue.length) this.ui.editButton.fadeIn()
+                        if (this.allowEdit) this.ui.editButton.fadeIn()
                         else this.ui.editButton.fadeOut()
                     } else {
                         if (this.queue.length > 1 && this.queueItem) {
@@ -291,11 +267,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
 
                 this.model.nodes.add(node)
-            },
-            modelChanged: function() {
-                let name = this.model.get('name')
-                if (name != this.ui.performanceName.val())
-                    this.ui.performanceName.val(name)
             },
             initResizable: function(el) {
                 let self = this,
@@ -455,41 +426,33 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 return this.model.getDuration() * this.config.pxPerSec
             },
             updateTimelineWidth: function() {
-                let width = this.getTimelineWidth(),
+                let timelineWidth = this.getTimelineWidth(),
                     containerWidth = this.ui.timelineContainer.width(),
-                    scaleWidth = Math.max(width, containerWidth),
-                    scale = d3.scaleLinear().domain([0, scaleWidth / this.config.pxPerSec]).range([0, scaleWidth])
+                    width = Math.max(timelineWidth, containerWidth),
+                    scale = d3.scaleLinear().domain([0, width / this.config.pxPerSec]).range([0, width])
 
                 // update axis
-                this.ui.timeAxis.html('').width(scaleWidth)
+                this.ui.timeAxis.html('').width(width)
                 d3.select(this.ui.timeAxis.get(0)).call(d3.axisBottom().scale(scale))
 
-                if (width < containerWidth || !containerWidth)
+                if (timelineWidth < containerWidth || !containerWidth)
                     width = '100%'
 
-                this.ui.timelineContainer.find('.app-timeline-nodes').css('width', scaleWidth)
+                this.ui.timelineContainer.find('.app-timeline-nodes').css('width', width)
                 this.ui.scrollContainer.perfectScrollbar('update')
-            },
-            setPerformanceName: function() {
-                this.model.set('name', this.ui.performanceName.val())
             },
             sortPerformances: function() {
                 this.performances.sort()
             },
             savePerformances: function() {
-                let self = this,
-                    path = ''
+                let self = this
 
-                if (this.performances && this.performances.currentPath)
-                    path = this.performances.currentPath
-
-                this.model.save({path: this.model.get('path') || path}, {
+                this.model.save({}, {
                     success: function(model) {
                         if (self.performances) self.performances.add(model)
                         if (!self.isDestroyed()) {
                             self.readonly = false
                             self.ui.deleteButton.fadeIn()
-                            self.ui.clearButton.fadeIn()
                             self.ui.nodesContainer.fadeIn()
 
                             if (model.get('error')) {
@@ -658,12 +621,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.ui.loopButton.addClass('active')
                 }
             },
-            /**
-             * Removes all nodes from the performance
-             */
-            clearPerformance: function() {
-                this.model.nodes.reset()
-            },
             deletePerformance: function() {
                 let self = this
 
@@ -671,7 +628,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (result)
                         self.$el.fadeOut(null, function() {
                             self.model.destroy()
-                            self.destroy()
+
+                            if (self.layoutView.queueCollection.length)
+                                self.layoutView.editCurrent()
+                            else
+                                self.layoutView.refreshCurrentPerformance()
                         })
                 })
             },

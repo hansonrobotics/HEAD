@@ -104,7 +104,7 @@ class Session(object):
             self.dump_file = self.test_fname
         else:
             self.dump_file = self.fname
-        return self.cache.dump(self.dump_file)
+        return self.test or self.cache.dump(self.dump_file)
 
     def get_session_data(self):
         return self.sdata

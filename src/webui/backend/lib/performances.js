@@ -4,84 +4,160 @@ let glob = require('glob'),
     yaml = require('js-yaml'),
     yamlIO = require('./yaml'),
     cp = require('child_process'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    rimraf = require('rimraf'),
+    mkdirp = require('mkdirp'),
+    mv = require('mv')
 
 module.exports = {
     ext: '.yaml',
-    all: function (dirs, options) {
-        options = typeof options == 'object' ? options : {};
+    all: function(dirs, options) {
+        options = typeof options === 'object' ? options : {}
 
         if (dirs.constructor !== Array)
-            dirs = [dirs];
+            dirs = [dirs]
 
-        let performances = [];
+        let performances = []
 
         for (let dir of dirs) {
-            let files = glob.sync(path.join(dir, '**', '*.yaml'));
+            let subDirs = glob.sync(path.join(dir, '**', '*/'))
 
-            for (let file of files) {
-                let id = file.replace(dir, '').replace(this.ext, '').substr(1),
-                    performance = this.get(dir, id, options);
+            for (let i = 0; i < subDirs.length; i++) {
+                // filter out dirs containing other dirs on a sorted arrray
+                if (i === subDirs.length - 1 || subDirs[i + 1].indexOf(subDirs[i]) === -1) {
+                    let id = subDirs[i].replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, ''),
+                        performance = this.get(dir, id, options)
 
-                if (performance) performances.push(performance);
+                    performances.push(performance)
+                }
             }
         }
 
-        return performances;
+        return performances
     },
-    get: function (dir, id, options) {
-        options = typeof options == 'object' ? options : {};
-        let performance = yamlIO.readFile(path.join(dir, id + this.ext));
+    get: function(dir, id, options) {
+        options = typeof options === 'object' ? options : {}
+        let self = this,
+            performance = null,
+            p = path.join(dir, id)
 
-        if (performance) {
-            performance['id'] = id;
-            performance['path'] = path.dirname(id);
-            performance['path'] = performance['path'] === '.' ? '' : performance['path'];
-            performance['name'] = path.basename(id);
+        if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
+            let performancePath = path.dirname(id),
+                files = glob.sync(path.join(p, '*.yaml'))
 
-            if ('skip_nodes' in options && options['skip_nodes'])
-                delete performance['nodes'];
+            performancePath = performancePath === '.' ? '' : performancePath
+            performance = {id: id, name: path.basename(id), path: performancePath, timelines: []}
+            files.forEach(function(filename) {
+                let id = filename.replace(dir, '').replace(/^[\/]+/, '').replace(/[\/]+$/, '').replace(self.ext, ''),
+                    timeline = self.get(dir, id, options)
+
+                if (timeline) {
+                    performance['timelines'].push(timeline)
+                }
+            })
+        } else {
+            performance = yamlIO.readFile(p + this.ext)
+
+            if (performance)
+                performance = this.parseTimeline(id, performance, options)
         }
 
-        return performance;
+        return performance
     },
-    update: function (dir, id, performance) {
-        let current;
+    parseTimeline: function(id, performance, options) {
+        performance['id'] = id
+        performance['path'] = path.dirname(id).replace('.', '')
+        performance['name'] = path.basename(id)
 
-        if ('previous_id' in performance) {
-            current = this.get(dir, performance['previous_id']);
-            this.remove(dir, performance['previous_id']);
-            delete performance['previous_id'];
+        if ('skip_nodes' in options && options['skip_nodes'])
+            delete performance['nodes']
+
+        return performance
+    },
+    update: function(dir, id, performance) {
+        let self = this,
+            timelines = [],
+            // use this path for all timelines
+            p = id
+
+        if ('timelines' in performance) {
+            timelines = performance['timelines']
+            mkdirp.sync(path.join(dir, id))
+
+            // remove timelines not included in the current performances
+            let ids = timelines.map(t => t.id),
+                deleteIds = _.pullAll(
+                    glob.sync(path.join(dir, id, '*.yaml')).map(f => path.relative(dir, f).replace(this.ext, '')), ids)
+
+            deleteIds.forEach(function(id) {
+                self.remove(dir, id)
+            })
+        } else {
+            timelines = [performance]
+            p = path.dirname(performance['id']).replace('.', '')
         }
 
-        if (!current) current = this.get(dir, id);
+        _.each(timelines, function(timeline, i) {
+            timeline['id'] = path.join(p, path.basename(timeline['id']))
+            let current,
+                ignoreNodes = 'ignore_nodes' in timeline && timeline['ignore_nodes']
 
-        if ('ignore_nodes' in performance && performance['ignore_nodes'] && 'nodes' in current) {
-            performance['nodes'] = current['nodes'];
-            delete performance['ignore_nodes'];
+            if ('previous_id' in timeline) {
+                if (ignoreNodes)
+                    current = self.get(dir, timeline['previous_id'])
+
+                // remove previous timeline
+                self.remove(dir, timeline['previous_id'])
+            }
+
+            if (ignoreNodes && !current) current = self.get(dir, timeline['id'])
+            if (current && ignoreNodes && 'nodes' in current) {
+                timeline['nodes'] = current['nodes']
+            }
+
+            if ('nodes' in timeline)
+                for (let node of timeline['nodes'])
+                    delete node['id'];
+
+            for (let k of ['path', 'ignore_nodes', 'previous_id'])
+                delete timeline[k]
+
+            timelines[i] = timeline
+        })
+
+        // save performances separately so that all the obsolete file are already deleted
+        _.each(timelines, function(timeline) {
+            let id = timeline['id']
+            delete timeline['id']
+            yamlIO.writeFile(path.join(dir, id + self.ext), timeline)
+        })
+
+        if ('previous_id' in performance && 'timelines' in performance) {
+            let propFilename = path.join(dir, performance['previous_id'], '.properties')
+            if (fs.existsSync(propFilename))
+                fs.renameSync(propFilename, path.join(dir, performance['id'], '.properties'))
+            this.remove(dir, performance['previous_id'])
+        }
+
+        return this.get(dir, id)
+    },
+    remove: function(dir, id) {
+        let p = path.join(dir, id)
+        if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
+            rimraf.sync(p, {}, function(e) {
+                if (e) console.log(e)
+            })
         } else
-            for (let node of performance['nodes'])
-                delete node['id'];
-
-
-        delete performance['id'];
-        delete performance['path'];
-
-        return yamlIO.writeFile(path.join(dir, id + this.ext), performance);
+            try {
+                fs.unlinkSync(p + this.ext)
+            } catch (e) {
+                console.log('Error: ', e)
+            }
+        return true
     },
-    remove: function (dir, id) {
-        try {
-            fs.unlinkSync(path.join(dir, id + this.ext));
-        } catch (e) {
-            return false;
-        }
-        return true;
-    },
-    run: function (id) {
-//        var res = cp.spawnSync('rosservice', ['call', '/performances/run_full_performance', id], {encoding: 'utf8'});
-//        return res.status === 0 && yaml.load(res.stdout)['success'];
-        // Async call to make the suncing with multiple PCs easier.
-        var res = cp.spawn('rosservice', ['call', '/performances/run_full_performance', id], {encoding: 'utf8'});
-        return true;
+    run: function(id) {
+        // Async call to make the syncing with multiple PCs easier.
+        cp.spawn('rosservice', ['call', '/performances/run_full_performance', id], {encoding: 'utf8'})
+        return true
     }
-};
+}

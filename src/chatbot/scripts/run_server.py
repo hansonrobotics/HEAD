@@ -6,6 +6,7 @@ import logging
 import datetime as dt
 import json
 import shutil
+import argparse
 
 import sys
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -14,13 +15,13 @@ sys.path.insert(0, os.path.join(CWD, '../src'))
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
-from chatbot.server.config import CHATBOT_LOG_DIR, HISTORY_DIR
+from chatbot.server.config import CHATBOT_SERVER_LOG_DIR, HISTORY_DIR
 
-if not os.path.isdir(CHATBOT_LOG_DIR):
-    os.makedirs(CHATBOT_LOG_DIR)
-LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(CHATBOT_LOG_DIR,
+if not os.path.isdir(CHATBOT_SERVER_LOG_DIR):
+    os.makedirs(CHATBOT_SERVER_LOG_DIR)
+LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(CHATBOT_SERVER_LOG_DIR,
                                                     dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
-link_log_fname = os.path.join(CHATBOT_LOG_DIR, 'chatbot_server_latest.log')
+link_log_fname = os.path.join(CHATBOT_SERVER_LOG_DIR, 'chatbot_server_latest.log')
 if os.path.islink(link_log_fname):
     os.unlink(link_log_fname)
 os.symlink(LOG_CONFIG_FILE, link_log_fname)
@@ -75,7 +76,10 @@ def _chat():
     lang = data.get('lang', 'en')
     query = data.get('query', 'false')
     query = query.lower() == 'true'
-    response, ret = ask(question, lang, session, query)
+    request_id = request.headers.get('X-Request-Id')
+    marker = data.get('marker', 'default')
+    response, ret = ask(
+        question, lang, session, query, request_id=request_id, marker=marker)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 
@@ -379,13 +383,25 @@ def _stats():
                     mimetype="application/json")
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        port = int(sys.argv[1])
+    parser = argparse.ArgumentParser('Chatbot Server')
+
+    parser.add_argument(
+        '-p, --port',
+        dest='port', default=8001, help='Server port')
+    parser.add_argument(
+        '-v, --verbose',
+        dest='verbose', action='store_true', help='Verbose')
+
+    option = parser.parse_args()
+
+    if option.verbose:
+        root_logger.setLevel(logging.INFO)
     else:
-        port = 8001
+        root_logger.setLevel(logging.WARN)
+
     if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
         sys.path.insert(0, os.path.expanduser(
             os.environ['HR_CHATBOT_SERVER_EXT_PATH']))
         import ext
         ext.load(app, ROOT)
-    app.run(host='0.0.0.0', debug=False, use_reloader=False, port=port)
+    app.run(host='0.0.0.0', debug=False, use_reloader=False, port=option.port)

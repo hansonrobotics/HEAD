@@ -55,6 +55,7 @@ INCLUDE_DIRS=($EMOTIME_DIR/src/{facedetector,utils,gaborbank,detector,training})
 INCLUDE_PATH=$(printf "%s:" "${INCLUDE_DIRS[@]}")
 
 export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMOTIME_DIR/include:$CLANDMARK_DIR/include:$INCLUDE_PATH
+export CPATH=$CPLUS_INCLUDE_PATH
 export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export PATH=/usr/lib/ccache:$PATH
 
@@ -483,7 +484,7 @@ install_other_deps() {
     $SUDO pip2 install transitions
 
     # For webui
-    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil natsort
 
     info "Installing other dependencies is done"
 }
@@ -510,6 +511,9 @@ install_test_deps() {
     # WebUI compatable webserver
     $SUDO npm install xmlhttprequest --prefix $HR_WORKSPACE/$PROJECT/src/chatbot/scripts
     info "Installing test dependencies is done"
+
+    # for python test coverage
+    $SUDO pip install coverage
 }
 
 install_webui_deps() {
@@ -1104,8 +1108,6 @@ check_ws() {
         if [[ ${confirm} -eq 1 ]]; then
             HR_WORKSPACE=${rel_ws}
             set_env
-        else
-            exit 1
         fi
     fi
 }

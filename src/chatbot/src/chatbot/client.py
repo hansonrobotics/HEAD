@@ -9,11 +9,11 @@ import logging
 import threading
 import pprint
 from chatbot.utils import norm
+import uuid
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-VERSION = 'v1.1'
 
 logger = logging.getLogger('hr.chatbot.client')
 
@@ -31,6 +31,8 @@ ERRORS = {
 }
 
 class Client(cmd.Cmd, object):
+
+    VERSION = 'v1.1'
 
     def __init__(self, key, response_listener=None, username=None, botname='sophia',
             host='localhost', port='8001', test=False,
@@ -52,13 +54,14 @@ class Client(cmd.Cmd, object):
                 callable(response_listener.on_response)
         self.response_listener = response_listener
         self.test = test
+        self.marker = 'default'
         self.prompt = '[me]: '
         self.botname = botname
         self.chatbot_ip = host
         self.chatbot_port = port
         self.chatbot_url = 'http://{}:{}'.format(
             self.chatbot_ip, self.chatbot_port)
-        self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
+        self.root_url = '{}/{}'.format(self.chatbot_url, self.VERSION)
         self.lang = 'en'
         self.session = None
         self.last_response = None
@@ -75,11 +78,11 @@ class Client(cmd.Cmd, object):
     def retry(times):
         def wrap(f):
             @wraps(f)
-            def wrap_f(*args):
+            def wrap_f(*args, **kwargs):
                 error = None
                 for i in range(times):
                     try:
-                        return f(*args)
+                        return f(*args, **kwargs)
                     except Exception as ex:
                         logger.error(ex)
                         self = args[0]
@@ -120,16 +123,20 @@ class Client(cmd.Cmd, object):
         self.set_weights(self.weights)
 
     @retry(3)
-    def ask(self, question, query=False):
+    def ask(self, question, query=False, request_id=None):
         self.cancel_timer()
         params = {
-            "question": "{}".format(question),
+            "question": question.strip(),
             "session": self.session,
             "lang": self.lang,
             "Auth": self.key,
-            "query": query
+            "query": query,
+            "marker": self.marker,
         }
-        r = requests.get('{}/chat'.format(self.root_url), params=params)
+        headers = {
+            'X-Request-ID': request_id or str(uuid.uuid1())
+        }
+        r = requests.get('{}/chat'.format(self.root_url), params=params, headers=headers)
         ret = r.json().get('ret')
         if r.status_code != 200:
             self.stdout.write("Request error: {}\n".format(r.status_code))
@@ -201,8 +208,8 @@ class Client(cmd.Cmd, object):
         chatbots = []
         try:
             chatbots = self.list_chatbot()
-            chatbots = ['{}: weight: {} level: {} dynamic level: {}'.format(
-                c, w, l, d) for c, w, l, d in chatbots]
+            chatbots = ['{}/{}: weight: {} level: {} dynamic level: {}'.format(
+                n, c, w, l, d) for n, c, w, l, d in chatbots]
             self.stdout.write('\n'.join(chatbots))
             self.stdout.write('\n')
         except Exception as ex:
@@ -236,7 +243,7 @@ class Client(cmd.Cmd, object):
                 self.chatbot_ip, self.chatbot_port = line.split(':')
                 self.chatbot_url = 'http://{}:{}'.format(
                     self.chatbot_ip, self.chatbot_port)
-                self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
+                self.root_url = '{}/{}'.format(self.chatbot_url, self.VERSION)
             except Exception:
                 self.stdout.write("Wrong conn argument\n")
                 self.help_conn()
@@ -258,7 +265,7 @@ For example, conn
         self.chatbot_ip = line
         self.chatbot_url = 'http://{}:{}'.format(
             self.chatbot_ip, self.chatbot_port)
-        self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
+        self.root_url = '{}/{}'.format(self.chatbot_url, self.VERSION)
 
     def help_ip(self):
         s = """
@@ -273,7 +280,7 @@ For example, ip 127.0.0.1
         self.chatbot_port = line
         self.chatbot_url = 'http://{}:{}'.format(
             self.chatbot_ip, self.chatbot_port)
-        self.root_url = '{}/{}'.format(self.chatbot_url, VERSION)
+        self.root_url = '{}/{}'.format(self.chatbot_url, self.VERSION)
 
     def help_port(self):
         s = """
@@ -320,6 +327,10 @@ For example, port 8001
 
     def help_c(self):
         self.stdout.write("Clean the memory of the dialog\n")
+
+    def set_marker(self, marker):
+        if marker:
+            self.marker = marker
 
     def do_rw(self, line):
         try:
@@ -670,3 +681,13 @@ Syntax: rc key,key2,key3,...
 
     def help_said(self):
         self.stdout.write('Set the chatbot state as the message was said\n')
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
+    HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
+    if len(sys.argv)>1:
+        client = Client(HR_CHATBOT_AUTHKEY, botname=sys.argv[1])
+    else:
+        client = Client(HR_CHATBOT_AUTHKEY)
+    client.cmdloop()

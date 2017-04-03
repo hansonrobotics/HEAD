@@ -1,5 +1,5 @@
 ---
-string performances
+string performance
 float32 current_time
 bool running
 bool paused
