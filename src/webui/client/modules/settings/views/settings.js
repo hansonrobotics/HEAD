@@ -79,8 +79,12 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     values = this.getAttributes(values)
 
                     _.each(values, function(val, key) {
+                        let type = self.schema['properties'][key]['type']
                         if (self.schema['properties'][key]
-                            && _.includes(['array', 'object'], self.schema['properties'][key]['type'])) {
+                            && _.includes(['array', 'object'], type)) {
+                            if (val.constructor === Array)
+                                val = _.sortBy(val, 'name')
+
                             values[key] = JSON.stringify(val)
                         }
                     })
