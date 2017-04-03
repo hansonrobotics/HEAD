@@ -338,11 +338,17 @@ list_robots() {
 }
 
 list_components() {
-    arg=$1
-    local funcs=$(compgen -A function|grep -E "^${1}_.*")
-    for f in ${funcs[@]}; do
-        echo ${f#${1}_};
-    done
+    if [[ $1 == 'cmd' ]]; then
+        local funcs=$(compgen -A function)
+        for f in ${funcs[@]}; do
+            echo ${f}
+        done
+    else
+        local funcs=$(compgen -A function|grep -E "^${1}_.*")
+        for f in ${funcs[@]}; do
+            echo ${f#${1}_};
+        done
+    fi
 }
 
 validate_component_args() {

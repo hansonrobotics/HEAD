@@ -9,7 +9,7 @@
 
 _hr() {
   local command
-  local hr_commands="init get install uninstall build clean cmd env update normal_opencog dev_opencog run stop version"
+  local hr_commands="init get install uninstall build clean cmd env update normal_opencog dev_opencog run stop version cmd"
   local cur=${COMP_WORDS[COMP_CWORD]}
   local words=${COMP_WORDS[@]}
   local cword=$COMP_CWORD
@@ -24,7 +24,7 @@ _hr() {
   done
 
   case ${command} in
-    install|uninstall|build|get|clean|update)
+    install|uninstall|build|get|clean|update|cmd)
       local args=$(hr cmd list_components ${command} 2> /dev/null)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
