@@ -10,7 +10,7 @@ BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 ############# Configurations #############
 HR_VERSION=0.1.2
-HRTOOL_VERSION=0.1.0
+HRTOOL_VERSION=0.1.1
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=(HEAD)
@@ -21,7 +21,7 @@ declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
-HR_INSTALLED_FILE=~/.hr/hr_installed.txt
+HR_VERSION_FILE=~/.hr/versions.txt
 HR_PREFIX=/opt/hansonrobotics
 DEFAULT_HRTOOL_PREFIX=/usr/local/bin
 HR_CACHE=$HOME/.hr/cache
@@ -62,7 +62,9 @@ export CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$HR_PREFIX/include:$CPPMT_DIR:$EMO
 export LIBRARY_PATH=$LIBRARY_PATH:$HR_PREFIX/lib:$CLANDMARK_DIR/lib/:$CPPMT_DIR:$EMOTIME_DIR/build/src
 export PATH=/usr/lib/ccache:$PATH
 
-ASSUME_YES=0
+if [[ -z $ASSUME_YES ]]; then
+    ASSUME_YES=0
+fi
 
 if [[ ! -d $HOME/.hr ]]; then
     mkdir -p $HOME/.hr
@@ -111,6 +113,44 @@ SUDO=""
 if [[ $(id -u) != 0 ]]; then
     SUDO="sudo"
 fi
+
+vercomp() {
+    # Compare version
+    # Return one of these values
+    #  0: equal
+    # -1: less than
+    #  1: greater than
+    local s=$1
+    local s2=$2
+    if [[ $s == $s2 ]]; then
+        echo 0
+    else
+        ss=$(echo -e "$s\n$s2"|sort -V|head -n1)
+        if [[ $s == $ss ]]; then
+            echo -1
+        else
+            echo 1
+        fi
+    fi
+}
+
+_update_version() {
+    k=$1
+    v=$2
+    if ! grep -E "$k=.*" $HR_VERSION_FILE >/dev/null 2>&1; then
+        echo "$k=$v" >> $HR_VERSION_FILE
+    else
+        sed -i "s/$k=.*/$k=$v/" $HR_VERSION_FILE
+    fi
+}
+
+_print_version() {
+    k=$1
+    if grep -E "$k=.*" $HR_VERSION_FILE >/dev/null 2>&1; then
+        ver=$(grep -E "$k=.*" $HR_VERSION_FILE)
+        echo $ver
+    fi
+}
 
 md5str() {
   local FNAME=$1
@@ -403,13 +443,15 @@ remove_installed_files() {
     local installed_file=$1
     if [[ -f $installed_file ]]; then
         local files=$(sort -u $installed_file)
-        for f in $files; do
-            echo "> $f"
-        done
-        local confirm
-        _get_confirm "These files will be removed [y/N]"
-        if [[ ${confirm} != 1 ]]; then
-            exit
+        if [[ $ASSUME_YES == 0 ]]; then
+            for f in $files; do
+                echo "> $f"
+            done
+            local confirm
+            _get_confirm "These files will be removed [y/N]"
+            if [[ ${confirm} != 1 ]]; then
+                exit
+            fi
         fi
         for f in $files; do
             if [[ -e $f || -L $f ]]; then
@@ -495,9 +537,8 @@ hr_init() {
     set_workspace $@
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
 cat <<EOF >>$HR_ENVFILE_PATH
-export HR_VERSION=$HR_VERSION
-export HRTOOL_VERSION=$HRTOOL_VERSION
 export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
+export HR_VERSION_FILE=$HR_VERSION_FILE
 export HR_PREFIX=$HR_PREFIX
 export HR_CACHE=$HR_CACHE
 
@@ -1014,6 +1055,7 @@ _install_calib_tools() {
 }
 
 install_hr() {
+    local hr_installed_file=$HOME/.hr/hr_installed.txt
     local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
     if [[ ! -d $prefix ]]; then
         mkdir -p $prefix
@@ -1026,11 +1068,12 @@ install_hr() {
     $SUDO cp $BASEDIR/hr $prefix/hr-base
     $SUDO chmod +x $prefix/hr-base
     info "Copied hr to $prefix/hr-base"
-    echo "$prefix/hr-base" >> $HR_INSTALLED_FILE
+    echo "$prefix/hr-base" >> $hr_installed_file
+    _update_version hr $HRTOOL_VERSION
 
     $SUDO ln -sf -T hr-base $prefix/hr
     info "Linked hr to $prefix/hr-base"
-    echo "$prefix/hr" >> $HR_INSTALLED_FILE
+    echo "$prefix/hr" >> $hr_installed_file
 
     local tmp_file=/tmp/hrcomp
     curl -sLo $tmp_file ${GITHUB_HRCOMP_URL}
@@ -1042,12 +1085,13 @@ install_hr() {
 
     $SUDO cp $tmp_file /etc/bash_completion.d/hr-completion.bash
     info "Copied hr-completion.bash to /etc/bash_completion.d"
-    echo "/etc/bash_completion.d/hr-completion.bash" >> $HR_INSTALLED_FILE
+    echo "/etc/bash_completion.d/hr-completion.bash" >> $hr_installed_file
 
     _install_hr-ext
 }
 
 _install_hr-ext() {
+    local hr_installed_file=$HOME/.hr/hr_installed.txt
     if [[ -z $GITHUB_TOKEN ]]; then
         info "GITHUB_TOKEN is not set"
         return
@@ -1068,13 +1112,14 @@ _install_hr-ext() {
 
     $SUDO cp $ext_file $prefix/hr-ext
     info "Copied hr to $prefix/hr-ext"
-    echo "$prefix/hr-ext" >> $HR_INSTALLED_FILE
+    echo "$prefix/hr-ext" >> $hr_installed_file
+    _update_version hr-ext $HRTOOL_EXT_VERSION
 
     $SUDO chmod +x $prefix/hr-ext
 
     $SUDO ln -sf -T hr-ext $prefix/hr
     info "Linked hr to $prefix/hr-ext"
-    echo "$prefix/hr" >> $HR_INSTALLED_FILE
+    echo "$prefix/hr" >> $hr_installed_file
 
     rm $ext_file
 }
@@ -1093,7 +1138,7 @@ EOF
 }
 
 uninstall_hr() {
-    remove_installed_files $HR_INSTALLED_FILE
+    remove_installed_files $HOME/.hr/hr_installed.txt
 }
 
 uninstall_opencv() {
@@ -1149,9 +1194,6 @@ update_opencog() {
 }
 
 update_hr() {
-    if [[ -f $HOME/.hr/installed.txt ]]; then
-        rm $HOME/.hr/installed.txt
-    fi
     local url=https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/hr
     local file=/tmp/hr
     curl -sLo $file ${url}
@@ -1161,7 +1203,19 @@ update_hr() {
         exit 1
     fi
     chmod +x /tmp/hr
-    /tmp/hr install hr
+    installed_ver=$(grep -E "^export HRTOOL_VERSION=" $HR_ENVFILE_PATH|cut -d= -f2)
+    if [[ -z ${installed_ver} ]]; then
+        ASSUME_YES=1 hr uninstall hr
+        /tmp/hr install hr
+    else
+        local compare=$(vercomp $installed_ver $HRTOOL_VERSION)
+        if [[ $compare == -1 ]]; then
+            ASSUME_YES=1 hr uninstall hr
+            /tmp/hr install hr
+        else
+            error "Can't Update to older version"
+        fi
+    fi
     rm -f /tmp/hr
 }
 
@@ -1196,6 +1250,7 @@ get_head() {
         cd $HR_WORKSPACE
         clone hansonrobotics $repo
     done
+    _update_version HEAD $HR_VERSION
     info "Cloning HR source code is done"
 }
 
