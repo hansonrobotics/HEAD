@@ -59,8 +59,8 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
                     readonly: true,
                     autoplay: true,
                     nav: false,
-                    hideQueue: true,
-                    disableSaving: true
+                    disableSaving: true,
+                    queueHeight: 300
                 });
 
                 // right col
@@ -99,7 +99,7 @@ define(['application', 'marionette', './templates/layout.tpl', 'lib/regions/fade
             updateDimensions: function () {
                 let contentHeight = App.LayoutInstance.getContentHeight();
 
-                if (this.ui.leftColumn.offset().left == this.ui.rightColumn.offset().left) {
+                if (this.ui.leftColumn.offset().left === this.ui.rightColumn.offset().left) {
                     this.ui.leftColumn.height('auto').perfectScrollbar('destroy');
                     this.ui.rightColumn.height('auto').perfectScrollbar('destroy');
                 } else {

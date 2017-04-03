@@ -1,23 +1,23 @@
-<h2>Timeline</h2>
-
 <div class="app-edit-container clearfix">
-    <div class="performance-name-container pull-left">
-        <div class="input-group">
-            <div class="input-group-addon">Name</div>
-            <input class="app-performance-name form-control" type="text"/>
-            <button class="app-save-button btn btn-primary"><i
-                    class="glyphicon glyphicon-floppy-save"></i> Save
-            </button>
+    <div class="pull-left">
+        <div class="btn-group">
+            <button class="app-previous-button btn btn-default">Previous</button>
+            <button class="app-next-button btn btn-default">Next</button>
         </div>
+
+        <button class="app-add-new-button btn btn-info"><i
+                class="glyphicon glyphicon-plus-sign"></i> Add New
+        </button>
+
+        <button class="app-save-button btn btn-primary"><i
+                class="glyphicon glyphicon-floppy-save"></i> Save
+        </button>
+        <button class="app-done-button btn btn-warning"><i class="glyphicon glyphicon-ok"></i> Done</button>
     </div>
 
-    <div class="performance-action-buttons btn-group">
+    <div class="performance-action-buttons">
         <button class="app-delete-button btn btn-danger" title="Delete">
             <i class="glyphicon glyphicon-trash"></i> Delete
-        </button>
-        <button class="app-clear-button btn btn-warning" title="Clear">
-            <i class="fa fa-eraser"></i>
-            Clear
         </button>
     </div>
 </div>
@@ -47,10 +47,7 @@
     </div>
 
     <div class="btn-group pull-right" role="group" aria-label="">
-        <button class="app-previous-button btn btn-default">Previous</button>
-        <button class="app-next-button btn btn-default">Next</button>
         <button class="app-edit-button btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</button>
-        <button class="app-done-button btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Done</button>
     </div>
 </div>
 

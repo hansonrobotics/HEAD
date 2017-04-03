@@ -9,6 +9,13 @@
 
     <div class="tab-content">
         <div role="tabpanel" class="app-settings-tab-content tab-pane fade active">
+            <div class="app-performance-name-container">
+                <h4>Performance name</h4>
+                <div class="form-group">
+                    <input type="text" class="app-performance-name form-control" placeholder="Name">
+                </div>
+            </div>
+
             <h4>Keywords</h4>
             <div class="form-group">
                 <input type="text" class="app-keywords form-control" placeholder="Keywords">

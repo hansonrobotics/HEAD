@@ -13,7 +13,8 @@
     border-color: #5cb85c;
 }
 
-.app-performances button {
+.app-performances button,
+.app-performances a {
     margin: 0 5px 5px 0;
 }
 
@@ -25,8 +26,23 @@
     width: 215px;
 }
 
+.performance-dir-header .btn-group {
+    position: relative;
+    top: -5px;
+}
+
 .performance-name-container {
     width: 390px;
+}
+
+.app-performance-queue {
+    position: relative;
+    overflow: hidden;
+}
+
+.app-performance-queue .ps-scrollbar-x-rail,
+.app-performance-queue .ps-scrollbar-y-rail {
+    z-index: 99999999;
 }
 
 .app-nodes,
@@ -61,8 +77,8 @@
     margin: 0 5px 0 0;
 }
 
-.app-clear-performance-queue {
-    margin: 0;
+.app-clear {
+    margin-bottom: 10px;
 }
 
 .app-timeline-nodes,
@@ -97,9 +113,13 @@
     height: 20px;
     text-align: left;
     z-index: 999;
-    cursor: pointer;
+    cursor: move;
     border: 1px solid #182934;
     overflow: hidden;
+}
+
+.app-timelines.readonly .app-node {
+    cursor: default;
 }
 
 .app-node[data-name="expression"] {
@@ -625,10 +645,7 @@ li.app-performance .app-edit {
     margin: 0 10px;
 }
 
-.app-performance-settings {
-    border: none;
-
-}
-.app-performance-settings:hover {
-    border: #5b6777 1px solid;
+.app-performance-actions {
+    margin-right: 10px;
+    display: inline-block;
 }

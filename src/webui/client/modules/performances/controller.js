@@ -1,5 +1,5 @@
 define(['application', 'lib/api', './views/layout', './views/attention_regions', './css/performances'],
-    function(App, api, LayoutView, AttentionRegionsView) {
+    function(app, api, LayoutView, AttentionRegionsView) {
         return {
             performances: function(dir) {
                 if (!this.layoutView || this.layoutView.isDestroyed()) {
@@ -14,20 +14,23 @@ define(['application', 'lib/api', './views/layout', './views/attention_regions',
                     api.disableInteractionMode()
 
                     // show page
-                    App.LayoutInstance.setTitle('Interactions and Performances')
-                    App.LayoutInstance.setFluid(true)
-                    App.LayoutInstance.getRegion('content').show(this.layoutView)
-                } else
-                    this.layoutView.getRegion('performances').currentView.switchDir(dir || '')
+                    app.LayoutInstance.setTitle('Performances')
+                    app.LayoutInstance.setFluid(true)
+                    app.LayoutInstance.getRegion('content').show(this.layoutView)
+                } else if (!app.skipPerformanceNav) {
+                    this.layoutView.getRegion('performances').currentView.navigate(dir || '')
+                } else {
+                    app.skipPerformanceNav = false
+                }
             },
             attention_regions: function() {
                 let attentionRegionsView = new AttentionRegionsView()
                 api.disableInteractionMode()
 
                 // show page
-                App.LayoutInstance.setTitle('Attention Regions')
-                App.LayoutInstance.setFluid(false)
-                App.LayoutInstance.getRegion('content').show(attentionRegionsView)
+                app.LayoutInstance.setTitle('Attention Regions')
+                app.LayoutInstance.setFluid(false)
+                app.LayoutInstance.getRegion('content').show(attentionRegionsView)
             }
         }
     })

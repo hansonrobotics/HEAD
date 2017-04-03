@@ -484,7 +484,7 @@ install_other_deps() {
     $SUDO pip2 install transitions
 
     # For webui
-    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil natsort
 
     info "Installing other dependencies is done"
 }
