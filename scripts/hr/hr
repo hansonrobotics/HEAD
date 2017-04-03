@@ -1217,13 +1217,13 @@ update_hr() {
         exit 1
     fi
     chmod +x /tmp/hr
-    installed_ver=$(grep -E "^export HRTOOL_VERSION=" $HR_ENVFILE_PATH|cut -d= -f2)
-    if [[ -z ${installed_ver} ]]; then
+    installed_hrver=$(_print_version hr|cut -d= -f2)
+    if [[ -z ${installed_hrver} ]]; then
         ASSUME_YES=1 hr uninstall hr
         /tmp/hr install hr
     else
-        local compare=$(vercomp $installed_ver $HRTOOL_VERSION)
-        if [[ $compare == -1 ]]; then
+        local compare=$(vercomp $installed_hrver $HRTOOL_VERSION)
+        if [[ $compare != 1 ]]; then
             ASSUME_YES=1 hr uninstall hr
             /tmp/hr install hr
         else
