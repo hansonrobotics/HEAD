@@ -1120,6 +1120,7 @@ _install_hr-ext() {
     $SUDO cp $ext_file $prefix/hr-ext
     info "Copied hr to $prefix/hr-ext"
     echo "$prefix/hr-ext" >> $hr_installed_file
+    HRTOOL_EXT_VERSION=$(grep -E "^HRTOOL_EXT_VERSION=" $prefix/hr-ext|cut -d= -f2)
     _update_version hr-ext $HRTOOL_EXT_VERSION
 
     $SUDO chmod +x $prefix/hr-ext
