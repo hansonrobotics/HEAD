@@ -21,7 +21,7 @@ declare -A MD5SUMS
 
 DEFAULT_HR_WORKSPACE=~/hansonrobotics
 HR_ENVFILE_PATH=~/.hr/env.sh
-HR_INSTALLED_FILE=~/.hr/installed.txt
+HR_INSTALLED_FILE=~/.hr/hr_installed.txt
 HR_PREFIX=/opt/hansonrobotics
 DEFAULT_HRTOOL_PREFIX=/usr/local/bin
 HR_CACHE=$HOME/.hr/cache
@@ -399,6 +399,31 @@ print_repo_info() {
     done
 }
 
+remove_installed_files() {
+    local installed_file=$1
+    if [[ -f $installed_file ]]; then
+        local files=$(sort -u $installed_file)
+        for f in $files; do
+            echo "> $f"
+        done
+        local confirm
+        _get_confirm "These files will be removed [y/N]"
+        if [[ ${confirm} != 1 ]]; then
+            exit
+        fi
+        for f in $files; do
+            if [[ -e $f || -L $f ]]; then
+                $SUDO rm $f
+                info "Removed $f"
+            fi
+        done
+        rm $installed_file
+    else
+        info "Nothing to remove"
+        return 1
+    fi
+}
+
 ############# End of Common #############
 
 ############# Entries #############
@@ -418,7 +443,9 @@ hr_uninstall() {
         local func=uninstall_${arg}
         info "Uninstalling ${arg}"
         eval $func
-        info "${arg} is uninstalled"
+        if [[ $? == 0 ]]; then
+            info "${arg} is uninstalled"
+        fi
     done
 }
 
@@ -764,7 +791,9 @@ _install_manyears_deps() {
         wget_cache https://github.com/hansonrobotics/manyears-C/archive/v1.0.0.tar.gz manyears.tar.gz
         mkdir -p $MANYEARSLIB_PREFIX
         tar zxf $HR_CACHE/manyears.tar.gz --strip-components 1 -C $MANYEARSLIB_PREFIX
-        mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make && $SUDO make install
+        mkdir -p $MANYEARSLIB_PREFIX/build && cd $MANYEARSLIB_PREFIX/build && cmake .. && make
+        $SUDO make install
+        cp install_manifest.txt  ~/.hr/manyears_deps_installed.txt
     else
         info "Manyears is already installed"
     fi
@@ -811,6 +840,7 @@ _install_opencv() {
         cd build
         cmake -DWITH_FFMPEG=OFF -DWITH_CUDA=OFF -DWITH_OPENCL=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
         $SUDO make install
+        cp install_manifest.txt  ~/.hr/opencv_installed.txt
         $SUDO rm -rf /tmp/opencv-2.4.11
         cd ${HR_WORKSPACE}
     fi
@@ -833,6 +863,7 @@ _install_openbiometrics() {
         cd ${OPENBR_SRC_DIR}/build
         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${HR_PREFIX} .. && make -j4
         $SUDO make install
+        cp install_manifest.txt  ~/.hr/openbiometrics_installed.txt
         cd ${HR_WORKSPACE}
     fi
 }
@@ -1016,40 +1047,6 @@ install_hr() {
     _install_hr-ext
 }
 
-help_install() {
-cat << EOF
-hr install <dependency> [<dependency>] ...
-
-Install dependencies
-
-    all             Install all the depencencies
-    head-deps       Install dependencies for HEAD
-    opencog-deps    Install dependencies for OpenCog
-    hr              Install hrtool
-EOF
-}
-
-uninstall_all() {
-    if [[ -f $HR_INSTALLED_FILE ]]; then
-        local files=$(sort -u $HR_INSTALLED_FILE)
-        for f in $files; do
-            echo "> $f"
-        done
-        local confirm
-        _get_confirm "These files will be removed [y/N]"
-        if [[ ${confirm} != 1 ]]; then
-            exit
-        fi
-        for f in $files; do
-            if [[ -e $f || -L $f ]]; then
-                $SUDO rm $f
-                info "Removed $f"
-            fi
-        done
-        rm $HR_INSTALLED_FILE
-    fi
-}
-
 _install_hr-ext() {
     if [[ -z $GITHUB_TOKEN ]]; then
         info "GITHUB_TOKEN is not set"
@@ -1080,6 +1077,37 @@ _install_hr-ext() {
     echo "$prefix/hr" >> $HR_INSTALLED_FILE
 
     rm $ext_file
+}
+
+help_install() {
+cat << EOF
+hr install <dependency> [<dependency>] ...
+
+Install dependencies
+
+    all             Install all the depencencies
+    head-deps       Install dependencies for HEAD
+    opencog-deps    Install dependencies for OpenCog
+    hr              Install hrtool
+EOF
+}
+
+uninstall_hr() {
+    remove_installed_files $HR_INSTALLED_FILE
+}
+
+uninstall_opencv() {
+    remove_installed_files $HOME/.hr/opencv_installed.txt
+}
+
+help_uninstall() {
+cat << EOF
+hr uninstall <component> [<component>] ...
+
+Uninstall components
+
+    hr      Uninstall hr tool
+EOF
 }
 
 update_head() {
@@ -1121,6 +1149,9 @@ update_opencog() {
 }
 
 update_hr() {
+    if [[ -f $HOME/.hr/installed.txt ]]; then
+        rm $HOME/.hr/installed.txt
+    fi
     local url=https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/hr
     local file=/tmp/hr
     curl -sLo $file ${url}
