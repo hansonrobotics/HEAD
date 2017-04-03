@@ -580,7 +580,14 @@ hr_env() {
 }
 
 hr_version() {
-    echo "HR Tool Version ${HRTOOL_VERSION}"
+    hrver=$(_print_version hr|cut -d= -f2)
+    if [[ ! -z $hrver ]]; then
+        echo "HR Tool Version ${hrver}"
+    fi
+    hrextver=$(_print_version hr-ext|cut -d= -f2)
+    if [[ ! -z $hrextver ]]; then
+        echo "HR Tool Extension Version ${hrextver}"
+    fi
     echo ""
     print_repo_info
 }
