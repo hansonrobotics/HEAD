@@ -512,26 +512,26 @@ hr_stop() {
 
 ############# Functions #############
 install_all() {
-    install_head_deps
-    install_opencog_deps
+    install_head-deps
+    install_opencog-deps
 }
 
-install_head_deps() {
-    install_basic
-    install_ros
-    install_blender
-    install_webui_deps
-    install_marky_markov
-    install_misc
+install_head-deps() {
+    _install_basic
+    _install_ros
+    _install_blender
+    _install_webui_deps
+    _install_marky_markov
+    _install_misc
 }
 
-install_basic() {
+_install_basic() {
     local pkgs=(git wget telnet python3-pip python-pip build-essential
             software-properties-common)
     apt_get_install "${pkgs[@]}"
 }
 
-install_ros() {
+_install_ros() {
     $SUDO sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
     $SUDO apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net --recv-key 0xB01FA116
     local pkgs=(
@@ -583,9 +583,6 @@ install_opencog_deps() {
     # For sentiment analysis
     install_nltk
 
-    # For random sentence generator
-    install_marky_markov
-
     install_relex_deps
 }
 
@@ -594,7 +591,7 @@ install_nltk() {
     $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 }
 
-install_marky_markov() {
+_install_marky_markov() {
     if [ ! -d $MARKY_MARKOV_DIR ]; then
       git clone https://github.com/hansonrobotics/marky_markov.git $MARKY_MARKOV_DIR
     else
@@ -673,18 +670,18 @@ install_pocketsphinx() {
     cd $BASEDIR
 }
 
-install_blender() {
+_install_blender() {
     add_ppa ppa:irie/blender
     apt_get_install blender
 }
 
-install_ffmpeg() {
+_install_ffmpeg() {
     # For blender_api_test
     add_ppa ppa:mc3man/trusty-media
     apt_get_install ffmpeg
 }
 
-install_misc() {
+_install_misc() {
     local pkgs=()
 
     # For rosbridge_server
@@ -739,7 +736,7 @@ install_misc() {
     $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
 }
 
-install_manyears_deps() {
+_install_manyears_deps() {
     if [[ ! -e $MANYEARSLIB_PREFIX/bin/libmanyears.a ]]; then
         # FOR GUI to build $SUDO apt-get ${APT_GET_OPTS} install qtmobility-dev
         MD5SUMS["manyears.tar.gz"]=cf8688959e6d6a7ea9cdd1167814862a
@@ -752,7 +749,7 @@ install_manyears_deps() {
     fi
 }
 
-install_test_deps() {
+_install_test_deps() {
     apt_get_install socat
 
     # WebUI compatable webserver
@@ -762,7 +759,7 @@ install_test_deps() {
     $SUDO pip install coverage
 }
 
-install_webui_deps() {
+_install_webui_deps() {
     # Remove npm and nodejs if needed
     # sudo npm uninstall -g npm
     # sudo apt-get remove nodejs
@@ -782,7 +779,7 @@ install_webui_deps() {
     fi
 }
 
-install_opencv() {
+_install_opencv() {
     if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
         MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
         wget_cache https://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.4.11/opencv-2.4.11.zip
@@ -798,9 +795,9 @@ install_opencv() {
     fi
 }
 
-install_openbiometrics() {
+_install_openbiometrics() {
     apt_get_install --force-yes qt5-default libqt5svg5-dev
-    install_opencv
+    _install_opencv
     if [[ ! -f ${HR_PREFIX}/lib/libopenbr.so ]]; then
         if [ ! -d ${OPENBR_SRC_DIR} ]; then
             info "Cloning openbr"
@@ -819,7 +816,7 @@ install_openbiometrics() {
     fi
 }
 
-install_dlib() {
+_install_dlib() {
     if [[ ! -e $DLIB_PATH/dist/dlib/dlib.so ]]; then
       # The dlib DNS server sometimes times out. Pinging it first
       # makes it much more likely that the wget will succeed.
@@ -834,7 +831,7 @@ install_dlib() {
     fi
 }
 
-install_clandmarks() {
+_install_clandmarks() {
     # Install clandmarks
     if [ ! -d $CLANDMARK_DIR ]; then
       MD5SUMS["clandmark.tar.bz2"]=0d1eb90bad2c02fb38aed4e464555f02
@@ -846,7 +843,7 @@ install_clandmarks() {
     fi
 }
 
-install_torch() {
+_install_torch() {
     if [ ! -d $TORCH_DIR ]; then
         git clone https://github.com/torch/distro.git $TORCH_DIR --recursive
 
@@ -870,7 +867,7 @@ install_torch() {
     fi
 }
 
-install_openface() {
+_install_openface() {
     # This is to install scikit-images as the pip version requires cython0.23 which can't be installed otherwise.
     apt_get_install python-skimage
     $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy scikit-learn
@@ -900,7 +897,7 @@ install_openface() {
     cp ${HR_CACHE}/celeb-classifier.nn4.small2.v1.pkl ${OPENFACE_DIR}/models/openface
 }
 
-install_cmt() {
+_install_cmt() {
     if [ ! -d $CPPMT_DIR ]; then
         info "Cloning CppMT"
         git clone https://github.com/hansonrobotics/CppMT.git $CPPMT_DIR
@@ -918,7 +915,7 @@ install_cmt() {
     cd $BASEDIR
 }
 
-install_emotime() {
+_install_emotime() {
     if [ ! -d $EMOTIME_DIR ]; then
       info "Cloning emotime"
       git clone https://github.com/hansonrobotics/emotime.git $EMOTIME_DIR
@@ -930,7 +927,7 @@ install_emotime() {
     make -j$(nproc)
 }
 
-install_vision_deps() {
+_install_vision_deps() {
     mkdir -p $VISION_TOOL_PREFIX
     apt_get_install libopencv-dev ros-indigo-opencv-apps
 
@@ -938,16 +935,16 @@ install_vision_deps() {
     $SUDO pip2 install ${PIP_OPTS} -I Pillow
     $SUDO pip2 install ${PIP_OPTS} imgurpython
 
-    install_dlib
-    install_clandmarks
-    install_torch
-    install_openface
-    install_cmt
-    install_emotime
-    install_openbiometrics
+    _install_dlib
+    _install_clandmarks
+    _install_torch
+    _install_openface
+    _install_cmt
+    _install_emotime
+    _install_openbiometrics
 }
 
-install_calib_tools() {
+_install_calib_tools() {
     MD5SUMS["maestro-linux-150116.tar.gz"]=84feed740c0695bb0eea13ccf7988b97
     wget_cache $GITHUB_STORAGE_URL/maestro-linux-150116.tar.gz
     mkdir -p ${HR_PREFIX}/maestro
@@ -964,7 +961,7 @@ install_calib_tools() {
     fi
 }
 
-install_self() {
+install_hr() {
     local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
     if [[ ! -d $prefix ]]; then
         mkdir -p $prefix
@@ -1004,10 +1001,10 @@ hr install <dependency> [<dependency>] ...
 
 Install dependencies
 
-    all     Install all the depencencies
-    head    Install dependencies for HEAD
-    opencog Install dependencies for OpenCog
-    hr      Install hrtool
+    all             Install all the depencencies
+    head-deps       Install dependencies for HEAD
+    opencog-deps    Install dependencies for OpenCog
+    hr              Install hrtool
 EOF
 }
 
@@ -1100,6 +1097,10 @@ update_opencog() {
         info "Updating [${repo}] is done"
     done
     info "Updating OpenCog source code is done"
+}
+
+update_hr() {
+    install_hr
 }
 
 help_update() {
