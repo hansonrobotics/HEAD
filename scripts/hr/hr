@@ -307,8 +307,8 @@ list_components() {
 
 validate_component_args() {
     if [[ $# == 1 ]]; then
-        error "Wrong $1 arguments"
-        return 1
+        eval help_${1}
+        return 0
     fi
     local found_components=$(list_components $1)
 
@@ -998,6 +998,19 @@ install_self() {
     install_hr-ext
 }
 
+help_install() {
+cat << EOF
+hr install <dependency> [<dependency>] ...
+
+Install dependencies
+
+    all     Install all the depencencies
+    head    Install dependencies for HEAD
+    opencog Install dependencies for OpenCog
+    hr      Install hrtool
+EOF
+}
+
 uninstall_all() {
     if [[ -f $HR_INSTALLED_FILE ]]; then
         local files=$(sort -u $HR_INSTALLED_FILE)
@@ -1089,6 +1102,18 @@ update_opencog() {
     info "Updating OpenCog source code is done"
 }
 
+help_update() {
+cat << EOF
+hr update <component> [<component>] ...
+
+Update components
+
+    head        Update HEAD source code
+    opencog     Update OpenCog source code
+    hr          Update hrtool
+EOF
+}
+
 get_opencog() {
     read_workspace
     info "Cloning OpenCog source code"
@@ -1138,6 +1163,19 @@ get_models() {
     tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
 }
 
+help_get() {
+cat << EOF
+hr get <component> [<component>] ...
+
+Download components
+
+    head        Download HEAD repositories
+    opencog     Download OpenCog repositories
+    models      Download models for dlib landmarks, markov text generator, etc.
+    voices      Download TTS voices
+EOF
+}
+
 build_head() {
     read_workspace
     cd $HR_WORKSPACE/HEAD
@@ -1174,13 +1212,13 @@ build_head() {
     pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
 }
 
-build_webui_js() {
+build_webui-js() {
     read_workspace
     cd $HR_WORKSPACE/HEAD/src/webui
     npm install
 }
 
-build_head_full() {
+build_head-full() {
     read_workspace
     cd $HR_WORKSPACE/HEAD
     source /opt/ros/indigo/setup.bash
@@ -1219,6 +1257,19 @@ build_opencog() {
     done
 }
 
+help_build() {
+cat << EOF
+hr build <component> [<component>] ...
+
+Build components
+
+    head        Build only active packages HEAD
+    head-full   Build all packages in HEAD
+    opencog     Build OpenCog components
+    webui-js    Install webui local JS packages
+EOF
+}
+
 clean_head() {
     read_workspace
     for repo in ${HR_REPOS[*]}; do
@@ -1248,6 +1299,17 @@ clean_opencog() {
     $SUDO rm -f /usr/local/etc/cogserver.conf
     $SUDO rm -f /usr/local/etc/opencog.conf
     $SUDO rm -f /usr/local/lib/libcogutil.so
+}
+
+help_clean() {
+cat << EOF
+hr clean <component> [<component>] ...
+
+Clean up components
+
+    head    Clean up HEAD builds
+    opencog Clean up OpenCog builds, cache and models
+EOF
 }
 
 check_local_changes() {
