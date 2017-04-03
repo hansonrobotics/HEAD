@@ -8,11 +8,11 @@ get_hr() {
     curl -sLo $file ${url}
     bash_flag=$(file $file | grep bash | wc -l)
     if [[ $bash_flag != "1" ]]; then
-        error "Can't get hr"
+        echo "Can't get hr"
         exit 1
     fi
     chmod +x /tmp/hr
-    /tmp/hr install self
+    /tmp/hr install hr
     rm -f /tmp/hr
 }
 
