@@ -338,11 +338,17 @@ list_robots() {
 }
 
 list_components() {
-    arg=$1
-    local funcs=$(compgen -A function|grep -E "^${1}_.*")
-    for f in ${funcs[@]}; do
-        echo ${f#${1}_};
-    done
+    if [[ $1 == 'cmd' ]]; then
+        local funcs=$(compgen -A function)
+        for f in ${funcs[@]}; do
+            echo ${f}
+        done
+    else
+        local funcs=$(compgen -A function|grep -E "^${1}_.*")
+        for f in ${funcs[@]}; do
+            echo ${f#${1}_};
+        done
+    fi
 }
 
 validate_component_args() {
@@ -1211,13 +1217,13 @@ update_hr() {
         exit 1
     fi
     chmod +x /tmp/hr
-    installed_ver=$(grep -E "^export HRTOOL_VERSION=" $HR_ENVFILE_PATH|cut -d= -f2)
-    if [[ -z ${installed_ver} ]]; then
+    installed_hrver=$(_print_version hr|cut -d= -f2)
+    if [[ -z ${installed_hrver} ]]; then
         ASSUME_YES=1 hr uninstall hr
         /tmp/hr install hr
     else
-        local compare=$(vercomp $installed_ver $HRTOOL_VERSION)
-        if [[ $compare == -1 ]]; then
+        local compare=$(vercomp $installed_hrver $HRTOOL_VERSION)
+        if [[ $compare != 1 ]]; then
             ASSUME_YES=1 hr uninstall hr
             /tmp/hr install hr
         else
