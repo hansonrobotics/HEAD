@@ -564,7 +564,7 @@ _install_ros() {
     fi
 }
 
-install_opencog_deps() {
+install_opencog-deps() {
     local pkgs=(
         cmake ccache
         binutils-dev
@@ -581,12 +581,12 @@ install_opencog_deps() {
     rm octool
 
     # For sentiment analysis
-    install_nltk
+    _install_nltk
 
-    install_relex_deps
+    _install_relex_deps
 }
 
-install_nltk() {
+_install_nltk() {
     $SUDO pip2 install ${PIP_OPTS} nltk
     $SUDO python -m nltk.downloader -d /usr/local/share/nltk_data punkt averaged_perceptron_tagger
 }
@@ -606,7 +606,7 @@ _install_marky_markov() {
     $SUDO gem install marky_markov
 }
 
-install_link_grammar() {
+_install_link_grammar() {
     MD5SUMS["link-grammar-5.3.13.tar.gz"]=d519ff9f404bbda5bfe229839272d91c
     wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.13.tar.gz
 
@@ -623,7 +623,7 @@ install_link_grammar() {
     cd $BASEDIR
 }
 
-install_relex_deps() {
+_install_relex_deps() {
     local pkgs=(
         build-essential python-dev swig zlib1g-dev unzip wget
         wordnet-dev wordnet-sense-index
@@ -633,7 +633,7 @@ install_relex_deps() {
     apt_get_install "${pkgs[@]}"
 
     if [[ ! -e /usr/local/lib/liblink-grammar.so ]]; then
-        install_link_grammar
+        _install_link_grammar
     fi
 
     # Java WordNet Library
@@ -647,7 +647,7 @@ install_relex_deps() {
     fi
 }
 
-install_pocketsphinx() {
+_install_pocketsphinx() {
     if [[ -f /opt/hansonrobotics/lib/pkgconfig/pocketsphinx.pc && -f /opt/hansonrobotics/lib/pkgconfig/sphinxbase.pc ]]; then
         info "Pocketsphinx is already installed."
         return
@@ -992,7 +992,7 @@ install_hr() {
     info "Copied hr-completion.bash to /etc/bash_completion.d"
     echo "/etc/bash_completion.d/hr-completion.bash" >> $HR_INSTALLED_FILE
 
-    install_hr-ext
+    _install_hr-ext
 }
 
 help_install() {
@@ -1029,7 +1029,7 @@ uninstall_all() {
     fi
 }
 
-install_hr-ext() {
+_install_hr-ext() {
     if [[ -z $GITHUB_TOKEN ]]; then
         info "GITHUB_TOKEN is not set"
         return
