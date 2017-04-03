@@ -10,6 +10,7 @@ BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 ############# Configurations #############
 HR_VERSION=0.1.2
+HRTOOL_VERSION=0.1.0
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=(HEAD)
@@ -448,6 +449,7 @@ hr_init() {
     echo export HR_WORKSPACE=$HR_WORKSPACE > $HR_ENVFILE_PATH
 cat <<EOF >>$HR_ENVFILE_PATH
 export HR_VERSION=$HR_VERSION
+export HRTOOL_VERSION=$HRTOOL_VERSION
 export HR_ENVFILE_PATH=$HR_ENVFILE_PATH
 export HR_PREFIX=$HR_PREFIX
 export HR_CACHE=$HR_CACHE
@@ -487,6 +489,11 @@ hr_env() {
     else
         error "Please run \"hr init\""
     fi
+}
+
+hr_version() {
+    echo "HR Version ${HR_VERSION}"
+    echo "HR Tool Version ${HRTOOL_VERSION}"
 }
 
 hr_run() {
@@ -1340,12 +1347,15 @@ Usage: hr <command> [<args>]
 
     dev_opencog
         checkout opencog original repositories under opencog
+
+    version
+        Show version
 EOF
 }
 
 execute() {
     case "$1" in
-        install|uninstall|build|cmd|get|init|clean|env|update|run|stop)
+        install|uninstall|build|cmd|get|init|clean|env|update|run|stop|version)
             command=$1
             shift
             hr_${command} $@
