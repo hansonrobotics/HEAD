@@ -118,6 +118,7 @@ class Runner:
         return TriggerResponse(success=True)
 
     def unload(self):
+        self.stop()
         with self.lock:
             if self.running_performance:
                 self.running_performance = None
