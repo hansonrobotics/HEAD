@@ -171,7 +171,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 addNewTab.click(function(e, ui) {
                     addNewTab.hide()
                     let input = $('<input>').addClass('form-control input-sm'),
-                        okButton = $('<button/>', {class: 'btn-sm btn btn-primary'}).html('OK'),
+                        okButton = $('<button/>', {class: 'btn-sm btn btn-primary'}).html('New Folder'),
                         container = $('<div/>', {class: 'form-inline'}).append($('<div/>', {class: 'form-group'})
                             .append(input)).append(okButton),
                         newTab = $('<li>').addClass('app-new-dir').html(container)
