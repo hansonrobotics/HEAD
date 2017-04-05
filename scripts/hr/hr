@@ -619,6 +619,11 @@ install_all() {
     install_opencog
 }
 
+install_all-deps() {
+    install_head-deps
+    install_opencog-deps
+}
+
 install_head() {
     install_head-deps
     get_head
