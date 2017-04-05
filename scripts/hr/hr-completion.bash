@@ -24,7 +24,7 @@ _hr() {
   done
 
   case ${command} in
-    install|uninstall|build|get|clean|update|cmd)
+    install|uninstall|build|clean|update|cmd)
       local args=$(hr cmd list_components ${command} 2> /dev/null)
       COMPREPLY=($(compgen -W "${args}" -- ${cur}))
       ;;
