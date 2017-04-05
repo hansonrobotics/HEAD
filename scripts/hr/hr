@@ -615,8 +615,13 @@ hr_stop() {
 
 ############# Functions #############
 install_all() {
+    install_head
+    install_opencog
+}
+
+install_head() {
     install_head-deps
-    install_opencog-deps
+    get_head
 }
 
 install_head-deps() {
@@ -665,6 +670,11 @@ _install_ros() {
         $SUDO rosdep init -q
         rosdep update -q
     fi
+}
+
+install_opencog() {
+    install_opencog-deps
+    get_opencog
 }
 
 install_opencog-deps() {
