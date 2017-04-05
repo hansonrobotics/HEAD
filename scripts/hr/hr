@@ -549,6 +549,7 @@ export HR_VERSION_FILE=$HR_VERSION_FILE
 export HR_PREFIX=$HR_PREFIX
 export HR_CACHE=$HR_CACHE
 
+export ROS_PKG_PREFIX=$ROS_PKG_PREFIX
 export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
 export DLIB_DIR=$DLIB_DIR
 export TORCH_DIR=$TORCH_DIR
@@ -561,7 +562,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
+export PYTHONPATH=\$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
