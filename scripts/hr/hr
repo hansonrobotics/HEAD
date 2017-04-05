@@ -402,7 +402,6 @@ set_workspace() {
         HR_WORKSPACE=${HR_WORKSPACE%/}
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
-    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 read_workspace() {
@@ -423,7 +422,6 @@ read_workspace() {
         exit 1;
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
-    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 print_repo_info() {
@@ -549,6 +547,7 @@ export HR_VERSION_FILE=$HR_VERSION_FILE
 export HR_PREFIX=$HR_PREFIX
 export HR_CACHE=$HR_CACHE
 
+export ROS_PKG_PREFIX=$ROS_PKG_PREFIX
 export VISION_TOOL_PREFIX=$VISION_TOOL_PREFIX
 export DLIB_DIR=$DLIB_DIR
 export TORCH_DIR=$TORCH_DIR
@@ -561,7 +560,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
+export PYTHONPATH=\$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
@@ -576,6 +575,7 @@ if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
   source $TORCH_DIR/install/bin/torch-activate
 fi
 EOF
+    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 hr_env() {
@@ -615,8 +615,13 @@ hr_stop() {
 
 ############# Functions #############
 install_all() {
+    install_head
+    install_opencog
+}
+
+install_head() {
     install_head-deps
-    install_opencog-deps
+    get_head
 }
 
 install_head-deps() {
@@ -665,6 +670,11 @@ _install_ros() {
         $SUDO rosdep init -q
         rosdep update -q
     fi
+}
+
+install_opencog() {
+    install_opencog-deps
+    get_opencog
 }
 
 install_opencog-deps() {
@@ -1503,55 +1513,26 @@ Usage: hr <command> [<args>]
 
   Supported commands:
 
-    install <component> [<component>] ...
-        install components
-
-    build <component> [<component>] ...
-        build components
-
-    get <repository> [<repository>] ...
-        clone repositories from GitHub
-
-    init [workspace]
-        default workspace is ~/hansonrobotics
-
-    cmd <function> [<args>]
-        run any defined function
-
-    run [robot name] [launch arguments]
-        run robot
-
-    stop
-        stop robot
-
-    env
-        show hansonrobotics environment variables
-
-    normal_opencog
-        checkout opencog forked repositories under hansonrobotics
-
-    dev_opencog
-        checkout opencog original repositories under opencog
-
-    version
-        Show version
+    init [workspace]                        Init HR workspace. The default is ~/hansonrobotics
+    install <component> [<component>] ...   Install components
+    uninstall <component> [<component>] ... Uninstall components
+    build <component> [<component>] ...     Build components
+    update <component> [<component>] ...    Update components
+    clean <component> [<component>] ...     Clean up components
+    cmd <function> [<args>]                 Run any pre-defined function
+    run [robot name] [arguments]            Run robot
+    stop                                    Stop robot
+    env                                     Show HR environment variables
+    version                                 Show version
 EOF
 }
 
 execute() {
     case "$1" in
-        install|uninstall|build|cmd|get|init|clean|env|update|run|stop|version)
+        install|uninstall|build|cmd|init|clean|env|update|run|stop|version)
             command=$1
             shift
             hr_${command} $@
-            ;;
-        normal_opencog)
-            shift
-            set_normal_opencog
-            ;;
-        dev_opencog)
-            shift
-            set_dev_opencog
             ;;
         *)
             warn "Unknown argument $1"
