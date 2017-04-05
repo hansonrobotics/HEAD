@@ -35,6 +35,7 @@ fi
 APT_CACHE_DIR=$HR_CACHE/archives
 PIP_CACHE_DIR=$HR_CACHE/pip
 LOG_DIR="$HOME/.hr/log"
+ROS_PKG_PREFIX=$HR_PREFIX/ros
 VISION_TOOL_PREFIX=$HR_PREFIX/vision
 DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 TORCH_DIR=$VISION_TOOL_PREFIX/torch
@@ -1308,7 +1309,7 @@ Download components
 EOF
 }
 
-build_head() {
+_build_head() {
     read_workspace
     cd $HR_WORKSPACE/HEAD
     source /opt/ros/indigo/setup.bash
@@ -1316,6 +1317,17 @@ build_head() {
         catkin init
     fi
 
+    catkin config --blacklist $@
+    catkin build --force-cmake -j$(nproc) --no-status --make-args install --cmake-args -DCMAKE_INSTALL_PREFIX=$ROS_PKG_PREFIX
+
+    TARGET=$ROS_PKG_PREFIX/lib/python2.7/dist-packages
+    rm -rf $TARGET/pololu*
+    rm -rf $TARGET/roscom*
+    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
+    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
+}
+
+build_head() {
     local blacklist=(
         audio_tools
         cmt_tracker
@@ -1333,15 +1345,7 @@ build_head() {
         testing_tools
         icog_face_tracker
     )
-
-    catkin config --blacklist ${blacklist[@]}
-    catkin build --force-cmake -j$(nproc) --no-status --make-args install
-
-    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages
-    rm -rf $TARGET/pololu*
-    rm -rf $TARGET/roscom*
-    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
-    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
+    _build_head ${blacklist[@]}
 }
 
 build_webui-js() {
@@ -1351,26 +1355,13 @@ build_webui-js() {
 }
 
 build_head-full() {
-    read_workspace
-    cd $HR_WORKSPACE/HEAD
-    source /opt/ros/indigo/setup.bash
-    if [[ ! -d .catkin_tools ]]; then
-        catkin init
-    fi
-
     local blacklist=(
         eva_behavior
         speech2command
         testing_tools
         icog_face_tracker
     )
-    catkin config --blacklist ${blacklist[@]}
-    catkin build --force-cmake -j$(nproc) --no-status --make-args install
-    TARGET=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages
-    rm -rf $TARGET/pololu*
-    rm -rf $TARGET/roscom*
-    pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
-    pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
+    _build_head ${blacklist[@]}
 }
 
 build_opencog() {
