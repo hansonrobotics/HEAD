@@ -40,7 +40,7 @@ class NodeConfiguration:
             logger.info('get_node_description service call received for node: ' + node)
 
             client = dynamic_reconfigure.client.Client(node)
-            return srv.NodeDescriptionResponse(json.dumps(client.get_parameter_descriptions()))
+            return srv.NodeDescriptionResponse(json.dumps(client.get_group_descriptions()))
         else:
             logger.info('get_node_description service: Invalid node name')
             return srv.NodeDescriptionResponse(json.dumps({}))
