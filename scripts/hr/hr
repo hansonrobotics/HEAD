@@ -402,7 +402,6 @@ set_workspace() {
         HR_WORKSPACE=${HR_WORKSPACE%/}
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
-    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 read_workspace() {
@@ -423,7 +422,6 @@ read_workspace() {
         exit 1;
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
-    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 print_repo_info() {
@@ -577,6 +575,7 @@ if [[ -f $TORCH_DIR/install/bin/torch-activate ]]; then
   source $TORCH_DIR/install/bin/torch-activate
 fi
 EOF
+    info HR_WORKSPACE=$HR_WORKSPACE
 }
 
 hr_env() {
