@@ -176,7 +176,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }
 
                 if (this.model.hasProperty('rosnode')) {
-                    this.showNodeSettings(this.model.get('schema'))
+                    console.log(this.model.get('schema'))
+                    this.showNodeSettings(this.model)
                     this.listenTo(this.model, 'change:rosnode', function() {
                         self.changeRosNode()
                     })
@@ -279,16 +280,14 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.model.set('values', {})
                 schema.fetch({
                     success: function(model) {
-                        let schema = model.toJSON()
-                        self.model.set('schema', schema)
-                        self.showNodeSettings(schema)
+                        self.showNodeSettings(model)
                     },
                     error: function() {
                         self.model.set('schema', {})
                     }
                 })
             },
-            showNodeSettings: function(schema) {
+            showNodeSettings: function(schemaModel) {
                 let self = this,
                     nodeConfig = new NodeConfig(this.model.get('rosnode'), true),
                     values = self.model.get('values')
@@ -300,10 +299,9 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     else
                         nodeConfig.off('change', updateValues)
                 }
-
                 this.getRegion('settingsEditor').show(new SettingsView({
                     model: nodeConfig,
-                    schema: schema,
+                    schemaModel: schemaModel,
                     refresh: false
                 }))
 
