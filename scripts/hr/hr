@@ -1513,55 +1513,26 @@ Usage: hr <command> [<args>]
 
   Supported commands:
 
-    install <component> [<component>] ...
-        install components
-
-    build <component> [<component>] ...
-        build components
-
-    get <repository> [<repository>] ...
-        clone repositories from GitHub
-
-    init [workspace]
-        default workspace is ~/hansonrobotics
-
-    cmd <function> [<args>]
-        run any defined function
-
-    run [robot name] [launch arguments]
-        run robot
-
-    stop
-        stop robot
-
-    env
-        show hansonrobotics environment variables
-
-    normal_opencog
-        checkout opencog forked repositories under hansonrobotics
-
-    dev_opencog
-        checkout opencog original repositories under opencog
-
-    version
-        Show version
+    init [workspace]                        Init HR workspace. The default is ~/hansonrobotics
+    install <component> [<component>] ...   Install components
+    uninstall <component> [<component>] ... Uninstall components
+    build <component> [<component>] ...     Build components
+    update <component> [<component>] ...    Update components
+    clean <component> [<component>] ...     Clean up components
+    cmd <function> [<args>]                 Run any pre-defined function
+    run [robot name] [arguments]            Run robot
+    stop                                    Stop robot
+    env                                     Show HR environment variables
+    version                                 Show version
 EOF
 }
 
 execute() {
     case "$1" in
-        install|uninstall|build|cmd|get|init|clean|env|update|run|stop|version)
+        install|uninstall|build|cmd|init|clean|env|update|run|stop|version)
             command=$1
             shift
             hr_${command} $@
-            ;;
-        normal_opencog)
-            shift
-            set_normal_opencog
-            ;;
-        dev_opencog)
-            shift
-            set_dev_opencog
             ;;
         *)
             warn "Unknown argument $1"
