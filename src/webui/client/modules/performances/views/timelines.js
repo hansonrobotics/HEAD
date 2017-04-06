@@ -29,14 +29,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 resumeButton: '.app-resume-button',
                 loopButton: '.app-loop-button',
                 runIndicator: '.app-run-indicator',
-                frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis',
                 doneButton: '.app-done-button',
                 editButton: '.app-edit-button',
                 previousButton: '.app-previous-button',
-                nextButton: '.app-next-button'
+                nextButton: '.app-next-button',
+                zoomInButton: '.app-zoom-in-button',
+                zoomOutButton: '.app-zoom-out-button'
             },
             regions: {
                 nodeSettings: {
@@ -59,7 +60,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.editButton': 'editCurrent',
                 'click @ui.previousButton': 'editPrevious',
                 'click @ui.nextButton': 'editNext',
-                'mousewheel @ui.scrollContainer': 'zoomCallback'
+                'mousewheel @ui.scrollContainer': 'zoomCallback',
+                'click @ui.zoomInButton': 'zoomIn',
+                'click @ui.zoomOutButton': 'zoomOut'
             },
             initialize: function(options) {
                 let self = this
@@ -256,10 +259,21 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     }
                 }
             },
-            zoomCallback: function(e, d) {
+            zoomIn: function() {
+                this.zoom(true, 2)
+            },
+            zoomOut: function() {
+                this.zoom(false, 2)
+            },
+            zoomCallback: function(e) {
                 e.preventDefault()
+                this.zoom(e.deltaY > 0)
+            },
+            zoom: function(magnify, power) {
+                power = power || 1
                 this.config.pxPerSec = Math.max(
-                    this.config.minPxPerSec, Math.min(this.config.pxPerSec + (e.deltaY > 0 ? 10 : -10), this.config.maxPxPerSec))
+                    this.config.minPxPerSec,
+                    Math.min(this.config.pxPerSec + (magnify ? 10 : -10) * power, this.config.maxPxPerSec))
                 this.updateNodes()
                 this.updateTimelineWidth()
                 this.updateIndicatorTime(this.indicatorTime)
@@ -524,11 +538,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.indicatorTime = time
                 this.trigger('change:time', time)
 
-                let step = 1. / App.getOption('fps'),
-                    frameCount = parseInt(time / step)
-
-                this.ui.frameCount.html(frameCount)
-                this.ui.timeIndicator.html((frameCount * step).toFixed(2))
+                this.ui.timeIndicator.html(time.toFixed(2))
 
                 if (this.running && !this.paused)
                     this.ui.scrollContainer.scrollLeft(Math.max(0, Math.min(maxScroll,
