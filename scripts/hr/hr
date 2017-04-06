@@ -431,15 +431,19 @@ print_repo_info() {
     printf "${format}\n" "Repository" "Branch" "Commit"
     for repo in ${HR_REPOS[*]}
     do
-        cd $HR_WORKSPACE/$repo
-        branch=$(git rev-parse --abbrev-ref HEAD)
-        printf "${format}\n" "$repo" "$branch" "$(eval $lg $commit)"
+        if [[ -d $HR_WORKSPACE/$repo ]]; then
+            cd $HR_WORKSPACE/$repo
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            printf "${format}\n" "$repo" "$branch" "$(eval $lg $commit)"
+        fi
     done
     for repo in ${OPENCOG_REPOS[*]}
     do
-        cd $HR_WORKSPACE/opencog/$repo
-        branch=$(git rev-parse --abbrev-ref HEAD)
-        printf "${format}\n" "opencog/$repo" "$branch" "$(eval $lg $commit)"
+        if [[ -d $HR_WORKSPACE/opencog/$repo ]]; then
+            cd $HR_WORKSPACE/opencog/$repo
+            branch=$(git rev-parse --abbrev-ref HEAD)
+            printf "${format}\n" "opencog/$repo" "$branch" "$(eval $lg $commit)"
+        fi
     done
 }
 
