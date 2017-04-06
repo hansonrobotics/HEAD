@@ -414,11 +414,10 @@ read_workspace() {
             HR_WORKSPACE=${str#export HR_WORKSPACE=}
         fi
     else
-        error "Workspace is not set. Please run \"hr init\" first"
-        exit 1
+        hr_init
     fi
     if [[ ! -d $HR_WORKSPACE ]]; then
-        error "HR_WORKSPACE doens't exist. Please rerun \"hr init\""
+        error "HR_WORKSPACE doesn't exist. Please run \"hr init\""
         exit 1;
     fi
     export HR_WORKSPACE=$HR_WORKSPACE
@@ -635,6 +634,7 @@ install_head-deps() {
     _install_blender
     _install_webui_deps
     _install_marky_markov
+    _install_scipy_stack
     _install_misc
 }
 
@@ -899,6 +899,10 @@ _install_webui_deps() {
     fi
 }
 
+_install_scipy_stack() {
+    $SUDO pip2 install ${PIP_OPTS} numpy pandas scipy
+}
+
 _install_opencv() {
     if [[ ! -f ${HR_PREFIX}/lib/libopencv_core.so ]]; then
         MD5SUMS["opencv-2.4.11.zip"]=32f498451bff1817a60e1aabc2939575
@@ -1084,6 +1088,9 @@ _install_calib_tools() {
 }
 
 install_hr() {
+    # Check/add the github host key to ~/.ssh/known_hosts
+    ssh -o StrictHostKeyChecking=no github.com 2>/dev/null|| true
+
     local hr_installed_file=$HOME/.hr/hr_installed.txt
     local prefix=${1:-${DEFAULT_HRTOOL_PREFIX}}
     if [[ ! -d $prefix ]]; then
