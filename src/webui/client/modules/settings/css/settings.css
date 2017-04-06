@@ -40,3 +40,7 @@
 .app-settings-container {
     margin-left: 40px;
 }
+
+.app-nav-node-list {
+    padding-bottom: 60px !important;
+}

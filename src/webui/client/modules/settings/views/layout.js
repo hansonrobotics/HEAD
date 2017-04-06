@@ -1,5 +1,5 @@
 define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery', 'lib/api', 'underscore',
-        'multilevelpushmenu', 'multilevelpushmenu-css'],
+        'multilevelpushmenu', 'multilevelpushmenu-css', 'scrollbar'],
     function(Marionette, template, FadeInRegion, $, api, _) {
         return Marionette.View.extend({
             template: template,
@@ -17,24 +17,29 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
             events: {
                 'click @ui.navLinks': 'collapseNav'
             },
+            onAttach: function() {
+            },
             onDomRefresh: function() {
                 let self = this,
                     updateNavHeight = function() {
                         if (self.isDestroyed())
                             $(window).off("resize", updateNavHeight)
                         else {
-                            self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(document).height())
+                            self.ui.navigation.multilevelpushmenu('option', 'menuHeight', $(window).height())
                             self.ui.navigation.multilevelpushmenu('redraw')
+                            $('.levelHolderClass', self.ui.navigation).perfectScrollbar('update')
                         }
                     }
 
                 this.ui.navigation.multilevelpushmenu({
                     container: this.ui.navigation,
                     menuWidth: '250px',
-                    menuHeight: $(document).height(),
+                    menuHeight: $(window).height(),
                     collapsed: true,
                     preventItemClick: false
                 })
+
+                $('.levelHolderClass', this.ui.navigation).perfectScrollbar()
 
                 $(window).on("resize", updateNavHeight)
                 this.nodeListInterval = setInterval(_.bind(this.updateNodeList, this), 10000)
@@ -54,12 +59,12 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
                         container.append($('<li>').append(link))
                     })
                     self.ui.nodeList.html(container.html())
+                    $('.levelHolderClass', self.ui.navigation).perfectScrollbar('update')
                 }, function(error) {
                     console.log(error)
                 })
             },
             onDestroy: function() {
-                $(window).off("resize", this.updateNavHeight, this)
                 clearInterval(this.nodeListInterval)
             }
         })
