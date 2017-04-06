@@ -7,7 +7,8 @@ let glob = require('glob'),
     _ = require('lodash'),
     rimraf = require('rimraf'),
     mkdirp = require('mkdirp'),
-    mv = require('mv')
+    mv = require('mv'),
+    spawn = require('child_process').spawn
 
 module.exports = {
     ext: '.yaml',
@@ -80,8 +81,11 @@ module.exports = {
             // use this path for all timelines
             p = id
 
-        if ('timelines' in performance) {
-            timelines = performance['timelines']
+        if (!'timelines' in performance) {
+            timelines = [performance]
+            p = path.dirname(performance['id']).replace('.', '')
+        } else {
+            timelines = 'timelines' in performance ? performance['timelines'] : []
             mkdirp.sync(path.join(dir, id))
 
             // remove timelines not included in the current performances
@@ -92,13 +96,16 @@ module.exports = {
             deleteIds.forEach(function(id) {
                 self.remove(dir, id)
             })
-        } else {
-            timelines = [performance]
-            p = path.dirname(performance['id']).replace('.', '')
+
+            if ('previous_id' in performance)
+                spawn('mv', ['-T', path.join(dir, performance['previous_id']), path.join(dir, performance['id'])])
         }
 
         _.each(timelines, function(timeline, i) {
             timeline['id'] = path.join(p, path.basename(timeline['id']))
+            if ('previous_id' in timeline)
+                timeline['previous_id'] = path.join(p, path.basename(timeline['previous_id']))
+
             let current,
                 ignoreNodes = 'ignore_nodes' in timeline && timeline['ignore_nodes']
 
@@ -131,13 +138,6 @@ module.exports = {
             delete timeline['id']
             yamlIO.writeFile(path.join(dir, id + self.ext), timeline)
         })
-
-        if ('previous_id' in performance && 'timelines' in performance) {
-            let propFilename = path.join(dir, performance['previous_id'], '.properties')
-            if (fs.existsSync(propFilename))
-                fs.renameSync(propFilename, path.join(dir, performance['id'], '.properties'))
-            this.remove(dir, performance['previous_id'])
-        }
 
         return this.get(dir, id)
     },
