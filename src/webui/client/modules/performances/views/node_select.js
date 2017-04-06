@@ -176,8 +176,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }
 
                 if (this.model.hasProperty('rosnode')) {
-                    console.log(this.model.get('schema'))
-                    this.showNodeSettings(this.model)
+                    this.changeRosNode()
                     this.listenTo(this.model, 'change:rosnode', function() {
                         self.changeRosNode()
                     })
