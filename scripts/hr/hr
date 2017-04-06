@@ -10,7 +10,7 @@ BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 ############# Configurations #############
 HR_VERSION=0.1.2
-HRTOOL_VERSION=0.1.6
+HRTOOL_VERSION=0.1.7
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=(HEAD)
@@ -1322,7 +1322,8 @@ get_models() {
     # markov
     wget_cache https://github.com/opencog/test-datasets/releases/download/current/markov_modeling.tar.gz
     checkmd5 ${HR_CACHE}/markov_modeling.tar.gz 7d51bbcd4df89b2633bd9520fb99b2b7
-    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS
+    mkdir -p $HR_MODELS/markov_modeling
+    tar zxf ${HR_CACHE}/markov_modeling.tar.gz -C $HR_MODELS/markov_modeling
 }
 
 help_get() {
