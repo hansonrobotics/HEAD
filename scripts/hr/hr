@@ -10,7 +10,7 @@ BASEDIR=$(dirname $(readlink -f ${BASH_SOURCE[0]}))
 
 ############# Configurations #############
 HR_VERSION=0.1.2
-HRTOOL_VERSION=0.1.4
+HRTOOL_VERSION=0.1.5
 
 OPENCOG_REPOS=(cogutils atomspace opencog ros-behavior-scripting relex external-tools)
 HR_REPOS=(HEAD)
@@ -559,7 +559,7 @@ export HR_MODELS=$HR_MODELS
 
 export ROS_LOG_DIR="$HOME/.hr/log"
 export OCBHAVE="$HR_WORKSPACE/opencog/ros-behavior-scripting"
-export PYTHONPATH=\$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
+export PYTHONPATH=$ROS_PKG_PREFIX/lib/python2.7/dist-packages:\$PYTHONPATH:$OCBHAVE/src:$OPENFACE_DIR:$DLIB_DIR/dlib-${DLIB_VERSION}/dist:/usr/local/share/opencog/python
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 export LIBRARY_PATH=$LIBRARY_PATH
@@ -635,6 +635,7 @@ install_head-deps() {
     _install_webui_deps
     _install_marky_markov
     _install_scipy_stack
+    _install_pocketsphinx
     _install_misc
 }
 
@@ -851,7 +852,7 @@ _install_misc() {
     $SUDO pip2 install transitions
 
     # For webui
-    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil
+    $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil natsort
 }
 
 _install_manyears_deps() {
@@ -1346,8 +1347,18 @@ _build_head() {
     TARGET=$ROS_PKG_PREFIX/lib/python2.7/dist-packages
     rm -rf $TARGET/pololu*
     rm -rf $TARGET/roscom*
+    info "Installing pololu-motors"
     pip2 install -t $TARGET $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
+    info "Installing blender roscom"
     pip3 install -t $TARGET $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
+
+    TARGET2=$HR_WORKSPACE/HEAD/devel/lib/python2.7/dist-packages
+    rm -rf $TARGET2/pololu*
+    rm -rf $TARGET2/roscom*
+    info "Installing pololu-motors"
+    pip2 install -t $TARGET2 $HR_WORKSPACE/HEAD/src/hardware/pololu-motors --no-deps
+    info "Installing blender roscom"
+    pip3 install -t $TARGET2 $HR_WORKSPACE/HEAD/src/blender_api_msgs --no-deps
 }
 
 build_head() {
@@ -1362,7 +1373,6 @@ build_head() {
         face_recognition
         manyears_msgs
         manyears_ros
-        robots_config
         rt_audio_ros
         speech2command
         testing_tools
