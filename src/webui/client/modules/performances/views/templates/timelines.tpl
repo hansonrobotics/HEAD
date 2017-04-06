@@ -43,11 +43,12 @@
         <button class="app-stop-button btn btn-default" title="Stop"><i
                 class="glyphicon glyphicon-stop"></i> Stop
         </button>
-        <button class="app-frame-count btn btn-primary" title="Frame count" disabled="disabled">0</button>
+        <button class="app-edit-button btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</button>
     </div>
 
-    <div class="btn-group pull-right" role="group" aria-label="">
-        <button class="app-edit-button btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</button>
+    <div class="btn-group pull-right" role="group" aria-label="Zoom controls">
+        <button class="app-zoom-out-button btn btn-default"><i class="glyphicon glyphicon glyphicon-zoom-out"></i></button>
+        <button class="app-zoom-in-button btn btn-default"><i class="glyphicon glyphicon glyphicon-zoom-in"></i></button>
     </div>
 </div>
 
