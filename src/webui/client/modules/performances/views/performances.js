@@ -298,9 +298,10 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         }
                     }
 
+                    if (!this.readonly)
+                        this.ui.settingsButton.show()
+
                     if (this.currentPerformance) {
-                        if (!this.readonly)
-                            this.ui.settingsButton.show()
                         this.ui.dirHeader.html(id)
                         this.listenTo(this.currentPerformance, 'change:id', function() {
                             self.ui.dirHeader.html(self.currentPerformance.id)
@@ -309,7 +310,6 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         this.ui.backButton.show()
                         this.layoutView.setCurrentPerformance(this.currentPerformance)
                     } else {
-                        this.ui.settingsButton.hide()
                         this.updateVisiblePerformances(id)
                         this.updateTabs()
                         this.ui.nav.slideDown()
