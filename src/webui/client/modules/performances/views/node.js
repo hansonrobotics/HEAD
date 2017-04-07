@@ -174,10 +174,15 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                     this.ui.container.addClass('app-disabled')
                 }
             },
-            showSettings: function(node) {
+            showSettings: function (node) {
+                let self = this
                 if (node === this.node) return
                 this.node = node
                 this.listenTo(node, 'change', this.updateNode)
+                this.listenTo(this.collection, 'add remove', function (model) {
+                    if (self.node === model)
+                        self.updateNode(model)
+                });
                 this.updateNode(node)
                 this.ui.container.removeClass('app-disabled')
                 this.ui.nodeTabs.removeClass('active')
