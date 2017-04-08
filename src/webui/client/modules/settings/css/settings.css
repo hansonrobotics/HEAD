@@ -27,7 +27,11 @@
 
 .app-settings-navigation-container {
     position: absolute;
-    top: 0;
+    top: 52px;
+    z-index: 999999999;
+}
+
+.app-settings-navigation-container .ps-scrollbar-y-rail {
     z-index: 9999999999;
 }
 
@@ -38,6 +42,10 @@
 }
 
 .app-settings-container {
+    margin-left: 250px;
+}
+
+.app-settings-container.mobile {
     margin-left: 40px;
 }
 
