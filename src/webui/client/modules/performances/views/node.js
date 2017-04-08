@@ -1,5 +1,6 @@
 define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'underscore', './node_select',
-        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
+        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider',
+        'select2', 'select2-css', 'scrollbar'],
     function(App, Marionette, template, api, _, NodeSelectView, NodeSettingsView, FadeInRegion, Node, $) {
         return Marionette.View.extend({
             template: template,
@@ -18,6 +19,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
 
                 hideButton: '.app-hide-settings-button',
                 deleteButton: '.app-delete-node-button',
+                createButton: '.app-create-button',
                 frameCount: '.app-node-frames-indicator',
                 durationIndicator: '.app-node-duration-indicator'
             },
@@ -38,6 +40,9 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
             },
             config: {
                 defaultNode: 'speech'
+            },
+            collectionEvents: {
+                'add remove': 'collectionUpdated'
             },
             initialize: function(options) {
                 this.mergeOptions(options, ['node'])
@@ -194,13 +199,19 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 let node = Node.create({name: name, start_time: 0, duration: 1})
                 this.showSettings(node)
             },
+            collectionUpdated: function() {
+                if (this.node)
+                    this.updateNode(this.node)
+            },
             updateNode: function(node) {
-                if (this.node != node)
-                    this.stopListening(node)
+                if (this.node !== node)
+                    this.stopListening(this.node)
                 else {
                     if (node.changed['duration']) this.updateIndicators()
-                    if (this.collection.contains(node)) this.ui.deleteButton.fadeIn()
-                    else this.ui.deleteButton.hide()
+                    if (this.collection.contains(node))
+                        this.ui.deleteButton.fadeIn()
+                    else
+                        this.ui.deleteButton.fadeOut()
                 }
             },
             updateIndicators: function() {

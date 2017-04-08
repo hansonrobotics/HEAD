@@ -6,6 +6,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
         return Marionette.View.extend({
             template: template,
             ui: {
+                container: '.app-node-content',
                 nodeProperties: '[data-node-property]',
                 emotionList: '.app-emotion-list',
                 gestureList: '.app-gesture-list',
@@ -53,6 +54,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             onAttach: function() {
                 this.initTypes()
                 this.initFields()
+                this.ui.container.perfectScrollbar()
             },
             initTypes: function() {
                 switch (this.model.get('name')) {
