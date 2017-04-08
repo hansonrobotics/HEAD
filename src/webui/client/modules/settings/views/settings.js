@@ -69,9 +69,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     this.editor.setValue(this.model.toJSON())
             },
             update: function() {
-                let self = this
-
-                // Only valid settings could be saved in timeline
+                // only valid settings should be saved
                 if (this.editor.validate().length === 0) {
                     let values = this.editor.getValue()
 
@@ -79,9 +77,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     values = this.getAttributes(values)
 
                     _.each(values, function(val, key) {
-                        let type = self.schema['properties'][key]['type']
-                        if (self.schema['properties'][key]
-                            && _.includes(['array', 'object'], type)) {
+                        if (val && _.includes([Array, Object], val.constructor)) {
                             if (val.constructor === Array)
                                 val = _.sortBy(val, 'name')
 
