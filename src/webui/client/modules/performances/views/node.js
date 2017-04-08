@@ -19,7 +19,6 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
 
                 hideButton: '.app-hide-settings-button',
                 deleteButton: '.app-delete-node-button',
-                createButton: '.app-create-button',
                 frameCount: '.app-node-frames-indicator',
                 durationIndicator: '.app-node-duration-indicator'
             },
@@ -208,6 +207,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                     this.stopListening(this.node)
                 else {
                     if (node.changed['duration']) this.updateIndicators()
+
                     if (this.collection.contains(node))
                         this.ui.deleteButton.fadeIn()
                     else

@@ -53,6 +53,9 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
             modelEvents: {
                 change: 'modelChanged'
             },
+            collectionEvents: {
+                'add remove': 'collectionUpdated'
+            },
             modelChanged: function() {
                 this.ui.startTime.val(this.model.get('start_time'))
                 this.ui.duration.val(this.model.get('duration'))
@@ -229,6 +232,13 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 if (this.model.hasProperty('attention_region'))
                     this.buildCrosshair()
 
+            },
+            collectionUpdated: function() {
+                if (this.collection.contains(this.model)) {
+                    this.ui.createButton.fadeOut()
+                } else {
+                    this.ui.createButton.fadeIn()
+                }
             },
             addPerformance: function() {
                 this.collection.add(this.model)
