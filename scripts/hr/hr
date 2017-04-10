@@ -484,7 +484,9 @@ hr_install() {
         local func=install_${arg}
         info "Installing ${arg}"
         eval $func
-        info "${arg} is installed"
+        if [[ $? != 0 ]]; then
+            error "Install ${arg} failed return code $?"
+        fi
     done
 }
 
@@ -1168,6 +1170,26 @@ _install_hr-ext() {
     rm $ext_file
 }
 
+install_hr_msgs() {
+    local installed_ver=$(_print_version hr_msgs|cut -d= -f2)
+    if [[ ! -z $installed_ver ]]; then
+        warn "hr_msgs==${installed_ver} is already installed"
+        return
+    fi
+    MD5SUMS["hr_msgs_v0.0.1.tar.gz"]=6d36ede47634b45e37eeca9639699208
+    wget_cache https://github.com/hansonrobotics/hr_msgs/archive/v0.0.1.tar.gz hr_msgs_v0.0.1.tar.gz
+    local tmp_ws=/tmp/ws
+    mkdir -p $tmp_ws/src
+    tar zxf ${HR_CACHE}/hr_msgs_v0.0.1.tar.gz -C $tmp_ws/src
+    rosdep install --from-paths $tmp_ws/src --ignore-src --rosdistro indigo
+    source /opt/ros/indigo/setup.bash
+    catkin_make_isolated --directory $tmp_ws --install --install-space $ROS_PKG_PREFIX -DCMAKE_BUILD_TYPE=Release
+    cp /tmp/ws/build_isolated/hr_msgs/install_manifest.txt $HOME/.hr/hr_msgs_installed.txt
+    sed -i '/hr_msgs/!d' ~/.hr/hr_msgs_installed.txt
+    _update_version hr_msgs 0.0.1
+    rm -r $tmp_ws
+}
+
 help_install() {
 cat << EOF
 hr install <dependency> [<dependency>] ...
@@ -1178,6 +1200,7 @@ Install dependencies
     head-deps       Install dependencies for HEAD
     opencog-deps    Install dependencies for OpenCog
     hr              Install hrtool
+    hr_msgs         Install hr_msgs, a shared set of ROS messages for HR
 EOF
 }
 
@@ -1189,6 +1212,10 @@ uninstall_opencv() {
     remove_installed_files $HOME/.hr/opencv_installed.txt
 }
 
+uninstall_hr_msgs() {
+    remove_installed_files $HOME/.hr/hr_msgs_installed.txt
+}
+
 help_uninstall() {
 cat << EOF
 hr uninstall <component> [<component>] ...
@@ -1196,6 +1223,7 @@ hr uninstall <component> [<component>] ...
 Uninstall components
 
     hr      Uninstall hr tool
+    hr_msgs Uninstall hr_msgs
 EOF
 }
 
