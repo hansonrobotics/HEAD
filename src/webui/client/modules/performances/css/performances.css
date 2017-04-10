@@ -425,6 +425,11 @@ textarea.form-control.app-node-text {
     overflow-y: auto;
 }
 
+.app-node-content,
+.app-options-content {
+    position: relative;
+}
+
 .app-node-content .app-node-thumbnail {
     width: 90px;
     height: 90px;

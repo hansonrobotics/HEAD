@@ -62,7 +62,6 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 delete config['node_schema']
                 if (typeof self.schemaModel.getGroupName === 'function')
                     _.each(config, function(val, key) {
-                        console.log(self.schemaModel.getGroupName(key))
                         self.editor.getEditor(self.schemaModel.getGroupName(key)).setValue(val)
                     })
                 else

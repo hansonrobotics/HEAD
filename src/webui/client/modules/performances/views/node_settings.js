@@ -4,6 +4,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
         return Marionette.View.extend({
             template: template,
             ui: {
+                container: '.app-options-content',
                 nodeProperties: '[data-node-property]',
                 magnitudeSlider: '.app-magnitide-slider',
                 startTime: '.app-node-start-time',
@@ -52,6 +53,9 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
             modelEvents: {
                 change: 'modelChanged'
             },
+            collectionEvents: {
+                'add remove': 'collectionUpdated'
+            },
             modelChanged: function() {
                 this.ui.startTime.val(this.model.get('start_time'))
                 this.ui.duration.val(this.model.get('duration'))
@@ -64,16 +68,12 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 if (this.model.hasProperty('blender_mode')) this.ui.kfModeSelect.val(this.model.get('blender_mode'))
                 if (this.model.hasProperty('message')) this.ui.messageInput.val(this.model.get('message'))
                 if (this.model.hasProperty('attention_region')) this.selectAttentionRegion()
-
-                if (this.collection.contains(this.model))
-                    this.ui.createButton.hide()
-                else
-                    this.ui.createButton.fadeIn()
             },
             onAttach: function() {
                 let self = this,
                     settings = this.model.getSettings()
 
+                this.ui.container.perfectScrollbar()
                 this.properties = this.model.getConfig().properties
 
                 this.ui.nodeProperties.hide()
@@ -156,7 +156,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                         max: 150,
                         value: this.model.get('volume') * 100,
                         slide: function(e, ui) {
-                            var volume = ui.value / 100
+                            let volume = ui.value / 100
                             self.model.set('volume', volume)
                             self.ui.volumeLabel.html(volume.toFixed(2))
                         }
@@ -164,7 +164,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 }
 
                 if (this.model.hasProperty('magnitude')) {
-                    var magnitude = this.model.get('magnitude')
+                    let magnitude = this.model.get('magnitude')
 
                     if (magnitude instanceof Array && magnitude.length == 2)
                         magnitude = [magnitude[0] * 100, magnitude[1] * 100]
@@ -191,11 +191,11 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                     $(this.ui.kfModeSelect).select2()
 
                 if (this.model.hasProperty('rosnode')) {
-                    var rosnode = this.model.get('rosnode')
-                    var selected = false
+                    let rosnode = this.model.get('rosnode'),
+                        selected = false
                     api.services.get_configurable_nodes.callService({}, function(response) {
                         $.each(response.nodes, function() {
-                            if (this == rosnode) {
+                            if (this === rosnode) {
                                 selected = true
                                 $(self.ui.rosNodeSelect).append($('<option>').prop('value', this).prop('selected', true).html(this))
                             } else {
@@ -233,6 +233,13 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                     this.buildCrosshair()
 
             },
+            collectionUpdated: function() {
+                if (this.collection.contains(this.model)) {
+                    this.ui.createButton.fadeOut()
+                } else {
+                    this.ui.createButton.fadeIn()
+                }
+            },
             addPerformance: function() {
                 this.collection.add(this.model)
                 this.ui.createButton.fadeOut()
@@ -256,7 +263,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 this.model.set('rosnode', this.ui.rosNodeSelect.val())
             },
             buildCrosshair: function() {
-                var self = this
+                let self = this
                 $(this.ui.crosshair).crosshairsl({
                     xmin: -1,
                     xmax: 1,
@@ -278,7 +285,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 self.model.set('z', 0)
             },
             selectAttentionRegion: function() {
-                if (this.model.get('attention_region') == 'custom')
+                if (this.model.get('attention_region') === 'custom')
                     this.ui.crosshair.fadeIn()
                 else
                     this.ui.crosshair.fadeOut()
