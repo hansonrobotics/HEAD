@@ -158,6 +158,13 @@ _print_version() {
     fi
 }
 
+_remove_version() {
+    k=$1
+    if grep -E "$k=.*" $HR_VERSION_FILE >/dev/null 2>&1; then
+        sed -i "/^${k}=/d" $HR_VERSION_FILE
+    fi
+}
+
 md5str() {
   local FNAME=$1
   case $(uname) in
@@ -475,7 +482,6 @@ remove_installed_files() {
         rm $installed_file
     else
         info "Nothing to remove"
-        return 1
     fi
 }
 
@@ -1210,14 +1216,17 @@ EOF
 
 uninstall_hr() {
     remove_installed_files $HOME/.hr/hr_installed.txt
+    _remove_version hr
 }
 
 uninstall_opencv() {
     remove_installed_files $HOME/.hr/opencv_installed.txt
+    _remove_version opencv
 }
 
 uninstall_hr_msgs() {
     remove_installed_files $HOME/.hr/hr_msgs_installed.txt
+    _remove_version hr_msgs
 }
 
 help_uninstall() {
