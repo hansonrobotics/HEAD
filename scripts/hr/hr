@@ -35,7 +35,11 @@ fi
 APT_CACHE_DIR=$HR_CACHE/archives
 PIP_CACHE_DIR=$HR_CACHE/pip
 LOG_DIR="$HOME/.hr/log"
-ROS_PKG_PREFIX=$HR_PREFIX/ros
+
+if [[ -z $ROS_PKG_PREFIX ]]; then
+    ROS_PKG_PREFIX=$HR_PREFIX/ros
+fi
+
 VISION_TOOL_PREFIX=$HR_PREFIX/vision
 DLIB_DIR=$VISION_TOOL_PREFIX/dlib
 TORCH_DIR=$VISION_TOOL_PREFIX/torch
@@ -151,6 +155,13 @@ _print_version() {
     if grep -E "$k=.*" $HR_VERSION_FILE >/dev/null 2>&1; then
         ver=$(grep -E "$k=.*" $HR_VERSION_FILE)
         echo $ver
+    fi
+}
+
+_remove_version() {
+    k=$1
+    if grep -E "$k=.*" $HR_VERSION_FILE >/dev/null 2>&1; then
+        sed -i "/^${k}=/d" $HR_VERSION_FILE
     fi
 }
 
@@ -471,7 +482,6 @@ remove_installed_files() {
         rm $installed_file
     else
         info "Nothing to remove"
-        return 1
     fi
 }
 
@@ -1206,14 +1216,17 @@ EOF
 
 uninstall_hr() {
     remove_installed_files $HOME/.hr/hr_installed.txt
+    _remove_version hr
 }
 
 uninstall_opencv() {
     remove_installed_files $HOME/.hr/opencv_installed.txt
+    _remove_version opencv
 }
 
 uninstall_hr_msgs() {
     remove_installed_files $HOME/.hr/hr_msgs_installed.txt
+    _remove_version hr_msgs
 }
 
 help_uninstall() {
