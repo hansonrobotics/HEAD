@@ -68,7 +68,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     this.editor.setValue(this.model.toJSON())
             },
             update: function() {
-                // Only valid settings could be saved in timeline
+                // only valid settings should be saved
                 if (this.editor.validate().length === 0) {
                     let values = this.editor.getValue()
 

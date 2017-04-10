@@ -7,22 +7,23 @@ define(['application', './views/layout', './views/settings', './entities/robot_c
                     this.layout = new LayoutView()
                     App.LayoutInstance.showAdminNav()
                     App.LayoutInstance.setTitle('Settings')
+                    App.LayoutInstance.setFluid(true)
                     App.LayoutInstance.getRegion('content').show(this.layout)
                 }
             },
             robot: function() {
                 self.showLayout()
 
-                let robotConfig = new RobotConfig(),
-                    robotConfigSchema = new RobotConfigSchema()
-
-                robotConfig.fetch()
-                robotConfigSchema.fetch({
-                    success: function(model) {
-                        let settings = new SettingsView({model: robotConfig, schemaModel: model})
-                        self.layout.getRegion('content').show(settings)
-                    }
-                })
+                // let robotConfig = new RobotConfig(),
+                //     robotConfigSchema = new RobotConfigSchema()
+                //
+                // robotConfig.fetch()
+                // robotConfigSchema.fetch({
+                //     success: function(model) {
+                //         let settings = new SettingsView({model: robotConfig, schemaModel: model})
+                //         self.layout.getRegion('content').show(settings)
+                //     }
+                // })
             },
             node: function(node) {
                 self.showLayout()
