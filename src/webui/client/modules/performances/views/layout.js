@@ -132,15 +132,14 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         if (!this.currentPerformance || p.id !== this.currentPerformance.id) {
                             this.setCurrentPerformance(new Performance(p), {
                                 skipLoading: true,
-                                allowEdit: false,
                                 readonly: true
                             })
 
-                            if (p.id)
-                                this.performancesView.navigate(p.id)
+                            if (p.id) this.performancesView.navigate(p.id)
                         }
                     } else {
                         this.setCurrentPerformance(null)
+                        this.performancesView.back()
                     }
                 }
             },
@@ -211,7 +210,6 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                             paused: response['paused'],
                             current_time: response['current_time'],
                             readonly: true,
-                            allowEdit: false,
                             skipLoading: true
                         })
 
