@@ -60,7 +60,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 switch (this.model.get('name')) {
                     case 'speech':
                         this.listenTo(this.model, 'change:start_time', this.setTextDuration)
-                        break;
+                        break
                 }
             },
             initFields: function() {
@@ -180,7 +180,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 if (this.model.hasProperty('rosnode')) {
                     this.changeRosNode()
                     this.listenTo(this.model, 'change:rosnode', function() {
-                        self.changeRosNode()
+                        self.changeRosNode(true)
                     })
                 }
 
@@ -273,12 +273,13 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             updateSomaStates: function(somas) {
                 this.initList(somas, 'soma', this.ui.somaList)
             },
-            changeRosNode: function() {
+            changeRosNode: function(reset) {
                 let self = this,
                     rosnode = this.model.get('rosnode'),
                     schema = new NodeConfigSchema(rosnode)
 
-                this.model.set('values', {})
+                if (reset) this.model.set('values', {})
+
                 schema.fetch({
                     success: function(model) {
                         self.showNodeSettings(model)
@@ -290,8 +291,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             showNodeSettings: function(schemaModel) {
                 let self = this,
-                    nodeConfig = new NodeConfig(this.model.get('rosnode'), true),
-                    values = self.model.get('values')
+                    values = self.model.get('values'),
+                    nodeConfig = new NodeConfig({}, {node_name: this.model.get('rosnode'), readonly: true})
 
                 let updateValues = function() {
                     let currentView = self.getRegion('settingsEditor').currentView
@@ -307,15 +308,12 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }))
 
                 nodeConfig.on('change', updateValues)
-                if (values){
+
+                if (values)
                     nodeConfig.set(values)
-                }else{
-                    nodeConfig.fetch({
-                        success: function() {
-                            nodeConfig.set(values)
-                        }
-                    })
-                }
+                else
+                    nodeConfig.fetch()
+
             },
             setText: function() {
                 this.model.set('text', this.ui.textInput.val())

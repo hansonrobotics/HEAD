@@ -1,8 +1,8 @@
 define(['backbone', 'roslib', 'lib/api', 'underscore'], function(Backbone, ROSLIB, api, _) {
     return Backbone.Model.extend({
-        initialize: function(node_name, readonly) {
-            this.node_name = node_name
-            this.readonly = readonly || false
+        initialize: function(attrs, options) {
+            this.node_name = options['node_name']
+            this.readonly = options['readonly'] || false
         },
         sync: function(method, model, options) {
             let self = this
