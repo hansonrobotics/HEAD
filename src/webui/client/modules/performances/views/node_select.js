@@ -303,19 +303,20 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     else
                         nodeConfig.off('change', updateValues)
                 }
-                this.getRegion('settingsEditor').show(new SettingsView({
-                    model: nodeConfig,
-                    schemaModel: schemaModel,
-                    refresh: false
-                }))
 
-                nodeConfig.on('change', updateValues)
+                nodeConfig.fetch({
+                    success: function() {
+                        if (values) nodeConfig.set(values)
 
-                if (values)
-                    nodeConfig.set(values)
-                else
-                    nodeConfig.fetch()
-
+                        self.getRegion('settingsEditor').show(new SettingsView({
+                            model: nodeConfig,
+                            schemaModel: schemaModel,
+                            refresh: false
+                        }))
+                        
+                        nodeConfig.on('change', updateValues)
+                    }
+                })
             },
             setText: function() {
                 this.model.set('text', this.ui.textInput.val())
