@@ -524,15 +524,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     })
             },
             indicatorTime: 0,
-            updateIndicatorTime: function(time) {
+            updateIndicatorTime: function(time, dragging) {
                 let position = parseInt(this.ui.runIndicator.css('left')),
-                    current = parseInt(this.ui.scrollContainer.scrollLeft()),
                     width = this.ui.scrollContainer.innerWidth(),
                     maxScroll = this.model.getDuration() * this.config.pxPerSec - width
 
-                if ($.isNumeric(time))
-                    this.ui.runIndicator.stop().animate({left: time * this.config.pxPerSec})
-                else
+                if ($.isNumeric(time)) {
+                    position = time * this.config.pxPerSec
+                    this.ui.runIndicator.stop().animate({left: position})
+                } else
                     time = parseInt(position) / this.config.pxPerSec
 
                 this.indicatorTime = time
@@ -540,13 +540,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 this.ui.timeIndicator.html(time.toFixed(2))
 
-                if (this.running && !this.paused)
-                    this.ui.scrollContainer.scrollLeft(Math.max(0, Math.min(maxScroll,
-                        position - this.ui.scrollContainer.innerWidth() * 0.5)))
-                else
-                    this.ui.scrollContainer.scrollLeft(Math.max(0, Math.min(maxScroll,
-                        current + (position - current - width * 0.5) / width * this.config.pxPerSec)))
-                        .perfectScrollbar('update')
+                if (this.running && !this.paused || !dragging)
+                    this.ui.scrollContainer.scrollLeft(Math.max(0, time * this.config.pxPerSec - this.config.pxPerSec))
+                else {
+                    let current = this.ui.scrollContainer.scrollLeft()
+                    if (position < current + width * 0.2 || position > current + width * 0.8)
+                        this.ui.scrollContainer.stop().scrollLeft(Math.max(0, Math.min(maxScroll,
+                            current + (position - current - width * 0.5) / width * this.config.pxPerSec))
+                        )
+                }
             },
             resetButtons: function() {
                 this.ui.runButton.fadeIn()
@@ -566,10 +568,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             enableIndicatorDragging: function() {
                 let self = this
+
                 this.ui.runIndicator.draggable({
                     axis: "x",
                     drag: function() {
-                        self.updateIndicatorTime()
+                        self.updateIndicatorTime(null, true)
                     },
                     stop: function(event, ui) {
                         let endPixels = self.model.getDuration() * self.config.pxPerSec
