@@ -16,7 +16,6 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
                     motorsCollection.setDefaultValues();
                 });
 
-                App.LayoutInstance.showNav();
                 App.LayoutInstance.getRegion('content').show(layoutView);
                 layoutView.getRegion('motors').show(motorsView);
             },
@@ -27,7 +26,6 @@ define(["application", "lib/api", './views/motors', './views/layout', './views/c
                 motorsCollection.fetchFromParam(function () {
                     motorsCollection.setDefaultValues();
                 });
-                App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.setTitle('Motor configuration');
                 var configurationView = new ConfigurationView();
                 App.LayoutInstance.getRegion('content').show(configurationView);

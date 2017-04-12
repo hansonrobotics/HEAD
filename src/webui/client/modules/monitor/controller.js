@@ -13,7 +13,6 @@ define(['application', './views/layout', 'modules/motors/views/motors', './views
 
                     App.LayoutInstance.setTitle('Monitoring');
                     App.LayoutInstance.getRegion('content').show(this.layoutView);
-                    App.LayoutInstance.showAdminNav();
                 }
 
                 this.layoutView.setActive(name);

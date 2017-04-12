@@ -5,7 +5,6 @@ define(['application', './views/layout', './views/settings', './entities/robot_c
             showLayout: function() {
                 if (!this.layout || this.layout !== App.LayoutInstance.getRegion('content').currentView) {
                     this.layout = new LayoutView()
-                    App.LayoutInstance.showAdminNav()
                     App.LayoutInstance.setTitle('Settings')
                     App.LayoutInstance.setFluid(true)
                     App.LayoutInstance.getRegion('content').show(this.layout)
