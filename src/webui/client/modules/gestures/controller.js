@@ -6,7 +6,6 @@ define(['application', './views/layout', './css/gestures'],
 
                 App.LayoutInstance.setTitle('Gestures');
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
-                App.LayoutInstance.showNav();
             }
         };
 

@@ -27,7 +27,8 @@ define(['jquery', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in',
             },
             onRender: function () {
                 this.setFluid(!!this.options.fluid);
-                this.showNav();
+                this.ui.adminNav.hide();
+                this.ui.userNav.hide();
             },
             setTitle: function (title) {
                 this.ui.title.text(title);

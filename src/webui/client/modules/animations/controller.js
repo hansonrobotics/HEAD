@@ -8,7 +8,6 @@ define(['application', './views/layout', 'lib/api', './css/animations'],
                 api.pointHead();
                 this.layoutView = new LayoutView();
                 App.LayoutInstance.setTitle('Animations');
-                App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.getRegion('content').show(this.layoutView);
             }
         }

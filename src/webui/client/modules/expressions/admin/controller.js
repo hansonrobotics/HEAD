@@ -10,7 +10,6 @@ define(['application', 'lib/api', './views/layout', '../css/expressions'],
 
                 var layoutView = new LayoutView();
 
-                App.LayoutInstance.showAdminNav();
                 App.LayoutInstance.setTitle('Motors');
                 App.LayoutInstance.getRegion('content').show(layoutView);
             }
