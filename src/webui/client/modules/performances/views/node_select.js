@@ -141,7 +141,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         self.updateGestures(gestures)
                     })
 
-                    this.model.on('change', this.setGestureLength, this)
+                    this.model.on('change', this.setGestureLengthCallback, this)
                 }
 
                 if (this.model.hasProperty('soma')) {
@@ -219,9 +219,11 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                                 if (self.collection && self.collection.contains(node)) {
                                     let attributes = node.toJSON()
                                     delete attributes['id']
+                                    attributes[attr] = val
                                     node = Node.create(attributes)
                                 }
 
+                                self.setGestureLength(node)
                                 node.set(attr, val)
                                 return $('<span>').attr('data-node-name', node.get('name'))
                                     .attr('data-node-id', node.get('id'))
@@ -329,11 +331,12 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     self.model.set('duration', response.length)
                 })
             },
-            setGestureLength: function() {
-                let self = this
-                api.getAnimationLength(this.model.get('gesture'), function(response) {
-                    self.gestureDuration = response.length
-                    self.model.set('duration', self.gestureDuration / self.model.get('speed'))
+            setGestureLengthCallback: function() {
+                this.setGestureLength(this.model)
+            },
+            setGestureLength: function(node) {
+                api.getAnimationLength(node.get('gesture'), function(response) {
+                    node.set('duration', response.length / node.get('speed'))
                 })
             },
             setTopic: function() {
