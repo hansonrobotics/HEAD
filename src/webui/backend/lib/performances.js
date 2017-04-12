@@ -81,7 +81,7 @@ module.exports = {
             // use this path for all timelines
             p = id
 
-        if (!'timelines' in performance) {
+        if (!('timelines' in performance)) {
             timelines = [performance]
             p = path.dirname(performance['id']).replace('.', '')
         } else {

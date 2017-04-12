@@ -73,6 +73,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 let self = this,
                     settings = this.model.getSettings()
 
+                this.toggleButtons()
                 this.ui.container.perfectScrollbar()
                 this.properties = this.model.getConfig().properties
 
@@ -234,10 +235,13 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
 
             },
             collectionUpdated: function() {
+                this.toggleButtons(true)
+            },
+            toggleButtons: function(effects) {
                 if (this.collection.contains(this.model)) {
-                    this.ui.createButton.fadeOut()
+                    this.ui.createButton.fadeOut(effects ? null : 0)
                 } else {
-                    this.ui.createButton.fadeIn()
+                    this.ui.createButton.fadeIn(effects ? null : 0)
                 }
             },
             addPerformance: function() {

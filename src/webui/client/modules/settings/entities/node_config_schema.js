@@ -7,7 +7,7 @@ define(['backbone', 'lib/api', './node_config'], function(Backbone, api, NodeCon
             if (method === 'read') {
                 if (self.node_name) {
                     let node_schema = new Promise(function(resolve, reject) {
-                        let node = new NodeConfig(self.node_name)
+                        let node = new NodeConfig({}, {node_name: self.node_name})
                         node.fetch({
                             success: function() {
                                 resolve(JSON.parse(node.get('node_schema') || '{}'))

@@ -68,7 +68,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 let self = this
                 this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
                     'queue', 'allowEdit', 'queueItem', 'skipLoading'])
-                this.nodeConfig = new NodeConfig('/performances')
+                this.nodeConfig = new NodeConfig({}, {node_name: '/performances'})
                 this.listenTo(this.nodeConfig, 'change', this.reconfigure)
                 this.nodeConfig.fetch()
                 this.configRefreshInterval = setInterval(function() {
