@@ -1,49 +1,64 @@
-define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, api) {
+define(['jquery', 'roslib', 'js-yaml', './api'], function($, ROSLIB, jsyaml, api) {
     var ros = {
         // Current status
         connected: false,
         // Connects to ROS
-        connect: function (success) {
+        connect: function(success) {
+            let self = this
+
             //Connect to rosbridge
             this.instance = api.ros = new ROSLIB.Ros({
                 url: this.rosUrl()
-            }).on("connection", function (e) {
-                    api.getRobotName(function (name) {
-                        if (name) {
-                            // Finish initializing UI
-                            console.log('robot: ' + name);
-                            api.config.robot = name;
+            }).on("connection", function(e) {
+                api.getRobotName(function(name) {
+                    if (name) {
+                        // Finish initializing UI
+                        console.log('robot: ' + name)
+                        api.config.robot = name
 
-                            ros.initTopics();
-                            ros.initServices();
-                            success();
-                        } else {
-                            console.error('Unable to get robot name, closing connection');
-                            api.ros.close();
-                        }
-                    });
-                }).on('connection', function () {
-                    $('#app-connecting').hide();
-                    $('#app-pages').fadeIn();
-                    api.ros.connected = true;
-                }).on('close', function () {
-                    $('#notifications .label').hide();
-                    $('#app-connection-error').show();
-                    api.ros.connected = false;
-                }).on('error', function (error) {
-                    $('#notifications .label').hide();
-                    $('#app-connection-error').show();
-                    api.ros.connected = false;
-                    $('#app-pages').fadeIn();
-                    success();
-                });
+                        ros.initTopics()
+                        ros.initServices()
+                        success()
+                    } else {
+                        console.error('Unable to get robot name, closing connection')
+                        api.ros.close()
+                    }
+                })
+
+                $('#app-connecting').hide()
+                $('#app-pages').fadeIn()
+                $('#app-connection-error').hide()
+                api.ros.connected = true
+            }).on('close', function() {
+                $('#notifications .label').hide()
+                $('#app-connection-error').show()
+                api.ros.connected = false
+                self.checkConnection()
+            }).on('error', function(error) {
+                $('#notifications .label').hide()
+                $('#app-connection-error').show()
+                api.ros.connected = false
+                $('#app-pages').fadeIn()
+                self.checkConnection()
+            })
         },
-        initTopics: function () {
+        checkConnection: function() {
+            let self = this
+
+            clearInterval(this.connectionCheckInterval)
+            this.connectionCheckInterval = setInterval(function() {
+                self.connect(function() {
+                    Backbone.history.loadUrl(Backbone.history.getFragment())
+                    clearInterval(self.connectionCheckInterval)
+                })
+            }, 1000)
+        },
+        initTopics: function() {
             api.logger = new ROSLIB.Topic({
                 ros: api.ros,
                 name: '/rosout',
                 messageType: 'rosgraph_msgs/Log',
-            });
+            })
             api.topics = {
                 cmdTree: new ROSLIB.Topic({
                     ros: api.ros,
@@ -256,9 +271,9 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                     name: '/' + api.config.robot + '/pololu_sync',
                     messageType: 'std_msgs/String'
                 })
-            };
+            }
         },
-        initServices: function () {
+        initServices: function() {
             api.services = {
                 headPauMux: new ROSLIB.Service({
                     ros: api.ros,
@@ -386,16 +401,16 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function ($, ROSLIB, jsyaml, ap
                         messageType: 'webui/Json'
                     })
                 }
-            };
+            }
         },
-        rosUrl: function () {
+        rosUrl: function() {
             if (window.location.protocol != "https:") {
-                return "ws://" + document.domain + ":9090";
+                return "ws://" + document.domain + ":9090"
             } else {
-                return "wss://" + document.domain + ":9094";
+                return "wss://" + document.domain + ":9094"
             }
         }
-    };
+    }
 
-    return ros;
-});
+    return ros
+})
