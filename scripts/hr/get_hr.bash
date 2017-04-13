@@ -1,19 +1,5 @@
 #!/usr/bin/env bash
 
-trap 'rm -f /tmp/hr' SIGINT SIGTERM EXIT
-
-get_hr() {
-    local url=https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/hr
-    local file=/tmp/hr
-    curl -sLo $file ${url}
-    bash_flag=$(file $file | grep bash | wc -l)
-    if [[ $bash_flag != "1" ]]; then
-        echo "Can't get hr"
-        exit 1
-    fi
-    chmod +x /tmp/hr
-    /tmp/hr install hr
-    rm -f /tmp/hr
-}
-
-get_hr
+version=0.1.8
+curl -sLo /tmp/head-hr_${version}_amd64.deb https://github.com/hansonrobotics/hrtool/releases/download/v${version}/head-hr_${version}_amd64.deb
+sudo dpkg -i /tmp/head-hr_${version}_amd64.deb
