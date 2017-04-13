@@ -572,7 +572,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.ui.runIndicator.draggable({
                     axis: "x",
                     drag: function() {
-                        self.updateIndicatorTime(null, true)
+                        self.updateIndicatorTime(null, {dragging: true})
                     },
                     stop: function(event, ui) {
                         let endPixels = self.model.getDuration() * self.config.pxPerSec
@@ -595,11 +595,13 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.run()
             },
             moveIndicatorCallback: function(e) {
-                this.moveIndicator(Math.min(e.offsetX / this.config.pxPerSec, this.model.getDuration()))
+                this.moveIndicator(Math.min(e.offsetX / this.config.pxPerSec, this.model.getDuration()), {
+                    disableScroll: true
+                })
             },
-            moveIndicator: function(time) {
+            moveIndicator: function(time, options) {
                 if (!this.running || this.paused) {
-                    this.updateIndicatorTime(time)
+                    this.updateIndicatorTime(time, options)
                 }
             },
             run: function(startTime, options) {
