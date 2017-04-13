@@ -202,8 +202,13 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 let self = this
                 options = options || {}
                 container.html('')
+
+                if (list && [Array, Object].includes(list.constructor))
+                    list = _.sortBy(list)
+
                 _.each(list, function(label, val) {
-                    if (list && list.constructor === Array) val = label
+                    if (list.constructor === Array)
+                        val = label
 
                     let thumbnail = $('<div>').addClass('app-node-thumbnail')
                         .attr('data-node-name', self.model.get('name')).attr('data-' + attr, val)
@@ -313,7 +318,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                             schemaModel: schemaModel,
                             refresh: false
                         }))
-                        
+
                         nodeConfig.on('change', updateValues)
                     }
                 })
