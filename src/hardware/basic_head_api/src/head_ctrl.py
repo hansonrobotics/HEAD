@@ -93,7 +93,7 @@ class SpecificRobotCtrl:
         # loaded from param server in robot config
         self.animationChannels = rospy.get_param('kf_anim_channels', [])
         self.playback = Playback(to_dict(motors, "name"), self.publisher, self.animationChannels)
-        # Subscribe motor topics based on their type
+        # Create motor publishers by robot names
         for m in motors:
             if not m['topic'] in self.publishers.keys():
                 # Pololu motor if motor_id is specified
