@@ -118,9 +118,8 @@ h2, .h2 {
 }
 
 #logo {
-    margin-top: 3px;
     padding-right: 10px;
-    height: 20px;
+    height: 40px;
 }
 
 nav.navbar {
@@ -285,6 +284,12 @@ Styling for JsonEditor slider extension
     font-family: "Yantramanav", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 30px;
     line-height: 30px;
+    padding: 0 15px;
+}
+
+#app-title {
+    display: inline-block;
+    margin-top: 6px;
 }
 
 .select2-container {
