@@ -11,6 +11,7 @@ import threading
 import re
 import uuid
 import pandas as pd
+import random
 
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
@@ -53,6 +54,8 @@ class Chatbot():
         self.speech = False
         self.enable = True
         self.mute = False
+        self.insert_behavior = False
+
         self.node_name = rospy.get_name()
         self.output_dir = os.path.join(HR_CHATBOT_REQUEST_DIR,
             dt.datetime.strftime(dt.datetime.now(), '%Y%m%d'))
@@ -237,6 +240,20 @@ class Chatbot():
         # Add space after punctuation for multi-sentence responses
         text = text.replace('?', '? ')
         text = text.replace('_', ' ')
+        if self.insert_behavior:
+            # no
+            pattern=r"(\bnot\s|\bno\s|\bdon't\s|\bwon't\s|\bdidn't\s)"
+            text = re.sub(pattern, '\g<1>|shake3| ', text, flags=re.IGNORECASE)
+
+            # yes
+            pattern=r'(\byes\b|\byeah\b|\byep\b)'
+            text = re.sub(pattern, '\g<1>|nod|', text, flags=re.IGNORECASE)
+
+            # question
+            # pattern=r'(\?)'
+            # thinks = ['thinkl', 'thinkr', 'thinklu', 'thinkld', 'thinkru', 'thinkrd']
+            # random.shuffle(thinks)
+            # text = re.sub(pattern, '|{}|\g<1>'.format(thinks[0]), text, flags=re.IGNORECASE)
 
         # if sentiment active save state and wait for affect_express to publish response
         # otherwise publish and let tts handle it
@@ -308,6 +325,7 @@ class Chatbot():
             self.client.set_context(config.set_context)
         self.client.set_marker(config.marker)
         self.mute = config.mute
+        self.insert_behavior = config.insert_behavior
 
         return config
 
