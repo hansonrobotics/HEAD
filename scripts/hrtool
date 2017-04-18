@@ -325,19 +325,19 @@ install_opencog_deps() {
 install_link_grammar() {
     info "Installing Link-Grammar"
 
-    MD5SUMS["link-grammar-5.3.15.tar.gz"]=446078337753bfb1d39f80281acee70d
-    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.15.tar.gz
+    MD5SUMS["link-grammar-5.3.16.tar.gz"]=b77134806c65bdba4898f37987ae9686
+    wget_cache $GITHUB_STORAGE_URL/link-grammar-5.3.16.tar.gz
 
-    $SUDO rm -rf /tmp/link-grammar-5.3.15
-    tar -zxf ${HR_CACHE}/link-grammar-5.3.15.tar.gz -C /tmp
-    mkdir -p /tmp/link-grammar-5.3.15/build
-    cd /tmp/link-grammar-5.3.15/build
+    $SUDO rm -rf /tmp/link-grammar-5.3.16
+    tar -zxf ${HR_CACHE}/link-grammar-5.3.16.tar.gz -C /tmp
+    mkdir -p /tmp/link-grammar-5.3.16/build
+    cd /tmp/link-grammar-5.3.16/build
     JAVA_HOME=/usr/lib/jvm/default-java
     ../configure
     make -j$(nproc)
     $SUDO make install
     $SUDO ldconfig
-    $SUDO rm -rf /tmp/link-grammar-5.3.15
+    $SUDO rm -rf /tmp/link-grammar-5.3.16
     cd $BASEDIR
     info "Installing Link-Grammar done"
 }
