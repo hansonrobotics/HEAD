@@ -18,7 +18,7 @@ Usage: $0 [--cmt] [--oc] [--sa]
     Enable OpenCog NLP sentiment analysis, should run with --oc
   --st
     Enable saliency tracking.
-  --fp
+  --op
     Enable Puppeteering.
 EOF
 }
@@ -42,7 +42,7 @@ while [[ $# > 0 ]]; do
             export ENABLE_SALIENCY_TRACKING=1
             shift
             ;;
-        --fp)
+        --op)
             export PUPPETEER=1
             shift
             ;;

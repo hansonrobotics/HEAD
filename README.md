@@ -221,12 +221,13 @@ If you are using `/tmp/hrtool`, you can ignore this error. From this
 point forward, use `<workspace>/scripts/hrtool` instead.
 
 #switch to facial_puppeteery branch and while on it,
+
 git branch 
 git checkout facial_puppeteery 
 git pull origin facial_puppeteery 
 ./scripts/hrtool -b or B or etc...
 source ~/hansonrobotics/HEAD/devel/setup.bash ... `ignore if added on .bashrc`
-./scripts/dev.sh --op
+./scripts/dev.sh --fp `modified from --op to --fp`
 ./scripts/stop.sh
 
 git status 
