@@ -1,0 +1,15 @@
+(cl:defpackage pi_face_tracker-srv
+  (:use )
+  (:export
+   "KEYCOMMAND"
+   "<KEYCOMMAND-REQUEST>"
+   "KEYCOMMAND-REQUEST"
+   "<KEYCOMMAND-RESPONSE>"
+   "KEYCOMMAND-RESPONSE"
+   "SETROI"
+   "<SETROI-REQUEST>"
+   "SETROI-REQUEST"
+   "<SETROI-RESPONSE>"
+   "SETROI-RESPONSE"
+  ))
+

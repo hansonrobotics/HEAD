@@ -1,0 +1,12 @@
+Metadata-Version: 1.0
+Name: ros2opencv
+Version: 0.3.0
+Summary: This package defines a base class for other packages in the
+     pi_vision stack for converting ROS image topics to OpenCV
+     format, displaying the image + markers, etc.
+Home-page: http://ros.org/wiki/ros2opencv
+Author: Vytas
+Author-email: vytas@hansonrobotics.com
+License: GPLv2
+Description: UNKNOWN
+Platform: UNKNOWN

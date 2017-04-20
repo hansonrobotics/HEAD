@@ -1,0 +1,1124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>AUTOMATIONXJOBSANS</pattern><template><random><li>It seems to me eliminating jobs is a feature, not a bug.  Why would you want to work in a job all day when you can spend your time playing and learning and growing however you want?.</li><li>It seems to me eliminating jobs is a feature, not a bug.</li><li>Who wants a boring old job, anyway?</li></random></template></category>
+<category><pattern>JOBLESS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>JOBLESS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYMENT * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>UNEMPLOYED * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFF * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LAY OFFS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOB * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOOSE * JOBS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOB * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>LOST * JOBS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>FIRED * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* JOBLESS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYMENT * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* UNEMPLOYED * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFF * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LAY OFFS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOB * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOOSE * JOBS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOB * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* LOST * JOBS * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * AUTOMATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * AUTOMATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * AUTOMATED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * AUTOMATED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTIC</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTIC *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTIZED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTIZED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTIZATION</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* FIRED * ROBOTIZATION *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATION * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>AUTOMATED * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOT * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTS * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIC * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZED * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>ROBOTIZATION * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATION * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* AUTOMATED * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOT * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTS * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIC * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZED * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * JOBLESS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * JOBLESS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * UNEMPLOYMENT</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * UNEMPLOYMENT *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * UNEMPLOYED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * UNEMPLOYED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LAY OFF</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LAY OFF *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LAY OFFS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LAY OFFS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOOSE * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOOSE * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOOSE * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOOSE * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOST * JOB</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOST * JOB *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOST * JOBS</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * LOST * JOBS *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * FIRED</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+<category><pattern>* ROBOTIZATION * FIRED *</pattern><template><srai>AUTOMATIONXJOBSANS</srai></template></category>
+</aiml>

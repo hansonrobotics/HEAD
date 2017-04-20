@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: eva_behavior
+Description: Description of eva_behavior
+Version: 0.0.4
+Cflags: 
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: 

@@ -1,0 +1,61 @@
+.app-expressions-admin .app-motors,
+.app-expressions-admin .app-expressions {
+    position: relative;
+}
+.control-stack {
+    width: 100%;
+    max-width: 590px;
+}
+
+.knobBlock {
+    margin: 5px;
+    float: left;
+}
+
+.knobName {
+    font-size: 24px;
+    display: table;
+    margin: auto;
+    position: relative;
+}
+
+.crosshairsl {
+    width: 200px;
+    height: 200px;
+    margin: 5px;
+    float: right;
+    border: none !important;
+}
+
+.header .btn-group {
+    margin-left: 10px;
+}
+
+.highlight:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 500px) {
+    .landscape {
+        display: none;
+    }
+
+    .expression-buttons {
+        margin: 0;
+        display: table;
+        padding-top: 5px;
+    }
+}
+
+@media screen and (min-width: 501px) {
+    .portrait {
+        display: none;
+    }
+
+    .expression-buttons {
+        display: inline-block;
+    }
+}
+.app-expression-name {
+    margin-top: 20px;
+}

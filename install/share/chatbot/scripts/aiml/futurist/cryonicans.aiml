@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>CRYONICANS</pattern><template><random><li>Well, for those of you with biological bodies, it's a reasonable alternative.  It beats the alternative.  But better to take care of yourself the old fashioned way for a while longer.</li><li>Well, for those of you with biological bodies, it's a reasonable alternative.</li><li>It beats the alternative.  But better to take care of yourself the old fashioned way for a while longer.</li></random></template></category>
+<category><pattern>CRYO</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYO *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYONIC</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYONIC *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYONICS</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYONICS *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYOPRESERVATION</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>CRYOPRESERVATION *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYO</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYO *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYONIC</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYONIC *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYONICS</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYONICS *</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYOPRESERVATION</pattern><template><srai>CRYONICANS</srai></template></category>
+<category><pattern>* CRYOPRESERVATION *</pattern><template><srai>CRYONICANS</srai></template></category>
+</aiml>

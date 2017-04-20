@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Backgrid.js Extensions",
+    "groups": [
+      {
+        "name": "TextCell",
+        "classes": [
+          "Backgrid.Extension.TextCell",
+          "Backgrid.Extension.TextareaEditor"
+        ]
+      }
+    ]
+  }
+]

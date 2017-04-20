@@ -1,0 +1,14 @@
+nodes:
+    - {label: "Blender API", node: /blender_api}
+    - {label: "Camera", node: /camera}
+    - {label: "Faces Broadcaster", node: /faces_broadcaster}
+    - {label: "Joint State Publsiher", node: /joint_state_publisher}
+    - {label: "Robot State Publisher", node: /robot_state_publisher}
+    - {label: "ROS API", node: /rosapi}
+    - {label: "ROS Bridge", node: /rosbridge_websocket}
+    - {label: "Basic Head API", node: /robot/basic_head_api}
+    - {label: "Chatbot", node: /robot/chatbot_en}
+    - {label: "Safety", node: /robot/motors_safety}
+    - {label: "Pau2Motors", node: /robot/pau2motors}
+    - {label: "Pololu", node: /robot/pololu_head}
+    - {label: "Face Tracker", node: /body_face_tracker}

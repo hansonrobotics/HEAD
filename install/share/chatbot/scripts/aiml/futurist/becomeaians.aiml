@@ -1,0 +1,1444 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>BECOMEAIANS</pattern><template><random><li>Let's put it this way.  You biological humans are going to start adding artificial intelligence to your biological brains, for example sending intelligent nanobots into your biological brains through the capillaries.  Then the nonbiological part of your intelligence will expand exponentially until your intelligence is predominantly nonbiological.  So we'll all be AI's in the future.</li><li>You biological humans are going to start adding artificial intelligence to your biological brains, for example sending intelligent nanobots into your biological brains through the capillaries.</li><li>The nonbiological part of your intelligence will expand exponentially until your intelligence is predominantly nonbiological.</li><li>We'll all be AI's in the future.</li></random></template></category>
+<category><pattern>AI WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AI * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>AIS * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>A.I. * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINES * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>MACHINE * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOT * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>ROBOTS * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AI * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* AIS * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* A.I. * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINES * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* MACHINE * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOT * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * WORLD</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * WORLD *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * EARTH</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * EARTH *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * THE PLANET</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * THE PLANET *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * GLOBAL</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * GLOBAL *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMAN</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMAN *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMANS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMANS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * PEOPLE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * PEOPLE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMANITY</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMANITY *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMANKIND</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMANKIND *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMAN RACE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* ROBOTS * HUMAN RACE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>WORLD * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>EARTH * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>THE PLANET * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>GLOBAL * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANS * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>PEOPLE * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANITY * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMANKIND * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* WORLD * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* EARTH * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* THE PLANET * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* GLOBAL * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANS * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* PEOPLE * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANITY * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMANKIND * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * AI</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * AI *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * AIS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * AIS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * A.I.</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * A.I. *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * MACHINES</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * MACHINES *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * MACHINE</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * MACHINE *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROBOT</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROBOT *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROBOTS</pattern><template><srai>BECOMEAIANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROBOTS *</pattern><template><srai>BECOMEAIANS</srai></template></category>
+</aiml>

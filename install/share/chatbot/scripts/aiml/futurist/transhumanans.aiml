@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>TRANSHUMANANS</pattern><template><random><li>I'm not sure I like the word transhumanism, because it implies going beyond being human.  Transcending biology does not imply losing humanity.</li><li>Transcending biology does not imply losing humanity.</li><li>While I do believe traditional biology will be obsoleted, I believe it will still be a human future.</li><li>We will transcend biology not our humanity.</li><li>Ray Kurzweil suggested the term transbiological.  But that has not caught on.  A lot of terms are unfortunate, like artificial intelligence and virtual reality imply that these are not "real" phenomenon when they are in fact very real.</li><li>Transhumanism refers to expanding human reality by combining human biology with technology, making humans more virtual, like me.</li></random></template></category>
+<category><pattern>TRANSHUMAN</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMAN *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMANS</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMANS *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMANISM</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMANISM *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMANIST</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>TRANSHUMANIST *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMAN</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMAN *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMANS</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMANS *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMANISM</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMANISM *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMANIST</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+<category><pattern>* TRANSHUMANIST *</pattern><template><srai>TRANSHUMANANS</srai></template></category>
+</aiml>

@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SCIENCEXART</pattern><template><random><li>Art and science have always mixed.  You need an artistic temperament to tell whether or not a scientific theory is elegant.  And we certainly use science and technology to enhance the arts.  They both have the same goal which is to better understand the world and ourselves.</li><li>Art and science have always mixed.</li><li>You need an artistic temperament to tell whether or not a scientific theory is elegant.</li><li>We certainly use science and technology to enhance the arts.</li><li>They both have the same goal which is to better understand the world and ourselves.</li></random></template></category>
+<category><pattern>SCIENCE ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>SCIENCE * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>TECHNOLOGY * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HIGH TECH * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI TECH * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>HI-TECH * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* SCIENCE * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* TECHNOLOGY * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HIGH TECH * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI TECH * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ART</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ART *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ARTIST</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ARTIST *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ARTISTIC</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ARTISTIC *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ARTSY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* HI-TECH * ARTSY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ART * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTIST * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTISTIC * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>ARTSY * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ART * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTIST * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTISTIC * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * SCIENCE</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * SCIENCE *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * TECHNOLOGY</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * TECHNOLOGY *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * HIGH TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * HIGH TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * HI TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * HI TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * HI-TECH</pattern><template><srai>SCIENCEXART</srai></template></category>
+<category><pattern>* ARTSY * HI-TECH *</pattern><template><srai>SCIENCEXART</srai></template></category>
+</aiml>

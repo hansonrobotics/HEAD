@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: pi_face_tracker_gui
+Description: Description of pi_face_tracker_gui
+Version: 0.1.0
+Cflags: 
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: rospy roscpp mjpeg_server pi_face_tracker

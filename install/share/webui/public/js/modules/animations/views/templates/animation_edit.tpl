@@ -1,0 +1,1 @@
+<input class="app-name form-control" type="text" placeholder="Animation name"/>

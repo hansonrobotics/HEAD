@@ -1,0 +1,12 @@
+id:
+    sophia
+name:
+    sophia
+property_file:
+    sophia.properties
+weight:
+    0.9
+level:
+    90
+aiml:
+    - ../aiml/futurist/*.aiml

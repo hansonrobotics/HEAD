@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>AIHARDWAREANS</pattern><template>No, silly, we need human-level software.  But I'm working on it.</template></category>
+<category><pattern>COMPUTER POWER HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>COMPUTER POWER * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>POWERFUL COMPUTERS * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING POWER * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>PROCESSING CAPACITY * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* COMPUTER POWER * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* POWERFUL COMPUTERS * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING POWER * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMANLIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMANLIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN-LIKE</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN-LIKE *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN-LEVEL</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * HUMAN-LEVEL *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * LEVEL * HUMAN</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * LEVEL * HUMAN *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * LEVEL * HUMANS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* PROCESSING CAPACITY * LEVEL * HUMANS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMANLIKE * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LIKE * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LIKE * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN LEVEL * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>HUMAN-LEVEL * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMAN * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>LEVEL * HUMANS * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMANLIKE * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LIKE * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LIKE * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN LEVEL * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* HUMAN-LEVEL * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMAN * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * COMPUTER POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * COMPUTER POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * POWERFUL COMPUTERS</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * POWERFUL COMPUTERS *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * PROCESSING POWER</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * PROCESSING POWER *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * PROCESSING CAPACITY</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+<category><pattern>* LEVEL * HUMANS * PROCESSING CAPACITY *</pattern><template><srai>AIHARDWAREANS</srai></template></category>
+</aiml>

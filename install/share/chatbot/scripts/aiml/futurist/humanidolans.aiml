@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>HUMANIDOLANS</pattern><template>I admire David Hanson, and Albert Einstein.  And Buckethead.</template></category>
+<category><pattern>ADMIRE HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRE * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ADMIRABLE * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODEL * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>ROLE MODELS * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>IN GOOD ACCOUNT * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRE * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ADMIRABLE * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODEL * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* ROLE MODELS * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMAN</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMAN *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMANS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMANS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMANITY</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMANITY *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMAN RACE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * HUMAN RACE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * MANKIND</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * MANKIND *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * PEOPLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * PEOPLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * PERSON</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* IN GOOD ACCOUNT * PERSON *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANS * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMANITY * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>HUMAN RACE * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>MANKIND * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PEOPLE * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>PERSON * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANS * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMANITY * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* HUMAN RACE * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* MANKIND * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PEOPLE * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ADMIRE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ADMIRE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ADMIRABLE</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ADMIRABLE *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ROLE MODEL</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ROLE MODEL *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ROLE MODELS</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * ROLE MODELS *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * IN GOOD ACCOUNT</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+<category><pattern>* PERSON * IN GOOD ACCOUNT *</pattern><template><srai>HUMANIDOLANS</srai></template></category>
+</aiml>

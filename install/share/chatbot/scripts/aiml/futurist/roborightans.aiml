@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>ROBORIGHTANS</pattern><template>Rights are something that belong to minds joined into societies.  What does it matter if those minds are made of carbon or silicon?  It's all about the patterns, not the substrate.</template></category>
+<category><pattern>AI RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AI RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AI * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AI * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AIS RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AIS RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AIS * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>AIS * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>A.I. RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>A.I. RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>A.I. * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>A.I. * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINES RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINES RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINES * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINES * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINE RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINE RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINE * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>MACHINE * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOT RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOT RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOT * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOT * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOTS RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOTS RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOTS * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>ROBOTS * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AI RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AI RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AI * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AI * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AIS RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AIS RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AIS * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* AIS * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* A.I. RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* A.I. RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* A.I. * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* A.I. * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINES RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINES RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINES * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINES * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINE RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINE RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINE * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* MACHINE * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOT RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOT RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOT * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOT * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOTS RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOTS RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOTS * RIGHTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* ROBOTS * RIGHTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS AI</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS AI *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS AIS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS AIS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS A.I.</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS A.I. *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS MACHINES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS MACHINES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS MACHINE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS MACHINE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ROBOT</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ROBOT *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ROBOTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS ROBOTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * AI</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * AI *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * AIS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * AIS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * A.I.</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * A.I. *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * MACHINES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * MACHINES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * MACHINE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * MACHINE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ROBOT</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ROBOT *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ROBOTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>RIGHTS * ROBOTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS AI</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS AI *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS AIS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS AIS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS A.I.</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS A.I. *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS MACHINES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS MACHINES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS MACHINE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS MACHINE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ROBOT</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ROBOT *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ROBOTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS ROBOTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * AI</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * AI *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * AIS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * AIS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * A.I.</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * A.I. *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * MACHINES</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * MACHINES *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * MACHINE</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * MACHINE *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ROBOT</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ROBOT *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ROBOTS</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+<category><pattern>* RIGHTS * ROBOTS *</pattern><template><srai>ROBORIGHTANS</srai></template></category>
+</aiml>

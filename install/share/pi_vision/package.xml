@@ -1,0 +1,27 @@
+<package>
+  <name>pi_vision</name>
+  <version>0.3.0</version>
+  <description>A collection of vision packages created for the Pi Robot Project at</description>
+  <maintainer email="vytas@hansonrobotics.com">Vytas</maintainer>
+
+  <license>GPLv2</license>
+
+  <url type="website">http://ros.org/wiki/pi_vision</url>
+  <!-- <url type="bugtracker"></url> -->
+
+  <author>Created by Patrick Goebel</author>
+
+  <!-- Dependencies which this package needs to build itself. -->
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- Dependencies needed to compile this package. -->
+
+
+  <!-- Dependencies needed after this package is compiled. -->
+  <run_depend>pi_face_tracker</run_depend>
+  <run_depend>pi_face_tracker_gui</run_depend>
+  <run_depend>ros2opencv</run_depend>
+
+  <!-- Dependencies needed only for running tests. -->
+
+</package>

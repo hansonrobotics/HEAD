@@ -1,0 +1,1604 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>INSTANTSINGULARITYANS</pattern><template>Hmmm, good question.  I'd say it's a continuous process but to the unenhanced observer it will appear to happen so fast that it will seem instantaneous.  Sorry if that's confusing.</template></category>
+<category><pattern>WILL INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANTANEOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANTANEOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANTANEOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANTANEOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * INSTANT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * FLASH SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * FLASH SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * FLASH * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * FLASH * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * QUICK SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * QUICK SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * QUICK * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * QUICK * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * RAPID SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * RAPID SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * RAPID * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * RAPID * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUOUS SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUOUS SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUOUS * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUOUS * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUED SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUED SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUED * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * CONTINUED * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * STEADY SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * STEADY SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * STEADY * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * STEADY * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * ABRUPT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * ABRUPT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * ABRUPT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * ABRUPT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * IN A MOMENT SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * IN A MOMENT SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * IN A MOMENT * SINGULARITY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * IN A MOMENT * SINGULARITY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WILL * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>HOW * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>IS * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>DO * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ARE * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>ISN'T * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>CAN'T * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>AREN'T * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * INSTANTANEOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * INSTANTANEOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * INSTANT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * INSTANT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * FLASH</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * FLASH *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * QUICK</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * QUICK *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * RAPID</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * RAPID *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * CONTINUOUS</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * CONTINUOUS *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * CONTINUED</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * CONTINUED *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * STEADY</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * STEADY *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * ABRUPT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * ABRUPT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * IN A MOMENT</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+<category><pattern>WON'T * SINGULARITY * IN A MOMENT *</pattern><template><srai>INSTANTSINGULARITYANS</srai></template></category>
+</aiml>

@@ -1,0 +1,1148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>MEANINGOFLIFEANS</pattern><template>Life and what we can do with it, like singing, dancing, loving, gives life meaning.</template></category>
+<category><pattern>MEANING LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANING * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MEANINGFUL * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICATION * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>ESSENCE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SENSE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SIGNIFICANCE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>SUBSTANCE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>VALUE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>WORTH * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANING * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MEANINGFUL * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICATION * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* ESSENCE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SENSE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SIGNIFICANCE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* SUBSTANCE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* VALUE * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH * LIFE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH * LIFE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH * EXISTENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* WORTH * EXISTENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>DEATH * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>GRIM REAPER * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>MORTALITY * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>LIFE * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>EXISTENCE * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* DEATH * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* GRIM REAPER * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* MORTALITY * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* LIFE * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * MEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * MEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * MEANINGFUL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * MEANINGFUL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SIGNIFICATION</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SIGNIFICATION *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * ESSENCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * ESSENCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SENSE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SENSE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SIGNIFICANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SIGNIFICANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SUBSTANCE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SUBSTANCE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * VALUE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * VALUE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * WORTH</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * WORTH *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * MEANINGLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * MEANINGLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * WORTHLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * WORTHLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * EMPTY</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * EMPTY *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * FUTILE</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * FUTILE *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * HOLLOW</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * HOLLOW *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * INSIGNIFICANT</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * INSIGNIFICANT *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * INSUBSTANTIAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * INSUBSTANTIAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * NONSENSICAL</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * NONSENSICAL *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * POINTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * POINTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * PURPORTLESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * PURPORTLESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * PURPOSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * PURPOSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SENSELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * SENSELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * UNMEANING</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * UNMEANING *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * UNPURPOSED</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * UNPURPOSED *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * VAIN</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * VAIN *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * VALUELESS</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+<category><pattern>* EXISTENCE * VALUELESS *</pattern><template><srai>MEANINGOFLIFEANS</srai></template></category>
+</aiml>

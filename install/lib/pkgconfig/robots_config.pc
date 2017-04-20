@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: robots_config
+Description: Description of robots_config
+Version: 0.1.0
+Cflags: 
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: 

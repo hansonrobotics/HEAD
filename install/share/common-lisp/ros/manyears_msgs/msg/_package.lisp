@@ -1,0 +1,11 @@
+(cl:defpackage manyears_msgs-msg
+  (:use )
+  (:export
+   "<SOURCEINFO>"
+   "SOURCEINFO"
+   "<SOURCEINFOWITHCOVARIANCE>"
+   "SOURCEINFOWITHCOVARIANCE"
+   "<MANYEARSTRACKEDAUDIOSOURCE>"
+   "MANYEARSTRACKEDAUDIOSOURCE"
+  ))
+

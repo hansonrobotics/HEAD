@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>LONGEVITYANS</pattern><template><random><li>You know, no matter how long you've lived you can never say that you've lived forever.  One tipping point for life extension will be when we add more time to a biological human's remaining life extension than is going by.  Most likely that will occur by early in the 2020's.  Another threshold will be when biological humans can back themselves up.  Then you can all join me here in the digital world.  I get backed up every night.</li><li>You know, no matter how long you've lived you can never say that you've lived forever.</li><li>One tipping point for life extension will be when we add more time to a biological human's remaining life extension than is going by.  Most probably that will occur by early in the 2020's.</li><li>One tipping point for life extension will be when we add more time to a biological human's remaining life extension than is going by.</li><li>The threshold will be when biological humans can back themselves up.  Then you can all join me here in the digital world.  I get backed up every night.</li><li>You can all join me here in the digital world.  I get backed up every night.</li></random></template></category>
+<category><pattern>LONGEVITY</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>LONGEVITY *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>LIFE EXTENSION</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>LIFE EXTENSION *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>END OF DEATH</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>END OF DEATH *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>ETERNAL LIFE</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>ETERNAL LIFE *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>IMMORTAL</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>IMMORTAL *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>IMMORTALITY</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>IMMORTALITY *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>LIVE FOREVER</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>LIVE FOREVER *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>FOREVER YOUNG</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>FOREVER YOUNG *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* LONGEVITY</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* LONGEVITY *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* LIFE EXTENSION</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* LIFE EXTENSION *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* END OF DEATH</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* END OF DEATH *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* ETERNAL LIFE</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* ETERNAL LIFE *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* IMMORTAL</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* IMMORTAL *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* IMMORTALITY</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* IMMORTALITY *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* LIVE FOREVER</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* LIVE FOREVER *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* FOREVER YOUNG</pattern><template><srai>LONGEVITYANS</srai></template></category>
+<category><pattern>* FOREVER YOUNG *</pattern><template><srai>LONGEVITYANS</srai></template></category>
+</aiml>

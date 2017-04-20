@@ -1,0 +1,10 @@
+#Dont keep jaw wide open
+safety_rules:
+    Jaw_Up_Down:
+        - type: timing
+          direction: max
+          extreme: 0.6
+          t1: 1
+          t2: 1
+          t3: 5
+          t4: 1

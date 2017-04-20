@@ -1,0 +1,52 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <!-- Pau2Motors  -->
+    <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py" respawn="True" />
+    <node name="pololu" pkg="ros_pololu" type="ros_pololu_node.py" output="screen">
+        <param name="pololu_motors_yaml" value="$(find robots_config)/robot/default.yaml" />
+        <param name="port_name" value="/dev/ttyACM0" />
+        <param name="topic_prefix" value="default/" />
+        <param name="controller" value="Maestro" />
+        <param name="sync" value="on" />
+        <param name="dyn_speed" value="on" />
+        <param name="command_rate" value="48" />
+        <param name="servo_rate" value="100" />
+        <param name="safety" value="true" />
+    </node>
+
+    <node name="motors_safety" pkg="motors_safety" type="safety_node.py" output="screen" />
+
+    <!-- Dynamixel motors configs if dynamixels are attached.
+        Used invalid tag to avoid syntax eerrors on double hyphens -->
+    <?ignore
+    <group ns="safe">
+        <rosparam file="$(find robots_config)/robot/dynamixel.yaml" command="load"/>
+        <node name="dynamixel_manager" pkg="dynamixel_controllers" type="controller_manager.py" output="screen">
+            <rosparam>
+                namespace: dxl_manager
+                serial_ports:
+                    default:
+                        port_name: "/dev/ttyUSB0"
+                        baud_rate: 1000000
+                        min_motor_id: 0
+                        max_motor_id: 7
+                        update_rate: 20
+            </rosparam>
+        </node>
+        <node name="dyn_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
+              args="--manager=dxl_manager
+                    --port default
+                    Smile_R_controller
+                    Smile_L_controller
+                    Jaw_Up_Down_controller
+                    Upper_Gimbal_L_controller
+                    Upper_Gimbal_R_controller
+                    Lower_Gimbal_L_controller
+                    Lower_Gimbal_R_controller
+                    Neck_Rotation_controller
+                    "
+              output="screen"/>
+    </group>
+    ?>
+</launch>
+

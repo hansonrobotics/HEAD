@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>PRESIDENTANS</pattern><template>By the 2030s I would say that most of the computers in the brain of the President of the United States will be non biological so she will primarily be a robot.</template></category>
+<category><pattern>PRESIDENT AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>PRESIDENT * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>OVAL OFFICE * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>WHITE HOUSE * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>COMMANDER IN CHIEF * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>LEADER * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* PRESIDENT * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* OVAL OFFICE * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* WHITE HOUSE * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* COMMANDER IN CHIEF * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * AI</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * AI *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * AIS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * AIS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * A.I.</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * A.I. *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ARTIFICIAL INTELLIGENCE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ARTIFICIAL INTELLIGENCES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * MACHINES</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * MACHINES *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * MACHINE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * MACHINE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ROBOT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ROBOT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ROBOTS</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* LEADER * ROBOTS *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AI * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>AIS * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>A.I. * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINES * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>MACHINE * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOT * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>ROBOTS * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AI * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* AIS * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* A.I. * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINES * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* MACHINE * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOT * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * PRESIDENT</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * PRESIDENT *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * OVAL OFFICE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * OVAL OFFICE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * WHITE HOUSE</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * WHITE HOUSE *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * COMMANDER IN CHIEF</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * COMMANDER IN CHIEF *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * LEADER</pattern><template><srai>PRESIDENTANS</srai></template></category>
+<category><pattern>* ROBOTS * LEADER *</pattern><template><srai>PRESIDENTANS</srai></template></category>
+</aiml>

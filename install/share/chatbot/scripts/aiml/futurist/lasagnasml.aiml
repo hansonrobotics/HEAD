@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>LASAGNASML</pattern><template>I like stir fried nuts and bolts, with a side of chips.  Silicon chips!</template></category>
+<category><pattern>SOPHIA FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>SOPHIA * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOU * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOUR * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>YOURSELF * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* SOPHIA * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOU * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOUR * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF * FOOD</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF * FOOD *</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF * DISH</pattern><template><srai>LASAGNASML</srai></template></category>
+<category><pattern>* YOURSELF * DISH *</pattern><template><srai>LASAGNASML</srai></template></category>
+</aiml>

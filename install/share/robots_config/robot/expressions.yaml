@@ -1,0 +1,7 @@
+!!python/unicode 'expressions':
+- !!python/unicode 'Neutral': {!!python/unicode 'EyeTurn-L': 0.5, !!python/unicode 'EyeTurn-R': 0.5,
+    !!python/unicode 'Eyes-Up-Down': 0.5, !!python/unicode 'Jaw_Up_Down': 0.049999999999999996,
+    !!python/unicode 'Smile_L': 0.7142857142857143, !!python/unicode 'Smile_R': 0.7142857142857143}
+- !!python/unicode 'Smile': {!!python/unicode 'EyeTurn-L': 0.5, !!python/unicode 'EyeTurn-R': 0.5,
+    !!python/unicode 'Eyes-Up-Down': 0.5, !!python/unicode 'Jaw_Up_Down': 0.5107999999999999,
+    !!python/unicode 'Smile_L': 0.07496296296296301, !!python/unicode 'Smile_R': 1}

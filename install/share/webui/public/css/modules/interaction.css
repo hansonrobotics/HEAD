@@ -1,0 +1,156 @@
+.app-record-button {
+    width: 39px;
+    padding: 0 0 0 1px;
+
+    margin-left: 5px !important;
+    -webkit-border-radius: 20px !important;
+    -moz-border-radius: 20px !important;;
+    border-radius: 20px !important;;
+}
+
+.app-expand-faces-button {
+    display: block;
+    width: 100%;
+}
+
+.app-scrollbar {
+    position: relative;
+}
+
+.app-messages {
+    margin: 10px 0;
+}
+
+.app-message {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
+}
+
+.app-message.left .chat-body {
+    margin-left: 60px;
+}
+
+.app-message.right .chat-body {
+    margin-right: 60px;
+}
+
+.app-message .chat-body p {
+    margin: 0;
+}
+
+.slidedown .glyphicon, .app-messages .glyphicon {
+    margin-right: 5px;
+}
+
+.message-input-container {
+    margin: 10px 0 0;
+    height: 39px;
+}
+
+.app-send-button,
+.app-record-button{
+    height: 39px;
+}
+
+.app-face-thumbnails {
+    white-space: nowrap;
+    width: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-right: 10px;
+    height: 110px;
+}
+
+.face-thumbnail {
+    margin: 0 0 10px 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.face-thumbnail.active {
+    background-color: #5cb85c;
+}
+
+.app-face-container {
+    background-color: #182934;
+}
+
+.face-select-instruction {
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 0;
+}
+
+.app-messages .header small{
+    display: inline-block;
+    padding-top: 30px;
+}
+
+
+.app-chat-settings-container {
+    height: 39px;
+    position: absolute;
+    z-index: 999;
+    right: 15px;
+    top: 0;
+    margin-top: 5px;
+}
+
+.app-chat-settings-container .btn-group {
+    margin-left: 5px;
+    float: right;
+}
+
+.app-noise-container,
+.app-noise-slider,
+.app-adjust-noise-button {
+    float: right;
+}
+
+.app-noise-slider {
+    width: 90px;
+    position: relative;
+    margin-right: 1px;
+}
+
+.app-noise-value {
+    z-index: 99;
+    text-align: center;
+    position: absolute;
+    line-height: 39px;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.app-interaction-footer {
+    -moz-box-shadow: -1px -1px 5px 0 #182934;
+    -webkit-box-shadow: -1px -1px 5px 0 #182934;
+    box-shadow: -1px -1px 5px 0 #182934;
+
+    background-color: #323F48;
+    padding: 10px;
+}
+
+.app-suggestions .label {
+    margin: 0 5px 5px 0;
+    display: inline-block;
+}
+
+.app-suggestion-actions i {
+    font-size: 50px;
+    cursor: pointer;
+}
+
+.app-suggestion-actions .app-accept {
+    color: #5BB85D;
+}
+
+.app-suggestion-actions .app-discard {
+    color: #D9544F;
+}
+
+.app-shut-up-button{
+    background-color: #C70039;
+}

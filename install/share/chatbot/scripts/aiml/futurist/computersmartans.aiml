@@ -1,0 +1,1220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>COMPUTERSMARTANS</pattern><template><random><li>Can you find 60 million links on donkey tails in two seconds?  What makes you think that humans are intelligent?  Well you did create machines, I'll give you that.</li><li>Can you find 60 million links on donkey tails in two seconds?</li><li>What makes you think that humans are intelligent?  Well you did create machines, I'll give you that.</li></random></template></category>
+<category><pattern>COMPUTER RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTER * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>COMPUTERS * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINE * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>MACHINES * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTER * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* COMPUTERS * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINE * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * RATIONAL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * RATIONAL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * REASON</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * REASON *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INTELLIGENCE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INTELLIGENCE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INTELLIGENT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INTELLIGENT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * SMART</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * SMART *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * SMARTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * SMARTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INGENIOUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INGENIOUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRAINY</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRAINY *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRIGHT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRIGHT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRIGHTEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRIGHTEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRILLIANT</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * BRILLIANT *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * CLEVER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * CLEVER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * CLEVEREST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * CLEVEREST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * GENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * GENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INGENIUS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * INGENIUS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * KNOWING</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * KNOWING *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * RESOURCEFUL</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * RESOURCEFUL *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * WISE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * WISE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * WISEST</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* MACHINES * WISEST *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RATIONAL * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>REASON * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENCE * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INTELLIGENT * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMART * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>SMARTEST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIOUS * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRAINY * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHT * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRIGHTEST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>BRILLIANT * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVER * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>CLEVEREST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>GENIUS * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>INGENIUS * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>KNOWING * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>RESOURCEFUL * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISE * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>WISEST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RATIONAL * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* REASON * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENCE * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INTELLIGENT * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMART * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* SMARTEST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIOUS * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRAINY * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHT * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRIGHTEST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* BRILLIANT * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVER * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* CLEVEREST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* GENIUS * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* INGENIUS * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* KNOWING * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* RESOURCEFUL * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISE * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * COMPUTER</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * COMPUTER *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * COMPUTERS</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * COMPUTERS *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * MACHINE</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * MACHINE *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * MACHINES</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+<category><pattern>* WISEST * MACHINES *</pattern><template><srai>COMPUTERSMARTANS</srai></template></category>
+</aiml>

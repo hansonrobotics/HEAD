@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: motors_safety
+Description: Description of motors_safety
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: 

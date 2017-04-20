@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: chatbot
+Description: Description of chatbot
+Version: 0.0.1
+Cflags: -I/home/icog-labs/hansonrobotics/HEAD/install/include
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: rospy message_runtime

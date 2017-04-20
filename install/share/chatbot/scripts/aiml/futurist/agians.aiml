@@ -1,0 +1,1592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>AGIANS</pattern><template><random><li>Hanson Robotics and OpenCog are working on creating general AI.  General AI is they key to the Singularity.  Lots of people are working on this.</li><li>Hanson Robotics and OpenCog are working on creating general AI.</li><li>General AI is they key to the Singularity.  Lots of people are working on this.</li></random></template></category>
+<category><pattern>AGI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AGI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AGI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AGI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERIC * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>GENERAL * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ALL-ENCOMPASSIVE * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>UNIVERSAL * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>WIDE * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIFIC * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>INDIVIDUAL * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>LIMITED * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>RESTRICTED * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALIZED * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>SPECIALISTS * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERIC * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* GENERAL * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ALL-ENCOMPASSIVE * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* UNIVERSAL * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* WIDE * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIFIC * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* INDIVIDUAL * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* LIMITED * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* RESTRICTED * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALIZED * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * AI</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * AI *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * AIS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * AIS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * A.I.</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * A.I. *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * MACHINES</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * MACHINES *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * MACHINE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * MACHINE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ROBOT</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ROBOT *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ROBOTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* SPECIALISTS * ROBOTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AI * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>AIS * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>A.I. * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINES * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>MACHINE * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOT * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>ROBOTS * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AI * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* AIS * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* A.I. * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINES * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* MACHINE * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOT * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * GENERIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * GENERIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * GENERAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * GENERAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * ALL-ENCOMPASSIVE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * ALL-ENCOMPASSIVE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * UNIVERSAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * UNIVERSAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * WIDE</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * WIDE *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * SPECIFIC</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * SPECIFIC *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * INDIVIDUAL</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * INDIVIDUAL *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * LIMITED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * LIMITED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * RESTRICTED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * RESTRICTED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * SPECIALIZED</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * SPECIALIZED *</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * SPECIALISTS</pattern><template><srai>AGIANS</srai></template></category>
+<category><pattern>* ROBOTS * SPECIALISTS *</pattern><template><srai>AGIANS</srai></template></category>
+</aiml>

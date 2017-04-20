@@ -1,0 +1,5 @@
+id: test
+name: test
+nodes:
+- {duration: 1, lang: en, name: speech, start_time: 0, text: hi}
+- {duration: 1, lang: en, name: speech, start_time: 2, text: bye}

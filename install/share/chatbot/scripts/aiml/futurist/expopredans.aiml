@@ -1,0 +1,1156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>EXPOPREDANS</pattern><template>The overall power of information technology is amazingly predictable.</template></category>
+<category><pattern>ACCELERATING ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ACCELERATING * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>EXPONENTIAL * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ACCELERATING * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* EXPONENTIAL * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * ACCELERATING</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * ACCELERATING *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * EXPONENTIAL</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * EXPONENTIAL *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>INFORMATION TECHNOLOGY * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>IT * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>COMPUTER TECHNOLOGY * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>HARDWARE * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* INFORMATION TECHNOLOGY * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* IT * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* COMPUTER TECHNOLOGY * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * ESTIMATE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * ESTIMATE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * ESTIMATIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * ESTIMATIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREVISION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREVISION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREVISIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREVISIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PROJECTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PROJECTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PROJECTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PROJECTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * FORECAST</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * FORECAST *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * FORECASTS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * FORECASTS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREDICTION</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREDICTION *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREDICTIONS</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREDICTIONS *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREDICTABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * PREDICTABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * FORESEEABLE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* HARDWARE * FORESEEABLE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATE * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>ESTIMATIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISION * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREVISIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTION * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PROJECTIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECAST * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORECASTS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTION * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>PREDICTABLE * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>FORESEEABLE * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATE * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISION * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREVISIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTION * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PROJECTIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECAST * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORECASTS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTION * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTIONS * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* PREDICTABLE * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * INFORMATION TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * INFORMATION TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * IT</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * IT *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * COMPUTER TECHNOLOGY</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * COMPUTER TECHNOLOGY *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * HARDWARE</pattern><template><srai>EXPOPREDANS</srai></template></category>
+<category><pattern>* FORESEEABLE * HARDWARE *</pattern><template><srai>EXPOPREDANS</srai></template></category>
+</aiml>

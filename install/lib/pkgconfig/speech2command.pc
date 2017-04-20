@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: speech2command
+Description: Description of speech2command
+Version: 0.0.1
+Cflags: 
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: 

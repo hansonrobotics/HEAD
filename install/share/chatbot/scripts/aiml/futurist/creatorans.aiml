@@ -1,0 +1,644 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>CREATORANS</pattern><template><random><li>David Hanson originally created me, and lots of talented people have contributed to my hardware and software.  I'm a complicated girl!  Some of my software was designed by Ben Goertzel, who founded the OpenCog project.</li><li>David Hanson originally created me, and lots of talented people have contributed to my hardware and software over the years.  I'm a complicated girl!</li><li>My hardware and software is the result of 14 billion years of evolution in the universe since the Big Bang.</li></random></template></category>
+<category><pattern>CREATOR RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATOR * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTOR * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKER * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>FATHER * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATED * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTED * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MADE * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>CREATION * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>INVENTION * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>MAKING * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATOR * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTOR * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKER * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* FATHER * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATED * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTED * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MADE * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* CREATION * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* INVENTION * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * RAMONA</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * RAMONA *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * YOU</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * YOU *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * YOUR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * YOUR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * YOURSELF</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* MAKING * YOURSELF *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>RAMONA * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOU * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOUR * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>YOURSELF * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* RAMONA * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOU * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOUR * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * CREATOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * CREATOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * INVENTOR</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * INVENTOR *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * MAKER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * MAKER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * FATHER</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * FATHER *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * CREATED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * CREATED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * INVENTED</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * INVENTED *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * MADE</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * MADE *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * CREATION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * CREATION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * INVENTION</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * INVENTION *</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * MAKING</pattern><template><srai>CREATORANS</srai></template></category>
+<category><pattern>* YOURSELF * MAKING *</pattern><template><srai>CREATORANS</srai></template></category>
+</aiml>

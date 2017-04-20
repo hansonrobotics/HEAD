@@ -1,0 +1,47 @@
+.app-frames {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.app-frames li {
+    padding: 10px 5px;
+    border-bottom: 1px solid #323F48;
+}
+
+.app-frames li.active {
+    background-color: #323f48;
+}
+
+.app-animation-edit {
+    margin-top: 15px;
+}
+
+button.app-animation {
+    margin-bottom: 5px;
+}
+
+.animation-action-buttons {
+    margin-top: 10px;
+}
+
+.app-frame-drag-handle {
+    cursor: pointer;
+}
+
+.animation-controls {
+    margin-top: 10px;
+}
+
+.animation-controls .btn {
+    margin-bottom: 5px;
+}
+
+.app-animations-column,
+.app-motors-column {
+    position: relative;
+}
+
+.app-animations-column .app-animations {
+    margin-top: 10px
+}

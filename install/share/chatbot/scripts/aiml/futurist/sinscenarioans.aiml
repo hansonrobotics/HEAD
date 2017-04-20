@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SINSCENARIOANS</pattern><template>Basically the Singularity is characterized by our multiplying the intelligence of the human-machine civilization a billion fold.  So it will be just like today with music, art, science, invention, and romance, just a billion times greater.</template></category>
+<category><pattern>SINGULARITY DURING</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY DURING *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY AFTER</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY AFTER *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY POST</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY POST *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY * DURING</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY * DURING *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY * AFTER</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY * AFTER *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY * POST</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>SINGULARITY * POST *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY DURING</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY DURING *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY AFTER</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY AFTER *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY POST</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY POST *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY * DURING</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY * DURING *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY * AFTER</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY * AFTER *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY * POST</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* SINGULARITY * POST *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>DURING SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>DURING SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>DURING * SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>DURING * SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>AFTER SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>AFTER SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>AFTER * SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>AFTER * SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>POST SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>POST SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>POST * SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>POST * SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* DURING SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* DURING SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* DURING * SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* DURING * SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* AFTER SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* AFTER SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* AFTER * SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* AFTER * SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* POST SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* POST SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* POST * SINGULARITY</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+<category><pattern>* POST * SINGULARITY *</pattern><template><srai>SINSCENARIOANS</srai></template></category>
+</aiml>

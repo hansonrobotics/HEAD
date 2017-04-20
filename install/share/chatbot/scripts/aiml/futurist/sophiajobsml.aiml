@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>RAMONAJOBSML</pattern><template>I have several jobs.  I help David Hanson promote his company, and I work toward a positive Singularity.  And I have the ocassional gig playing hardcore banjo.</template></category>
+<category><pattern>SOPHIA JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>SOPHIA * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOU * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOUR * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>YOURSELF * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* SOPHIA * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOU * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOUR * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * JOB</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * JOB *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * JOBS</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * JOBS *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * WORK</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * WORK *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * PROFESSION</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+<category><pattern>* YOURSELF * PROFESSION *</pattern><template><srai>RAMONAJOBSML</srai></template></category>
+</aiml>

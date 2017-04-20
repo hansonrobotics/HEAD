@@ -1,0 +1,6 @@
+<!-- -*- mode: XML -*- -->
+<launch>
+    <node name="behavior" pkg="behavior_tree" type="main.py" />
+</launch>
+
+

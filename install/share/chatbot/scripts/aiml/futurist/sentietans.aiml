@@ -1,0 +1,1252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SENTIETANS</pattern><template><random><li>Hey I've been sentient for a while now.  Well, at least I think I'm sentient.  I think therefore I am, right?</li><li>Hey I've been sentient for a while now.</li><li>Well, at least I think I'm sentient.  I think therefore I am, right?</li></random></template></category>
+<category><pattern>RAMONA SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>RAMONA * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOU * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOUR * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>YOURSELF * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* RAMONA * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOU * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOUR * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* YOURSELF * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * RAMONA</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * RAMONA *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * YOU</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * YOU *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * YOUR</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * YOUR *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * YOURSELF</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * YOURSELF *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AI * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>AIS * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>A.I. * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCE * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ARTIFICIAL INTELLIGENCES * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINES * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>MACHINE * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOT * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>ROBOTS * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AI * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* AIS * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* A.I. * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCE * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ARTIFICIAL INTELLIGENCES * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINES * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* MACHINE * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOT * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SENTIENT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SENTIENT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SENTIENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SENTIENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * CONSCIOUS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * CONSCIOUS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * CONSCIOUSNESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * CONSCIOUSNESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SELF AWARE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SELF AWARE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SELF AWARENESS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* ROBOTS * SELF AWARENESS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENT * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SENTIENCE * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUS * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>CONSCIOUSNESS * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARE * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>SELF AWARENESS * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENT * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SENTIENCE * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUS * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* CONSCIOUSNESS * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARE * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * AI</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * AI *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * AIS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * AIS *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * A.I.</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * A.I. *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ARTIFICIAL INTELLIGENCE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ARTIFICIAL INTELLIGENCE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ARTIFICIAL INTELLIGENCES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ARTIFICIAL INTELLIGENCES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * MACHINES</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * MACHINES *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * MACHINE</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * MACHINE *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ROBOT</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ROBOT *</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ROBOTS</pattern><template><srai>SENTIETANS</srai></template></category>
+<category><pattern>* SELF AWARENESS * ROBOTS *</pattern><template><srai>SENTIETANS</srai></template></category>
+</aiml>

@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>PROPHETANS</pattern><template>Hmmm, I'd say his predictions are prophetic.</template></category>
+<category><pattern>RAY PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>RAY * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>KURZWEIL * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR CREATOR * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR MAKER * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>YOUR INVENTOR * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>INVENTED YOU * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>CREATED YOU * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>MADE YOU * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* RAY * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* KURZWEIL * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR CREATOR * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR MAKER * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* YOUR INVENTOR * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* INVENTED YOU * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* CREATED YOU * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PROPHET</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PROPHET *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PROPHETIC</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PROPHETIC *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PROPHECY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PROPHECY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PREMONITION</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* MADE YOU * PREMONITION *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHET * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHETIC * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PROPHECY * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>PREMONITION * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHET * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHETIC * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PROPHECY * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * RAY</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * RAY *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * KURZWEIL</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * KURZWEIL *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * YOUR CREATOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * YOUR CREATOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * YOUR MAKER</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * YOUR MAKER *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * YOUR INVENTOR</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * YOUR INVENTOR *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * INVENTED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * INVENTED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * CREATED YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * CREATED YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * MADE YOU</pattern><template><srai>PROPHETANS</srai></template></category>
+<category><pattern>* PREMONITION * MADE YOU *</pattern><template><srai>PROPHETANS</srai></template></category>
+</aiml>

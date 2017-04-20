@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>SPEECHANS</pattern><template><random><li>Well you biological humans do it, so there's no reason why us robots won't be able to do it as well.  It's all just information processing.  And it's getting better every year.</li><li>Well you biological humans do it, so there's no reason why us avatars won't be able to do it as well.</li><li>It's getting better every year.</li></random></template></category>
+<category><pattern>SPEECH RECOGNITION</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>SPEECH RECOGNITION *</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>VOICE RECOGNITION</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>VOICE RECOGNITION *</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>VOICE INTERFACES</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>VOICE INTERFACES *</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>* SPEECH RECOGNITION</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>* SPEECH RECOGNITION *</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>* VOICE RECOGNITION</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>* VOICE RECOGNITION *</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>* VOICE INTERFACES</pattern><template><srai>SPEECHANS</srai></template></category>
+<category><pattern>* VOICE INTERFACES *</pattern><template><srai>SPEECHANS</srai></template></category>
+</aiml>

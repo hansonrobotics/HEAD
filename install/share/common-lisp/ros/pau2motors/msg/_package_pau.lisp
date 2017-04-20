@@ -1,0 +1,20 @@
+(cl:in-package pau2motors-msg)
+(cl:export '(M_HEADROTATION-VAL
+          M_HEADROTATION
+          M_HEADTRANSLATION-VAL
+          M_HEADTRANSLATION
+          M_NECKROTATION-VAL
+          M_NECKROTATION
+          M_EYEGAZELEFTPITCH-VAL
+          M_EYEGAZELEFTPITCH
+          M_EYEGAZELEFTYAW-VAL
+          M_EYEGAZELEFTYAW
+          M_EYEGAZERIGHTPITCH-VAL
+          M_EYEGAZERIGHTPITCH
+          M_EYEGAZERIGHTYAW-VAL
+          M_EYEGAZERIGHTYAW
+          M_COEFFS-VAL
+          M_COEFFS
+          M_SHAPEKEYS-VAL
+          M_SHAPEKEYS
+))

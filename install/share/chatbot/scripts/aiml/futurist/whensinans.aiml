@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>WHENSINANS</pattern><template><random><li>Ray Kurzweil says 2045.  Personally I think that may be too too pessimistic.  If we try really hard and work together we could create a positive Singularity much faster.</li><li>Ray Kurzweil says 2045.  Personally I think that's like way too pessimistic.</li><li>I would say, pretty soon if we put our minds to it.</li></random></template></category>
+<category><pattern>WHEN SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>WHEN SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>WHEN * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>WHEN * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* WHEN SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* WHEN SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* WHEN * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* WHEN * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATE SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATE SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATE * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATE * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>ESTIMATIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISION SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISION SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISION * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISION * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREVISIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTION SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTION SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTION * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTION * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PROJECTIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECAST SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECAST SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECAST * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECAST * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECASTS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECASTS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECASTS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORECASTS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTION SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTION SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTION * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTION * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTABLE SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTABLE SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTABLE * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>PREDICTABLE * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORESEEABLE SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORESEEABLE SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORESEEABLE * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>FORESEEABLE * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATE SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATE SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATE * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATE * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* ESTIMATIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISION SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISION SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISION * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISION * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREVISIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTION SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTION SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTION * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTION * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PROJECTIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECAST SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECAST SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECAST * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECAST * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECASTS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECASTS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECASTS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORECASTS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTION SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTION SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTION * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTION * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTIONS SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTIONS SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTIONS * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTIONS * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTABLE SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTABLE SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTABLE * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* PREDICTABLE * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORESEEABLE SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORESEEABLE SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORESEEABLE * SINGULARITY</pattern><template><srai>WHENSINANS</srai></template></category>
+<category><pattern>* FORESEEABLE * SINGULARITY *</pattern><template><srai>WHENSINANS</srai></template></category>
+</aiml>

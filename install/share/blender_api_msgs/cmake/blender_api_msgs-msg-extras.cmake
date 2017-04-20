@@ -1,0 +1,2 @@
+set(blender_api_msgs_MESSAGE_FILES "msg/GetAPIVersion.msg;msg/AvailableSomaStates.msg;msg/AvailableEmotionStates.msg;msg/AvailableGestures.msg;msg/AvailableVisemes.msg;msg/EmotionState.msg;msg/EmotionStates.msg;msg/Gesture.msg;msg/Gestures.msg;msg/SetGesture.msg;msg/SomaState.msg;msg/SomaStates.msg;msg/Target.msg;msg/Viseme.msg;msg/Visemes.msg;msg/BlinkCycle.msg;msg/SaccadeCycle.msg")
+set(blender_api_msgs_SERVICE_FILES "srv/SetParam.srv;srv/GetParam.srv;srv/GetAnimationLength.srv")

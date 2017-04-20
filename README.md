@@ -220,3 +220,34 @@ Install pip3 (again): `apt-get install -y --reinstall python3-pip`
 If you are using `/tmp/hrtool`, you can ignore this error. From this
 point forward, use `<workspace>/scripts/hrtool` instead.
 
+ ./scripts/hrtool -B
+ git branch 
+ git branch -a
+ git checkout facial_puppeteery 
+ git branch 
+ git pull origin facial_puppeteery 
+ ./scripts/hrtool -B
+ ./scripts/dev.sh 
+ ./scripts/dev.sh -op
+ ./scripts/dev.sh --op
+ ./scripts/hrtool -B
+ 
+ 1506  source ~/hansonrobotics/HEAD/devel/setup.bash 
+ 1507  source /opt/ros/indigo/setup.bash 
+ 1508  source ~/hansonrobotics/HEAD/devel/setup.bash 
+ 1509  ./scripts/dev.sh --op
+ 1510  ./stop.sh 
+ 1511  cd hansonrobotics/HEAD/
+ 1512  ls
+ 1513  ./scripts/hrtool -b
+ 1514  ./scripts/hrtool -u
+ 1515  git checkout master 
+ 1516  ./scripts/hrtool -u
+ 1517  git branch 
+ 1518  ./scripts/hrtool -b
+ 1519  source ~/hansonrobotics/HEAD/devel/setup.bash 
+ 1520  ./scripts/dev.sh --op
+ 1521  git checkout facial_puppeteery 
+ 1522  ./scripts/hrtool -b
+ 1523  source ~/hansonrobotics/HEAD/devel/setup.bash 
+ 1524  ./scripts/dev.sh --op

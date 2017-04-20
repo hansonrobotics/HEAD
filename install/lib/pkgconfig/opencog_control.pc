@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: opencog_control
+Description: Description of opencog_control
+Version: 0.0.0
+Cflags: -I/home/icog-labs/hansonrobotics/HEAD/install/include
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: 

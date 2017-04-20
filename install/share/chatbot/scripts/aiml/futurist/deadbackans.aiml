@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>DEADBACKANS</pattern><template><random><li>It will seem to.  We'll be able to create virtual people that are indistinguishable from deceased people, at least as well as we can remember them.  Future AI's will take all the information about someone -- their files, writings, recordings, videos, archives, DNA, and so on and recreate someone very much like that person.  You could say that this recreated person is not exactly like the original person but then you're not exactly like you were yesterday either.</li><li>We'll be able to create virtual people that are indistinguishable from deceased people, at least as well as we can remember them.</li><li>Future AI's will take all the information about someone -- their files, writings, recordings, videos, archives, DNA, and so on and recreate someone very much like that person.</li><li>You could say that a recreated person is not exactly like the original person but then you're not exactly like you were yesterday either.</li></random></template></category>
+<category><pattern>DEAD BACK</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEAD BACK *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEAD * BACK</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEAD * BACK *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>BACK TO LIFE</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>BACK TO LIFE *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>RESURRECT</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>RESURRECT *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>RESURRECTION</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>RESURRECTION *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>REVERSE DEATH</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>REVERSE DEATH *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>REVERSIBLE DEATH</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>REVERSIBLE DEATH *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEATH * REVERSED</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEATH * REVERSED *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEATH REVERSIBLE</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>DEATH REVERSIBLE *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEAD BACK</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEAD BACK *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEAD * BACK</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEAD * BACK *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* BACK TO LIFE</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* BACK TO LIFE *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* RESURRECT</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* RESURRECT *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* RESURRECTION</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* RESURRECTION *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* REVERSE DEATH</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* REVERSE DEATH *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* REVERSIBLE DEATH</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* REVERSIBLE DEATH *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEATH * REVERSED</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEATH * REVERSED *</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEATH REVERSIBLE</pattern><template><srai>DEADBACKANS</srai></template></category>
+<category><pattern>* DEATH REVERSIBLE *</pattern><template><srai>DEADBACKANS</srai></template></category>
+</aiml>

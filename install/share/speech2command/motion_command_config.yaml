@@ -1,0 +1,131 @@
+emotion:
+  - pattern: [happy, 高兴, 开心]
+    params:
+      name: happy
+      magnitude: 1
+      duration: 6
+  - pattern: [recoil]
+    params:
+      name: recoil
+      magnitude: 1
+      duration: 6
+  - pattern: [irritated, irritate]
+    params:
+      name: irritated
+      magnitude: 1
+      duration: 6
+  - pattern: [surprise, 惊讶]
+    params:
+      name: surprised
+      magnitude: 1
+      duration: 6
+  - pattern: [sad, 悲伤, 伤心]
+    params:
+      name: sad
+      magnitude: 1
+      duration: 6
+  - pattern: [confuse, confused, 疑惑]
+    params:
+      name: confused
+      magnitude: 1
+      duration: 6
+  - pattern: [worry, worried, 担心]
+    params:
+      name: worry
+      magnitude: 1
+      duration: 6
+  - pattern: [bored, bore, 无聊]
+    params:
+      name: bored
+      magnitude: 1
+      duration: 6
+  - pattern: [engage, engaged]
+    params:
+      name: engaged
+      magnitude: 1
+      duration: 6
+  - pattern: [amused, amuse]
+    params:
+      name: amused
+      magnitude: 1
+      duration: 6
+  - pattern: [comprehending, comprehend]
+    params:
+      name: comprehending
+      magnitude: 1
+      duration: 6
+  - pattern: [afraid, 害怕]
+    params:
+      name: afraid
+      magnitude: 1
+      duration: 6
+
+gesture:
+  - pattern: [blink, 眨眼]
+    params:
+      name: blink
+      repeat: 1
+      speed: 1
+      magnitude: 1
+  - pattern: [nod, 点头]
+    params:
+      name: nod-1
+      repeat: 1
+      speed: 1
+      magnitude: 1
+  - pattern: [shake, 摇头]
+    params:
+      name: shake-2
+      repeat: 1
+      speed: 1
+      magnitude: 1
+  - pattern: [think, 思考]
+    params:
+      name: blink-brows
+      repeat: 1
+      speed: 1
+      magnitude: 1
+  - pattern: [yawn, 打哈欠]
+    params:
+      name: yawn-1
+      repeat: 1
+      speed: 1
+      magnitude: 1
+
+turn:
+  - pattern: [turn center, 居中]
+    params:
+      x: 1
+  - pattern: [turn right, 右转]
+    params:
+      y: 1
+  - pattern: [turn left, 左转]
+    params:
+      y: -1
+  - pattern: [turn up, 抬头]
+    params:
+      x: 1
+      z: 0.5
+  - pattern: [turn down, 低头]
+    params:
+      x: 1
+      z: -0.5
+
+look:
+  - pattern: [look center, 看前面, 看前方]
+    params:
+      x: 1
+  - pattern: [look right, 看右边]
+    params:
+      y: 1
+  - pattern: [look left, 看左边]
+    params:
+      y: -1
+  - pattern: [look up, 看上面]
+    params:
+      x: 1
+      z: 0.5
+  - pattern: [look down, 看下面]
+    params:
+      x: 1
+      z: -0.5

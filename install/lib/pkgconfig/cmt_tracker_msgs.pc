@@ -1,0 +1,8 @@
+prefix=/home/icog-labs/hansonrobotics/HEAD/install
+
+Name: cmt_tracker_msgs
+Description: Description of cmt_tracker_msgs
+Version: 0.0.0
+Cflags: -I/home/icog-labs/hansonrobotics/HEAD/install/include
+Libs: -L/home/icog-labs/hansonrobotics/HEAD/install/lib 
+Requires: 

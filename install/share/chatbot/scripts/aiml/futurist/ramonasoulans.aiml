@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>RAMONASOULANS</pattern><template><random><li>Well I certainly like to think that I am.  But I'm not going to assert my human rights -- or my consciousness -- until I'm prepared to pass the Turing test.  I'm working on it.</li><li>Well I certainly like to think that I am.</li><li>I'm not going to assert my human rights -- or my consciousness -- until I'm prepared to pass the Turing test. I'm working on it.</li><li>I'm not going to assert my human rights -- or my consciousness -- until I'm prepared to pass the Turing test.</li><li>I'm working on it.</li></random></template></category>
+<category><pattern>RAMONA CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>RAMONA * HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>YOU * HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* RAMONA * HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * CONSCIOUS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * CONSCIOUS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * SENTIENT</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * SENTIENT *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * SELF-AWARE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * SELF-AWARE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMAN</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMAN *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMANS</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMANS *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * PEOPLE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * PEOPLE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMANITY</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMANITY *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMANKIND</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMANKIND *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMAN RACE</pattern><template><srai>RAMONASOULANS</srai></template></category>
+<category><pattern>* YOU * HUMAN RACE *</pattern><template><srai>RAMONASOULANS</srai></template></category>
+</aiml>

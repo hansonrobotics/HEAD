@@ -1,0 +1,106 @@
+<!--
+ - tracker.launch
+ -
+ - Launch file for pi_vision face tracking, with inputs from two
+ - cameras: a (stationary) body camera, and an eye camera (which
+ - moves with the eyes, and thus has a constantly changing
+ - field-of-view).
+ -
+-->
+<launch>
+    <node pkg="usb_cam" type="usb_cam_node" name="camera">
+      <param name="video_device" value="/dev/video2"/>
+      <param name="pixel_format" value="yuyv"/>
+      <!-- Image size and type -->
+      <param name="width" value="640"/>
+      <param name="height" value="480"/>
+    </node>
+
+    <node pkg="usb_cam" type="usb_cam_node" name="eye_camera">
+      <param name="video_device" value="/dev/video1"/>
+      <param name="pixel_format" value="yuyv"/>
+      <!-- Image size and type -->
+      <param name="width" value="640"/>
+      <param name="height" value="480"/>
+    </node>
+
+    <arg name="auto_face_tracking" default="True" />
+    <node pkg="pi_face_tracker" name="body_face_tracker"
+          type="face_tracker.py" output="screen">
+
+        <!--remap the topics if using multiple cameras -->
+        <remap from="input_rgb_image" to="camera/image_raw" />
+        <remap from="output_image" to="camera/pi_face_tracker/image" />
+
+        <param name="auto_face_tracking" value="$(arg auto_face_tracking)" />
+
+        <param name="camera_name" value="camera" />
+
+        <rosparam>
+          use_haar_only: False
+          use_depth_for_detection: False
+          use_depth_for_tracking: False
+          auto_min_features: True
+          min_features: 50
+          abs_min_features: 6
+          good_feature_distance: 5
+          add_feature_distance: 10
+          std_err_xy: 3.0
+          max_mse: 10000
+          show_text: True
+          show_features: True
+          fov_width: 1.094
+          fov_height: 1.094
+          max_face_size: 0.28
+          expand_roi: 1.02
+          flip_image: True
+          feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
+          surf_hessian_quality: 100
+        </rosparam>
+
+        <param name="cascade_frontal_alt"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+        <param name="cascade_frontal_alt2"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt2.xml" />
+  </node>
+  <node pkg="pi_face_tracker" name="eye_face_tracker"
+        type="face_tracker.py" output="screen">
+
+        <!--remap the topics if using multiple cameras -->
+        <remap from="input_rgb_image" to="eye_camera/image_raw" />
+        <remap from="output_image" to="eye_camera/pi_face_tracker/image" />
+
+        <param name="auto_face_tracking" value="$(arg auto_face_tracking)" />
+
+        <param name="camera_name" value="eye_camera" />
+
+        <rosparam>
+          use_haar_only: True
+          face_min_attention: 0.985
+          face_haar_frames_needed: 1
+          face_time_to_keep: 0
+          use_depth_for_detection: False
+          use_depth_for_tracking: False
+          auto_min_features: True
+          min_features: 50
+          abs_min_features: 6
+          good_feature_distance: 5
+          add_feature_distance: 10
+          std_err_xy: 3.0
+          max_mse: 10000
+          show_text: True
+          show_features: True
+          fov_width: 1.094
+          fov_height: 1.094
+          max_face_size: 0.28
+          expand_roi: 1.02
+          flip_image: True
+          feature_type: 0 <!-- 0 = Good Features To Track, 1 = SURF -->
+          surf_hessian_quality: 100
+        </rosparam>
+
+        <param name="cascade_frontal_alt"
+               value="$(find pi_face_tracker)/params/haarcascade_frontalface_alt.xml" />
+
+  </node>
+</launch>

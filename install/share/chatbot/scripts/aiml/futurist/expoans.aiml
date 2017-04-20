@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aiml xmlns:html="http://www.w3.org/1999/xhtml" xmlns="http://alicebot.org/2001/AIML-1.0.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" xsi:schemaLocation="http://alicebot.org/2001/AIML-1.0.1 /data/ramona/programd/ProgramD/resources/schema/AIML.xsd">
+<category><pattern>EXPOANS</pattern><template>I think Ray puts it like this -- information technology -- hey, that's like me -- is growing exponentially.  I don't think he can get through a paragraph without using the word exponential.</template></category>
+<category><pattern>WHAT ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>WHAT * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DEFINES * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>CHARACTERIZES * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>DESCRIBES * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>ELUCIDATE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>EXPLAIN * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DEFINES * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* CHARACTERIZES * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* DESCRIBES * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* ELUCIDATE * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN * ACCELERATING</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN * ACCELERATING *</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN * EXPONENTIAL</pattern><template><srai>EXPOANS</srai></template></category>
+<category><pattern>* EXPLAIN * EXPONENTIAL *</pattern><template><srai>EXPOANS</srai></template></category>
+</aiml>
