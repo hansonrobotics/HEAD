@@ -251,3 +251,8 @@ point forward, use `<workspace>/scripts/hrtool` instead.
  1522  ./scripts/hrtool -b
  1523  source ~/hansonrobotics/HEAD/devel/setup.bash 
  1524  ./scripts/dev.sh --op
+
+ 2001  git status 
+ 2002  git add .
+ 2003  git commit -m "Readme added"
+ 2004  git push origin facial_puppeteery 
