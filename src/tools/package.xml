@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>testing_tools</name>
-  <version>0.0.1</version>
-  <description>The testing_tools package</description>
+  <name>tools</name>
+  <version>0.1.0</version>
+  <description>The tools package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
