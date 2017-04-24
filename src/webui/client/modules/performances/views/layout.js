@@ -139,7 +139,6 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         }
                     } else {
                         this.setCurrentPerformance(null)
-                        this.performancesView.back()
                     }
                 }
             },
