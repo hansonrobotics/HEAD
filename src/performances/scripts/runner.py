@@ -403,6 +403,9 @@ class Runner:
                             self.topics['events'].publish(Event('finished', run_time))
                             break
 
+                        if self.paused:
+                            continue
+
                     running = False
                     # checks if any nodes still running
                     for k, node in enumerate(nodes):
