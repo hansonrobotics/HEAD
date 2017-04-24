@@ -211,6 +211,7 @@ class Runner:
             with open(p, 'r') as f:
                 timeline = yaml.load(f.read())
                 timeline['id'] = id
+                timeline['name'] = os.path.basename(id)
                 timeline['path'] = os.path.dirname(id)
                 self.validate_timeline(timeline)
         return timeline
