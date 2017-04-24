@@ -345,3 +345,12 @@ span.select2-selection.select2-selection--single {
 .modal-dialog {
     margin-top: 70px;
 }
+
+.button-list {
+    /* remove whitespaces */
+    font-size: 0;
+}
+
+.button-list .btn {
+    margin: 0 5px 5px 0;
+}
