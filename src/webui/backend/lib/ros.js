@@ -1,4 +1,4 @@
-var ROSLIB = require('roslib'),
+let ROSLIB = require('roslib'),
     url = 'ws://localhost:9090',
     ros = new ROSLIB.Ros({
         url: url
@@ -20,7 +20,7 @@ ros.on('close', function() {
     console.log('Connection to websocket server closed.')
 })
 
-var self = module.exports = {
+let self = module.exports = {
     instance: ros,
     services: {
         updateMotors: new ROSLIB.Service({
@@ -44,15 +44,15 @@ var self = module.exports = {
                 name: '/performances/load',
                 messageType: 'performances/Load'
             }),
-            load_sequence: new ROSLIB.Service({
-                ros: ros,
-                name: '/performances/load_sequence',
-                messageType: 'performances/LoadSequence'
-            }),
             load_performance: new ROSLIB.Service({
                 ros: ros,
                 name: '/performances/load_performance',
                 messageType: 'performances/LoadPerformance'
+            }),
+            unload: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/unload',
+                messageType: 'std_srvs/Trigger'
             }),
             current: new ROSLIB.Service({
                 ros: ros,
@@ -107,8 +107,6 @@ var self = module.exports = {
         this.services.updateMotors.callService({
             robot_name: robot_name,
             motors: JSON.stringify(motors)
-        }, function(res) {
-            console.log(res)
         })
     },
     lookAt: function(point) {
@@ -121,16 +119,25 @@ var self = module.exports = {
         }))
     },
     performances: {
-        reloadProperties: function () {
-            self.services.performances.reload_properties.callService();
+        reloadProperties: function(options) {
+            options = options || {}
+            self.services.performances.reload_properties.callService({},
+                function() {
+                    if (options.success) options.success()
+                }, function() {
+                    if (options.error) options.error()
+                })
         },
-        setProperties: function (id, properties, options) {
+        setProperties: function(id, properties, options) {
+            options = options || {}
             self.services.performances.set_properties.callService({
                 id: id,
                 properties: JSON.stringify(properties)
-            }, function (response) {
-                if (options.success) options.success(response);
-            });
+            }, function(response) {
+                if (options.success) options.success(response)
+            }, function() {
+                if (options.error) options.error()
+            })
         }
     },
     updateExpressions: function(robot_name) {

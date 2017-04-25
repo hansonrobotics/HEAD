@@ -2,14 +2,25 @@ let express = require('express'),
     router = express.Router(),
     ros = require('../lib/ros')
 
+router.post('/reload_properties', function(req, res) {
+    ros.performances.reloadProperties({
+        success: function() {
+            res.json({success: true})
+        },
+        error: function() {
+            res.json({success: false})
+        }
+    })
+})
+
 router.post('/set_properties', function(req, res) {
-    ros.services.performances.load.callService({
-        id: req.body['id'],
-        properties: req.body['properties']
-    }, function(response) {
-        res.json({success: response.success})
-    }, function() {
-        res.json({success: false})
+    ros.performances.setProperties(req.body['id'], req.body['properties'], {
+        success: function(response) {
+            res.json({success: response.success})
+        },
+        error: function() {
+            res.json({success: false})
+        }
     })
 })
 
@@ -24,19 +35,6 @@ router.post('/load', function(req, res) {
     })
 })
 
-router.post('/load_sequence', function(req, res) {
-    let ids = req.body['ids']
-    ids = ids.constructor === Array ? ids : (ids ? [ids] : [])
-    ros.services.performances.load_sequence.callService({
-        ids: ids
-    }, function(response) {
-        let success = response.success
-        res.json({success: success, performances: success ? JSON.parse(response.performances) : null})
-    }, function() {
-        res.json({success: false, performances: null})
-    })
-})
-
 router.post('/load_performance', function(req, res) {
     ros.services.performances.load_performance.callService({
         performance: JSON.stringify(req.body['performance'])
@@ -45,6 +43,15 @@ router.post('/load_performance', function(req, res) {
     }, function() {
         res.json({success: false})
     })
+})
+
+router.post('/unload', function(req, res) {
+    ros.services.performances.unload.callService({},
+        function() {
+            res.json({success: true})
+        }, function() {
+            res.json({success: false})
+        })
 })
 
 router.post('/run_by_name', function(req, res) {
@@ -72,7 +79,7 @@ router.get('/current', function(req, res) {
         res.json({
             running: response.running,
             current_time: response.current_time,
-            performances: JSON.parse(response.performances)
+            performance: JSON.parse(response.performance)
         })
     }, function() {
         res.json({
@@ -109,13 +116,6 @@ router.post('/pause', function(req, res) {
     })
 })
 
-router.post('/pause', function(req, res) {
-    ros.services.performances.pause.callService({}, function(response) {
-        res.json({success: response.success, time: response.time})
-    }, function() {
-        res.json({success: false, time: null})
-    })
-})
 
 router.post('/stop', function(req, res) {
     ros.services.performances.stop.callService({}, function(response) {
@@ -124,6 +124,5 @@ router.post('/stop', function(req, res) {
         res.json({success: false, time: null})
     })
 })
-
 
 module.exports = router

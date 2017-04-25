@@ -230,10 +230,10 @@ app.post('/performance/variables/:path(*)?', function(req, res) {
 // recursively require and use all routers
 let routers = require('./routers'),
     requireRouters = function(routers) {
-        _.forIn(routers, function(val) {
+        _.forIn(routers, function(val, key) {
             switch (typeof val) {
                 case 'function':
-                    app.use('/api', val)
+                    app.use(path.join('/api', key), val)
                     break
                 case 'object':
                     requireRouters(val)

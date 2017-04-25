@@ -38,7 +38,7 @@
             <span class="input-group-btn">
                     <button class="app-send-button btn btn-primary">Send</button>
                     <button class="app-shut-up-button btn btn-danger">ShutUp</button>
-                    <button class="app-rate-good-button btn btn-default btn-sm"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                    <button class="app-rate-good-button btn btn-default"><span class="glyphicon glyphicon-thumbs-up"></span></button>
                     <button class="app-rate-bad-button btn-default btn"><span
                             class="glyphicon glyphicon-thumbs-down"></span></button>
                     <button class="app-record-button btn btn-info"><i class="fa fa-microphone"></i></button>
