@@ -38,7 +38,7 @@ define(['application', "marionette", "./motor", 'jquery', 'jquery-ui'],
 
                 $(document).on('click', '.app-select-group-button', function () {
                     var groupMotors = $(this).closest('.app-motor-container')
-                        .nextUntil(".app-first-in-motor-group").andSelf();
+                        .nextUntil(".app-first-in-motor-group").addBack();
 
                     var selected = $('.glyphicon-ok', groupMotors).closest('.app-select-motor-button');
                     if (selected.length > 0)

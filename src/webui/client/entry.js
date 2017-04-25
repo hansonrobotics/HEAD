@@ -14,6 +14,6 @@ require(['eventemitter2', 'application',
             r.keys().forEach(r)
         }
 
-        requireAll(require.context("./extensions", true, /.*/))
+        requireAll(require.context("extensions", true, /.*/))
         app.start()
     })

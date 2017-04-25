@@ -125,7 +125,8 @@ def set_weights(param, lang, sid):
                 weights[characters[k].id] = v
             except ValueError:
                 weights[k] = v
-    except Exception:
+    except Exception as ex:
+        logger.error(ex)
         return False, "Wrong weight format"
 
     sess.sdata.weights = weights
@@ -192,14 +193,14 @@ def preprocessing(question, lang, session):
 
     reduction = get_character('reduction')
     if reduction is not None:
-        response = reduction.respond(question, lang, session, query=True)
+        response = reduction.respond(question, lang, session, query=True, request_id=request_id)
         reducted_text = response.get('text')
         if reducted_text:
             question = reducted_text
 
     return question
 
-def _ask_characters(characters, question, lang, sid, query):
+def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs):
     sess = session_manager.get_session(sid)
     if sess is None:
         return
@@ -221,7 +222,7 @@ def _ask_characters(characters, question, lang, sid, query):
 
     control = get_character('control')
     if control is not None:
-        _response = control.respond(_question, lang, sess, query)
+        _response = control.respond(_question, lang, sess, query, request_id)
         _answer = _response.get('text')
         if _answer == '[tell me more]':
             cross_trace.append((control.id, 'control', _response.get('trace') or 'No trace'))
@@ -325,7 +326,7 @@ def _ask_characters(characters, question, lang, sid, query):
             cross_trace.append((character.id, stage, 'Disabled'))
             return False, None, None
 
-        response = character.respond(_question, lang, sess, query)
+        response = character.respond(_question, lang, sess, query, request_id)
         answer = str_cleanup(response.get('text', ''))
         trace = response.get('trace')
 
@@ -461,7 +462,8 @@ def _ask_characters(characters, question, lang, sid, query):
     if not query and hit_character is not None:
         sess.add(question, answer, AnsweredBy=hit_character.id,
                     User=user, BotName=botname, Trace=cross_trace,
-                    Revision=REVISION, Lang=lang, ModQuestion=_question)
+                    Revision=REVISION, Lang=lang, ModQuestion=_question,
+                    RequestId=request_id,Marker=kwargs.get('marker'))
 
         sess.last_used_character = hit_character
 
@@ -499,7 +501,7 @@ def get_responding_characters(lang, sid):
             generic.set_properties(character.get_properties())
             responding_characters.append(generic)
     else:
-        logger.warn("Generic character is not found")
+        logger.info("Generic character is not found")
 
     responding_characters = sorted(responding_characters, key=lambda x: x.level)
 
@@ -519,12 +521,11 @@ def rate_answer(sid, idx, rate):
     return True
 
 
-def ask(question, lang, sid, query=False):
+def ask(question, lang, sid, query=False, request_id=None, **kwargs):
     """
     return (response dict, return code)
     """
     response = {'text': '', 'emotion': '', 'botid': '', 'botname': ''}
-    response['yousaid'] = question
 
     sess = session_manager.get_session(sid)
     if sess is None:
@@ -538,10 +539,17 @@ def ask(question, lang, sid, query=False):
         logger.error("Wrong characer name")
         return response, WRONG_CHARACTER_NAME
 
+    # Handle commands
+    if question == ':reset':
+        session_manager.dump(sid)
+        session_manager.reset_session(sid)
+        logger.warn("Session {} is reset by :reset".format(sid))
     for c in responding_characters:
         if c.is_command(question):
-            response.update(c.respond(question, lang, sess, query))
+            response.update(c.respond(question, lang, sess, query, request_id))
             return response, SUCCESS
+
+    response['yousaid'] = question
 
     sess.set_characters(responding_characters)
     if RESET_SESSION_BY_HELLO and question:
@@ -549,7 +557,7 @@ def ask(question, lang, sid, query=False):
         if 'hi' in question_tokens or 'hello' in question_tokens:
             session_manager.dump(sid)
             session_manager.reset_session(sid)
-            logger.warn("Session is reset by greeting")
+            logger.warn("Session {} is reset by greeting".format(sid))
     if question and question.lower().strip() in ["what's new"]:
         sess.last_used_character = None
         sess.open_character = None
@@ -557,7 +565,7 @@ def ask(question, lang, sid, query=False):
 
     logger.info("Responding characters {}".format(responding_characters))
     _response = _ask_characters(
-        responding_characters, question, lang, sid, query)
+        responding_characters, question, lang, sid, query, request_id, **kwargs)
 
     if not query:
         # Sync session data
@@ -578,12 +586,6 @@ def ask(question, lang, sid, query=False):
                     c.check_reset_topic(sid)
                 except Exception:
                     continue
-
-        if 'goodbye' in question.lower().split() or \
-            'see you' in question.lower().split() or \
-            'bye' in question.lower().split():
-            session_manager.remove_session(sid)
-            logger.info("Session {} is removed by goodbye".format(sid))
 
     if _response is not None and _response.get('text'):
         response.update(_response)

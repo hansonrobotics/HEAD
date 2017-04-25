@@ -5,7 +5,7 @@ module.exports = Backbone.Collection.extend({
         return this.find(function(item) {
             let match = time >= offset
             offset += item.get('performance').getDuration()
-            return match && time < offset
+            return match
         })
     }
 })

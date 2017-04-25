@@ -1,5 +1,6 @@
 define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'underscore', './node_select',
-        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider', 'select2', 'select2-css'],
+        './node_settings', 'lib/regions/fade_in', '../entities/node', 'jquery', 'jquery-ui', 'lib/crosshair-slider',
+        'select2', 'select2-css', 'scrollbar'],
     function(App, Marionette, template, api, _, NodeSelectView, NodeSettingsView, FadeInRegion, Node, $) {
         return Marionette.View.extend({
             template: template,
@@ -36,14 +37,20 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 'click @ui.deleteButton': 'deleteNode',
                 'click @ui.nodeTypeButtons': 'typeButtonClick'
             },
+            config: {
+                defaultNode: 'speech'
+            },
+            collectionEvents: {
+                'add remove': 'collectionUpdated'
+            },
             initialize: function(options) {
                 this.mergeOptions(options, ['node'])
             },
             onAttach: function() {
-                var self = this
+                let self = this
                 this.ui.nodeTypeButtons.draggable({
                     helper: function() {
-                        var attributes
+                        let attributes
                         if (self.node && self.collection && self.node.get('name') == $(this).data('node-name')) {
                             // Copy current view attributes if node is same
                             attributes = self.node.toJSON()
@@ -54,7 +61,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                                 duration: 1
                             }
                         }
-                        var node = Node.create(attributes)
+                        let node = Node.create(attributes)
                         return $('<span>').attr('data-node-name', node.get('name'))
                             .attr('data-node-id', node.get('id'))
                             .addClass('label app-node').html(node.getTitle())
@@ -72,7 +79,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 if (this.node)
                     this.showSettings(this.node)
                 else
-                    this.hideSettings()
+                    this.createNode(this.config.defaultNode)
 
                 this.initResponsive()
             },
@@ -81,7 +88,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 this.initTabScrolling(this.ui.optionsTabBar, this.ui.optionsTabs, this.ui.optionsScrollLeft, this.ui.optionsScrollRight)
             },
             initResponsive: function() {
-                var self = this,
+                let self = this,
                     resize = function() {
                         if (self.isDestroyed())
                             $(window).unbind('resize', resize)
@@ -94,14 +101,14 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 $(window).bind('resize', resize)
             },
             initTabScrolling: function(tabBar, tabs, scrollLeft, scrollRight) {
-                var self = this,
+                let self = this,
                     resize = function() {
                         if (self.isDestroyed()) {
                             $(window).off('resize', resize)
                             return
                         }
 
-                        var width = self.getWidthSum(tabs)
+                        let width = self.getWidthSum(tabs)
 
                         if (width > $(tabBar).width()) {
                             $(tabBar).addClass('app-overflow')
@@ -128,7 +135,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
 
                 $(scrollRight).click(eventData, function(e) {
                     $(this).blur()
-                    var max = self.getWidthSum(e.data.tabs) - e.data.tabBar.width()
+                    let max = self.getWidthSum(e.data.tabs) - e.data.tabBar.width()
                     $(e.data.tabs).stop().animate({right: Math.min(parseInt(e.data.tabs.css('right')) + 200, max)})
                 })
 
@@ -141,9 +148,9 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
              * @returns {number}
              */
             getWidthSum: function(tabs) {
-                var width = 0
+                let width = 0
                 $(tabs).each(function() {
-                    var rect = $(this).get(0).getBoundingClientRect()
+                    let rect = $(this).get(0).getBoundingClientRect()
                     if (rect.width) {
                         // `width` is available for IE9+
                         width += rect.width
@@ -155,7 +162,7 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 return width
             },
             hideSettings: function() {
-                var self = this,
+                let self = this,
                     selectView = this.getRegion('select').currentView,
                     settingsView = this.getRegion('settings').currentView
 
@@ -188,20 +195,27 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 this.createNode($(e.target).data('node-name'))
             },
             createNode: function(name) {
-                var node = Node.create({name: name, start_time: 0, duration: 1})
+                let node = Node.create({name: name, start_time: 0, duration: 1})
                 this.showSettings(node)
             },
+            collectionUpdated: function() {
+                if (this.node)
+                    this.updateNode(this.node)
+            },
             updateNode: function(node) {
-                if (this.node != node)
-                    this.stopListening(node)
+                if (this.node !== node)
+                    this.stopListening(this.node)
                 else {
                     if (node.changed['duration']) this.updateIndicators()
-                    if (this.collection.contains(node)) this.ui.deleteButton.fadeIn()
-                    else this.ui.deleteButton.hide()
+
+                    if (this.collection.contains(node))
+                        this.ui.deleteButton.fadeIn()
+                    else
+                        this.ui.deleteButton.fadeOut()
                 }
             },
             updateIndicators: function() {
-                var fps = App.getOption('fps'),
+                let fps = App.getOption('fps'),
                     step = 1 / fps,
                     duration = Number(parseInt(this.node.get('duration') / step) * step).toFixed(2)
 

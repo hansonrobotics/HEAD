@@ -38,9 +38,10 @@ performance pipeline and infrastructure:
 
 ## <a name="tldr"></a>TL;DR
 
-Install dependencies, get source code, build. This may take several hours.
+Install dependencies, get source code, build. This may take several hours for the first time.
 
-`sudo apt-get update && sudo apt-get install wget && wget https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hrtool -O /tmp/hrtool && chmod +x /tmp/hrtool && /tmp/hrtool -iGBy`
+1. `curl https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/get_hr.bash|bash`
+2. `hr install all`
 
 Then run
 

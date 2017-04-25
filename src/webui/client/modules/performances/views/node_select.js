@@ -6,6 +6,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
         return Marionette.View.extend({
             template: template,
             ui: {
+                container: '.app-node-content',
                 nodeProperties: '[data-node-property]',
                 emotionList: '.app-emotion-list',
                 gestureList: '.app-gesture-list',
@@ -53,12 +54,13 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             onAttach: function() {
                 this.initTypes()
                 this.initFields()
+                this.ui.container.perfectScrollbar()
             },
             initTypes: function() {
                 switch (this.model.get('name')) {
                     case 'speech':
                         this.listenTo(this.model, 'change:start_time', this.setTextDuration)
-                        break;
+                        break
                 }
             },
             initFields: function() {
@@ -139,7 +141,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         self.updateGestures(gestures)
                     })
 
-                    this.model.on('change', this.setGestureLength, this)
+                    this.model.on('change', this.setGestureLengthCallback, this)
                 }
 
                 if (this.model.hasProperty('soma')) {
@@ -176,9 +178,9 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }
 
                 if (this.model.hasProperty('rosnode')) {
-                    this.showNodeSettings(this.model.get('schema'))
+                    this.changeRosNode()
                     this.listenTo(this.model, 'change:rosnode', function() {
-                        self.changeRosNode()
+                        self.changeRosNode(true)
                     })
                 }
 
@@ -217,9 +219,11 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                                 if (self.collection && self.collection.contains(node)) {
                                     let attributes = node.toJSON()
                                     delete attributes['id']
+                                    attributes[attr] = val
                                     node = Node.create(attributes)
                                 }
 
+                                self.setGestureLength(node)
                                 node.set(attr, val)
                                 return $('<span>').attr('data-node-name', node.get('name'))
                                     .attr('data-node-id', node.get('id'))
@@ -271,27 +275,26 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             updateSomaStates: function(somas) {
                 this.initList(somas, 'soma', this.ui.somaList)
             },
-            changeRosNode: function() {
+            changeRosNode: function(reset) {
                 let self = this,
                     rosnode = this.model.get('rosnode'),
                     schema = new NodeConfigSchema(rosnode)
 
-                this.model.set('values', {})
+                if (reset) this.model.set('values', {})
+
                 schema.fetch({
                     success: function(model) {
-                        let schema = model.toJSON()
-                        self.model.set('schema', schema)
-                        self.showNodeSettings(schema)
+                        self.showNodeSettings(model)
                     },
                     error: function() {
                         self.model.set('schema', {})
                     }
                 })
             },
-            showNodeSettings: function(schema) {
+            showNodeSettings: function(schemaModel) {
                 let self = this,
-                    nodeConfig = new NodeConfig(this.model.get('rosnode'), true),
-                    values = self.model.get('values')
+                    values = self.model.get('values'),
+                    nodeConfig = new NodeConfig({}, {node_name: this.model.get('rosnode'), readonly: true})
 
                 let updateValues = function() {
                     let currentView = self.getRegion('settingsEditor').currentView
@@ -301,16 +304,17 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         nodeConfig.off('change', updateValues)
                 }
 
-                this.getRegion('settingsEditor').show(new SettingsView({
-                    model: nodeConfig,
-                    schema: schema,
-                    refresh: false
-                }))
-
-                nodeConfig.on('change', updateValues)
                 nodeConfig.fetch({
                     success: function() {
-                        nodeConfig.set(values)
+                        if (values) nodeConfig.set(values)
+
+                        self.getRegion('settingsEditor').show(new SettingsView({
+                            model: nodeConfig,
+                            schemaModel: schemaModel,
+                            refresh: false
+                        }))
+                        
+                        nodeConfig.on('change', updateValues)
                     }
                 })
             },
@@ -322,16 +326,16 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             setTextDuration: function() {
                 let self = this
-                console.log('update')
                 api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function(response) {
                     self.model.set('duration', response.length)
                 })
             },
-            setGestureLength: function() {
-                let self = this
-                api.getAnimationLength(this.model.get('gesture'), function(response) {
-                    self.gestureDuration = response.length
-                    self.model.set('duration', self.gestureDuration / self.model.get('speed'))
+            setGestureLengthCallback: function() {
+                this.setGestureLength(this.model)
+            },
+            setGestureLength: function(node) {
+                api.getAnimationLength(node.get('gesture'), function(response) {
+                    node.set('duration', response.length / node.get('speed'))
                 })
             },
             setTopic: function() {

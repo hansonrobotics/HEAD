@@ -71,8 +71,8 @@ class Node(object):
     def run(self, run_time):
         # ignore the finished nodes
         if self.finished:
-            # don't start but mark as running if node should be running
-            return self.start_time < run_time < self.end_time()
+            return False
+
         if self.started:
             # Time to finish:
             if run_time >= self.end_time():
@@ -378,7 +378,7 @@ class chat_pause(Node):
     def start(self, run_time):
         if 'message' in self.data and self.data['message']:
             self.runner.pause()
-            self.runner.topics['chatbot'].publish(ChatMessage(self.data['message'], 100))
+            self.runner.topics['chatbot'].publish(ChatMessage(utterance=self.data['message'], confidence=100, source='performances'))
 
             def speech_event_callback(event):
                 if event.data == 'stop':

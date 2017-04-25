@@ -1,16 +1,19 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
         'lib/api', 'annyang', 'modules/settings/entities/node_config', 'jquery-ui', 'scrollbar',
-        'scrollbar-css', 'scrollTo', 'font-awesome'],
+        'scrollbar-css', 'scrollTo', 'font-awesome', 'jquery-mousewheel'],
     function(App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition,
              api, annyang, NodeConfig) {
         return Marionette.View.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
             config: {
-                pxPerSec: 70
+                pxPerSec: 70,
+                minPxPerSec: 5,
+                maxPxPerSec: 300,
             },
             ui: {
+                addNewButton: '.app-add-new-button',
                 timelineContainer: '.app-timelines',
                 editContainer: '.app-edit-container',
                 timelineNodes: '.app-timeline-nodes .app-node',
@@ -18,7 +21,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 nodesContainer: '.app-nodes',
                 nodeSettings: '.app-node-settings-container',
                 scrollContainer: '.app-scroll-container',
-                performanceName: '.app-performance-name',
                 saveButton: '.app-save-button',
                 runButton: '.app-run-button',
                 stopButton: '.app-stop-button',
@@ -26,16 +28,16 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 autoPauseButton: '.app-auto-pause-button',
                 resumeButton: '.app-resume-button',
                 loopButton: '.app-loop-button',
-                clearButton: '.app-clear-button',
                 runIndicator: '.app-run-indicator',
-                frameCount: '.app-frame-count',
                 timeIndicator: '.app-current-time div',
                 deleteButton: '.app-delete-button',
                 timeAxis: '.app-time-axis',
                 doneButton: '.app-done-button',
                 editButton: '.app-edit-button',
                 previousButton: '.app-previous-button',
-                nextButton: '.app-next-button'
+                nextButton: '.app-next-button',
+                zoomInButton: '.app-zoom-in-button',
+                zoomOutButton: '.app-zoom-out-button'
             },
             regions: {
                 nodeSettings: {
@@ -46,14 +48,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             events: {
                 'click @ui.nodes': 'nodeClicked',
                 'click @ui.saveButton': 'savePerformances',
-                'keyup @ui.performanceName': 'setPerformanceName',
-                'focusout @ui.performanceName': 'sortPerformances',
                 'click @ui.runButton': 'runAtIndicator',
                 'click @ui.stopButton': 'stop',
                 'click @ui.pauseButton': 'pause',
                 'click @ui.resumeButton': 'resume',
                 'click @ui.timeAxis': 'moveIndicatorCallback',
-                'click @ui.clearButton': 'clearPerformance',
                 'click @ui.deleteButton': 'deletePerformance',
                 'click @ui.doneButton': 'done',
                 'click @ui.loopButton': 'loop',
@@ -61,47 +60,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 'click @ui.editButton': 'editCurrent',
                 'click @ui.previousButton': 'editPrevious',
                 'click @ui.nextButton': 'editNext',
-            },
-            modelEvents: {
-                'change': 'modelChanged'
+                'mousewheel @ui.scrollContainer': 'zoomCallback',
+                'click @ui.zoomInButton': 'zoomIn',
+                'click @ui.zoomOutButton': 'zoomOut'
             },
             initialize: function(options) {
-                let self = this,
-                    loadOptions = {
-                        success: function() {
-                            self.backup()
-                            if (self.autoplay) self.run()
-
-                            if (self.readonly)
-                                self.model.enableSync()
-                            else {
-                                let reload = function() {
-                                    self.model.loadPerformance()
-                                }
-                                self.listenTo(self.model.nodes, 'change add remove', reload)
-                                self.listenTo(self.model.nodes, 'change', self.markChanged)
-                            }
-                        }
-                    }
-
-                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView', 'queue', 'allowEdit',
-                    'queueItem'])
-
-                if (options.sequence instanceof Array) {
-                    this.model = new Performance()
-                    this.model.loadSequence(options.sequence, loadOptions)
-                } else if (this.model) {
-                    if (this.model.id && this.model.nodes.isEmpty()) {
-                        this.model.load(loadOptions)
-                    } else if (this.readonly)
-                        this.model.enableSync()
-                    else
-                        this.model.loadPerformance(loadOptions)
-                } else {
-                    this.model = new Performance()
-                    this.model.fetchCurrent(loadOptions)
-                }
-                this.nodeConfig = new NodeConfig('/performances')
+                let self = this
+                this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
+                    'queue', 'allowEdit', 'queueItem', 'skipLoading'])
+                this.nodeConfig = new NodeConfig({}, {node_name: '/performances'})
                 this.listenTo(this.nodeConfig, 'change', this.reconfigure)
                 this.nodeConfig.fetch()
                 this.configRefreshInterval = setInterval(function() {
@@ -159,11 +126,42 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             setAutoPause: function(val) {
                 this.nodeConfig.save({autopause: val})
             },
+            loadPerformance: function() {
+                let self = this,
+                    loadOptions = {
+                        success: function() {
+                            self.backup()
+                            if (self.autoplay) self.run()
+                            if (!self.readonly) {
+                                let reload = function() {
+                                    self.model.loadPerformance()
+                                }
+                                self.listenTo(self.model.nodes, 'change add remove', reload)
+                                self.listenTo(self.model.nodes, 'change', self.markChanged)
+                            }
+                        }
+                    }
+
+                if (this.model) {
+                    if (this.skipLoading) {
+                        loadOptions.success()
+                    } else if (this.model.id && this.model.nodes.isEmpty()) {
+                        this.model.load(loadOptions)
+                    } else if (!this.readonly)
+                        this.model.loadPerformance(loadOptions)
+                } else {
+                    this.model = new Performance()
+                    this.model.fetchCurrent(loadOptions)
+                }
+            },
             onAttach: function() {
                 let self = this
 
-                if (this.readonly)
+                this.loadPerformance()
+                if (this.readonly) {
                     this.ui.editContainer.hide()
+                    this.ui.timelineContainer.addClass('readonly')
+                }
 
                 this.ui.doneButton.fadeIn()
                 this.ui.scrollContainer.droppable({
@@ -190,15 +188,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (this.readonly) {
                     this.ui.nodesContainer.hide()
                     this.ui.doneButton.hide()
-                    if (!this.queue.length)
-                        this.ui.editButton.hide()
                 } else {
                     this.nodeView = new NodeView({collection: this.model.nodes})
                     this.getRegion('nodeSettings').show(this.nodeView)
                     this.ui.editButton.hide()
                 }
 
-                this.modelChanged()
                 this.ui.scrollContainer.perfectScrollbar()
 
                 let eventCallback = function(msg) {
@@ -209,21 +204,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 }
                 api.topics.performance_events.subscribe(eventCallback)
 
-                let nodeListener = function() {
-                    if (self.model.nodes.isEmpty())
-                        self.ui.clearButton.fadeOut()
-                    else if (!self.readonly)
-                        self.ui.clearButton.fadeIn()
-                }
-
                 this.queueUpdated()
                 this.listenTo(this.queue, 'add remove reset', this.queueUpdated)
-                this.listenTo(this.model.nodes, 'add remove reset', nodeListener)
 
                 // hide delete and clear buttons for new models
                 if (!this.model.get('id')) {
                     this.ui.deleteButton.hide()
-                    this.ui.clearButton.hide()
                 }
 
                 this.listenTo(this.model.nodes, 'add', this.addNode)
@@ -239,6 +225,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     else
                         self.updateTimelineWidth()
                 }
+
                 $(window).on('resize', updateWidth)
 
                 if (this.options.paused)
@@ -248,16 +235,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 else
                     this.stopIndicator()
             },
-            onDestroy: function() {
-                this.model.stop()
-
-                if (this.readonly) this.model.disableSync()
-            },
             queueUpdated: function() {
                 if (!this.isDestroyed()) {
                     if (this.readonly) {
                         $([this.ui.nextButton, this.ui.previousButton]).hide()
-                        if (this.allowEdit && this.queue.length) this.ui.editButton.fadeIn()
+                        if (this.allowEdit) this.ui.editButton.fadeIn()
                         else this.ui.editButton.fadeOut()
                     } else {
                         if (this.queue.length > 1 && this.queueItem) {
@@ -277,6 +259,25 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     }
                 }
             },
+            zoomIn: function() {
+                this.zoom(true, 2)
+            },
+            zoomOut: function() {
+                this.zoom(false, 2)
+            },
+            zoomCallback: function(e) {
+                e.preventDefault()
+                this.zoom(e.deltaY > 0)
+            },
+            zoom: function(magnify, power) {
+                power = power || 1
+                this.config.pxPerSec = Math.max(
+                    this.config.minPxPerSec,
+                    Math.min(this.config.pxPerSec + (magnify ? 10 : -10) * power, this.config.maxPxPerSec))
+                this.updateNodes()
+                this.updateTimelineWidth()
+                this.updateIndicatorTime(this.indicatorTime)
+            },
             removeNodeElements: function() {
                 let self = this
                 this.model.nodes.each(function(node) {
@@ -291,11 +292,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
 
                 this.model.nodes.add(node)
-            },
-            modelChanged: function() {
-                let name = this.model.get('name')
-                if (name != this.ui.performanceName.val())
-                    this.ui.performanceName.val(name)
             },
             initResizable: function(el) {
                 let self = this,
@@ -345,6 +341,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (node.hasProperty('duration'))
                         this.initResizable(el)
                 }
+            },
+            updateNodes: function() {
+                let self = this
+                this.model.nodes.each(function(node) {
+                    self.updateNodeEl(node)
+                })
             },
             /**
              * Updates node element
@@ -455,41 +457,33 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 return this.model.getDuration() * this.config.pxPerSec
             },
             updateTimelineWidth: function() {
-                let width = this.getTimelineWidth(),
+                let timelineWidth = this.getTimelineWidth(),
                     containerWidth = this.ui.timelineContainer.width(),
-                    scaleWidth = Math.max(width, containerWidth),
-                    scale = d3.scaleLinear().domain([0, scaleWidth / this.config.pxPerSec]).range([0, scaleWidth])
+                    width = Math.max(timelineWidth, containerWidth),
+                    scale = d3.scaleLinear().domain([0, width / this.config.pxPerSec]).range([0, width])
 
                 // update axis
-                this.ui.timeAxis.html('').width(scaleWidth)
+                this.ui.timeAxis.html('').width(width)
                 d3.select(this.ui.timeAxis.get(0)).call(d3.axisBottom().scale(scale))
 
-                if (width < containerWidth || !containerWidth)
+                if (timelineWidth < containerWidth || !containerWidth)
                     width = '100%'
 
-                this.ui.timelineContainer.find('.app-timeline-nodes').css('width', scaleWidth)
+                this.ui.timelineContainer.find('.app-timeline-nodes').css('width', width)
                 this.ui.scrollContainer.perfectScrollbar('update')
-            },
-            setPerformanceName: function() {
-                this.model.set('name', this.ui.performanceName.val())
             },
             sortPerformances: function() {
                 this.performances.sort()
             },
             savePerformances: function() {
-                let self = this,
-                    path = ''
+                let self = this
 
-                if (this.performances && this.performances.currentPath)
-                    path = this.performances.currentPath
-
-                this.model.save({path: this.model.get('path') || path}, {
+                this.model.save({}, {
                     success: function(model) {
                         if (self.performances) self.performances.add(model)
                         if (!self.isDestroyed()) {
                             self.readonly = false
                             self.ui.deleteButton.fadeIn()
-                            self.ui.clearButton.fadeIn()
                             self.ui.nodesContainer.fadeIn()
 
                             if (model.get('error')) {
@@ -505,7 +499,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             startIndicator: function(startTime, endTime, callback) {
                 let self = this
-                this.running = true
                 this.paused = false
                 this.ui.runButton.hide()
                 this.ui.resumeButton.hide()
@@ -525,24 +518,37 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         },
                         complete: function() {
                             if (self.isDestroyed()) return
-                            if (typeof callback == 'function')
+                            if (typeof callback === 'function')
                                 callback()
                         }
                     })
             },
-            updateIndicatorTime: function(time) {
-                let left = parseInt(this.ui.runIndicator.css('left'))
-                if (!$.isNumeric(time))
-                    time = parseInt(left) / this.config.pxPerSec
+            indicatorTime: 0,
+            updateIndicatorTime: function(time, dragging) {
+                let position = parseInt(this.ui.runIndicator.css('left')),
+                    width = this.ui.scrollContainer.innerWidth(),
+                    maxScroll = this.model.getDuration() * this.config.pxPerSec - width
 
+                if ($.isNumeric(time)) {
+                    position = time * this.config.pxPerSec
+                    this.ui.runIndicator.stop().animate({left: position})
+                } else
+                    time = parseInt(position) / this.config.pxPerSec
+
+                this.indicatorTime = time
                 this.trigger('change:time', time)
 
-                let step = 1. / App.getOption('fps'),
-                    frameCount = parseInt(time / step)
+                this.ui.timeIndicator.html(time.toFixed(2))
 
-                this.ui.frameCount.html(frameCount)
-                this.ui.timeIndicator.html((frameCount * step).toFixed(2))
-                this.ui.scrollContainer.scrollLeft(Math.max(0, left - this.ui.scrollContainer.innerWidth() * 0.1))
+                if (this.running && !this.paused || !dragging)
+                    this.ui.scrollContainer.scrollLeft(Math.max(0, time * this.config.pxPerSec - this.config.pxPerSec))
+                else {
+                    let current = this.ui.scrollContainer.scrollLeft()
+                    if (position < current + width * 0.2 || position > current + width * 0.8)
+                        this.ui.scrollContainer.stop().scrollLeft(Math.max(0, Math.min(maxScroll,
+                            current + (position - current - width * 0.5) / width * this.config.pxPerSec))
+                        )
+                }
             },
             resetButtons: function() {
                 this.ui.runButton.fadeIn()
@@ -551,7 +557,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.ui.resumeButton.hide()
             },
             pauseIndicator: function(time) {
-                this.paused = true
                 this.ui.runIndicator.stop().css('left', time * this.config.pxPerSec)
                 this.pausePosition = parseInt(this.ui.runIndicator.css('left'))
                 this.updateIndicatorTime()
@@ -563,27 +568,23 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             enableIndicatorDragging: function() {
                 let self = this
+
                 this.ui.runIndicator.draggable({
                     axis: "x",
                     drag: function() {
-                        self.updateIndicatorTime()
+                        self.updateIndicatorTime(null, {dragging: true})
                     },
                     stop: function(event, ui) {
                         let endPixels = self.model.getDuration() * self.config.pxPerSec
                         if (ui.position.left < 0) {
-                            self.ui.runIndicator.animate({left: 0})
                             self.updateIndicatorTime(0)
                         } else if (ui.position.left > endPixels) {
-                            self.ui.runIndicator.animate({left: endPixels})
                             self.updateIndicatorTime(endPixels / self.config.pxPerSec)
                         }
                     }
                 })
             },
             stopIndicator: function() {
-                this.running = false
-                this.paused = false
-                this.ui.runIndicator.stop().css('left', 0)
                 this.enableIndicatorDragging()
                 this.updateIndicatorTime(0)
                 this.resetButtons()
@@ -594,12 +595,13 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.run()
             },
             moveIndicatorCallback: function(e) {
-                this.moveIndicator(Math.min(e.offsetX / this.config.pxPerSec, this.model.getDuration()))
+                this.moveIndicator(Math.min(e.offsetX / this.config.pxPerSec, this.model.getDuration()), {
+                    disableScroll: true
+                })
             },
-            moveIndicator: function(time) {
+            moveIndicator: function(time, options) {
                 if (!this.running || this.paused) {
-                    this.ui.runIndicator.css('left', time * this.config.pxPerSec)
-                    this.updateIndicatorTime(time)
+                    this.updateIndicatorTime(time, options)
                 }
             },
             run: function(startTime, options) {
@@ -658,12 +660,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.ui.loopButton.addClass('active')
                 }
             },
-            /**
-             * Removes all nodes from the performance
-             */
-            clearPerformance: function() {
-                this.model.nodes.reset()
-            },
             deletePerformance: function() {
                 let self = this
 
@@ -671,7 +667,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (result)
                         self.$el.fadeOut(null, function() {
                             self.model.destroy()
-                            self.destroy()
+
+                            if (self.layoutView.queueCollection.length)
+                                self.layoutView.editCurrent()
+                            else
+                                self.layoutView.refreshCurrentPerformance()
                         })
                 })
             },
@@ -682,22 +682,26 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             handleEvents: function(e) {
                 let duration = this.model.getDuration()
-                if (e.event == 'paused') {
+                if (e.event === 'paused') {
+                    this.paused = true
                     this.pauseIndicator(e.time)
                     this.model.b_pause(e)
                     this.queueUpdated()
-                } else if (e.event == 'idle') {
+                } else if (e.event === 'idle') {
+                    this.running = false
+                    this.paused = false
                     this.stopIndicator()
                     this.queueUpdated()
-                } else if (e.event == 'running') {
+                } else if (e.event === 'running') {
+                    this.running = true
                     this.startIndicator(e.time, duration)
                     this.hideEditNav()
-                } else if (e.event == 'resume') {
+                } else if (e.event === 'resume') {
                     this.startIndicator(e.time, duration)
                     this.hideEditNav()
-                } else if (e.event == 'chat')
+                } else if (e.event === 'chat')
                     this.enableChat()
-                else if (e.event == 'chat_end')
+                else if (e.event === 'chat_end')
                     this.disableChat()
             },
             enableChat: function() {
