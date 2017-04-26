@@ -39,6 +39,10 @@ class Node(object):
                 if start_time > node.start_time:
                     # Start time should be before or on node starting
                     node.finished = True
+
+                    if start_time < node.end_time():
+                        node.started = True
+
                 return node
         print "Wrong node description"
 
@@ -71,7 +75,7 @@ class Node(object):
     def run(self, run_time):
         # ignore the finished nodes
         if self.finished:
-            return False
+            return False if not self.started else run_time < self.end_time()
 
         if self.started:
             # Time to finish:
