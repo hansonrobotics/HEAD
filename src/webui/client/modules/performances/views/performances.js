@@ -203,7 +203,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
 
                 if (!this.readonly)
                     this.ui.tabs.append(addNewTab)
-                this.ui.dirHeader.html((this.currentPath || 'Performances').replace('/', ' / '))
+                this.ui.dirHeader.html((this.currentPath || 'Performances').replace(/\//g, ' / '))
             },
             getCurrentDirs: function() {
                 let self = this,
@@ -302,9 +302,9 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         this.ui.settingsButton.show()
 
                     if (this.currentPerformance) {
-                        this.ui.dirHeader.html(id)
+                        this.ui.dirHeader.html(id.replace(/\//g, ' / '))
                         this.listenTo(this.currentPerformance, 'change:id', function() {
-                            self.ui.dirHeader.html(self.currentPerformance.id)
+                            self.ui.dirHeader.html(self.currentPerformance.id.replace(/\//g, ' / '))
                         })
                         this.ui.nav.slideUp()
                         this.ui.backButton.show()

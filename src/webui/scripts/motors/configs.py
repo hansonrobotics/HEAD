@@ -4,6 +4,7 @@ Creates confg from motor settings page
 import copy
 import math
 import json
+import rospy
 
 class ConfigError(Exception):
     pass
@@ -90,6 +91,7 @@ class Configs:
     def parseMotors(self,motors):
         for i, m in enumerate(motors):
             if not 'hardware' in m.keys():
+                rospy.logerr('Cant parse motor {}'.formate(str(m)))
                 continue
             self._add_motor(m)
             self._add_pololu(m)
@@ -147,7 +149,7 @@ class Configs:
     def _get_pau(self,m):
         p = copy.deepcopy(self._PAU_TPL)
         # Parsers
-        if not m['parser']:
+        if not ('parser' in m.keys() and m['parser'] != ''):
             return False
         p['parser']['name'] = m['parser']
         if m['parser'] == 'getproperty':

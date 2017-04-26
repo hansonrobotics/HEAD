@@ -109,9 +109,6 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 options = options || {}
 
                 if (this.currentPerformance) {
-                    if (p && p.id && p.id === this.currentPerformance.id)
-                        return
-
                     this.stopListening(this.currentPerformance)
                 }
 
@@ -139,7 +136,6 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         }
                     } else {
                         this.setCurrentPerformance(null)
-                        this.performancesView.back()
                     }
                 }
             },

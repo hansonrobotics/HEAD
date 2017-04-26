@@ -8,7 +8,10 @@ let glob = require('glob'),
     rimraf = require('rimraf'),
     mkdirp = require('mkdirp'),
     mv = require('mv'),
-    spawn = require('child_process').spawn
+    spawn = require('child_process').spawn,
+    naturalSort = require('javascript-natural-sort')
+
+naturalSort.insensitive = true
 
 module.exports = {
     ext: '.yaml',
@@ -44,7 +47,7 @@ module.exports = {
 
         if (fs.existsSync(p) && fs.lstatSync(p).isDirectory()) {
             let performancePath = path.dirname(id),
-                files = glob.sync(path.join(p, '*.yaml'))
+                files = glob.sync(path.join(p, '*.yaml')).sort(naturalSort)
 
             performancePath = performancePath === '.' ? '' : performancePath
             performance = {id: id, name: path.basename(id), path: performancePath, timelines: []}
@@ -136,6 +139,7 @@ module.exports = {
         _.each(timelines, function(timeline) {
             let id = timeline['id']
             delete timeline['id']
+            delete timeline['name']
             yamlIO.writeFile(path.join(dir, id + self.ext), timeline)
         })
 

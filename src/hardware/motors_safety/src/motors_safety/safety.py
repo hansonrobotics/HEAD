@@ -26,6 +26,7 @@ class Safety():
         self.motors = {}
         self.timers = {}
         self.motors_msgs = {}
+        self.corrections = {}
         # Dynamixel loads
         self.motor_loads = [0]*256
         # Create proxy topics and subscribers
@@ -46,7 +47,6 @@ class Safety():
 
         # Making corrections
         self.correction_sub = rospy.Subscriber("add_correction", MotorCommand, self.correction_cb)
-        self.corrections = {}
         # Subscribe motor states
         rospy.Subscriber('safe/motor_states', MotorStateList, self.update_load)
         # Pauses motor sync while in config mode
