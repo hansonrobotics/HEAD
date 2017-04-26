@@ -36,8 +36,8 @@ let express = require('express'),
         }
     }).usage('Usage: $0 [options]').help('h').alias('h', 'help').argv
 
-app.use(bodyParser.urlencoded({extended: false}))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended: false, limit: '5mb'}))
+app.use(bodyParser.json({limit: '5mb'}))
 app.use('/public', express.static(path.join(__dirname, '../public')))
 
 app.get('/', function(req, res) {

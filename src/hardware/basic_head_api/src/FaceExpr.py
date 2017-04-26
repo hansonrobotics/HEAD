@@ -27,7 +27,10 @@ class FaceExprMotors:
     """
     result = OrderedDict()
     for exprname in expr_yaml:
-      result[exprname] = cls(expr_yaml[exprname], motor_yaml)
+      try:
+        result[exprname] = cls(expr_yaml[exprname], motor_yaml)
+      except:
+        rospy.logerr("Cant load Expression {}".format(exprname))
     return result
 
   def __init__(self, expr_entry, motor_yaml):

@@ -45,6 +45,8 @@ class Playback:
                 if i > 0:
                     sleep(i)
                 t = time()
+        except:
+            rospy.logerr("Error play animation {}".format(animation))
         finally:
             self._releaseChannel(name)
 
