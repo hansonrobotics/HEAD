@@ -98,6 +98,7 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
             },
             onDestroy: function() {
                 clearInterval(this.nodeListInterval)
+                $(window).off("resize", this.resizeCallback)
             }
         })
     })
