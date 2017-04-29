@@ -141,7 +141,6 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
             getLabel: function() {
                 return this.getConfig().label
             },
-
             getTitle: function() {
                 var title = this.getLabel(),
                     name = this.get('name')

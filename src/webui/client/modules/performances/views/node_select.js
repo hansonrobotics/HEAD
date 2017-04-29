@@ -299,7 +299,16 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             showNodeSettings: function(schemaModel) {
                 let self = this,
                     values = self.model.get('values'),
-                    nodeConfig = new NodeConfig({}, {node_name: this.model.get('rosnode'), readonly: true})
+                    nodeConfig = new NodeConfig({}, {node_name: this.model.get('rosnode'), readonly: true}),
+                    init = function() {
+                        self.getRegion('settingsEditor').show(new SettingsView({
+                            model: nodeConfig,
+                            schemaModel: schemaModel,
+                            refresh: false
+                        }))
+
+                        nodeConfig.on('change', updateValues)
+                    }
 
                 let updateValues = function() {
                     let currentView = self.getRegion('settingsEditor').currentView
@@ -309,19 +318,15 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         nodeConfig.off('change', updateValues)
                 }
 
-                nodeConfig.fetch({
-                    success: function() {
-                        if (values) nodeConfig.set(values)
-
-                        self.getRegion('settingsEditor').show(new SettingsView({
-                            model: nodeConfig,
-                            schemaModel: schemaModel,
-                            refresh: false
-                        }))
-
-                        nodeConfig.on('change', updateValues)
-                    }
-                })
+                if (values) {
+                    nodeConfig.set(values)
+                    init()
+                } else
+                    nodeConfig.fetch({
+                        success: function() {
+                            init()
+                        }
+                    })
             },
             setText: function() {
                 this.model.set('text', this.ui.textInput.val())
