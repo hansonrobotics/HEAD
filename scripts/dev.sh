@@ -126,7 +126,6 @@ tmux new-window -n 'blender' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/blender_api &&
 if [[ $OC_CHATBOT != 1 ]]; then
     tmux new-window -n 'chat_server' "cd $HR_WORKSPACE/$MAJOR_PROJECT/src/chatbot/scripts && python run_server.py; $SHELL"
 fi
-tmux new-window -n 'marytts' "~/.hr/tts/marytts/marytts-5.1.2/bin/marytts-server; $SHELL"
 
 # btree needs blender to be ready
 sleep 8
