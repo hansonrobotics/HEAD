@@ -259,7 +259,7 @@ class Runner:
                 node['start_time'] = 0
             if node['name'] == 'pause':
                 node['duration'] = 0.1
-            if 'duration' not in node:
+            if 'duration' not in node or not node['duration']:
                 node['duration'] = 0
 
         return timeline
