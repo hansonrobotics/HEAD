@@ -75,6 +75,11 @@ module.exports = {
 
         if ('skip_nodes' in options && options['skip_nodes'])
             delete performance['nodes']
+        else if ('nodes' in performance) {
+            for (let node of performance['nodes'])
+                node['duration'] = node['duration'] || 0
+        } else
+            performance['nodes'] = []
 
         return performance
     },
