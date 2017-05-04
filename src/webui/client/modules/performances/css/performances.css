@@ -654,3 +654,7 @@ li.app-performance .app-edit {
     margin-right: 10px;
     display: inline-block;
 }
+
+.app-tts-preview {
+    margin-top: 1px;
+}
