@@ -26,19 +26,13 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function($, ROSLIB, jsyaml, api
                 })
 
                 $('#app-connecting').hide()
-                $('#app-pages').fadeIn()
                 $('#app-connection-error').hide()
                 api.ros.connected = true
             }).on('close', function() {
-                $('#notifications .label').hide()
-                $('#app-connection-error').show()
                 api.ros.connected = false
                 self.checkConnection()
             }).on('error', function(error) {
-                $('#notifications .label').hide()
-                $('#app-connection-error').show()
                 api.ros.connected = false
-                $('#app-pages').fadeIn()
                 self.checkConnection()
             })
         },
@@ -47,9 +41,12 @@ define(['jquery', 'roslib', 'js-yaml', './api'], function($, ROSLIB, jsyaml, api
 
             clearInterval(this.connectionCheckInterval)
             this.connectionCheckInterval = setInterval(function() {
+                $('#notifications .label').hide()
+                $('#app-connecting').show()
+
                 self.connect(function() {
-                    Backbone.history.loadUrl(Backbone.history.getFragment())
                     clearInterval(self.connectionCheckInterval)
+                    Backbone.history.loadUrl(Backbone.history.getFragment())
                 })
             }, 1000)
         },
