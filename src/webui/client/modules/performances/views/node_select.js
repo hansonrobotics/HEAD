@@ -203,8 +203,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 options = options || {}
                 container.html('')
 
-                if (list && [Array, Object].includes(list.constructor))
-                    list = _.sortBy(list)
+                if (list && list.constructor === Array)
+                    list = _.sortBy(list, 'name')
 
                 _.each(list, function(label, val) {
                     if (list.constructor === Array)
