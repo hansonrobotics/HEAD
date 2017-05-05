@@ -106,7 +106,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 }
 
                 if (this.model.hasProperty('kfanimation')) {
-                    this.model.on('change', this.setKFAnimationDuration, this)
+                    this.model.on('change', this.setKFAnimationDurationCallback, this)
 
                     // init with empty list
                     self.updateKFAnimations([])
@@ -230,7 +230,14 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                                     node = Node.create(attributes)
                                 }
 
-                                self.setGestureLength(node)
+                                switch (self.model.get('name')) {
+                                    case 'gesture':
+                                        self.setGestureLength(node)
+                                        break
+                                    case 'kfanimation':
+                                        self.setKFAnimationDuration(node)
+                                        break
+                                }
                                 node.set(attr, val)
                                 return $('<span>').attr('data-node-name', node.get('name'))
                                     .attr('data-node-id', node.get('id'))
@@ -262,11 +269,13 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             updateEmotions: function(emotions) {
                 this.initList(emotions, 'emotion', this.ui.emotionList)
             },
-            setKFAnimationDuration: function() {
+            setKFAnimationDurationCallback: function() {
+                this.setKFAnimationDuration(this.model)
+            },
+            setKFAnimationDuration: function(node) {
                 let self = this
-                api.getKFAnimationLength(this.model.get('animation'), function(response) {
-                    self.animationFrames = response.frames
-                    self.model.set('duration', 0.1 + self.animationFrames / self.model.get('fps'))
+                api.getKFAnimationLength(node.get('animation'), function(response) {
+                    node.set('duration', 0.1 + response.frames / self.model.get('fps'))
                 })
             },
             updateKFAnimations: function(animations) {

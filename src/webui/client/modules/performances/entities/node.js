@@ -5,7 +5,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 emotion: {
                     label: 'Emotion',
                     properties: ['duration', 'magnitude', 'emotion'],
-                    defaultValues: {magnitude: [0.9, 1]}
+                    defaultValues: {magnitude: [0.9, 1], duration: 1}
                 },
                 interaction: {
                     label: 'Interaction',
@@ -53,7 +53,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 kfanimation: {
                     label: 'KF Animation',
                     properties: ['kfanimation', 'fps', 'blender_mode'],
-                    defaultValues: {blender_mode: 'no', fps: 24}
+                    defaultValues: {blender_mode: 'no', fps: 24, duration: 1}
                 },
                 speech: {
                     label: 'Speech',
