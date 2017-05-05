@@ -1,0 +1,2 @@
+intxy center
+intxy size

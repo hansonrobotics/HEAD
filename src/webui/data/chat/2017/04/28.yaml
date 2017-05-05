@@ -1,0 +1,8 @@
+- data: {author: Robot, message: hello}
+  time: 2017/04/28 07:56:58
+- data: {author: Me, message: 'can you hear me?'}
+  time: 2017/04/28 07:57:05
+- data: {author: Me, message: 'can you hear me?'}
+  time: 2017/04/28 07:57:10
+- data: {author: Me, message: 'can you hear me?'}
+  time: 2017/04/28 07:57:14

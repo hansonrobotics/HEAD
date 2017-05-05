@@ -1,0 +1,241 @@
+<!-- FUSION SETUP:
+
+Every camera is defined as a group that processes vision and extracts as much
+information as it can from it. The group looks like this:
+
+detect_face:
+	input: raw camera feed
+	output: face rectangle, face landmarks and a small image of the normalized
+	face, all annotated with a unique ID for referencing by other nodes, and a
+	timestamp
+
+	The detection algorithm can be run at a different (lower) rate than the
+	raw camera feed in order to save CPU resources, or, when face detection
+	from this camera is not needed
+
+identify_face:
+	input: normalized face image with unique ID
+	output: ID of the closest match from the face database
+
+	The face database holds face images and/or vectors for comparison, per
+	face, per camera
+	The identification algorithm can be run at a different (much lower) rate
+	than the raw camera feed in order to save CPU resources
+
+	An alternative approach is to have the fusion node handle requests for
+	identifying the face, this because when a user is established, figuring
+	out who it is is only needed once, and not periodically
+
+detect_age:
+	input: face landmarks, small image of normalized face, all with unique ID
+	and timestamp
+	output: age of the face with unique ID and timestamp
+
+detect_gender:
+	input: face landmarks, small image of normalized face, all with unique ID
+	and timestamp
+	output: gender of the face with unique ID and timestamp
+
+detect_gaze:
+	input: face landmarks with unique ID and timestamp
+	output: gaze angles with unique ID and timestamp
+
+	The rate can differ
+
+analyze_face_expression:
+	input: face landmarks with unique ID and timestamp
+	output: array of strings that describe face expressions (or something
+	better) with unique ID and timestamp
+
+	The rate can differ
+
+detect_hand:
+	input: raw camera feed
+	output: hand rectangle and hand landmarks, all annotated with a unique ID
+	for referencing by other nodes, and a timestamp
+
+	The detection algorithm can be run at a different (lower) rate than the
+	raw camera feed in order to save CPU resources, or, when hand detection
+	from this camera is not needed
+
+analyze_hand_gesture:
+	input: hand landmarks with unique ID and timestamp
+	output: array of strings that describe hand gestures (or something
+	better) with unique ID and timestamp
+
+	The rate can differ
+
+detect_ambience:
+	input: raw camera feed
+	output: ambience data with timestamp
+
+	The rate can differ
+
+detect_saliency:
+	input: raw camera feed
+	output: saliency events with timestamp
+
+	The rate can differ
+
+
+Every microphone is defined as a group that processes hearing and extracts as
+much information as it can from it. The group looks like this:
+
+detect_speech:
+	input: raw audio stream
+	output: audio chunks that are considered speech with timestamp
+
+detect_noise:
+	input: raw audio stream
+	output: noise events with timestamp
+
+stt_piecewise:
+	input: audio chunks with timestamp
+	output: speech text and confidence with timestamp
+
+stt_continuous:
+	input: raw audio stream
+	output: speech text and confidence with timestamp
+
+
+Everything coming from vision and hearing groups goes into the fusion node.
+The fusion node keeps track of all observations by applying coordinate
+transformations to robot coordinates and storing them in arrays. The fusion
+node will average noise, remove false positives and false negatives, and
+integrate all information into a coherent set of observations for further
+AI.
+
+Part of that means applying linear or quadratic regression to coordinates to
+be able to get smooth and correct predictions that remove any timing and
+delay issues in the vision and hearing groups.
+
+Finally, the fusion node outputs the coherent observations as ROS messages to
+the remaining non-fusion nodes, or, output the observations as OpenCog atoms.
+
+While all this is going on, the fusion node can control the various processing
+rates of each of the other nodes. This means that, when the eye cameras are
+not really needed for the current situation, the detection and analysis rates
+can go down to a minimum. For specific situations, the rates can go up as
+well. When the eye cameras are required during eye contact, face detection on
+the eye cameras should have a high rate, but the wide angle camera can be idle
+for the time being.
+
+Most, if not all, of the above is already realized in some form, so the work
+mostly entails repackaging/refactoring older experiments and currently
+functioning nodes.
+
+After some consideration, the initial fully integrated C++ project became a
+Python/ROS project. This allows quick interfacing with the current
+architecture, and more people can work with it.
+
+
+TO BE DETERMINED:
+
+- the set of coherent observations shipped to further AI / ChatScript /
+  OpenCog. Currently, fusion would output the notion of a 'user', which is
+  related to combined detected faces from all cameras, as well as localized
+  speech. Also, there is an idea to classify the user configuration (things
+  like "David with an older male", "two young girls", "Ben and Manhin", "An
+  unknown woman", etc.). This can further index different ChatScript content,
+  inform OpenCog, etc. Discussing with Ben's group would give rise to many
+  more observations we can consider.
+
+- where to factor in the face database. Face identification is only needed
+  very seldomly, and could potentially be handled by the fusion node alone, as
+  opposed to a separate identification node.
+
+- where the various ideas that circle around for machine learning can be
+  plugged into this system, and if anything needs to be prepared for this.
+
+- the messages are currently engineered and very specific, but could
+  potentially also contain more abstract vectors from machine learning nodes.
+
+- attention feedback (which nodes need higher rates than others) for the
+  fusion node.
+
+
+STEPS, ROUGHLY:
+
+1. build an empty framework, define the nodes and messages.
+
+2. implement the RealSense vision pipeline (replacing parts of the
+   realsense-tracker, perception and geometry nodes), and make sure the fusion
+   node outputs sensible observations as ROS messages. Ideally, the system can
+   now be used in production-Sophia.
+
+3. implement the hearing pipeline (replacing the various STT and audio nodes),
+   and make sure the fusion node correctly combines hearing and vision data.
+
+4. implement the vision pipeline for other cameras (replacing the various
+   detection and analysis nodes and proof-of-concept projects), and make sure
+   it's integrated with the fusion node.
+
+5. add linear/quadratic regression and grooming techniques to the
+   observations.
+
+6. architect more complicated observations that can be derived from this, and
+   output as OpenCog atoms.
+
+
+-->
+
+<launch>
+	<group name="fusion">
+		<group name="left_eye">
+			<!-- some way to identify left eye camera for this group -->
+			<node name="detect_face" pkg="fusion1" type="detect_face"/>
+			<node name="identify_face" pkg="fusion1" type="identify_face"/>
+			<node name="detect_gaze" pkg="fusion1" type="detect_gaze"/>
+			<node name="detect_age" pkg="fusion1" type="detect_age"/>
+			<node name="detect_gender" pkg="fusion1" type="detect_gender"/>			
+			<node name="analyze_face_expression" pkg="fusion1" type="analyze_face_expression"/>
+			<node name="detect_hand" pkg="fusion1" type="detect_hand"/>
+			<node name="analyze_hand_gesture" pkg="fusion1" type="analyze_hand_gesture"/>
+			<node name="detect_ambience" pkg="fusion1" type="detect_ambience"/>
+			<node name="detect_saliency" pkg="fusion1" type="detect_saliency"/>
+		</group>
+		<group name="right_eye">
+			<!-- some way to identify right eye camera for this group -->
+			<node name="detect_face" pkg="fusion1" type="detect_face"/>
+			<node name="identify_face" pkg="fusion1" type="identify_face"/>
+			<node name="detect_gaze" pkg="fusion1" type="detect_gaze"/>
+			<node name="detect_age" pkg="fusion1" type="detect_age"/>
+			<node name="detect_gender" pkg="fusion1" type="detect_gender"/>			
+			<node name="analyze_face_expression" pkg="fusion1" type="analyze_face_expression"/>
+			<node name="detect_hand" pkg="fusion1" type="detect_hand"/>
+			<node name="analyze_hand_gesture" pkg="fusion1" type="analyze_hand_gesture"/>
+			<node name="detect_ambience" pkg="fusion1" type="detect_ambience"/>
+			<node name="detect_saliency" pkg="fusion1" type="detect_saliency"/>
+		</group>
+		<group name="wideangle">
+			<!-- some way to identify wide angle camera for this group -->
+			<node name="detect_face" pkg="fusion1" type="detect_face"/>
+			<node name="identify_face" pkg="fusion1" type="identify_face"/>
+			<node name="detect_gaze" pkg="fusion1" type="detect_gaze"/>
+			<node name="analyze_face_expression" pkg="fusion1" type="analyze_face_expression"/>
+			<node name="detect_hand" pkg="fusion1" type="detect_hand"/>
+			<node name="analyze_hand_gesture" pkg="fusion1" type="analyze_hand_gesture"/>
+			<node name="detect_ambience" pkg="fusion1" type="detect_ambience"/>
+			<node name="detect_saliency" pkg="fusion1" type="detect_saliency"/>
+		</group>
+		<group name="realsense">
+			<node name="realsense" pkg="fusion1" type="realsense"/>
+		</group>
+		<group name="micarray">
+			<!-- some way to identify microphone array for this group -->
+			<node name="detect_speech" pkg="fusion1" type="detect_speech"/>
+			<node name="detect_noise" pkg="fusion1" type="detect_noise"/>
+			<node name="stt_piecewise" pkg="fusion1" type="stt_piecewise"/>
+			<node name="stt_continuous" pkg="fusion1" type="stt_continuous"/>
+		</group>
+		<group name="handheld_mic">
+			<!-- some way to identify handheld microphone for this group -->
+			<node name="detect_speech" pkg="fusion1" type="detect_speech"/>
+			<node name="detect_noise" pkg="fusion1" type="detect_noise"/>
+			<node name="stt_piecewise" pkg="fusion1" type="stt_piecewise"/>
+			<node name="stt_continuous" pkg="fusion1" type="stt_continuous"/>
+		</group>
+		<node name="facedb" pkg="fusion1"/> <!-- this allows access to the face database via ROS messages -->
+		<node name="fusion" pkg="fusion1"/> <!-- this will output either ROS messages to the non-fusion nodes, or OpenCog atoms through some TBD interface -->
+	</group>
+</launch>

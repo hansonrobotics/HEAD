@@ -1,0 +1,2 @@
+floatxy center
+floatxy size
