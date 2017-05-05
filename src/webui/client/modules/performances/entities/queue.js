@@ -9,9 +9,8 @@ module.exports = Backbone.Collection.extend({
     findItemByTime: function(time) {
         let offset = 0
         return this.find(function(item) {
-            let match = time >= offset
             offset += item.get('performance').getDuration()
-            return match
+            return time < offset
         })
     }
 })

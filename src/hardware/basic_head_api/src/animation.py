@@ -45,12 +45,18 @@ class Animation:
         k = (frame - action['start']) / float(action['stop'] - action['start'])
         return action['prev'] + k * (action['target'] - action['prev'])
 
-    def frames(self):
+    def frames(self, prev_values={}):
         timeline = deepcopy(self._timeline)
+        # Copy values at first iteration so its not updated after
+        prev = deepcopy(prev_values)
         for x in xrange(self.total):
             current = {}
             for m, actions in timeline.items():
                 if len(actions) > 0:
+                    # Start from previous known motor position for the first frame
+                    if actions[0]['start'] == 0:
+                        if m in prev_values.keys():
+                            actions[0]['prev'] = prev[m]
                     current[m] = self.interp(actions[0], x + 1)
                     # Remove finished actions
                     if actions[0]['stop'] == x + 1:
@@ -70,10 +76,12 @@ if __name__ == '__main__':
     import os
     import rospkg
     path = rospkg.RosPack().get_path('robots_config')
-    animation_file = '%s/arthur/animations.yaml' % path
+    animation_file = '%s/sophia_body/animations.yaml' % path
     anims = open(animation_file)
     y = yaml.load(anims)
-    a = Animation(y['animations'][0]['Happy'])
-    for f in a.frames():
+    a = Animation(y['animations'][0]['Simple'])
+    b = {'RElbowRoll':0}
+    for f in a.frames(b):
+        b['RElbowRoll'] = f['RElbowRoll']
         print f
 

@@ -55,7 +55,7 @@ class Node(object):
 
     def __init__(self, data, runner):
         self.data = data
-        self.duration = data['duration']
+        self.duration = min(0.1, float(data['duration']))
         self.start_time = data['start_time']
         self.started = False
         self.started_at = 0

@@ -265,6 +265,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
             },
             changeRosNode: function() {
                 this.model.set('rosnode', this.ui.rosNodeSelect.val())
+                this.model.set('values', null)
             },
             buildCrosshair: function() {
                 let self = this

@@ -26,8 +26,12 @@ define(['backbone', 'lib/api', 'underscore', 'lib/utilities'], function (Backbon
         },
         unsubscribe: function () {
             if (this.subscribeCallback) {
-                api.topics.face_locations.unsubscribe(this.subscribeCallback);
-                api.topics.face_locations.removeAllListeners();
+                try {
+                    api.topics.face_locations.unsubscribe(this.subscribeCallback);
+                    api.topics.face_locations.removeAllListeners();
+                } catch (e) {
+                    console.error(e)
+                }
             }
         },
         setLookAtFaceId: function (id) {

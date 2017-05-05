@@ -16,6 +16,7 @@ class Playback:
         self._channels = {}
         for c in channels:
             self._channels[c] = Lock()
+        self._last_postions = {}
 
 
 
@@ -28,7 +29,7 @@ class Playback:
             #start = time()
             dt = 1.0 / float(fps)
             t = time()
-            for f in animation.frames():
+            for f in animation.frames(self._last_postions):
                 for m in f:
                     if m in self._cmders:
                         msg = self._cmders[m].msg_fracDist(f[m])
@@ -38,6 +39,7 @@ class Playback:
                             self._cmders[m] = MotorCmder(self._motors[m])
                             msg = self._cmders[m].msg_fracDist(f[m])
                             self._pub(msg)
+                    self._last_postions[m] = f[m]
 
                 # Exclude execution for more accurate timing
                 t2 = time()

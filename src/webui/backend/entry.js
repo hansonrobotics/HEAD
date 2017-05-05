@@ -125,7 +125,8 @@ let updatePerformance = function(req, res) {
 
     let p = performances.update(root, req.params['id'], _.cloneDeep(req.body))
     if (p)
-        res.json(p)
+        // return original performance to preserve node ids
+        res.json(req.body)
     else
         res.sendStatus(500)
 }

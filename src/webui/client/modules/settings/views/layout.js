@@ -83,7 +83,8 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
                         // go to first node settings on initialization
                         if (self.init) {
                             self.init = false
-                            Backbone.history.navigate(url, {trigger: true})
+                            if (Backbone.history.getFragment() === 'admin/settings')
+                                Backbone.history.navigate(url, {trigger: true})
                         }
                         let link = $('<a>').prop({
                             href: '#' + url
@@ -98,6 +99,7 @@ define(['marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'jquery',
             },
             onDestroy: function() {
                 clearInterval(this.nodeListInterval)
+                $(window).off("resize", this.resizeCallback)
             }
         })
     })

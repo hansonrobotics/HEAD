@@ -28,7 +28,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 listenResponseList: '.app-chat-response-list',
                 removeListenResponseButton: '.app-remove-listen-response',
                 enableChatbotCheckbox: '.app-enable-chatbot-checkbox',
-                responsesProperty: '[data-node-property="responses"]'
+                responsesProperty: '[data-node-property="responses"]',
+                ttsPreviewButton: '.app-tts-preview'
             },
             events: {
                 'keyup @ui.textInput': 'setText',
@@ -39,6 +40,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 'change @ui.listenResponseInputs': 'updateChatResponses',
                 'click @ui.listenAddResponseButton': 'addListenResponse',
                 'click @ui.removeListenResponseButton': 'removeListenResponse',
+                'click @ui.ttsPreviewButton': 'previewTts',
                 'change @ui.enableChatbotCheckbox': 'setEnableChatbot'
             },
             regions: {
@@ -203,8 +205,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 options = options || {}
                 container.html('')
 
-                if (list && [Array, Object].includes(list.constructor))
-                    list = _.sortBy(list)
+                if (list && list.constructor === Array)
+                    list = _.sortBy(list, 'name')
 
                 _.each(list, function(label, val) {
                     if (list.constructor === Array)
@@ -299,7 +301,16 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             showNodeSettings: function(schemaModel) {
                 let self = this,
                     values = self.model.get('values'),
-                    nodeConfig = new NodeConfig({}, {node_name: this.model.get('rosnode'), readonly: true})
+                    nodeConfig = new NodeConfig({}, {node_name: this.model.get('rosnode'), readonly: true}),
+                    init = function() {
+                        self.getRegion('settingsEditor').show(new SettingsView({
+                            model: nodeConfig,
+                            schemaModel: schemaModel,
+                            refresh: false
+                        }))
+
+                        nodeConfig.on('change', updateValues)
+                    }
 
                 let updateValues = function() {
                     let currentView = self.getRegion('settingsEditor').currentView
@@ -309,19 +320,15 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         nodeConfig.off('change', updateValues)
                 }
 
-                nodeConfig.fetch({
-                    success: function() {
-                        if (values) nodeConfig.set(values)
-
-                        self.getRegion('settingsEditor').show(new SettingsView({
-                            model: nodeConfig,
-                            schemaModel: schemaModel,
-                            refresh: false
-                        }))
-
-                        nodeConfig.on('change', updateValues)
-                    }
-                })
+                if (values) {
+                    nodeConfig.set(values)
+                    init()
+                } else
+                    nodeConfig.fetch({
+                        success: function() {
+                            init()
+                        }
+                    })
             },
             setText: function() {
                 this.model.set('text', this.ui.textInput.val())
@@ -334,6 +341,9 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 api.getTtsLength(this.ui.textInput.val(), this.model.get('lang'), function(response) {
                     self.model.set('duration', response.length)
                 })
+            },
+            previewTts: function() {
+                api.robotSpeech(this.model.get('text'), this.model.get('lang'))
             },
             setGestureLengthCallback: function() {
                 this.setGestureLength(this.model)

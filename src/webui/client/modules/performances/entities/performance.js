@@ -27,7 +27,7 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 this.on('change:nodes', function() {
                     if (this.get('nodes') !== this.nodes) {
                         // updating collection
-                        this.nodes.reset(this.get('nodes'))
+                        this.nodes.set(this.get('nodes'))
                         this.set({nodes: this.nodes})
                     }
                 })
@@ -60,7 +60,13 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
                 api.topics.running_performance.subscribe(this.syncCallback)
             },
             disableSync: function() {
-                if (this.syncCallback) api.topics.running_performance.unsubscribe(this.syncCallback)
+                if (this.syncCallback) {
+                    try {
+                        api.topics.running_performance.unsubscribe(this.syncCallback)
+                    } catch (e) {
+                        console.error(e)
+                    }
+                }
             },
             load: function(options) {
                 let self = this

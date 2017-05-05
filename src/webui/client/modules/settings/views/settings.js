@@ -1,3 +1,5 @@
+let path = require('path')
+
 define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 'lib/json_editor/slider'],
     function(App, Marionette, template, JSONEditor) {
         return Marionette.View.extend({
@@ -26,14 +28,14 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     disable_edit_json: true,
                     disable_array_reorder: true,
                     disable_properties: this.options.refresh,
+                    no_additional_properties: this.options.refresh,
                     iconlib: 'fontawesome4'
                 })
 
+                this.setConfig()
                 this.editor.on('change', function() {
                     self.update()
                 })
-
-                this.setConfig()
 
                 if (this.options.refresh)
                     this.refreshInterval = setInterval(function() {
@@ -45,8 +47,10 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 this.editor.destroy()
             },
             setConfig: function() {
+                let all = this.schemaModel.getAllKeys()
                 let self = this,
-                    config = this.model.toJSON()
+                    config = this.model.toJSON(),
+                    hiddenKeys = _.difference(all, _.keys(config))
 
                 config = _.each(config, function(val, key) {
                     if (self.schema['properties'][key] && _.includes(['array', 'object'],
@@ -60,12 +64,28 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 })
 
                 delete config['node_schema']
-                if (typeof self.schemaModel.getGroupName === 'function')
+                if (typeof self.schemaModel.getGroupName === 'function') {
                     _.each(config, function(val, key) {
-                        self.editor.getEditor(self.schemaModel.getGroupName(key)).setValue(val)
+                        let groupName = self.schemaModel.getGroupName(key),
+                            parentEditor = self.editor.getEditor(path.dirname(groupName.replace('.', '/')).replace('/', '.')),
+                            editor = self.editor.getEditor(groupName)
+
+                        if (parentEditor)
+                            parentEditor.addObjectProperty(key)
+
+                        if (editor)
+                            editor.setValue(val)
                     })
-                else
-                    this.editor.setValue(this.model.toJSON())
+
+                    if (!_.isEmpty(config))
+                        _.each(hiddenKeys, function(key) {
+                            let groupName = self.schemaModel.getGroupName(key),
+                                editor = self.editor.getEditor(path.dirname(groupName.replace('.', '/')).replace('/', '.'))
+
+                            editor.removeObjectProperty(key)
+                        })
+                } else
+                    this.editor.setValue(config)
             },
             update: function() {
                 // only valid settings should be saved
@@ -84,6 +104,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                         }
                     })
 
+                    this.model.clear({silent: true})
                     this.model.save(values, {
                         error: function() {
                             console.log('error updating node configuration')

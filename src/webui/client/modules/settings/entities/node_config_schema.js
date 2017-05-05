@@ -120,6 +120,9 @@ define(['backbone', 'lib/api', './node_config'], function(Backbone, api, NodeCon
         groupNames: {},
         getGroupName: function(name) {
             return name in this.groupNames ? this.groupNames[name] : name
+        },
+        getAllKeys: function() {
+            return _.keys(this.groupNames)
         }
     })
 })
