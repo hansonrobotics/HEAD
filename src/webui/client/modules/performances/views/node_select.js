@@ -206,7 +206,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 container.html('')
 
                 if (list && list.constructor === Array)
-                    list = _.sortBy(list, 'name')
+                    list = _.sortBy(list)
 
                 _.each(list, function(label, val) {
                     if (list.constructor === Array)
