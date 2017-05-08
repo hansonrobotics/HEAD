@@ -269,6 +269,13 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
             },
             buildCrosshair: function() {
                 let self = this
+
+                if (!this.model.get('x')) {
+                    this.model.set('x', 1)
+                    this.model.set('y', 0)
+                    this.model.set('z', 0)
+                }
+
                 $(this.ui.crosshair).crosshairsl({
                     xmin: -1,
                     xmax: 1,
@@ -280,14 +287,9 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                         self.model.set('x', 1)
                         self.model.set('y', ui.xval)
                         self.model.set('z', -1 * ui.yval)
-
                         self.model.call()
                     }
                 })
-
-                self.model.set('x', 1)
-                self.model.set('y', 0)
-                self.model.set('z', 0)
             },
             selectAttentionRegion: function() {
                 if (this.model.get('attention_region') === 'custom')
