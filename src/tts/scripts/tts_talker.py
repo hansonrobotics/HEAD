@@ -8,12 +8,14 @@ import os
 import random
 import threading
 
+from dynamic_reconfigure.server import Server
 from std_msgs.msg import String
 from blender_api_msgs.msg import Viseme
 from common.visemes import BaseVisemes
 from common.sound_file import SoundFile
 from tts.ttsapi import get_api
-from tts.srv import TTSLengthResponse
+from tts.srv import *
+from tts.cfg import TTSConfig
 
 logger = logging.getLogger('hr.tts.tts_talker')
 
@@ -29,7 +31,9 @@ class TTSTalker:
         self.sound = SoundFile()
         self.tts_data = None
         self.interrupt = False
+        self.enable = True
         rospy.Subscriber(tts_control, String, self.tts_control)
+        rospy.Service('tts_length', TTSLength, self.tts_length)
 
     def _get_tts_api_config(self):
         return rospy.get_param('tts_api_config', {'en': 'festival'})
@@ -44,6 +48,10 @@ class TTSTalker:
             self.interrupt = True
 
     def say(self, msg, lang=None):
+        if not self.enable:
+            logger.warn("TTS is not enabled")
+            return
+
         if lang is None:
             lang = rospy.get_param('lang', None)
             if lang is None:
@@ -116,7 +124,12 @@ class TTSTalker:
             msg.name = 'M'
             self.vis_topic.publish(msg)
 
+    def reconfig(self, config, level):
+        self.enable = config.enable
+        return config
+
 if __name__ == '__main__':
     rospy.init_node('tts_talker')
     talker = TTSTalker()
+    Server(TTSConfig, talker.reconfig)
     rospy.spin()
