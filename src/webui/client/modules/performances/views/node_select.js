@@ -182,6 +182,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 if (this.model.hasProperty('rosnode')) {
                     this.changeRosNode()
                     this.listenTo(this.model, 'change:rosnode', function() {
+                        self.model.unset('schema')
+                        self.model.unset('values')
                         self.changeRosNode(true)
                     })
                 }
@@ -294,18 +296,25 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             changeRosNode: function(reset) {
                 let self = this,
                     rosnode = this.model.get('rosnode'),
-                    schema = new NodeConfigSchema(rosnode)
+                    schemaModel = new NodeConfigSchema({}, {node_name: rosnode}),
+                    schema = this.model.get('schema')
 
                 if (reset) this.model.set('values', {})
 
-                schema.fetch({
-                    success: function(model) {
-                        self.showNodeSettings(model)
-                    },
-                    error: function() {
-                        self.model.set('schema', {})
-                    }
-                })
+                if (schema) {
+                    schemaModel.set(schema)
+                    self.showNodeSettings(schemaModel)
+                } else
+                    schemaModel.fetch({
+                        success: function() {
+                            let json = schemaModel.toJSON()
+                            self.model.set('schema', json)
+                            self.showNodeSettings(schemaModel)
+                        },
+                        error: function() {
+                            self.model.set('schema', {})
+                        }
+                    })
             },
             showNodeSettings: function(schemaModel) {
                 let self = this,
@@ -323,8 +332,10 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
 
                 let updateValues = function() {
                     let currentView = self.getRegion('settingsEditor').currentView
-                    if (currentView && currentView.model === nodeConfig)
+                    if (currentView && currentView.model === nodeConfig) {
                         self.model.set('values', nodeConfig.toJSON())
+                        self.model.set('node_schema', nodeConfig.toJSON())
+                    }
                     else
                         nodeConfig.off('change', updateValues)
                 }
