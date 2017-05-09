@@ -249,7 +249,7 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 this.ui.createButton.fadeOut()
             },
             setDuration: function() {
-                this.model.set('duration', Number($(this.ui.duration).val()))
+                this.model.set('duration', Number(this.ui.duration.val()))
             },
             setMessage: function() {
                 this.model.set('message', this.ui.messageInput.val())
