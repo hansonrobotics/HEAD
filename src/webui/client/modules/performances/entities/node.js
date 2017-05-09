@@ -53,7 +53,7 @@ define(['application', 'backbone', 'lib/api', 'jquery', 'supermodel'],
                 kfanimation: {
                     label: 'KF Animation',
                     properties: ['kfanimation', 'fps', 'blender_mode'],
-                    defaultValues: {blender_mode: 'no', fps: 24, duration: 1}
+                    defaultValues: {blender_mode: 'no', fps: 24}
                 },
                 speech: {
                     label: 'Speech',
