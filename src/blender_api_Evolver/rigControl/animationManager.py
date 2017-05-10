@@ -16,6 +16,7 @@ import imp
 import pdb
 from mathutils import Vector
 import logging
+import re
 
 #import GA_methods
 from GA_methods import IGA
@@ -25,16 +26,26 @@ debug = True
 logger = logging.getLogger('hr.blender_api.rigcontrol.animationmanager')
 
 class AnimationManager():
-
+    d = {}
+    b = {}
     def __init__(self):
         logger.info('Starting AnimationManager singleton')
-
+        # Loading Relationship between the faceshift and Sophia relation from the JSON file.
+        logger.info('Starting AnimationManager singleton')
         # Gesture params
         self.gesturesList = []
         self.gesturesList_IGA = []
         self.emotionsList = []
         self.visemesList = []
         self.cyclesSet = set()
+        # Cycles to remove
+        self.cyclesToRemove = []
+        # Start from normal animation mode. 
+        self.mode= 0
+        self.old_mode= 0
+        self.deleted_drivers = False
+        # Shapekeys to apply on next frame
+        self.shapeKeys = {}
 
 
         # Start default cycles
@@ -55,25 +66,31 @@ class AnimationManager():
         # Eye_target distance in BU from 0 point
         # -4 for Sophia 1.0 -2 for blender rig
         self.eye_target_offset = -4
-
-
+        # Face rotation
+        self.headRotation = 0
+        # Latest face target
+        self.face_target = [0,1,0]
         # Head and Eye tracking parameters
         self.headTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap([
-                Pipes.exponential(3.5),
-                Pipes.moving_average(window=0.4)],
+                Pipes.exponential(7),
+                Pipes.moving_average(window=0.3)],
                 Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
         ))
         self.eyeTargetLoc = blendedNum.LiveTarget([0,0,0], transition=Wrappers.wrap(
-            Pipes.linear(speed=3),
+            Pipes.linear(speed=300),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         ))
+        self.headRotation = blendedNum.LiveTarget(0, transition=Pipes.moving_average(0.4))
 
         self.actuatorManager = ActuatorManager()
 
         # Internal vars
         self._time = 0
         self.nextTrigger = {}
-
+        # Last time eyes were set by gaze
+        self.eyes_gazing = 0
+        # Maximum time for eyes to be controlled by gaze. After that time eyes will be controlled by face target.
+        self.max_eye_gaze = 0.2
         # global access
         self.deformObj = bpy.data.objects['deform']
         self.bones = bpy.data.objects['control'].pose.bones
@@ -116,6 +133,89 @@ class AnimationManager():
                 string += str(attr) + ": " + str(value) + "\n"
         return string
 
+    def setMode(self,mode):
+        self.mode = mode
+        self.shapeKeys = {}
+        return 0
+
+    def changeMode(self):
+        if self.mode != self.old_mode:
+            self.old_mode = self.mode
+            # Restore original drivers
+            if self.mode == 0:
+                bpy.context.scene['keepAlive'] = True
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
+                self.setHeadRotation(0)
+                self.setFaceTarget([0,1,0])
+                self.setGazeTarget([0,1,0])
+                for key in self.b:
+                    #The key holds the value of the shapekey name.
+                    driverdata= bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_add('value', -1)
+                    drv= driverdata.driver
+                    drv.type= self.b[key][0]['type']
+                    drv.expression=self.b[key][1]['exp']
+                    variable= self.b[key][2]
+                    for i in variable['var']:
+                        var= drv.variables.new()
+                        var.name=i[0]['name']
+                        var.type=i[1]['type']
+                        targ= var.targets[0]
+                        targ.id=i[2]['targ'][0]['id']
+                        targ.bone_target=i[2]['targ'][1]['bone']
+                        targ.transform_type=i[2]['targ'][2]['type']
+                        targ.transform_space=i[2]['targ'][3]['space']
+                        self.deleted_drivers = False
+            else:
+                bpy.context.scene['keepAlive']
+
+    def getMode(self):
+        return self.mode
+
+    def setShapeKeys(self,shape_keys):
+        self.shapeKeys = shape_keys
+
+    def applyShapeKeys(self):
+        if self.shapeKeys and self.mode:
+            self.setShape(self.shapeKeys)
+            self.shapeKeys = {}
+
+    def setShape(self, dict_shape):
+        # Delete the driver related items.
+        if not self.deleted_drivers:
+            for i in bpy.data.shape_keys['ShapeKeys'].animation_data.drivers:
+                key=re.search('"(.*)"',i.data_path).group(1)
+                if key in dict_shape:
+                    list_value=[]
+                    drv= i
+                    list_value.append({'type':drv.driver.type})
+                    list_value.append({'exp' : drv.driver.expression})
+                    variable= []
+                    for vr in drv.driver.variables:
+                        var=[]
+                        var.append({"name":vr.name})
+                        var.append({"type":vr.type})
+                        targ=[]
+                        tr = vr.targets[0]
+                        targ.append({'id':tr.id})
+                        targ.append({'bone':tr.bone_target})
+                        targ.append({'type':tr.transform_type})
+                        targ.append({'space':tr.transform_space})
+                        var.append({'targ':targ})
+                        variable.append(var)
+                    list_value.append({'var':variable})
+                    global b
+                    self.b[key]=list_value
+                    #Now the b[key] value hold the values where there is some assignment has been done.
+                    bpy.data.shape_keys['ShapeKeys'].key_blocks[key].driver_remove('value', -1)
+                    self.deleted_drivers= True
+
+        for key in dict_shape:
+            if(key=='lip-JAW.DN'):
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]= dict_shape[key]
+            else:
+                bpy.data.shape_keys['ShapeKeys'].key_blocks[key].value= dict_shape[key]
+
+
 
     def newGesture(self, name, repeat = 1, speed=1, magnitude=0.5, priority=1):
         '''Perform a new gesture.'''
@@ -155,6 +255,8 @@ class AnimationManager():
         if magnitude < 1:
             newStrip.use_animated_influence = True
             newStrip.influence = magnitude
+            ifc = newStrip.fcurves.items()[1][1]
+            ifc.keyframe_points.insert(1, magnitude, {'FAST'})
 
         # Create object and add to list
         g = Gesture(name, newTrack, newStrip, duration=duration, speed=speed, \
@@ -238,22 +340,44 @@ class AnimationManager():
                 continue
             else:
                 found = False
+                emo = None
+                start = 0
                 for emotion in self.emotionsList:
                     if emotionName == emotion.name:
-                        # update magnitude
-                        num = emotion.magnitude
-                        num.keyframes = []
-                        num.add_keyframe(target=data['magnitude'], transition=(0, Pipes.linear(2)))
-                        num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
+                        emo = emotion
+                        start = emo.magnitude.current
                         found = True
 
+
+                num = blendedNum.Trajectory(start)
+                    # min 0.5s max 1.5s
+                fade = min(2.0,max(2.0/3.0, 3.0/float(data['duration'])))
+                # Fixme for whatever reason the timed keyframe needs time from beginning,
+                # meaning that need to substract only the fadeout time.
+                keep = max(0.0, data['duration'] - 1.0/fade)
+                # Fade Slower for less magnitude
+                fade = fade / data['magnitude']
+
+                num.add_keyframe(target=data['magnitude'], transition=[
+                    (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                if keep > 0:
+                    num.add_keyframe(target=data['magnitude'], time=keep)
+                num.add_keyframe(target=0.0, transition=[
+                    (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
                 if not found:
-                    num = blendedNum.Trajectory(0)
-                    num.add_keyframe(target=data['magnitude'], transition=[
-                        (0, Pipes.linear(2)), (1, Pipes.moving_average(0.2))])
-                    num.add_keyframe(target=0.0, transition=(0, Pipes.exponential(0.8/data['duration'])))
                     emotion = Emotion(emotionName, magnitude=num)
                     self.emotionsList.append(emotion)
+                else:
+                    emo.magnitude = num
+                # Fade all existing expressions
+                for emotion in self.emotionsList:
+                    if emotionName != emotion.name:
+                        # In addition needs to check if its about to finish
+                        start = emotion.magnitude.current
+                        num = blendedNum.Trajectory(start)
+                        num.add_keyframe(target=0.0, transition=[
+                             (0, Pipes.linear(fade)), (1, Pipes.moving_average(0.2))])
+                        emotion.magnitude = num
 
 
     def newViseme(self, vis, duration=0.5, rampInRatio=0.1, rampOutRatio=0.8, startTime=0):
@@ -299,18 +423,20 @@ class AnimationManager():
 
         return True
 
+    def removeCycles(self):
+        cycles = self.cyclesToRemove[:]
+        for c in cycles:
+            toRemove = [cycle for cycle in self.cyclesSet if cycle.name == c]
+            for cycle in toRemove:
+                self.cyclesSet.remove(cycle)
+            toRemove = [gesture for gesture in self.gesturesList if gesture.name == c]
+            for gesture in toRemove:
+                self._deleteGesture(gesture)
+            self.cyclesToRemove.remove(c)
 
     def setCycle(self, name, rate, magnitude, ease_in):
         if magnitude == 0:
-            # Remove cycle
-            toRemove = [cycle for cycle in self.cyclesSet if cycle.name == name]
-            for cycle in toRemove:
-                self.cyclesSet.remove(cycle)
-
-            toRemove = [gesture for gesture in self.gesturesList if gesture.name == name]
-            for gesture in toRemove:
-                self._deleteGesture(gesture)
-            return 0
+            self.cyclesToRemove.append(name)
         else:
             # Check value for sanity
             checkValue(rate, 0.1, 10)
@@ -388,31 +514,44 @@ class AnimationManager():
         return locBU
 
 
-    def setFaceTarget(self, loc):
+    def setFaceTarget(self, loc, speed=1.0):
         '''Set the target used by eye and face tracking.'''
-
+        # If speed is not set default speed is used.
+        if speed < 0.01:
+            duration = 0.1
+        else:
+            duration = max(0.1 / (speed**2), 0.02)
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.face_target_offset)
+        self.headTargetLoc.transition = Wrappers.wrap([
+                Pipes.exponential(7),
+                Pipes.moving_average(window=duration)],
+                Wrappers.in_spherical(origin=[0, self.face_target_offset, 0], radius=4)
+        )
 
         self.headTargetLoc.target = locBU
+        if time.time() - self.eyes_gazing > self.max_eye_gaze:
+            # Change offset for the eyes
+            locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
-        # Change offset for the eyes
-        locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
+            # Move eyes too, really fast
+            self.eyeTargetLoc.transition = Wrappers.wrap([
+                    Pipes.linear(speed=300)],
+                Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
+            self.eyeTargetLoc.target = locBU
 
-        # Move eyes too, slowly
-        self.eyeTargetLoc.transition = Wrappers.wrap([
-                Pipes.linear(speed=0.5),
-                Pipes.stick(window=0.5),
-                Pipes.moving_average(window=0.1)],
-            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
-        self.eyeTargetLoc.target = locBU
 
-    def setGazeTarget(self, loc):
+    # Rotates the face target which will make head roll
+    def setHeadRotation(self,rot):
+        self.headRotation.target = rot
+
+    def setGazeTarget(self, loc, speed=1):
         '''Set the target used for eye tracking only.'''
-
+        ''' Ignores speed for now. Eyes should always move fast '''
+        self.eyes_gazing = time.time()
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
 
         self.eyeTargetLoc.transition = Wrappers.wrap(
-            Pipes.linear(speed=3),
+            Pipes.linear(speed=300),
             Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4)
         )
         self.eyeTargetLoc.target = locBU
@@ -551,5 +690,3 @@ def init():
         logger.info('Skipping Singleton instantiation')
     else:
         bpy.evaAnimationManager = AnimationManager()
-
-    

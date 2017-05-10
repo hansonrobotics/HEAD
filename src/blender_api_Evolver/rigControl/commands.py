@@ -25,21 +25,62 @@ def terminate():
 
 
 class EvaAPI(RigAPI):
+    PAU_HEAD_YAW = 1
+    PAU_HEAD_PITCH = 2
+    PAU_HEAD_ROLL = 4
+    PAU_EYE_TARGET = 8
+    PAU_FACE = 16
+    # Flag which determines if currenjtly PAU messages are being transmitted
+    PAU_ACTIVE = 128
+    PAU_ACTIVE_TIMEOUT = 0.5
     selected_actions = IGA.selected_actions
     initial_population = [] # initialize population for the IGA
 
 
 
     def __init__(self):
+        # Current animation mode (combined by addition)
+        # 0 - Face eyes and head controlled by animations
+        # 1 - head yaw controlled by PAU
+        # 2 - head pitch controlled by PAU
+        # 4 - head roll controlled by PAU
+        # 8 - Eye Target controlled by PAU
+        # 16 - Face shapekeys controlled by PAU
+        self.pauAnimationMode = 0
+        # If 1 current shapekeys are controlled directly by PAU, otherwise by default drivers
+        self.shapekeysControl = 0
+        # Time for PAU controls to expire
+        self.pauTimeout = 0
         pass
 
-    # System control and information commands ===========
+
     def getAPIVersion(self):
         return 4
 
     def isAlive(self):
         return int(bpy.context.scene['animationPlaybackActive'])
+    # Faceshift to ROS mapping functions
+    def getAnimationMode(self):
 
+        return self.pauAnimationMode
+
+    def setAnimationMode(self, animation_mode):
+
+        ## Now let's delete the shape
+        if self.pauAnimationMode != animation_mode:
+            print(animation_mode)
+            # Face should drivers should be disabled
+            # Face drivers are enabled on the first PAU message recieved if the correct animation mode is set.
+            if animation_mode & (self.PAU_FACE | self.PAU_ACTIVE) == (self.PAU_FACE | self.PAU_ACTIVE):
+                bpy.evaAnimationManager.setMode(1)
+            else:
+                 bpy.evaAnimationManager.setMode(0)
+            self.pauAnimationMode = animation_mode
+        return 0
+
+    def setShapeKeys(self, shape_keys):
+        bpy.evaAnimationManager.setShapeKeys(shape_keys)
+        return 0
     # Somatic states  --------------------------------
     # awake, asleep, drunk, dazed and confused ...
     def availableSomaStates(self):
@@ -480,16 +521,22 @@ class EvaAPI(RigAPI):
     # Distances are measured in meters.  Origin of the coordinate
     # system is somewhere (where?) in the middle of the head.
 
-    def setFaceTarget(self, loc):
+    def setFaceTarget(self, loc, speed=1.0):
         # Eva uses y==forward x==right. Distances in meters from
         # somewhere in the middle of the head.
         mloc = [loc[1], loc[0], loc[2]]
-        bpy.evaAnimationManager.setFaceTarget(mloc)
+        bpy.evaAnimationManager.setFaceTarget(mloc, speed)
         return 0
 
-    def setGazeTarget(self, loc):
+    # Rotates the face target which will make head roll
+    def setHeadRotation(self,rot):
+        bpy.evaAnimationManager.setHeadRotation(rot)
+        return 0
+
+
+    def setGazeTarget(self, loc, speed=1.0):
         mloc = [loc[1],  loc[0], loc[2]]
-        bpy.evaAnimationManager.setGazeTarget(mloc)
+        bpy.evaAnimationManager.setGazeTarget(mloc, speed)
         return 0
     # ========== procedural animations with unique parameters =============
     def setBlinkRandomly(self,interval_mean,interval_variation):

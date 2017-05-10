@@ -11,4 +11,3 @@ bpy.ops.wm.global_timer()
 bpy.ops.wm.command_listener()
 # Starts animation manager
 bpy.ops.wm.animation_playback()
-

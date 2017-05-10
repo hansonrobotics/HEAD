@@ -9,6 +9,21 @@ class RigAPI:
 
     def isAlive(self):
         return None
+    # Codes to enable faceshift to blendshape mapping
+    def getAnimationMode(self):
+        return None
+
+    def setAnimationMode(self,animation_mode=0):
+        return None
+
+    def setShapekeys(self, shapekeys):
+        return None
+
+    def setAnimationMode(self,animation_mode=0):
+        return None
+
+    def setShapekeys(self, shapekeys):
+        return None
 
     # Somatic states  --------------------------------
     # awake, asleep, drunk, dazed and confused ...
@@ -59,10 +74,16 @@ class RigAPI:
     # coordinates: 'x' is forward, 'y' to the left, and 'z' up.
     # Distances are measured in meters.  Origin of the coordinate
     # system is somewhere (where?) in the middle of the head.
-    def setFaceTarget(self, location):
+    # Speed is added for more control. Uses moving average over period of time
+    def setFaceTarget(self, location, speed=1.0):
         return None
 
-    def setGazeTarget(self, location):
+    def setGazeTarget(self, location, speed=1.0):
+        return None
+
+    # Head roll ----------------------------------
+    # Sets head roll by the angle given.
+    def setHeadRotation(self, location):
         return None
 
     # ========== info dump for ROS
