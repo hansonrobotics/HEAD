@@ -69,6 +69,10 @@ generate_messages(
 #   std_msgs  # Or other packages containing msgs
 )
 
+generate_dynamic_reconfigure_options(
+  cfg/TTS.cfg
+)
+
 ###################################
 ## catkin specific configuration ##
 ###################################

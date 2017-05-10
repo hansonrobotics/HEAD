@@ -5,7 +5,6 @@ import rospy
 import logging
 import json
 import time
-import rospkg
 import yaml
 import os
 import fnmatch
@@ -26,14 +25,13 @@ from dynamic_reconfigure.server import Server
 from performances.cfg import PerformancesConfig
 
 logger = logging.getLogger('hr.performances')
-rospack = rospkg.RosPack()
-
 
 class Runner:
     def __init__(self):
         logger.info('Starting performances node')
 
         self.robot_name = rospy.get_param('/robot_name')
+        self.robots_config_dir = rospy.get_param('/robots_config_dir')
         self.running = False
         self.paused = False
         self.autopause = False
@@ -153,7 +151,7 @@ class Runner:
             robot_name = 'common'
         else:
             robot_name = rospy.get_param('/robot_name')
-        dir_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id)
+        dir_path = os.path.join(self.robots_config_dir, robot_name, 'performances', id)
         if os.path.isdir(dir_path):
             root, dirs, files = next(os.walk(dir_path))
 
@@ -183,7 +181,7 @@ class Runner:
 
     def load(self, id):
         robot_name = 'common' if id.startswith('shared') else rospy.get_param('/robot_name')
-        p = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id)
+        p = os.path.join(self.robots_config_dir, robot_name, 'performances', id)
 
         if os.path.isdir(p):
             root, dirs, files = next(os.walk(p))
@@ -205,7 +203,7 @@ class Runner:
     def get_timeline(self, id):
         timeline = None
         robot_name = 'common' if id.startswith('shared') else rospy.get_param('/robot_name')
-        p = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances', id) + '.yaml'
+        p = os.path.join(self.robots_config_dir, robot_name, 'performances', id) + '.yaml'
 
         if os.path.isfile(p):
             with open(p, 'r') as f:
@@ -477,8 +475,8 @@ class Runner:
 
     def load_properties(self):
         robot_name = rospy.get_param('/robot_name')
-        robot_path = os.path.join(rospack.get_path('robots_config'), robot_name, 'performances')
-        common_path = os.path.join(rospack.get_path('robots_config'), 'common', 'performances')
+        robot_path = os.path.join(self.robots_config_dir, robot_name, 'performances')
+        common_path = os.path.join(self.robots_config_dir, 'common', 'performances')
         for path in [common_path, robot_path]:
             for root, dirnames, filenames in os.walk(path):
                 if '.properties' in filenames:

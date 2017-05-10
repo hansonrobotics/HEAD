@@ -1,7 +1,0 @@
-<!-- -*- mode: XML -*- -->
-<launch>
-    <node name="blender_api" pkg="blender_api_msgs" type="blender"
-        args="-y $(find blender_api_msgs)/../blender_api/Sophia.blend
-        -P $(find blender_api_msgs)/../blender_api/autostart.py"/>
-</launch>
-
