@@ -18,7 +18,7 @@
  -
 -->
 <launch>
-	<arg name="model" default="$(find robots_config)/han/description.urdf" />
+	<arg name="model" />
 	<arg name="gui" default="True" />
 	<arg name="pololu_joints" default="" />
 	<arg name="pau_joints" default="Eyes_Pitch;Eye_L;Eye_R;roll_base_joint;pitch_base_joint;yaw_joint;roll_neck_joint;pitch_neck_joint" />

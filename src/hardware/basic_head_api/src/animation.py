@@ -74,8 +74,8 @@ class Animation:
 if __name__ == '__main__':
     import yaml
     import os
-    import rospkg
-    path = rospkg.RosPack().get_path('robots_config')
+    import rospy
+    path = rospy.get_param('/robots_config_dir')
     animation_file = '%s/sophia_body/animations.yaml' % path
     anims = open(animation_file)
     y = yaml.load(anims)

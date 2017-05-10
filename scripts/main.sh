@@ -186,7 +186,7 @@ fi
 
 export ROS_PYTHON_LOG_CONFIG_FILE="$BASEDIR/python_logging.conf"
 export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
-export ROBOT_CONFIG_DIR=$HR_WORKSPACE/HEAD/src/robots_config
+export ROBOTS_CONFIG_DIR=$HR_WORKSPACE/HEAD/src/robots_config
 export HR_CHARACTER_PATH=$HR_WORKSPACE/HEAD/src/chatbot/scripts/characters
 export HR_CHATBOT_REVISION=$(git -C $HR_WORKSPACE/HEAD log -1 --format='%h' 2>/dev/null)
 export LOCATION_SERVER_HOST=52.41.5.107
@@ -198,7 +198,7 @@ if [[ $(tmux ls 2>/dev/null) == ${NAME}* ]]; then
     info "Killed session $NAME"
 fi
 
-ros_args="name:=$NAME"
+ros_args="name:=$NAME robots_config_dir:=$ROBOTS_CONFIG_DIR"
 
 if [[ $DEV_MODE == 1 ]]; then
     ros_args="$ros_args dev:=true"
@@ -245,7 +245,7 @@ while rostopic list >/dev/null 2>&1; do error "roscore is running. Waiting." >&2
 
 warn "ROS launch args \"${ros_args}\""
 
-tmux new-session -d -s $NAME -n $NAME "roslaunch robots_config robot.launch $ros_args; $SHELL"
+tmux new-session -d -s $NAME -n $NAME "roslaunch ${ROBOTS_CONFIG_DIR}/robot.launch $ros_args; $SHELL"
 until rostopic list >/dev/null 2>&1; do sleep 1; info "Waiting for master"; done
 
 info "Starting"
@@ -262,8 +262,8 @@ if [[ $DEV_MODE == 1 ]]; then
 fi
 
 tmux new-window -n 'webui' "cd $HR_WORKSPACE/HEAD/src/webui; webpack $WEBPACK_OPTIONS &
-    $NODE_INTERPRETER $WEBUI_SERVER -p 4000 -c $ROBOT_CONFIG_DIR -r $NAME -s &
-    $NODE_INTERPRETER $WEBUI_SERVER -p 8000 -c $ROBOT_CONFIG_DIR -r $NAME; $SHELL"
+    $NODE_INTERPRETER $WEBUI_SERVER -p 4000 -c $ROBOTS_CONFIG_DIR -r $NAME -s &
+    $NODE_INTERPRETER $WEBUI_SERVER -p 8000 -c $ROBOTS_CONFIG_DIR -r $NAME; $SHELL"
 
 tmux new-window -n 'blender' "cd $HR_WORKSPACE/HEAD/src/blender_api && blender -y $BLENDER_FILE -P autostart.py; $SHELL"
 
