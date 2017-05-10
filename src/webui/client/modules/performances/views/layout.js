@@ -136,6 +136,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         }
                     } else {
                         this.setCurrentPerformance(null)
+                        this.performancesView.backToDir()
                     }
                 }
             },
@@ -201,19 +202,24 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
 
                 this.syncedPerformance.fetchCurrent({
                     success: function(response) {
-                        self.setCurrentPerformance(self.syncedPerformance, {
-                            running: response['running'],
-                            paused: response['paused'],
-                            current_time: response['current_time'],
-                            readonly: true,
-                            skipLoading: true
-                        })
+                        if (self.syncedPerformance.get('timelines') || self.readonly) {
+                            self.setCurrentPerformance(self.syncedPerformance, {
+                                running: response['running'],
+                                paused: response['paused'],
+                                current_time: response['current_time'],
+                                readonly: true,
+                                skipLoading: true
+                            })
 
-                        if (self.syncedPerformance.id)
-                            self.performancesView.navigate(self.syncedPerformance.id)
+                            if (self.syncedPerformance.id)
+                                self.performancesView.navigate(self.syncedPerformance.id)
 
-                        if (!response.performance) {
-                            self.destroyTimeline()
+                            if (!response.performance) {
+                                self.destroyTimeline()
+                            }
+
+                        } else {
+                            self.performancesView.back(self.syncedPerformance.id)
                         }
                     }
                 })
