@@ -250,7 +250,7 @@ until rostopic list >/dev/null 2>&1; do sleep 1; info "Waiting for master"; done
 
 info "Starting"
 
-tmux new-window -n 'rosbridge_ssl' "roslaunch robots_config rosbridge_ssl.launch ssl:=true certfile:=$HR_WORKSPACE/HEAD/src/webui/backend/ssl/cert.crt keyfile:=$HR_WORKSPACE/HEAD/src/webui/backend/ssl/key.pem port:=9094"
+tmux new-window -n 'rosbridge_ssl' "roslaunch ${ROBOTS_CONFIG_DIR}/rosbridge_ssl.launch ssl:=true certfile:=$HR_WORKSPACE/HEAD/src/webui/backend/ssl/cert.crt keyfile:=$HR_WORKSPACE/HEAD/src/webui/backend/ssl/key.pem port:=9094"
 
 WEBUI_SERVER=$HR_WORKSPACE/HEAD/src/webui/backend/entry.js
 WEBPACK_OPTIONS="--optimize-minimize"
