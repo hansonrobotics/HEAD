@@ -132,6 +132,7 @@ class BLPlayback(bpy.types.Operator):
                 headLoc[0] = -normalX * 0.2
                 headLoc[2] = normalY * 0.2
             # update NLA based gestures
+            eva.removeCycles()
             gestures = eva.gesturesList[:]  	# prevent in-situ removal while iterating bug
             for gesture in gestures:
                 # Leave strrip time for backward compatable with blender with version lower 2.75
@@ -186,14 +187,24 @@ class BLPlayback(bpy.types.Operator):
 
             eva.headTargetLoc.blend(time, dt)
             eva.eyeTargetLoc.blend(time, dt)
+            eva.headRotation.blend(time, dt)
 
             head_loc = eva.headTargetLoc.current
             head_loc[0] = -head_loc[0]
+            head_loc_old = eva.face_target
             headControl.location = head_loc
             eye_loc = eva.eyeTargetLoc.current
             eye_loc[1] = -eye_loc[1]
             eyeControl.location = eye_loc
+            if abs(head_loc[0] + head_loc_old[0]) > 0.01:
+                bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_scale = 0
+            else:
+                bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_scale = 1
 
+
+            scale = 0 if abs(head_loc[0] - head_loc_old[0]) else 1
+            # Rotation
+            headControl.rotation_euler[1] = eva.headRotation.current
             # udpate emotions
             for emotion in eva.emotionsList:
                 emotion.magnitude.blend(time, dt)
@@ -252,6 +263,11 @@ class BLPlayback(bpy.types.Operator):
                         if gesture.name == cycle.name:
                             gesture.stripRef.mute = True
 
+            # Apply animation mode and shapekeys
+            # Check if the animations mode was changed and updates it
+            eva.changeMode()
+            # Apply queued shapekeys
+            eva.applyShapeKeys()
             # force update
             bpy.data.scenes['Scene'].frame_set(1)
 

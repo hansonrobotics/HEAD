@@ -13,4 +13,3 @@ def register():
     rigControl.init()
 
 register()
-
