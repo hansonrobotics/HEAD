@@ -29,7 +29,7 @@ define(['application', './views/layout', './views/settings', './entities/robot_c
 
                 node = decodeURIComponent(node)
                 let nodeConfig = new NodeConfig({}, {node_name: node}),
-                    nodeConfigSchema = new NodeConfigSchema(node)
+                    nodeConfigSchema = new NodeConfigSchema({}, {node_name: node})
 
                 nodeConfig.fetch()
                 nodeConfigSchema.fetch({

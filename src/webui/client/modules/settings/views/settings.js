@@ -33,8 +33,13 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 })
 
                 this.setConfig()
-                this.editor.on('change', function() {
-                    self.update()
+                let init = true
+                self.editor.on('change', function() {
+                    // skip the first update since it is tiggered before values are properly set
+                    if (init)
+                        init = false
+                    else
+                        self.update()
                 })
 
                 if (this.options.refresh)

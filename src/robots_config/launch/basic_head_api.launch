@@ -1,5 +1,0 @@
-<!-- -*- mode: XML -*- -->
-<launch>
-   <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py" respawn="true"/>
-</launch>
-

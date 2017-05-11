@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="name"/>
+    <arg name="robots_config_dir" />
+    <arg name="dev" default="false" />
+    <arg name="pi_vision" default="true" />
+    <arg name="cmt" default="false" />
+    <arg name="realsense" default="false" />
+    <arg name="puppeteering" default="false" />
+    <arg name="oc_chatbot" default="false" />
+    <arg name="chatbot" default="true" />
+    <arg name="gui" default="true" />
+    <arg name="saliency" default="false" />
+    <arg name="dynamixel_usb" default="false" />
+    <arg name="dynamixel_device" default="" />
+
+    <param name="/robot_name" type="str" value="$(arg name)" />
+    <param name="/robots_config_dir" type="str" value="$(arg robots_config_dir)" />
+
+    <group ns="/$(arg name)">
+        <!-- lang: en/zh -->
+        <param name="lang" value="en" />
+        <param name="oc_chatbot" type="bool" value="$(arg oc_chatbot)" />
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/config.yaml" command="load"/>
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/motors.yaml" command="load" />
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/expressions.yaml" command="load"/>
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/safety.yaml" command="load"/>
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/attention_regions.yaml" command="load"/>
+
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/animations.yaml" command="load"/>
+        <group unless="$(arg dev)">
+            <include file="$(arg robots_config_dir)/$(arg name)/hardware.launch" unless="$(arg dynamixel_usb)">
+                <arg name="name" value="$(arg name)" />
+            </include>
+            <include file="$(arg robots_config_dir)/$(arg name)/hardware.launch" if="$(arg dynamixel_usb)">
+                <arg name="name" value="$(arg name)" />
+                <arg name="dyn_usb" value="$(arg dynamixel_device)" />
+            </include>
+        </group>
+
+        <node name="basic_head_api" pkg="basic_head_api" type="head_ctrl.py" respawn="true"/>
+        <node name="pau2motors" pkg="pau2motors" type="pau2motors_node.py" respawn="True" />
+
+        <node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
+        <node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
+        <node pkg="topic_tools" type="mux" name="lips_pau" args="lips_pau head_pau lipsync_pau mux:=lips_pau_mux"/>
+        <node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
+
+        <node name="chatbot" pkg="chatbot" type="ai.py" args="$(find chatbot)/aiml/ -sent" respawn="true" if="$(arg chatbot)">
+            <param name="properties" value="$(arg robots_config_dir)/$(arg name)/bot.properties" />
+        </node>
+        <node name="wholeshow" pkg="performances" type="wholeshow.py" respawn="true" output="screen" />
+
+        <rosparam file="$(arg robots_config_dir)/$(arg name)/tts_animation_config.yaml" command="load"/>
+        <param name="tts_topic" value="tts" />
+        <node name="tts_talker" pkg="tts" type="tts_talker.py" respawn="true"/>
+
+        <node name="audio_stream" pkg="audio_stream" type="run.py" respawn="true"/>
+        <node name="audio_sensor" pkg="audio_stream" type="audio_sensor.py" respawn="true"/>
+        <node name="dxl_tools" pkg="webui" type="dxl_controller.py" />
+        <node pkg="topic_tools" type="mux" name="tts" args="tts chatbot_responses web_responses mux:=tts_mux"/>
+        <node pkg="topic_tools" type="mux" name="tts_en" args="tts_en chatbot_responses_en web_responses_en mux:=tts_en_mux"/>
+        <node pkg="topic_tools" type="mux" name="tts_zh" args="tts_zh chatbot_responses_zh web_responses_zh mux:=tts_zh_mux"/>
+    </group>
+
+    <include file="$(find webui)/webui.launch" />
+
+    <!-- Perception outside the namespace -->
+    <include file="$(find perception)/launch/geometry.launch">
+        <arg name="model" value="$(arg robots_config_dir)/$(arg name)/description.urdf" />
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+    <include file="$(arg robots_config_dir)/$(arg name)/camera.launch">
+        <arg name="dev" value="$(arg dev)" />
+    </include>
+
+    <include file="$(arg robots_config_dir)/tracker.launch" >
+        <arg name="robots_config_dir" value="$(arg robots_config_dir)"/>
+        <arg name="pi_vision" value="$(arg pi_vision)" />
+        <arg name="cmt" value="$(arg cmt)" />
+        <arg name="realsense" value="$(arg realsense)" />
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+    <include file="$(find face_id)/launch/face_id.launch" if="$(arg cmt)"/>
+
+    <node name="saliency" pkg="ros_nmpt_saliency" type="ros_nmpt_saliency_node" if="$(arg saliency)">
+        <param name="gui" value="$(arg gui)"/>
+    </node>
+
+    <!-- Rosbridge for webui -->
+    <node name="rosbridge_websocket" pkg="rosbridge_server" type="rosbridge_websocket">
+      <param name="authenticate" value="false" />
+      <param name="port" value="9090"/>
+      <param name="address" value=""/>
+    </node>
+    <node name="rosapi" pkg="rosapi" type="rosapi_node" />
+
+    <include file="$(find faceshift_puppeteering)/launch/faceshift_puppeteering.launch" if="$(arg puppeteering)">
+        <arg name="IP" value="192.168.1.105" />
+    </include>
+</launch>

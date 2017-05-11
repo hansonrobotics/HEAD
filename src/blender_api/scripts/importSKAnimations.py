@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import rospy
 import yaml
-from rospkg import RosPack
 ROBOT = "sophia_body"
 #import bpy
 #rospy.init_node("expression_tools")
@@ -11,8 +10,7 @@ animations = rospy.get_param('/{}/animations'.format(ROBOT))
 
 from pau2motors.msg import pau
 from pau2motors import ShapekeyStore
-rp = RosPack()
-config_root = rp.get_path('robots_config')
+config_root = rospy.get_param('robots_config_dir')
 with open(config_root+"/"+ROBOT+"/motors_settings.yaml", 'r') as stream:
     motors = yaml.load(stream)
 

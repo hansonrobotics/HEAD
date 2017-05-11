@@ -1,7 +1,9 @@
 define(['backbone', 'lib/api', './node_config'], function(Backbone, api, NodeConfig) {
     return Backbone.Model.extend({
-        initialize: function(node_name) {
-            this.node_name = node_name
+        initialize: function(attributes, options) {
+            options = options || {}
+            this.node_name = options['node_name'] || null
+            this.on('change', this.updateGroupNames)
         },
         sync: function(method, self, options) {
             if (method === 'read') {
@@ -47,25 +49,22 @@ define(['backbone', 'lib/api', './node_config'], function(Backbone, api, NodeCon
                 }
             }
         },
-        getSchemaFromDescription: function(description, prefix) {
-            prefix = prefix || 'root.'
-
+        getSchemaFromDescription: function(description) {
             let self = this,
-                properties = this.getSchemaFromParams(description.parameters, prefix)
+                properties = this.getSchemaFromParams(description.parameters)
 
             _.each(description.groups, function(group, name) {
                 properties[name] = {
                     type: 'object',
                     title: group.name,
-                    properties: self.getSchemaFromDescription(group, prefix + name + '.')
+                    properties: self.getSchemaFromDescription(group)
                 }
             })
 
             return properties
         },
-        getSchemaFromParams(params, prefix) {
-            let self = this,
-                schema = {}
+        getSchemaFromParams(params) {
+            let schema = {}
 
             $.each(params, function(i, param) {
                 // hide node schema field
@@ -112,17 +111,31 @@ define(['backbone', 'lib/api', './node_config'], function(Backbone, api, NodeCon
                 if ($.isNumeric(param.max)) property.maximum = param.max
 
                 schema[param.name] = property
-                self.groupNames[param.name] = prefix + param.name
             })
 
             return schema
         },
-        groupNames: {},
         getGroupName: function(name) {
             return name in this.groupNames ? this.groupNames[name] : name
         },
         getAllKeys: function() {
             return _.keys(this.groupNames)
+        },
+        updateGroupNames: function() {
+            this.groupNames = {}
+            this.crawlProperties('', 'root', this.attributes)
+            // remove root
+            delete this.groupNames['root']
+        },
+        crawlProperties: function(prefix, name, value) {
+            this.groupNames[name] = prefix + name
+
+            if (value['type'] === 'object') {
+                let properties = value['properties']
+                for (let key in properties)
+                    if (properties.hasOwnProperty(key))
+                        this.crawlProperties(prefix + name + '.', key, properties[key])
+            }
         }
     })
 })
