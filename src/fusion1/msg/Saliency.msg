@@ -1,2 +1,0 @@
-time ts
-floatxy saliency

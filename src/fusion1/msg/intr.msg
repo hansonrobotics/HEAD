@@ -1,2 +1,0 @@
-intxy center
-intxy size

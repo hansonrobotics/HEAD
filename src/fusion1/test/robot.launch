@@ -4,6 +4,32 @@
 	<param name="/robot_name" type="str" value="$(arg name)"/>
 	<group ns="/$(arg name)">
 		<param name="lang" value="en"/>
+		<!--
+		<group ns="lefteye">
+			<node name="camera" type="usb_cam_node" pkg="usb_cam">
+				<param name="video_device" value="/dev/video1"/>
+				<param name="pixel_format" value="yuyv"/>
+				<param name="width" value="320"/>
+				<param name="height" value="240"/>
+			</node>
+			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
+			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
+			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
+		</group>
+		<group ns="righteye">
+			<node name="camera" type="usb_cam_node" pkg="usb_cam">
+				<param name="video_device" value="/dev/video2"/>
+				<param name="pixel_format" value="yuyv"/>
+				<param name="width" value="320"/>
+				<param name="height" value="240"/>
+			</node>
+			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
+			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
+			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
+		</group>
+		-->
 		<group ns="wideangle">
 			<node name="camera" type="usb_cam_node" pkg="usb_cam">
 				<param name="video_device" value="/dev/video0"/>
@@ -12,27 +38,14 @@
 				<param name="height" value="480"/>
 			</node>
 			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
-		</group>
-		<group ns="lefteye">
-			<node name="camera" type="usb_cam_node" pkg="usb_cam">
-				<param name="video_device" value="/dev/video1"/>
-				<param name="pixel_format" value="yuyv"/>
-				<param name="width" value="640"/>
-				<param name="height" value="480"/>
-			</node>
-			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
-		</group>
-		<group ns="righteye">
-			<node name="camera" type="usb_cam_node" pkg="usb_cam">
-				<param name="video_device" value="/dev/video2"/>
-				<param name="pixel_format" value="yuyv"/>
-				<param name="width" value="640"/>
-				<param name="height" value="480"/>
-			</node>
-			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
+			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
+			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
 		</group>
 		<group ns="realsense">
-			<node name="camera" type="realsense_receiver" pkg="fusion1"/>
+			<!-- RealSense is running on /windowspc and communicates directly with fusion/vision pipeline -->
+			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
+			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
 		</group>
 	</group>
 </launch>

@@ -50,25 +50,12 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
 add_message_files(
   FILES
-  Ambience.msg
-  AudioChunk.msg
+  AgeRequest.msg
+  AgeResponse.msg
   Face.msg
-  floatr.msg
-  floatxy.msg
-  Gaze.msg
-  HandGestures.msg
-  HandLandmarks.msg
-  HandRect.msg
-  Image.msg
-  intr.msg
-  intxy.msg
-  LoudNoise.msg
-  Saliency.msg
-  SpeechEmotion.msg
-  Speech.msg
-  Thumb.msg
-  Transform.msg
-  utterance.msg
+  Hand.msg
+  GenderRequest.msg
+  GenderResponse.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -171,19 +158,14 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 install(PROGRAMS
+  scripts/age_estimation.py
   scripts/detect_faces.py
+  scripts/detect_hands.py
   scripts/fusion.py
-  scripts/analyze_face_expression.py
-  scripts/analyze_hand_gesture.py
-  scripts/detect_ambience.py
-  scripts/detect_gaze.py
-  scripts/detect_hand.py
-  scripts/detect_noise.py
-  scripts/detect_saliency.py
-  scripts/detect_speech.py
-  scripts/identify_face.py
-  scripts/stt_continuous.py
-  scripts/stt_piecewise.py
+  scripts/gender_estimation.py
+  scripts/hearing_pipeline.py
+  scripts/partial_user.py
+  scripts/vision_pipeline.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

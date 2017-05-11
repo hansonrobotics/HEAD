@@ -1,0 +1,17 @@
+* setup vision and hearing pipelines
+
+* build age estimation
+
+* build gender estimation
+
+* id, age and gender estimation cannot run asynchronously, so they have to be embedded in vision pipeline somehow
+
+- enqueue the age/gender/ID requests, so we only need one external process/network that we can re-use
+
+- fix realsense input and output
+
+- refactor saliency code
+
+- refactor ambience code
+
+- replacement of joint_state_publisher that publishes motor angles, or, combine into fusion.py, so it accesses the motors directly

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- this is separate from robot.launch because it has it's own terminal window with console output -->
 <launch>
 	<arg name="name"/>
 	<param name="/robot_name" type="str" value="$(arg name)"/>
