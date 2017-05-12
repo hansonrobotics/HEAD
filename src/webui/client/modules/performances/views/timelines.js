@@ -245,11 +245,14 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         if (this.queue.length > 1 && this.queueItem) {
                             let pos = this.queue.findIndex(this.queueItem)
                             if (pos !== -1) {
-                                if (pos > 0) this.ui.previousButton.fadeIn()
-                                else this.ui.previousButton.fadeOut()
+                                this.ui.previousButton.fadeIn()
+                                this.ui.nextButton.fadeIn()
+                                
+                                if (pos > 0) this.ui.previousButton.prop('disabled', false)
+                                else this.ui.previousButton.prop('disabled', true)
 
-                                if (pos < this.queue.length - 1) this.ui.nextButton.fadeIn()
-                                else this.ui.nextButton.fadeOut()
+                                if (pos < this.queue.length - 1) this.ui.nextButton.prop('disabled', false)
+                                else this.ui.nextButton.prop('disabled', true)
                             } else {
                                 this.hideEditNav()
                             }
