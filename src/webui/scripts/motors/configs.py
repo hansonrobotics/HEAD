@@ -149,7 +149,7 @@ class Configs:
     def _get_pau(self,m):
         p = copy.deepcopy(self._PAU_TPL)
         # Parsers
-        if not ('parser' in m.keys() and m['parser'] != ''):
+        if not ('parser' in m.keys() and m['parser'] != '' and m['parser']):
             return False
         p['parser']['name'] = m['parser']
         if m['parser'] == 'getproperty':
