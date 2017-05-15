@@ -6,12 +6,38 @@
 
 * id, age and gender estimation cannot run asynchronously, so they have to be embedded in vision pipeline somehow
 
-- enqueue the age/gender/ID requests, so we only need one external process/network that we can re-use
+* create directory structure and store all thumbs
 
-- fix realsense input and output
++ enqueue the age/gender/ID requests, so we only need one external process/network that we can re-use
 
-- refactor saliency code
++ make transformations work from motor positions (refactor current perception ROS node)
 
-- refactor ambience code
++ hook up rviz (analyze current perception ROS node)
 
-- replacement of joint_state_publisher that publishes motor angles, or, combine into fusion.py, so it accesses the motors directly
+- make 2D face detection 3D using camera FOV
+
+- adjustable timer periods and FOVs
+
++ generate 3D coordinates from faces
+
++ hook up realsense
+
+- cut out realsense thumbs and send them over
+
++ visualize users with id, age, gender etc. info
+
+- hook up speech and localization
+
+- refactor ambience for all cameras
+
+- refactor saliency for all cameras
+
+- visualize saliency
+
+- fuse observations (needs discussion w/ OpenCog people)
+
+- output opencog (needs discussion w/ OpenCog people)
+
+- output classic ROS
+
+- BUG: sometimes there are 0 faces in the puser list and python dumps an exception, which should not be possible

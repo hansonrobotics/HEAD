@@ -24,15 +24,12 @@ camera_fovy_atan = 1.0 # TODO: specify real camera fovy
 
 
 # prepare serial ID, unique to this namespace
-ros_namespace_hash = 0
-serial_number = 0
+serial_number = -1
 
-def GenerateID():
-    global ros_namespace_hash
+def GenerateFaceID():
     global serial_number
-    result = ros_namespace_hash + serial_number
     serial_number += 1
-    return result
+    return serial_number
 
 
 # the face detector
@@ -73,8 +70,8 @@ class DetectFaces(object):
             return
 
         # detect faces
-        gray_frame = opencv_bridge.imgmsg_to_cv2(self.most_recent_frame,"mono8")
-        faces = face_cascade.detectMultiScale(gray_frame,scaleFactor=1.1,minSize=(30,30),flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
+        color_frame = opencv_bridge.imgmsg_to_cv2(self.most_recent_frame,"bgr8")
+        faces = face_cascade.detectMultiScale(color_frame,scaleFactor=1.1,minSize=(30,30),flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
 
         # don't publish anything if there were no faces detected
         if len(faces) == 0:
@@ -83,29 +80,43 @@ class DetectFaces(object):
         # publish all faces
         for (x,y,w,h) in faces:
 
+            if (w <= 0) or (h <= 0):
+                continue
+
             # prepare face message
             face = Face()
 
             # create new UID for the face
-            face.id = GenerateID()
+            face.face_id = GenerateFaceID()
 
             # set timestamp
             face.ts = self.most_recent_ts
 
+            # set rectangle
+            face.rect.origin.x = -1.0 + 2.0 * float(x) / float(self.most_recent_frame.width)
+            face.rect.origin.y = -1.0 + 2.0 * float(y) / float(self.most_recent_frame.height)
+            face.rect.size.x = 2.0 * float(w) / float(self.most_recent_frame.width)
+            face.rect.size.y = 2.0 * float(h) / float(self.most_recent_frame.height)
+
             # TODO: convert rectangle to 3D coordinates
-            face.x = -1.0 + 2.0 * float(x + w / 2) / float(self.most_recent_frame.width)
-            face.y = -1.0 + 2.0 * float(y + h / 2) / float(self.most_recent_frame.height)
-            face.z = 1.0
+            face.pos.x = face.rect.origin.x + face.rect.size.x / 2
+            face.pos.y = face.rect.origin.y + face.rect.size.y / 2
+            face.pos.z = 1.0
 
             # assume it's a valid face
             face.confidence = 1.0
 
-            # cut out thumbnail (a little larger, so OpenBR can correctly identify stuff)
-            tx = x - 10
-            ty = y - 10
-            tw = w + 20
-            th = h + 20
-            face.image = opencv_bridge.cv2_to_imgmsg(cv2.resize(gray_frame[ty:ty+th,tx:tx+tw],(64,64)))
+            # non-realsense does not understand smile, frown and expressions
+            face.smile = 0.0
+            face.frown = 0.0
+            face.expressions = []
+            
+            # landmarks
+            face.landmarks = []
+
+            # cut out thumbnail
+            cvthumb = cv2.resize(color_frame[y:y+h,x:x+w],(64,64))
+            face.thumb = opencv_bridge.cv2_to_imgmsg(cvthumb)
 
             # and publish
             self.face_pub.publish(face)

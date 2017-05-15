@@ -14,8 +14,7 @@
 			</node>
 			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
 			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
-			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
+			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 		</group>
 		<group ns="righteye">
 			<node name="camera" type="usb_cam_node" pkg="usb_cam">
@@ -26,8 +25,7 @@
 			</node>
 			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
 			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
-			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
+			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 		</group>
 		-->
 		<group ns="wideangle">
@@ -39,13 +37,11 @@
 			</node>
 			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
 			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
-			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
+			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 		</group>
 		<group ns="realsense">
 			<!-- RealSense is running on /windowspc and communicates directly with fusion/vision pipeline -->
-			<node name="age_estimation" type="age_estimation.py" pkg="fusion1"/>
-			<node name="gender_estimation" type="gender_estimation.py" pkg="fusion1"/>
+			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 		</group>
 	</group>
 </launch>

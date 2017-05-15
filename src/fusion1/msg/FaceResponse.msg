@@ -1,0 +1,11 @@
+uint32 invocation_id
+uint32 pipeline_id
+uint32 puser_id
+uint32 face_id
+time ts
+float32 age
+float32 age_confidence
+int32 gender
+float32 gender_confidence
+uint64 identity
+float32 identity_confidence

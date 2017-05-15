@@ -1,9 +1,13 @@
 #!/usr/bin/env python2.7
 import os
 import rospy
+import time
 
 from vision_pipeline import VisionPipeline
 from hearing_pipeline import HearingPipeline
+
+
+invocation_id = hash(time.strftime("%H%M%S")) & 0xFFFFFFFF
 
 
 class Fusion(object):
@@ -11,10 +15,12 @@ class Fusion(object):
 
     def __init__(self):
 
-        #self.lefteye = VisionPipeline("lefteye")
-        #self.righteye = VisionPipeline("righteye")
-        #self.realsense = VisionPipeline("realsense")
-        self.wideangle = VisionPipeline("wideangle")
+        global invocation_id
+
+        #self.lefteye = VisionPipeline("lefteye",invocation_id)
+        #self.righteye = VisionPipeline("righteye",invocation_id)
+        #self.realsense = VisionPipeline("realsense",invocation_id)
+        self.wideangle = VisionPipeline("wideangle",invocation_id)
 
         self.period_sec = 0.03333 # 30Hz
         self.timer = rospy.Timer(rospy.Duration(self.period_sec),self.HandleTimer)
