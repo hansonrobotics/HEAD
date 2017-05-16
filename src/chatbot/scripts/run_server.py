@@ -9,6 +9,7 @@ import shutil
 import argparse
 
 import sys
+import re
 CWD = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(CWD, '../src'))
 
@@ -44,7 +45,7 @@ from flask import Flask, request, Response, send_from_directory
 from chatbot.server.chatbot_agent import (
     ask, list_character, session_manager, set_weights, set_context,
     dump_history, dump_session, add_character, list_character_names,
-    rate_answer, get_context, said, remove_context)
+    rate_answer, get_context, said, remove_context, update_config)
 from chatbot.stats import history_stats
 
 json_encode = json.JSONEncoder().encode
@@ -220,6 +221,26 @@ def _get_context():
     ret, response = get_context(sid)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
+
+@app.route(ROOT + '/update_config', methods=['GET'])
+@requires_auth
+def _update_config():
+    data = request.args.to_dict()
+    for k, v in data.iteritems():
+        if v.lower() == 'true':
+            data[k]=True
+        elif v.lower() == 'false':
+            data[k]=False
+        elif re.match(r'[0-9]+', v):
+            data[k]=int(v)
+        elif re.match(r'[0-9]+\.[0-9]+', v):
+            data[k]=float(v)
+        else:
+            data[k]=str(v)
+    ret, response = update_config(**data)
+    return Response(json_encode({'ret': ret, 'response': response}),
+                    mimetype="application/json")
+
 
 @app.route(ROOT + '/upload_character', methods=['POST'])
 def _upload_character():
