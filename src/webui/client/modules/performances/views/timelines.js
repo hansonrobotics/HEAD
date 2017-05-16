@@ -2,7 +2,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
         '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
         'lib/api', 'annyang', 'modules/settings/entities/node_config', 'jquery-ui', 'scrollbar',
         'scrollbar-css', 'scrollTo', 'font-awesome', 'jquery-mousewheel'],
-    function(App, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition,
+    function(app, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition,
              api, annyang, NodeConfig) {
         return Marionette.View.extend({
             template: template,
@@ -37,7 +37,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 previousButton: '.app-previous-button',
                 nextButton: '.app-next-button',
                 zoomInButton: '.app-zoom-in-button',
-                zoomOutButton: '.app-zoom-out-button'
+                zoomOutButton: '.app-zoom-out-button',
+                nodeContextMenu: '.app-node-context-menu',
+                timelineContextMenu: '.app-timeline-context-menu'
             },
             regions: {
                 nodeSettings: {
@@ -182,6 +184,24 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     }
                 })
 
+                if (!this.readonly)
+                    this.ui.timelineContainer.contextMenu({
+                        menuSelector: this.ui.timelineContextMenu,
+                        menuSelected: function(invokedOn, selectedMenu, position) {
+                            switch ($(selectedMenu).data('action')) {
+                                case 'paste':
+                                    let node = app.state.get('node_clipboard'),
+                                        container = self.ui.timelineContainer
+                                    if (node) {
+                                        node = new Node(node)
+                                        node.set('start_time', ($(container).scrollLeft() + position.left - $(container).offset().left) / self.config.pxPerSec)
+                                        self.model.get('nodes').add(node)
+                                    }
+                                    break
+                            }
+                        }
+                    })
+
                 this.ui.previousButton.hide()
                 this.ui.nextButton.hide()
 
@@ -247,7 +267,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             if (pos !== -1) {
                                 this.ui.previousButton.fadeIn()
                                 this.ui.nextButton.fadeIn()
-                                
+
                                 if (pos > 0) this.ui.previousButton.prop('disabled', false)
                                 else this.ui.previousButton.prop('disabled', true)
 
@@ -322,6 +342,19 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.listenTo(node, 'change', this.focusNode)
                 this.listenTo(node, 'change', this.updateNodeEl)
                 this.updateNodeEl(node)
+
+                $(el, this.ui.timelineContainer).contextMenu({
+                    menuSelector: this.ui.nodeContextMenu,
+                    menuSelected: function(invokedOn, selectedMenu) {
+                        switch ($(selectedMenu).data('action')) {
+                            case 'copy':
+                                let json = node.toJSON()
+                                delete json['id']
+                                app.state.set('node_clipboard', json)
+                                break
+                        }
+                    }
+                })
 
                 if (!this.readonly) {
                     el.draggable({
@@ -490,11 +523,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             self.ui.nodesContainer.fadeIn()
 
                             if (model.get('error')) {
-                                App.Utilities.showPopover(self.ui.saveButton, model.get('error'))
+                                app.Utilities.showPopover(self.ui.saveButton, model.get('error'))
                                 model.unset('error')
                             } else {
                                 self.backup()
-                                App.Utilities.showPopover(self.ui.saveButton, 'Saved')
+                                app.Utilities.showPopover(self.ui.saveButton, 'Saved')
                             }
                         }
                     }

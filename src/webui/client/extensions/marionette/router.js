@@ -12,6 +12,8 @@ let app = require('application'),
         return false
     }
 
+app.lastUrl = ''
+
 Backbone.Router.prototype.execute = function(callback, args) {
     // Make sure only monitor is loaded before connection is made
     if (checkConnection())

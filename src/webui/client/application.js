@@ -45,7 +45,7 @@ define(['backbone', 'marionette', 'modules/layout/layout', 'lib/ros', 'lib/api',
                 fps: 48
             })
 
-        app.lastUrl = null
+        app.state = new Backbone.Model()
 
         return app
     })
