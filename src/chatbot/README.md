@@ -250,3 +250,18 @@ Parameters:
 Return:
 - *ret* - Return code
 - *response*
+
+
+```
+GET /v1.1/update_config
+```
+
+Parameters:
+- *Auth* - Authorization token
+- *config_key* - Configuration key
+- *config_key2* - Configuration key2
+- ...
+
+Return:
+- *ret* - Return code
+- *response*
