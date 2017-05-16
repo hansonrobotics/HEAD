@@ -66,3 +66,11 @@
 </div>
 
 <div class="app-node-settings-container"></div>
+
+<ul class="app-node-context-menu dropdown-menu" role="menu">
+    <li><a tabindex="-1" href="javascript:void(0)" data-action="copy">Copy</a></li>
+</ul>
+
+<ul class="app-timeline-context-menu dropdown-menu" role="menu">
+    <li><a tabindex="-1" href="javascript:void(0)" data-action="paste">Paste</a></li>
+</ul>
