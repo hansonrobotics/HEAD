@@ -311,6 +311,9 @@ For example, port 8001
         self.stdout.write("Set language. [en|zh]\n")
 
     def do_c(self, line):
+        reset_session()
+
+    def reset_session(self):
         try:
             params = {
                 "session": "{}".format(self.session),
