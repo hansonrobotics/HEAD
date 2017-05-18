@@ -145,6 +145,10 @@
     z-index: 9999;
 }
 
+.app-node.selected {
+    border: 1px solid white;
+}
+
 .app-timeline {
     position: relative;
 }

@@ -1,8 +1,8 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
-        '../entities/node', 'underscore', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
+        '../entities/node', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
         'lib/api', 'annyang', 'modules/settings/entities/node_config', 'jquery-ui', 'scrollbar',
         'scrollbar-css', 'scrollTo', 'font-awesome', 'jquery-mousewheel'],
-    function(app, Marionette, template, d3, bootbox, NodeView, Node, _, $, Performance, FadeInRegion, speechRecognition,
+    function(app, Marionette, template, d3, bootbox, NodeView, Node, $, Performance, FadeInRegion, speechRecognition,
              api, annyang, NodeConfig) {
         return Marionette.View.extend({
             template: template,
@@ -190,12 +190,17 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         menuSelected: function(invokedOn, selectedMenu, position) {
                             switch ($(selectedMenu).data('action')) {
                                 case 'paste':
-                                    let node = app.state.get('node_clipboard'),
+                                    let nodes = app.state.get('node_clipboard'),
                                         container = self.ui.timelineContainer
-                                    if (node) {
-                                        node = new Node(node)
-                                        node.set('start_time', ($(container).scrollLeft() + position.left - $(container).offset().left) / self.config.pxPerSec)
-                                        self.model.get('nodes').add(node)
+
+                                    if (nodes) {
+                                        if (nodes.constructor !== Array) nodes = [nodes]
+                                        _.each(nodes, function(node) {
+                                            node = new Node(node)
+                                            node.set('start_time', node.get('start_time') + ($(container).scrollLeft() +
+                                                position.left - $(container).offset().left) / self.config.pxPerSec)
+                                            self.model.get('nodes').add(node)
+                                        })
                                     }
                                     break
                             }
@@ -333,8 +338,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     el = $('<div>').addClass('app-node label')
                         .attr('data-node-name', node.get('name'))
                         .attr('data-node-id', node.cid)
-                        .on('click', function() {
-                            self.showNodeSettings(node)
+                        .on('click', function(e) {
+                            if (e.ctrlKey)
+                                self.selectNode(node)
+                            else
+                                self.showNodeSettings(node)
                         })
 
                 node.set('el', el.get(0), {silent: true})
@@ -348,9 +356,14 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     menuSelected: function(invokedOn, selectedMenu) {
                         switch ($(selectedMenu).data('action')) {
                             case 'copy':
-                                let json = node.toJSON()
-                                delete json['id']
-                                app.state.set('node_clipboard', json)
+                                if (self.selectedNodes.length && self.selectedNodes.indexOf(node) > -1) {
+                                    app.state.set('node_clipboard', self.getSelectedNodes())
+                                    self.deselectNodes()
+                                } else {
+                                    let json = node.toJSON()
+                                    delete json['id']
+                                    app.state.set('node_clipboard', json)
+                                }
                                 break
                         }
                     }
@@ -377,6 +390,41 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (node.hasProperty('duration'))
                         this.initResizable(el)
                 }
+            },
+            getSelectedNodes: function() {
+                let nodes = []
+                for (let node of this.selectedNodes) {
+                    let json = node.toJSON()
+                    delete json['id']
+                    nodes.push(json)
+                }
+
+                if (nodes.length) {
+                    nodes = _.sortBy(nodes, 'start_time')
+                    let offset = nodes[0]['start_time']
+                    _.each(nodes, function(val, key) {
+                        nodes[key]['start_time'] -= offset
+                    })
+                }
+
+                return nodes
+            },
+            selectedNodes: [],
+            selectNode: function(node) {
+                if (this.selectedNodes.indexOf(node) > -1) {
+                    _.remove(this.selectedNodes, node)
+                    $(node.get('el')).removeClass('selected')
+                } else {
+                    this.selectedNodes.push(node)
+                    $(node.get('el')).addClass('selected')
+                }
+            },
+            deselectNodes: function() {
+                _.each(this.selectedNodes, function(node) {
+                    $(node.get('el')).removeClass('selected')
+                })
+
+                this.selectedNodes = []
             },
             updateNodes: function() {
                 let self = this
