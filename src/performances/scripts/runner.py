@@ -53,7 +53,8 @@ class Runner:
         rospy.init_node('performances')
         self.services = {
             'head_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/head_pau_mux/select', MuxSelect),
-            'neck_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/neck_pau_mux/select', MuxSelect)
+            'neck_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/neck_pau_mux/select', MuxSelect),
+            'eyes_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/eyes_pau_mux/select', MuxSelect)
         }
         self.topics = {
             'running_performance': rospy.Publisher('~running_performance', String, queue_size=1),
