@@ -21,7 +21,7 @@ INVALID_QUESTION = 4
 logger = logging.getLogger('hr.chatbot.server.chatbot_agent')
 
 from loader import load_characters
-from config import CHARACTER_PATH, RESET_SESSION_BY_HELLO
+from config import CHARACTER_PATH, RESET_SESSION_BY_HELLO, config
 CHARACTERS = load_characters(CHARACTER_PATH)
 REVISION = os.environ.get('HR_CHATBOT_REVISION')
 
@@ -185,6 +185,26 @@ def get_context(sid):
         if k.startswith('_'):
             del context[k]
     return True, context
+
+def update_config(**kwargs):
+    keys = []
+    for key, value in kwargs.items():
+        if key in config:
+            if isinstance(value, unicode):
+                value = str(value)
+            config[key] = value
+            if key not in keys:
+                keys.append(key)
+        else:
+            logger.warn("Unknown config {}".format(key))
+
+    if len(keys) > 0:
+        logger.warn("Configuration is updated")
+        for key in keys:
+            logger.warn("{}={}".format(key, config[key]))
+        return True, "Configuration is updated"
+    else:
+        return False, "No configuration is updated"
 
 def preprocessing(question, lang, session):
     question = question.lower().strip()

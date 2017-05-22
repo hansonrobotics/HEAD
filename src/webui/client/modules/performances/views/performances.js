@@ -17,7 +17,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             },
             events: {
                 'click @ui.newButton': 'addNew',
-                'click @ui.backButton': 'back',
+                'click @ui.backButton': 'backCallback',
                 'click @ui.settingsButton': 'showSettings'
             },
             collectionEvents: {
@@ -280,8 +280,7 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                 if (this.currentPerformance)
                     this.stopListening(this.currentPerformance)
                 this.currentPerformance = this.collection.get(id)
-
-                if (this.collection.get(this.currentPath) && !this.currentPerformance)
+                if (this.collection.get(this.currentPath) && !this.currentPerformance && !this.collection.get(path.dirname(id)))
                     this.layoutView.setCurrentPerformance(null)
 
                 this.currentPath = id
@@ -326,8 +325,17 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
             getParentPath: function(path) {
                 return _.compact((path || '').split('/').slice(0, -1)).join('/')
             },
-            back: function() {
-                let p = path.dirname(this.currentPath)
+            backCallback: function() {
+                this.back()
+            },
+            back: function(id) {
+                let p = path.dirname(id || this.currentPath)
+                this.navigate(p === '.' ? '' : p)
+            },
+            backToDir: function() {
+                let p = this.currentPath
+                while (this.collection.get(p) || this.collection.get(path.dirname(p)))
+                    p = path.dirname(p)
                 this.navigate(p === '.' ? '' : p)
             },
             reload: function() {

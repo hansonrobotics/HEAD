@@ -17,7 +17,7 @@
     <div class="form-group" data-node-property="text">
         <label title="Text">Text</label>
         <textarea class="app-node-text form-control" title="Text"></textarea>
-        <button class="app-tts-preview btn btn-primary btn-block">Preview</button>
+        <button class="app-tts-preview btn btn-primary">Preview</button>
     </div>
 
     <div class="app-attention-region-list"></div>

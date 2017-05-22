@@ -311,6 +311,9 @@ For example, port 8001
         self.stdout.write("Set language. [en|zh]\n")
 
     def do_c(self, line):
+        reset_session()
+
+    def reset_session(self):
         try:
             params = {
                 "session": "{}".format(self.session),
@@ -682,6 +685,16 @@ Syntax: rc key,key2,key3,...
     def help_said(self):
         self.stdout.write('Set the chatbot state as the message was said\n')
 
+    def set_config(self, **kwargs):
+        params = {
+            "Auth": self.key,
+        }
+        params.update(kwargs)
+        r = requests.get(
+            '{}/update_config'.format(self.root_url), params=params)
+        ret = r.json().get('ret')
+        response = r.json().get('response')
+        logger.info(response)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)

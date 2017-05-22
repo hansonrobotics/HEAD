@@ -332,10 +332,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
 
                 let updateValues = function() {
                     let currentView = self.getRegion('settingsEditor').currentView
-                    if (currentView && currentView.model === nodeConfig) {
+                    if (currentView && currentView.model === nodeConfig)
                         self.model.set('values', nodeConfig.toJSON())
-                        self.model.set('node_schema', nodeConfig.toJSON())
-                    }
                     else
                         nodeConfig.off('change', updateValues)
                 }
