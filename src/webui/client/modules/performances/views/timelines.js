@@ -79,6 +79,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     else
                         self.nodeConfig.fetch()
                 }, 1000)
+                this.selectedNodes = []
             },
             changed: false,
             markChanged: function() {
@@ -409,7 +410,6 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 return nodes
             },
-            selectedNodes: [],
             selectNode: function(node) {
                 if (this.selectedNodes.indexOf(node) > -1) {
                     _.remove(this.selectedNodes, node)
