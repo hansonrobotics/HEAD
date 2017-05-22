@@ -140,7 +140,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                     self.model.loadPerformance()
                                 }
                                 self.listenTo(self.model.nodes, 'change add remove', reload)
-                                self.listenTo(self.model.nodes, 'change', self.markChanged)
+                                self.listenTo(self.model.nodes, 'change add remove', self.markChanged)
                             }
                         }
                     }
