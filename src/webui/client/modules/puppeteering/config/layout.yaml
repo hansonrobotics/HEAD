@@ -1,0 +1,19 @@
+- rows:
+  - cols:
+    - type: 'animation_mode'
+  - cols:
+    - type: 'timelines'
+  - cols:
+    - type: 'poses'
+- rows:
+  - cols:
+    - type: 'crosshairs'
+      size: 5
+    - type: 'face_select'
+      size: 7
+  - cols:
+    - type: 'speech'
+  - cols:
+    - type: 'interaction'
+  - cols:
+    - type: 'animations'

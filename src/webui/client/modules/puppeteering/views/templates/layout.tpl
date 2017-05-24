@@ -1,22 +1,16 @@
 <div class="container-fluid">
     <div class="app-puppeteering-container row">
-        <div class="app-left-column col-md-6">
+        <% for (let w of config) { %>
+        <div class="app-puppeteering-column col-md-<%= w.size || parseInt(12 / config.length) %>">
+            <% for (let row of w.rows) { %>
             <div class="row">
-                <div class="app-animation-mode-region col-md-12"></div>
-                <div class="app-timeline-editor-region col-md-12"></div>
-                <div class="app-pose-region col-md-12"></div>
+                <% for (let col of row.cols) { %>
+                <div class="col-md-<%= col.size || parseInt(12 / row.cols.length) %>"
+                     data-column="<%= col.type %>"></div>
+                <% } %>
             </div>
+            <% } %>
         </div>
-        <div class="app-right-column col-md-6">
-            <div class="app-controls">
-                <div class="row">
-                    <div class="app-cross-hairs-region col-md-5"></div>
-                    <div class="app-faces-region col-md-7"></div>
-                </div>
-                <div class="app-speech-region"></div>
-            </div>
-            <div class="app-chat-region"></div>
-            <div class="app-animations-region"></div>
-        </div>
+        <% } %>
     </div>
 </div>
