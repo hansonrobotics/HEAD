@@ -211,8 +211,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 } else {
                     this.nodeView = new NodeView({collection: this.model.nodes})
                     this.getRegion('nodeSettings').show(this.nodeView)
-                    this.ui.editButton.hide()
                 }
+
+                if (!this.readonly || !this.allowEdit)
+                    this.ui.editButton.hide()
 
                 this.ui.scrollContainer.perfectScrollbar()
 
@@ -259,8 +261,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!this.isDestroyed()) {
                     if (this.readonly) {
                         $([this.ui.nextButton, this.ui.previousButton]).hide()
-                        if (this.allowEdit) this.ui.editButton.fadeIn()
-                        else this.ui.editButton.fadeOut()
+                        if (!this.readonly || !this.allowEdit) this.ui.editButton.fadeOut()
+                        else this.ui.editButton.fadeIn()
                     } else {
                         if (this.queue.length > 1 && this.queueItem) {
                             let pos = this.queue.findIndex(this.queueItem)
