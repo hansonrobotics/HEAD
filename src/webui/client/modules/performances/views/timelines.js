@@ -69,7 +69,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             initialize: function(options) {
                 let self = this
                 this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
-                    'queue', 'allowEdit', 'queueItem', 'skipLoading'])
+                    'queue', 'allowEdit', 'queueItem', 'skipLoading', 'newTimeline'])
                 this.nodeConfig = new NodeConfig({}, {node_name: '/performances'})
                 this.listenTo(this.nodeConfig, 'change', this.reconfigure)
                 this.nodeConfig.fetch()
@@ -128,19 +128,20 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             setAutoPause: function(val) {
                 this.nodeConfig.save({autopause: val})
             },
-            loadPerformance: function() {
+            loadPerformance: function(success) {
                 let self = this,
                     loadOptions = {
                         success: function() {
-                            self.backup()
                             if (self.autoplay) self.run()
                             if (!self.readonly) {
                                 let reload = function() {
                                     self.model.loadPerformance()
                                 }
                                 self.listenTo(self.model.nodes, 'change add remove', reload)
-                                self.listenTo(self.model.nodes, 'change', self.markChanged)
+                                self.listenTo(self.model.nodes, 'change add remove', self.markChanged)
                             }
+
+                            if (success) success()
                         }
                     }
 
@@ -159,7 +160,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             onAttach: function() {
                 let self = this
 
-                this.loadPerformance()
+                this.loadPerformance(function() {
+                    self.backup()
+
+                    if (self.newTimeline)
+                        self.markChanged()
+                })
                 if (this.readonly) {
                     this.ui.editContainer.hide()
                     this.ui.timelineContainer.addClass('readonly')
@@ -518,6 +524,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 this.model.save({}, {
                     success: function(model) {
+                        self.newPerformance = false
                         if (self.performances) self.performances.add(model)
                         if (!self.isDestroyed()) {
                             self.readonly = false

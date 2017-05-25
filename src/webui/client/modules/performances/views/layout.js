@@ -168,7 +168,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 })
                 this.queueCollection.set(items)
             },
-            updateTimelineOrder: function() {
+            updateTimelineOrder: function(success) {
                 if (this.currentPerformance) {
                     let self = this,
                         timelines = new PerformanceCollection()
@@ -179,8 +179,11 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     })
 
                     this.currentPerformance.save({'timelines': timelines.toJSON()}, {
-                        success: function(r) {
-                            self.refreshCurrentPerformance()
+                        success: function() {
+                            if (!self.editting)
+                                self.refreshCurrentPerformance()
+
+                            if (success) success()
                         }
                     })
                 }
@@ -270,10 +273,12 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             remove: function(item) {
                 let self = this
                 bootbox.confirm("Are you sure?", function(result) {
-                    self.queueCollection.remove(item)
-                    item.get('performance').destroy()
-                    if (!self.editting)
-                        self.refreshCurrentPerformance()
+                    if (result) {
+                        self.queueCollection.remove(item)
+                        item.get('performance').destroy()
+                        self.updateTimelineOrder()
+
+                    }
                 })
             },
             setItemTime: function(item) {
@@ -297,21 +302,35 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 }
             },
             addNewTimeline: function() {
-                let self = this,
-                    current = this.currentPerformance,
+                function saveTimeline() {
+                    timelines.push(performance)
+                    performance.save({}, {
+                        success: function() {
+                            self.editItem(item)
+                            self.queueCollection.add(item)
+                        }
+                    })
+                }
+
+                let current = this.currentPerformance,
+                    timelines = current.get('timelines'),
+                    name = (timelines.length + 1).toString(),
+                    self = this,
                     performance = new Performance({
                         path: current.get('id'),
-                        name: (current.get('timelines').length + 1).toString()
+                        name: name
                     }),
                     item = new QueueItem({
                         performance: performance
                     })
-                performance.save({}, {
-                    success: function() {
-                        self.queueCollection.add(item)
-                        self.editItem(item)
-                    }
-                })
+
+                if (_.findIndex(timelines, {name: name}) > -1) {
+                    this.updateTimelineOrder(function() {
+                        saveTimeline()
+                    })
+                } else {
+                    saveTimeline()
+                }
             },
             clearQueue: function() {
                 this.queueCollection.reset()
