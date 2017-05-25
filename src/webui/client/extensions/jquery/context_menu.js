@@ -8,7 +8,7 @@ $.fn.contextMenu = function(settings) {
             // open menu
             let left = getMenuPosition(e.clientX, 'width', 'scrollLeft'),
                 top = getMenuPosition(e.clientY, 'height', 'scrollTop'),
-                $menu = $(settings.menuSelector)
+                $menu = $(settings.menuSelector).clone().appendTo('body')
                     .data("invokedOn", $(e.target))
                     .show()
                     .css({
@@ -18,20 +18,18 @@ $.fn.contextMenu = function(settings) {
                     })
                     .off('click')
                     .on('click', 'a', function(e) {
-                        $menu.hide()
-
                         let $invokedOn = $menu.data("invokedOn")
                         let $selectedMenu = $(e.target)
-
+                        $menu.remove()
                         settings.menuSelected.call(this, $invokedOn, $selectedMenu, {left: left, top: top})
                     })
 
-            return false
-        })
+            $('body').trigger('click').on('click contextmenu', function removeMenu() {
+                $menu.remove()
+                $('body').off('click contextmenu', removeMenu)
+            })
 
-        //make sure menu closes on any click
-        $('body').click(function() {
-            $(settings.menuSelector).hide()
+            return false
         })
     })
 
