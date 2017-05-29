@@ -39,8 +39,9 @@ module.exports = Marionette.View.extend({
         e.stopPropagation()
         this.layoutView.play(this.model)
     },
-    remove: function() {
+    remove: function(e) {
         this.layoutView.remove(this.model)
+        return false
     },
     setItemTime: function() {
         this.layoutView.setItemTime(this.model)

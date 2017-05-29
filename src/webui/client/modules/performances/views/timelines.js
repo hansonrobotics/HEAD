@@ -69,7 +69,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             initialize: function(options) {
                 let self = this
                 this.mergeOptions(options, ['performances', 'autoplay', 'readonly', 'disableSaving', 'layoutView',
-                    'queue', 'allowEdit', 'queueItem', 'skipLoading'])
+                    'queue', 'allowEdit', 'queueItem', 'skipLoading', 'newTimeline'])
                 this.nodeConfig = new NodeConfig({}, {node_name: '/performances'})
                 this.listenTo(this.nodeConfig, 'change', this.reconfigure)
                 this.nodeConfig.fetch()
@@ -129,11 +129,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             setAutoPause: function(val) {
                 this.nodeConfig.save({autopause: val})
             },
-            loadPerformance: function() {
+            loadPerformance: function(success) {
                 let self = this,
                     loadOptions = {
                         success: function() {
-                            self.backup()
                             if (self.autoplay) self.run()
                             if (!self.readonly) {
                                 let reload = function() {
@@ -142,6 +141,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                 self.listenTo(self.model.nodes, 'change add remove', reload)
                                 self.listenTo(self.model.nodes, 'change add remove', self.markChanged)
                             }
+
+                            if (success) success()
                         }
                     }
 
@@ -160,7 +161,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             onAttach: function() {
                 let self = this
 
-                this.loadPerformance()
+                this.loadPerformance(function() {
+                    self.backup()
+
+                    if (self.newTimeline)
+                        self.markChanged()
+                })
                 if (this.readonly) {
                     this.ui.editContainer.hide()
                     this.ui.timelineContainer.addClass('readonly')
@@ -173,12 +179,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     drop: function(e, ui) {
                         let el = $(ui.helper),
                             id = el.data('node-id'),
-                            node = Node.all().get(id),
-                            startTime = Math.round(
-                                    ($(this).scrollLeft() + ui.offset.left - $(this).offset().left) / self.config.pxPerSec * 100) / 100
+                            node = Node.all().get(id)
 
                         if (id && node) {
-                            node.set('start_time', startTime)
                             self.model.nodes.add(node)
                             self.showNodeSettings(node)
                         }
@@ -217,8 +220,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 } else {
                     this.nodeView = new NodeView({collection: this.model.nodes})
                     this.getRegion('nodeSettings').show(this.nodeView)
-                    this.ui.editButton.hide()
                 }
+
+                if (!this.readonly || !this.allowEdit)
+                    this.ui.editButton.hide()
 
                 this.ui.scrollContainer.perfectScrollbar()
 
@@ -265,8 +270,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!this.isDestroyed()) {
                     if (this.readonly) {
                         $([this.ui.nextButton, this.ui.previousButton]).hide()
-                        if (this.allowEdit) this.ui.editButton.fadeIn()
-                        else this.ui.editButton.fadeOut()
+                        if (!this.readonly || !this.allowEdit) this.ui.editButton.fadeOut()
+                        else this.ui.editButton.fadeIn()
                     } else {
                         if (this.queue.length > 1 && this.queueItem) {
                             let pos = this.queue.findIndex(this.queueItem)
@@ -339,11 +344,17 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     el = $('<div>').addClass('app-node label')
                         .attr('data-node-name', node.get('name'))
                         .attr('data-node-id', node.cid)
+                        .on('mousedown', function(e) {
+                            if (!e.ctrlKey && !_.includes(self.selectedNodes, node))
+                                self.deselectNodes()
+                        })
                         .on('click', function(e) {
                             if (e.ctrlKey)
-                                self.selectNode(node)
-                            else
+                                self.toggleNode(node)
+                            else {
+                                self.deselectNodes()
                                 self.showNodeSettings(node)
+                            }
                         })
 
                 node.set('el', el.get(0), {silent: true})
@@ -383,8 +394,42 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             // hide original when showing clone
                             $(this).hide()
                         },
-                        stop: function() {
+                        stop: function(e, ui) {
                             $(this).show()
+
+                            let offset = Math.round((ui.offset.left -
+                                    ui.originalPosition.left) / self.config.pxPerSec * 100) / 100
+
+                            if (self.selectedNodes.length) {
+                                let min = _.minBy(self.selectedNodes, function(node) {
+                                    return node.get('start_time')
+                                }).get('start_time')
+
+                                if (min + offset < 0) offset += Math.abs(min + offset)
+
+                                for (let node of self.selectedNodes) {
+                                    node.set('start_time', node.get('start_time') + offset)
+                                    let el = $(node.get('el'))
+                                    el.css('marginLeft', 0)
+                                    el.css('marginTop', 0)
+                                }
+                            } else
+                                node.set('start_time', Math.max(0, node.get('start_time') + offset))
+                        },
+                        drag: function(e, ui) {
+                            if (self.selectedNodes.length && _.includes(self.selectedNodes, node)) {
+                                let orig = ui.originalPosition,
+                                    offsetLeft = ui.offset.left - orig.left,
+                                    offsetTop = ui.offset.top - orig.top
+
+                                for (let node of self.selectedNodes) {
+                                    let selectedEl = $(node.get('el'))
+                                    if (selectedEl !== el) {
+                                        selectedEl.css('marginLeft', offsetLeft)
+                                        selectedEl.css('marginTop', offsetTop)
+                                    }
+                                }
+                            }
                         }
                     })
 
@@ -411,20 +456,45 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 return nodes
             },
             selectNode: function(node) {
-                if (this.selectedNodes.indexOf(node) > -1) {
-                    _.remove(this.selectedNodes, node)
-                    $(node.get('el')).removeClass('selected')
-                } else {
+                if (this.selectedNodes.indexOf(node) === -1)
                     this.selectedNodes.push(node)
-                    $(node.get('el')).addClass('selected')
-                }
+
+                $(node.get('el')).addClass('active')
+            },
+            deselectNode: function(node) {
+                _.remove(this.selectedNodes, node)
+                $(node.get('el')).removeClass('active')
+                this.nodeSettingsCheck()
+            },
+            toggleNode: function(node) {
+                if (this.selectedNodes.indexOf(node) > -1)
+                    this.deselectNode(node)
+                else
+                    this.selectNode(node)
+
+                this.nodeSettingsCheck()
             },
             deselectNodes: function() {
                 _.each(this.selectedNodes, function(node) {
-                    $(node.get('el')).removeClass('selected')
+                    $(node.get('el')).removeClass('active')
                 })
-
                 this.selectedNodes = []
+                this.nodeSettingsCheck()
+            },
+            nodeSettingsCheck: function(node) {
+                let self = this,
+                    length = this.selectedNodes.length
+
+                if (length > 1)
+                    this.ui.nodeSettings.slideUp()
+                else {
+                    if (length === 1) {
+                        self.showNodeSettings(self.selectedNodes[0])
+                        self.ui.nodeSettings.slideDown()
+                    } else self.nodeView.hideSettings(function() {
+                        self.ui.nodeSettings.slideDown()
+                    })
+                }
             },
             updateNodes: function() {
                 let self = this
@@ -453,9 +523,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             showNodeSettings: function(node) {
                 if (this.readonly) return
-                this.ui.timelineContainer.find('.app-node').removeClass('active')
-                if (node.get('el')) $(node.get('el')).addClass('active')
-                this.nodeView.showSettings(node)
+                if (node.get('el')) this.selectNode(node)
+
+                if (this.selectedNodes.length === 1)
+                    this.nodeView.showSettings(node)
             },
             addNode: function(node) {
                 this.placeNode(node)
@@ -564,6 +635,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 this.model.save({}, {
                     success: function(model) {
+                        self.newPerformance = false
                         if (self.performances) self.performances.add(model)
                         if (!self.isDestroyed()) {
                             self.readonly = false
