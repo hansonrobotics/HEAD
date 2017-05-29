@@ -491,9 +491,10 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (length === 1) {
                         self.showNodeSettings(self.selectedNodes[0])
                         self.ui.nodeSettings.slideDown()
-                    } else self.nodeView.hideSettings(function() {
-                        self.ui.nodeSettings.slideDown()
-                    })
+                    } else if (self.nodeView)
+                        self.nodeView.hideSettings(function() {
+                            self.ui.nodeSettings.slideDown()
+                        })
                 }
             },
             updateNodes: function() {
