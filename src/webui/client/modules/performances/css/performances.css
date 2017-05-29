@@ -99,7 +99,11 @@
 }
 
 .app-timeline-nodes .app-node .ui-resizable-handle.ui-icon-gripsmall-diagonal-se {
-    z-index: 99999;
+    z-index: 999991;
+}
+
+.app-node-context-menu, .app-timeline-context-menu {
+    z-index: 999992;
 }
 
 .app-timeline-editor {
@@ -112,7 +116,7 @@
     line-height: 14px;
     height: 20px;
     text-align: left;
-    z-index: 999;
+    z-index: 9999;
     cursor: move;
     border: 1px solid #182934;
     overflow: hidden;
@@ -141,12 +145,8 @@
 }
 
 .app-node.active {
-    box-shadow: 0 0 3pt 2pt #5cb85c;
-    z-index: 9999;
-}
-
-.app-node.selected {
-    border: 1px solid white;
+    border: 1px solid #ececec;
+    box-shadow: 0 0 1px 0 #ececec;
 }
 
 .app-timeline {
