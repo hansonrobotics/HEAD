@@ -182,7 +182,14 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             node = Node.all().get(id)
 
                         if (id && node) {
-                            self.model.nodes.add(node)
+                            if (!self.model.nodes.includes(node)) {
+                                self.deselectNodes()
+                                let startTime = Math.round(($(this).scrollLeft() + ui.offset.left - $(this).offset().left) /
+                                        self.config.pxPerSec * 100) / 100
+
+                                self.model.nodes.add(node)
+                                node.set('start_time', startTime)
+                            }
                             self.showNodeSettings(node)
                         }
                     }
@@ -199,11 +206,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                                     if (nodes) {
                                         if (nodes.constructor !== Array) nodes = [nodes]
+                                        let model
                                         _.each(nodes, function(node) {
-                                            node = new Node(node)
-                                            node.set('start_time', node.get('start_time') + ($(container).scrollLeft() +
+                                            model = new Node(node)
+                                            model.set('start_time', model.get('start_time') + ($(container).scrollLeft() +
                                                 position.left - $(container).offset().left) / self.config.pxPerSec)
-                                            self.model.get('nodes').add(node)
+                                            self.model.get('nodes').add(model)
                                         })
                                     }
                                     break
@@ -373,6 +381,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                     self.deselectNodes()
                                 } else {
                                     let json = node.toJSON()
+                                    json['start_time'] = 0
                                     delete json['id']
                                     app.state.set('node_clipboard', json)
                                 }
