@@ -2,9 +2,9 @@ let bootbox = require('bootbox')
 
 define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/regions/fade_in', 'lib/api', './performances',
         '../entities/performance_collection', '../entities/performance', './queue', './timelines', 'jquery',
-        'underscore', '../entities/queue', '../entities/queue_item', 'select2', 'select2-css'],
+        'underscore', '../entities/queue', '../entities/queue_item', 'mousetrap', 'select2', 'select2-css'],
     function(app, Marionette, Backbone, template, FadeInRegion, api, PerformancesView, PerformanceCollection, Performance,
-             QueueView, TimelinesView, $, _, QueueCollection, QueueItem) {
+             QueueView, TimelinesView, $, _, QueueCollection, QueueItem, Mousetrap) {
         return Marionette.View.extend({
             template: template,
             className: 'app-performances-page',
@@ -97,10 +97,27 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                             self.showCurrent()
                     }
                 })
+
+                this.registerShortcuts()
+            },
+            registerShortcuts: function() {
+                let self = this
+                Mousetrap.bind('y', function() {
+                    self.ui.saveChanges.click()
+                })
+
+                Mousetrap.bind('n', function() {
+                    self.ui.discardChanges.click()
+                })
+            },
+            unregisterShortcuts: function() {
+                Mousetrap.unbind('y')
+                Mousetrap.unbind('n')
             },
             onDestroy: function() {
                 this.syncedPerformance.disableSync()
                 app.changeCheck = null
+                this.unregisterShortcuts()
             },
             setCurrentPerformance: function(p, options) {
                 options = options || {}
@@ -238,8 +255,11 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     if (p && p.nodes.isEmpty()) p.fetch()
                 })
             },
+            getCurrentItem: function() {
+                return this.queueCollection.findItemByTime(this.time)
+            },
             editCurrent: function() {
-                let item = this.queueCollection.findItemByTime(this.time)
+                let item = this.getCurrentItem(s)
                 if (item) this.editItem(item)
                 else this.addNewTimeline()
             },
@@ -247,9 +267,20 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 let i = this.queueCollection.findIndex(item)
                 if (i > 0) this.editItem(this.queueCollection.at(i - 1))
             },
-            editNext: function(item) {
+            editNext: function() {
                 let i = this.queueCollection.findIndex(item)
                 if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
+            },
+            movePrevious: function() {
+                let i = this.queueCollection.findIndex(this.getCurrentItem())
+                if (i >= 0)
+                    this.timelinesView.moveIndicator(this.queueCollection.at(Math.max(0, i - 1)).getStartTime())
+            },
+            moveNext: function(item) {
+                let i = this.queueCollection.findIndex(this.getCurrentItem())
+                if (i >= 0 && i <= this.queueCollection.length - 1)
+                    this.timelinesView.moveIndicator(
+                        this.queueCollection.at(Math.min(this.queueCollection.length - 1, i + 1)).getStartTime())
             },
             editItem: function(item, options) {
                 let self = this
