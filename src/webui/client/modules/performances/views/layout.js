@@ -259,7 +259,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 return this.queueCollection.findItemByTime(this.time)
             },
             editCurrent: function() {
-                let item = this.getCurrentItem(s)
+                let item = this.getCurrentItem()
                 if (item) this.editItem(item)
                 else this.addNewTimeline()
             },
@@ -267,7 +267,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 let i = this.queueCollection.findIndex(item)
                 if (i > 0) this.editItem(this.queueCollection.at(i - 1))
             },
-            editNext: function() {
+            editNext: function(item) {
                 let i = this.queueCollection.findIndex(item)
                 if (i >= 0 && i < this.queueCollection.length - 1) this.editItem(this.queueCollection.at(i + 1))
             },
