@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- this is separate from robot.launch because it has it's own terminal window with console output -->
 <launch>
 	<arg name="name"/>
+
+	<!-- robot name -->
 	<param name="/robot_name" type="str" value="$(arg name)"/>
+
+	<!-- /robot -->
 	<group ns="/$(arg name)">
-		<param name="lang" value="en"/>
-		<node name="fusion" type="fusion.py" pkg="fusion1"/>
+
+		<!-- perception/input/sensors -->
+		<group ns="perception">
+
+			<node name="fusion" type="fusion.py" pkg="fusion1"/>
+
+		</group>
+
 	</group>
+
 </launch>

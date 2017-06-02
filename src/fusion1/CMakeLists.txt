@@ -11,7 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   sensor_msgs
+  visualization_msgs
   message_generation
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -55,8 +57,19 @@ add_message_files(
   Float32R.msg
   Face.msg
   Hand.msg
+  Saliency.msg
+  Sound.msg
+  Utterance.msg
+  Speech.msg
+  RealSenseParam.msg
   FaceRequest.msg
   FaceResponse.msg
+  CandidateUser.msg
+  CandidateHand.msg
+  CandidateSaliency.msg
+  EstablishedUser.msg
+  EstablishedHand.msg
+  EstablishedSaliency.msg
 )
 
 ## Generate added messages and services with any dependencies listed here
@@ -65,8 +78,6 @@ generate_messages(
   std_msgs
   sensor_msgs
 )
-
-catkin_package(CATKIN_DEPENDS message_runtime)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -83,10 +94,12 @@ catkin_package(CATKIN_DEPENDS message_runtime)
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
+generate_dynamic_reconfigure_options(
+  cfg/vision_pipeline.cfg
+  cfg/hearing_pipeline.cfg
+)
+
+catkin_package(CATKIN_DEPENDS message_runtime)
 
 ###################################
 ## catkin specific configuration ##
@@ -160,12 +173,17 @@ include_directories(
 # )
 install(PROGRAMS
   scripts/detect_faces.py
-  scripts/face_analysis.py
   scripts/detect_hands.py
-  scripts/vision_pipeline.py
-  scripts/hearing_pipeline.py
+  scripts/detect_saliency.py
+  scripts/detect_sounds.py
+  scripts/face_analysis.py
   scripts/fusion.py
+  scripts/gather_pau_states.py
+  scripts/hearing_pipeline.py
   scripts/partial_user.py
+  scripts/realsense_param_proxy.py
+  scripts/speech_to_text.py
+  scripts/vision_pipeline.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

@@ -4,60 +4,57 @@ import rospy
 import logging
 import time
 import cv2
-from sensor_msgs.msg import Image;
-from fusion1.msg import Hand;
-from cv_bridge import CvBridge;
-from std_msgs.msg import String;
+import dynamic_reconfigure.client
+from sensor_msgs.msg import Image
+from fusion1.msg import Hand
+from cv_bridge import CvBridge
 
 
-# prepare OpenCV-ROS bridge and TBD hand detection stuff
 opencv_bridge = CvBridge()
 
 
-# prepare serial ID, unique to this namespace
-ros_namespace_hash = 0
 serial_number = 0
-
-def GenerateID():
-    global ros_namespace_hash
+def GenerateHandID():
     global serial_number
-    result = ros_namespace_hash + serial_number
+    result = serial_number
     serial_number += 1
     return result
 
 
-# the hand detector
 class DetectHands(object):
 
 
     def __init__(self):
 
-        # initialize current image and timestamp
-        self.most_recent_frame = Image()
-        self.most_recent_ts = 0.0
+        self.cur_image = Image()
+        self.cur_ts = 0.0
 
-        # initialize face detection period (can be changed later by ROS service message)
-        self.period_sec = 0.2 # 5Hz
+        rospy.wait_for_service("vision_pipeline")
+        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
+        self.fovy = rospy.get_param("fovy")
+        self.aspect = rospy.get_param("aspect")
+        self.rate = rospy.get_param("rate")
 
-        # start subscribers and publishers
-        self.frame_sub = rospy.Subscriber("camera/image_raw",Image,self.HandleFrame)
+        self.image_sub = rospy.Subscriber("camera/image_raw",Image,self.HandleImage)
         self.hand_pub = rospy.Publisher("hand",Hand,queue_size=5)
 
-        # start timer
-        self.timer = rospy.Timer(rospy.Duration(self.period_sec),self.HandleTimer)
+        self.timer = rospy.Timer(rospy.Duration(self.period),self.HandleTimer)
 
 
-    def HandleFrame(self,data):
+    def HandleConfig(self,data):
 
-        # overwrite current frame and generate timestamp
-        self.most_recent_frame = data
-        self.most_recent_ts = rospy.get_rostime()
+        print "detect_hands {:?}".format(data)
+
+
+    def HandleImage(self,data):
+
+        self.cur_image = data
+        self.cur_ts = rospy.get_rostime()
 
 
     def HandleTimer(self,event):
 
-        # make sure there is a frame to process
-        if self.most_recent_ts == 0.0:
+        if self.cur_ts == 0.0:
             return
 
         # TODO: detect hands
@@ -69,14 +66,6 @@ class DetectHands(object):
 
 if __name__ == '__main__':
 
-    # initialize node
     rospy.init_node('detect_hands')
-
-    # initialize namespace hash
-    ros_namespace_hash = hash(rospy.get_namespace())
-
-    # create face detector object
     node = DetectHands()
-
-    # run
     rospy.spin()

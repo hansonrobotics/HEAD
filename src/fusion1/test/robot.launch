@@ -1,47 +1,129 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
+
 	<arg name="name"/>
-	<param name="/robot_name" type="str" value="$(arg name)"/>
+	<arg name="session"/>
+
+	<!-- geometry description -->
+	<param name="robot_description" textfile="/home/hr/hansonrobotics/HEAD/src/fusion1/test/robot.urdf"/>
+
+	<!-- robot name -->
+	<param name="robot_name" type="str" value="$(arg name)"/>
+
+	<!-- current session -->
+	<param name="session_tag" value="$(arg session)"/>
+
+	<!-- while we're still using Blender in the old backend, we have to update transformations somehow -->
+	<!-- gather Blender PAU messages and generate joint_states, and update tf from that -->
+	<node name="gather_pau_states" type="gather_pau_states.py" pkg="fusion1"/>
+	<node name="robot_state_publisher" type="state_publisher" pkg="robot_state_publisher"/>
+
+	<!-- /robot -->
 	<group ns="/$(arg name)">
-		<param name="lang" value="en"/>
-		<!--
-		<group ns="lefteye">
-			<node name="camera" type="usb_cam_node" pkg="usb_cam">
-				<param name="video_device" value="/dev/video1"/>
-				<param name="pixel_format" value="yuyv"/>
-				<param name="width" value="320"/>
-				<param name="height" value="240"/>
-			</node>
-			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
-			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
+
+		<!-- perception/input/sensors -->
+		<group ns="perception">
+
+			<!-- left eye camera -->		
+			<group ns="lefteye">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
+				<node name="camera" type="usb_cam_node" pkg="usb_cam">
+					<param name="video_device" value="/dev/video1"/>
+					<param name="pixel_format" value="yuyv"/>
+					<param name="width" value="320"/>
+					<param name="height" value="240"/>
+				</node>
+				<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+				<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
+				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
+				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
+				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
+
+			<!-- right eye camera -->
+			<group ns="righteye">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
+				<node name="camera" type="usb_cam_node" pkg="usb_cam">
+					<param name="video_device" value="/dev/video2"/>
+					<param name="pixel_format" value="yuyv"/>
+					<param name="width" value="320"/>
+					<param name="height" value="240"/>
+				</node>
+				<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+				<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
+				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
+				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
+				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
+
+			<!-- RealSense camera -->
+			<group ns="realsense">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
+				<node name="realsense_param_proxy" type="realsense_param_proxy.py" pkg="fusion1"/>
+				<!-- face, hand and saliency detection are done in the RealSense app on Windows -->
+				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
+				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
+
+			<!-- wideangle camera -->
+			<group ns="wideangle">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
+				<node name="camera" type="usb_cam_node" pkg="usb_cam">
+					<param name="video_device" value="/dev/video0"/>
+					<param name="pixel_format" value="yuyv"/>
+					<param name="width" value="640"/>
+					<param name="height" value="480"/>
+				</node>
+				<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+				<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
+				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
+				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
+				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
+
+			<!-- Acoustic Magic microphone array -->
+			<group ns="acousticmagic">
+				<rosparam name="threshold" value="0.3"/>
+				<rosparam name="linger" value="0.2"/>
+				<node name="detect_sound" type="detect_sound.py" pkg="fusion1"/>
+				<node name="speech_to_text" type="speech_to_text.py" pkg="fusion1"/>
+				<node name="hearing_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
+
+			<!-- handheld microphone -->
+			<group ns="handheld">
+				<rosparam name="threshold" value="0.3"/>
+				<rosparam name="linger" value="0.2"/>
+				<node name="detect_sound" type="detect_sound.py" pkg="fusion1"/>
+				<node name="speech_to_text" type="speech_to_text.py" pkg="fusion1"/>
+				<node name="hearing_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
+
+			<!-- visualization of perception/input/sensor fusion -->
+			<node name="rviz" type="rviz" pkg="rviz" args="-d /home/hr/hansonrobotics/HEAD/src/fusion1/test/urdf.rviz"/>
+
 		</group>
-		<group ns="righteye">
-			<node name="camera" type="usb_cam_node" pkg="usb_cam">
-				<param name="video_device" value="/dev/video2"/>
-				<param name="pixel_format" value="yuyv"/>
-				<param name="width" value="320"/>
-				<param name="height" value="240"/>
-			</node>
-			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
-			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
-		</group>
-		-->
-		<group ns="wideangle">
-			<node name="camera" type="usb_cam_node" pkg="usb_cam">
-				<param name="video_device" value="/dev/video0"/>
-				<param name="pixel_format" value="yuyv"/>
-				<param name="width" value="640"/>
-				<param name="height" value="480"/>
-			</node>
-			<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
-			<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
-		</group>
-		<group ns="realsense">
-			<!-- RealSense is running on /windowspc and communicates directly with fusion/vision pipeline -->
-			<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
-		</group>
+
 	</group>
+
 </launch>

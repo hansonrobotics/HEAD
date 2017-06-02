@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<robot name="robot">
+    <link name="world"/>
+
+    <link name="torso">
+        <visual>
+            <geometry>
+                <box size="0.2 0.3 0.52"/>
+            </geometry>
+            <origin xyz="0 0 0"/>
+            <material name="robot_model">
+                <color rgba="0.3 0.3 0.3 0.4"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="realsense">
+        <visual>
+            <geometry>
+                <box size="0.01 0.12 0.02"/>
+            </geometry>
+            <origin xyz="0 0 0"/>
+            <material name="robot_camera">
+                <color rgba="0.0 0.1 0.3 0.6"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="wideangle">
+        <visual>
+            <geometry>
+                <sphere radius="0.01"/>
+            </geometry>
+            <material name="robot_camera">
+                <color rgba="0.0 0.1 0.3 0.6"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="torso_neck_rp"/>
+
+    <link name="torso_neck_py"/>
+
+    <link name="neck">
+        <visual>
+            <geometry>
+                <cylinder length="0.16" radius="0.05"/>
+            </geometry>
+            <origin xyz="0 0 0.08"/>
+            <material name="robot_model">
+                <color rgba="0.3 0.3 0.3 0.4"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="neck_head_rp"/>
+
+    <link name="head">
+        <visual>
+            <geometry>
+                <box size="0.19 0.13 0.21"/>
+            </geometry>
+            <origin xyz="-0.025 0 0.015"/>
+            <material name="robot_model">
+                <color rgba="0.3 0.3 0.3 0.4"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="eyes"/>
+
+    <link name="left_eye">
+        <visual>
+            <geometry>
+                <sphere radius="0.005"/>
+            </geometry>
+            <origin xyz="0 0 0"/>
+            <material name="robot_camera">
+                <color rgba="0.0 0.1 0.3 0.6"/>
+            </material>
+        </visual>
+    </link>
+
+    <link name="right_eye">
+        <visual>
+            <geometry>
+                <sphere radius="0.005"/>
+            </geometry>
+            <origin xyz="0 0 0"/>
+            <material name="robot_camera">
+                <color rgba="0.0 0.1 0.3 0.6"/>
+            </material>
+        </visual>
+    </link>
+
+    <joint name="torso" type="fixed">
+        <parent link="world"/>
+        <child link="torso"/>
+        <origin xyz="0 0 0"/>
+    </joint>
+
+    <joint name="realsense" type="fixed">
+        <parent link="torso"/>
+        <child link="realsense"/>
+        <origin xyz="-0.05 0.0 0.15"/>
+    </joint>
+
+    <joint name="wideangle" type="fixed">
+        <parent link="torso"/>
+        <child link="wideangle"/>
+        <origin xyz="-0.07 0.0 0.12"/>
+    </joint>
+
+    <joint name="neck_roll" type="revolute">
+        <parent link="torso"/>
+        <child link="torso_neck_rp"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="0 0 0.26"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="neck_pitch" type="revolute">
+        <parent link="torso_neck_rp"/>
+        <child link="torso_neck_py"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="neck_yaw" type="revolute">
+        <parent link="torso_neck_py"/>
+        <child link="neck"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 0 0"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="head_roll" type="revolute">
+        <parent link="neck"/>
+        <child link="neck_head_rp"/>
+        <axis xyz="1 0 0"/>
+        <origin xyz="0 0 0.16"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="head_pitch" type="revolute">
+        <parent link="neck_head_rp"/>
+        <child link="head"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="eyes_pitch" type="revolute">
+        <parent link="head"/>
+        <child link="eyes"/>
+        <axis xyz="0 1 0"/>
+        <origin xyz="-0.11 0 0.01"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="left_eye_yaw" type="revolute">
+        <parent link="eyes"/>
+        <child link="left_eye"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 -0.03 0"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+
+    <joint name="right_eye_yaw" type="revolute">
+        <parent link="eyes"/>
+        <child link = "right_eye"/>
+        <axis xyz="0 0 1"/>
+        <origin xyz="0 0.03 0"/>
+        <limit effort="1" velocity="1"/>
+    </joint>
+</robot>

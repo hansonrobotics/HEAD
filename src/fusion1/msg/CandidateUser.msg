@@ -1,0 +1,15 @@
+uint32 session_id
+uint32 camera_id
+uint32 cuser_id
+time ts
+Float32XYZ position
+float32 confidence
+float32 smile
+float32 frown
+std_msgs/String[] expressions
+float32 age
+float32 age_confidence
+uint8 gender
+float32 gender_confidence
+uint64 identity
+float32 identity_confidence

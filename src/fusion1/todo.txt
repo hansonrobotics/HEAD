@@ -1,43 +1,67 @@
 * setup vision and hearing pipelines
-
-* build age estimation
-
-* build gender estimation
-
+* build age estimation -> OpenBiometrics problem
+* build gender estimation -> OpenBiometrics problem
 * id, age and gender estimation cannot run asynchronously, so they have to be embedded in vision pipeline somehow
-
 * create directory structure and store all thumbs
-
-+ enqueue the age/gender/ID requests, so we only need one external process/network that we can re-use
-
-+ make transformations work from motor positions (refactor current perception ROS node)
-
-+ hook up rviz (analyze current perception ROS node)
-
+* hook up realsense faces
+* cut out realsense thumbs and send them over, depth is descoped for now
+* adjustable timer periods and FOVs and more parameters
+* refactor saliency for all cameras
+* hook up rviz (analyze current perception ROS node)
+* make transformations work from motor positions (refactor current perception ROS node)
++ refactor towards using dynamic reconfigure, instead of separate messages
++ make sure camera FOV works correctly
++ output sounds and speech to directories and CSV
++ hook up realsense hands
++ visualize users with id, age, gender etc. info using text markers
++ hook up speech and audio localization from both microphones
++ implement saliency for RealSense, or use blob detection that comes with RealSense
+- access ROS parameters in the RealSense code
+- audio detection and streaming, refactor audio_stream and audio_sensor
+- google speech, continuous and regular, refactor google_speech
+- dragon speech, continuous and regular, append to RealSense
 - make 2D face detection 3D using camera FOV
+- maintain global CSV file with parameters for stored faces (timestamp, anything already gathered from realsense, etc.)
+- solve timing problem between Linux and Windows (first send ROS message to RealSense, wait for answer, the time difference divided by 2 is the general delay between Windows and Linux), this might not be necessary
+- refactor room luminance for all cameras
+- visualize saliency in rviz
+- fuse observations (needs discussion w/ OpenCog people and possibly David)
+- output to OpenCog (needs discussion w/ OpenCog people)
+- output classic ROS to (parts of) existing architecture
 
-- adjustable timer periods and FOVs
 
-+ generate 3D coordinates from faces
 
-+ hook up realsense
+Towards OpenCog:
 
-- cut out realsense thumbs and send them over
+	for each face:
+		position in 3D (robot coordinates)
+		confidence of this position (0..1)
+		how much she smiles (0..1) --> predicates (truthvalue)
+		how much she frowns (0..1)
+		various analyzed expressions (list of strings), TBD
+		gender, if found (None, Male, Female)
+		confidence in gender (0..1)
+		age, if found (None, 0..200)
+		confidence in age (0..1)
+		identity (64-bit ID, or string, could be more closely related to known atoms)
+		confidence in identity
+		... and whatever Ethiopia and Ralf come up with that might be interesting
 
-+ visualize users with id, age, gender etc. info
+	for each hand:
+		position in 3D (robot coordinates)
+		confidence of this position (0..1)
+		various analyzed gestures (list of strings), TBD
 
-- hook up speech and localization
+	for each salient point:
+		position in 3D (or only an angle.. not sure yet)
+		confidence (0..1; if two cameras see something interesting, it must be really interesting)
 
-- refactor ambience for all cameras
+	for each microphone:
+		translated speech
+		confidence of the translation (0..1)
+		localization of where the speech came from (angle, maybe quaternion)
+		confidence of the location
 
-- refactor saliency for all cameras
+Also, there are several things the fusion layer can still do that could be interesting for OpenCog:
 
-- visualize saliency
-
-- fuse observations (needs discussion w/ OpenCog people)
-
-- output opencog (needs discussion w/ OpenCog people)
-
-- output classic ROS
-
-- BUG: sometimes there are 0 faces in the puser list and python dumps an exception, which should not be possible
+	- 
