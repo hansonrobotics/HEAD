@@ -170,10 +170,9 @@ define(['application', 'marionette', './templates/node.tpl', 'lib/api', 'undersc
                 this.node = null
                 this.ui.nodeTabs.removeClass('active')
                 if (settingsView) {
-                    $(selectView.$el).add(settingsView.$el).slideUp(null, function() {
-                        self.ui.container.addClass('app-disabled')
-                        success()
-                    })
+                    $(selectView.$el).hide()
+                    this.ui.container.addClass('app-disabled')
+                    success()
                 } else {
                     this.ui.container.addClass('app-disabled')
                     success()
