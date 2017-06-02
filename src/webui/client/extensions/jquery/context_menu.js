@@ -16,6 +16,7 @@ $.fn.contextMenu = function(settings) {
                         left: left,
                         top: top
                     })
+                    .addClass('app-context-menu')
                     .off('click')
                     .on('click', 'a', function(e) {
                         let $invokedOn = $menu.data("invokedOn")
