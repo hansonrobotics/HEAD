@@ -69,6 +69,8 @@
 
 <ul class="app-node-context-menu dropdown-menu" role="menu">
     <li><a tabindex="-1" href="javascript:void(0)" data-action="copy">Copy</a></li>
+    <li><a tabindex="-1" href="javascript:void(0)" data-action="invert">Invert selection</a></li>
+    <li><a tabindex="-1" href="javascript:void(0)" data-action="delete">Delete</a></li>
 </ul>
 
 <ul class="app-timeline-context-menu dropdown-menu" role="menu">

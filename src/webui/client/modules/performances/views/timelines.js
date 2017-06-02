@@ -441,16 +441,20 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 $(el, this.ui.timelineContainer).contextMenu({
                     menuSelector: this.ui.nodeContextMenu,
                     menuSelected: function(invokedOn, selectedMenu) {
+                        if (!self.selectedNodes.length || self.selectedNodes.indexOf(node) === -1) {
+                            self.deselectNodes()
+                            self.selectNode(node)
+                        }
+
                         switch ($(selectedMenu).data('action')) {
                             case 'copy':
-                                if (self.selectedNodes.length && self.selectedNodes.indexOf(node) > -1) {
-                                    self.copySelectedNodes()
-                                } else {
-                                    let json = node.toJSON()
-                                    json['start_time'] = 0
-                                    delete json['id']
-                                    app.state.set('node_clipboard', json)
-                                }
+                                self.copySelectedNodes()
+                                break
+                            case 'invert':
+                                self.invertSelection()
+                                break
+                            case 'delete':
+                                self.deleteSelected()
                                 break
                         }
                     }
@@ -511,6 +515,27 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     if (node.hasProperty('duration'))
                         this.initResizable(el)
                 }
+            },
+            invertSelection: function() {
+                let self = this,
+                    selection = []
+
+                this.model.nodes.each(function(node) {
+                    if (!_.includes(self.selectedNodes, node))
+                        selection.push(node)
+                })
+
+                this.deselectNodes()
+                for (let node of selection)
+                    this.selectNode(node)
+            },
+            deleteSelected: function() {
+                for (let node of this.selectedNodes) {
+                    this.model.nodes.remove(node)
+                    node.destroy()
+                }
+                
+                this.deselectNodes()
             },
             pasteSelectedNodes: function(offset) {
                 let nodes = app.state.get('node_clipboard')
