@@ -205,7 +205,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                         offset = ($(container).scrollLeft() +
                                             position.left - $(container).offset().left) / self.config.pxPerSec
 
-                                    this.pasteSelectedNodes(offset)
+                                    self.pasteSelectedNodes(offset)
                                     break
                             }
                         }
