@@ -1,9 +1,9 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'jquery-ui', 'scrollbar',
+        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'mousetrap', 'jquery-ui', 'scrollbar',
         'scrollbar-css', 'scrollTo', 'font-awesome', 'jquery-mousewheel'],
     function(app, Marionette, template, d3, bootbox, NodeView, Node, $, Performance, FadeInRegion, speechRecognition,
-             api, annyang, NodeConfig) {
+             api, annyang, NodeConfig, Mousetrap) {
         return Marionette.View.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
@@ -201,19 +201,11 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         menuSelected: function(invokedOn, selectedMenu, position) {
                             switch ($(selectedMenu).data('action')) {
                                 case 'paste':
-                                    let nodes = app.state.get('node_clipboard'),
-                                        container = self.ui.timelineContainer
+                                    let container = self.ui.timelineContainer,
+                                        offset = ($(container).scrollLeft() +
+                                            position.left - $(container).offset().left) / self.config.pxPerSec
 
-                                    if (nodes) {
-                                        if (nodes.constructor !== Array) nodes = [nodes]
-                                        let model
-                                        _.each(nodes, function(node) {
-                                            model = new Node(node)
-                                            model.set('start_time', model.get('start_time') + ($(container).scrollLeft() +
-                                                position.left - $(container).offset().left) / self.config.pxPerSec)
-                                            self.model.get('nodes').add(model)
-                                        })
-                                    }
+                                    this.pasteSelectedNodes(offset)
                                     break
                             }
                         }
@@ -273,6 +265,81 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.startIndicator(this.options.current_time, this.model.getDuration())
                 else
                     this.stopIndicator()
+
+                this.registerShortcuts()
+            },
+            onDestroy: function() {
+                this.unregisterShortcuts()
+            },
+            registerShortcuts: function() {
+                let self = this
+                if (!this.readonly) {
+                    Mousetrap.bind('ctrl+a', function() {
+                        self.toggleNodes()
+                        return false
+                    })
+
+                    Mousetrap.bind('ctrl+c', function() {
+                        self.copySelectedNodes()
+                    })
+
+                    Mousetrap.bind('ctrl+v', function() {
+                        self.pasteSelectedNodes(self.getCurrentIndicatorTime())
+                    })
+
+                    Mousetrap.bind('ctrl+s', function() {
+                        self.savePerformances()
+                        return false
+                    })
+
+                    Mousetrap.bind('ctrl+d', function(e) {
+                        self.deselectNodes()
+                        return false
+                    })
+
+                    Mousetrap.bind('del', function(e) {
+                        self.deleteSelectedNodes()
+                    })
+                }
+
+                Mousetrap.bind(['space', 'alt+a'], function(e) {
+                    if (!self.running)
+                        self.runAtIndicator()
+                    else if (self.paused)
+                        self.resume()
+                    else
+                        self.pause()
+
+                    return false
+                })
+
+                Mousetrap.bind('[', function() {
+                    if (self.readonly)
+                        self.layoutView.movePrevious()
+                    else
+                        self.editPrevious()
+                })
+
+                Mousetrap.bind(']', function() {
+                    if (self.readonly)
+                        self.layoutView.moveNext()
+                    else
+                        self.editNext()
+                })
+            },
+            unregisterShortcuts: function() {
+                if (!this.readonly) {
+                    Mousetrap.unbind('ctrl+a')
+                    Mousetrap.unbind('ctrl+c')
+                    Mousetrap.unbind('ctrl+v')
+                    Mousetrap.unbind('ctrl+s')
+                    Mousetrap.unbind('ctrl+d')
+                    Mousetrap.unbind('del')
+                }
+
+                Mousetrap.unbind(['space', 'alt+a'])
+                Mousetrap.unbind('[')
+                Mousetrap.unbind(']')
             },
             queueUpdated: function() {
                 if (!this.isDestroyed()) {
@@ -377,8 +444,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         switch ($(selectedMenu).data('action')) {
                             case 'copy':
                                 if (self.selectedNodes.length && self.selectedNodes.indexOf(node) > -1) {
-                                    app.state.set('node_clipboard', self.getSelectedNodes())
-                                    self.deselectNodes()
+                                    self.copySelectedNodes()
                                 } else {
                                     let json = node.toJSON()
                                     json['start_time'] = 0
@@ -446,6 +512,24 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         this.initResizable(el)
                 }
             },
+            pasteSelectedNodes: function(offset) {
+                let nodes = app.state.get('node_clipboard')
+
+                if (nodes) {
+                    if (nodes.constructor !== Array) nodes = [nodes]
+                    let self = this
+
+                    _.each(nodes, function(node) {
+                        let model = new Node(node)
+                        model.set('start_time', model.get('start_time') + offset)
+                        self.model.get('nodes').add(model)
+                    })
+                }
+            },
+            copySelectedNodes: function() {
+                app.state.set('node_clipboard', this.getSelectedNodes())
+                this.deselectNodes()
+            },
             getSelectedNodes: function() {
                 let nodes = []
                 for (let node of this.selectedNodes) {
@@ -470,6 +554,18 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
 
                 $(node.get('el')).addClass('active')
             },
+            toggleNodes: function() {
+                let self = this,
+                    selected = true
+
+                this.model.nodes.each(function(node) {
+                    selected = selected && $(node.get('el')).hasClass('active')
+                    self.selectNode(node)
+                })
+
+                if (selected)
+                    this.deselectNodes()
+            },
             deselectNode: function(node) {
                 _.remove(this.selectedNodes, node)
                 $(node.get('el')).removeClass('active')
@@ -489,6 +585,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
                 this.selectedNodes = []
                 this.nodeSettingsCheck()
+            },
+            deleteSelectedNodes: function() {
+                let self = this
+                _.each(this.selectedNodes, function(node) {
+                    self.model.nodes.remove(node)
+                    node.destroy()
+                })
+
+                self.deselectNodes()
             },
             nodeSettingsCheck: function(node) {
                 let self = this,
@@ -805,7 +910,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
             },
             resume: function() {
-                if (this.paused && parseInt(this.ui.runIndicator.css('left')) == this.pausePosition)
+                if (this.paused && parseInt(this.ui.runIndicator.css('left')) === this.pausePosition)
                     this.model.resume({
                         error: function(error) {
                             console.log(error)
@@ -815,10 +920,13 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.runAtIndicator()
             },
             runAtIndicator: function() {
-                this.run(1. * parseInt(this.ui.runIndicator.css('left')) / this.config.pxPerSec)
+                this.run(this.getCurrentIndicatorTime())
+            },
+            getCurrentIndicatorTime: function() {
+                return parseInt(this.ui.runIndicator.css('left')) / this.config.pxPerSec
             },
             loop: function(enable) {
-                if (typeof enable == 'boolean' && !enable || this.enableLoop) {
+                if (typeof enable === 'boolean' && !enable || this.enableLoop) {
                     this.enableLoop = false
                     this.ui.loopButton.removeClass('active').blur()
                 } else {
