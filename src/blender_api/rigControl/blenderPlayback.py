@@ -105,7 +105,6 @@ class BLPlayback(bpy.types.Operator):
         if event.type == 'TIMER':
 
             eva = bpy.evaAnimationManager
-
             # compute fps
             context.scene['evaFPS'] = fps = self.computeFPS(context)
             timeScale = framerateHz/fps
@@ -125,6 +124,7 @@ class BLPlayback(bpy.types.Operator):
                 headLoc[0] = -normalX * 0.2
                 headLoc[2] = normalY * 0.2
             # update NLA based gestures
+            eva.removeCycles()
             gestures = eva.gesturesList[:]  	# prevent in-situ removal while iterating bug
             for gesture in gestures:
                 # Leave strrip time for backward compatable with blender with version lower 2.75
@@ -171,7 +171,6 @@ class BLPlayback(bpy.types.Operator):
             eye_loc[1] = -eye_loc[1]
             eyeControl.location = eye_loc
             if abs(head_loc[0] + head_loc_old[0]) > 0.01:
-                print(abs(head_loc[0] + head_loc_old[0]))
                 bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_scale = 0
             else:
                 bpy.data.scenes["Scene"].actuators.ACT_saccade.PARAM_scale = 1
