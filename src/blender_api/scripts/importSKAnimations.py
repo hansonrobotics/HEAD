@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import rospy
 import yaml
+from rospkg import RosPack
 ROBOT = "sophia_body"
 #import bpy
 #rospy.init_node("expression_tools")
@@ -10,7 +11,8 @@ animations = rospy.get_param('/{}/animations'.format(ROBOT))
 
 from pau2motors.msg import pau
 from pau2motors import ShapekeyStore
-config_root = rospy.get_param('robots_config_dir')
+rp = RosPack()
+config_root = rp.get_path('robots_config')
 with open(config_root+"/"+ROBOT+"/motors_settings.yaml", 'r') as stream:
     motors = yaml.load(stream)
 
@@ -87,12 +89,13 @@ def getDriverFromShapekeyName(sk):
     return None
 
 def getShapekeyName(id):
-    if (id >= len(bpy.data.shape_keys['ShapeKeys'].key_blocks)):
-        raise Exception("No Shapkey Fond")
+    if (id > len(bpy.data.shape_keys['ShapeKeys'].key_blocks)):
+        raise Exception("No Shapkey Fond {}".format(id))
     return bpy.data.shape_keys['ShapeKeys'].key_blocks[id].name
 
 def getShapekeyBone(id):
-
+    if id == 48:
+        return [25.0/7.142, 'chin']
     sk = getShapekeyName(id)
     d = getDriverFromShapekeyName(sk)
     var = None
@@ -127,10 +130,16 @@ def newAction(name):
     new_action.name = name
     return new_action
 
-
-def insertkeyframe(action, bone, frame, value, channel = 0):
-    k = action.groups[bone].channels[channel].keyframe_points.insert(frame, value)
-    return k
+# Channel 1 (means location Y)
+def insertkeyframe(action, bone, frame, value, channel = 1):
+    if bone == 'chin':
+        #Z for chin
+        channel = 2
+    for c in action.groups[bone].channels:
+        if c.array_index == channel:
+            k = c.keyframe_points.insert(frame, value)
+            return k
+    return False
 
 def blenderVal(v):
     return v / 25.0
@@ -224,7 +233,7 @@ def updateExpressions(expressions):
         motors = list(e.values())[0]
         visime = False
         if exp.find('vis_') > -1:
-            action = findVisime(exp[4:])
+            action = findVisime(exp)
             if not action:
                 print("Skipping Visime "+exp[4:])
                 continue
@@ -232,9 +241,14 @@ def updateExpressions(expressions):
         else:
             action = findExpression(exp)
             if not action:
-                action = newAction('EMO-'+exp.lower())
+                print("Skipping Expression "+exp)
+                continue
         m = getPauFromMotors(motors)
         kf = getKeyFrameFromPAU(m)
+        if exp == 'Happy.001':
+            print(motors)
+            print(m)
+            print(kf)
         for bone, val in kf.items():
             # Need to clear previous KF frames first
             try:
@@ -249,6 +263,6 @@ def updateExpressions(expressions):
                 print(ex)
 
 if __name__ == '__main__':
-    importAnimations(animations)
-#    updateExpressions(expressions)
+#    importAnimations(animations)
+    updateExpressions(expressions)
 

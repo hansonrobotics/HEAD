@@ -32,6 +32,8 @@ class AnimationManager():
         self.emotionsList = []
         self.visemesList = []
         self.cyclesSet = set()
+        # Cycles to remove
+        self.cyclesToRemove = []
         # Start from normal animation mode. 
         self.mode= 0
         self.old_mode= 0
@@ -79,7 +81,10 @@ class AnimationManager():
         # Internal vars
         self._time = 0
         self.nextTrigger = {}
-
+        # Last time eyes were set by gaze
+        self.eyes_gazing = 0
+        # Maximum time for eyes to be controlled by gaze. After that time eyes will be controlled by face target.
+        self.max_eye_gaze = 0.2
         # global access
         self.deformObj = bpy.data.objects['deform']
         self.bones = bpy.data.objects['control'].pose.bones
@@ -132,6 +137,7 @@ class AnimationManager():
             self.old_mode = self.mode
             # Restore original drivers
             if self.mode == 0:
+                bpy.context.scene['keepAlive'] = True
                 bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=0
                 self.setHeadRotation(0)
                 self.setFaceTarget([0,1,0])
@@ -153,6 +159,9 @@ class AnimationManager():
                         targ.transform_type=i[2]['targ'][2]['type']
                         targ.transform_space=i[2]['targ'][3]['space']
                         self.deleted_drivers = False
+            else:
+                bpy.context.scene['keepAlive']
+
     def getMode(self):
         return self.mode
 
@@ -196,7 +205,7 @@ class AnimationManager():
 
         for key in dict_shape:
             if(key=='lip-JAW.DN'):
-                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]=dict_shape[key]
+                bpy.evaAnimationManager.deformObj.pose.bones['chin'].location[2]= dict_shape[key]
             else:
                 bpy.data.shape_keys['ShapeKeys'].key_blocks[key].value= dict_shape[key]
 
@@ -240,6 +249,8 @@ class AnimationManager():
         if magnitude < 1:
             newStrip.use_animated_influence = True
             newStrip.influence = magnitude
+            ifc = newStrip.fcurves.items()[1][1]
+            ifc.keyframe_points.insert(1, magnitude, {'FAST'})
 
         # Create object and add to list
         g = Gesture(name, newTrack, newStrip, duration=duration, speed=speed, \
@@ -349,18 +360,20 @@ class AnimationManager():
 
         return True
 
+    def removeCycles(self):
+        cycles = self.cyclesToRemove[:]
+        for c in cycles:
+            toRemove = [cycle for cycle in self.cyclesSet if cycle.name == c]
+            for cycle in toRemove:
+                self.cyclesSet.remove(cycle)
+            toRemove = [gesture for gesture in self.gesturesList if gesture.name == c]
+            for gesture in toRemove:
+                self._deleteGesture(gesture)
+            self.cyclesToRemove.remove(c)
 
     def setCycle(self, name, rate, magnitude, ease_in):
         if magnitude == 0:
-            # Remove cycle
-            toRemove = [cycle for cycle in self.cyclesSet if cycle.name == name]
-            for cycle in toRemove:
-                self.cyclesSet.remove(cycle)
-
-            toRemove = [gesture for gesture in self.gesturesList if gesture.name == name]
-            for gesture in toRemove:
-                self._deleteGesture(gesture)
-            return 0
+            self.cyclesToRemove.append(name)
         else:
             # Check value for sanity
             checkValue(rate, 0.1, 10)
@@ -453,15 +466,15 @@ class AnimationManager():
         )
 
         self.headTargetLoc.target = locBU
+        if time.time() - self.eyes_gazing > self.max_eye_gaze:
+            # Change offset for the eyes
+            locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
 
-        # Change offset for the eyes
-        locBU[1] = locBU[1] - self.face_target_offset + self.eye_target_offset
-
-        # Move eyes too, really fast
-        self.eyeTargetLoc.transition = Wrappers.wrap([
-                Pipes.linear(speed=300)],
-            Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
-        self.eyeTargetLoc.target = locBU
+            # Move eyes too, really fast
+            self.eyeTargetLoc.transition = Wrappers.wrap([
+                    Pipes.linear(speed=300)],
+                Wrappers.in_spherical(origin=[0, self.eye_target_offset, 0], radius=4))
+            self.eyeTargetLoc.target = locBU
 
 
     # Rotates the face target which will make head roll
@@ -471,7 +484,7 @@ class AnimationManager():
     def setGazeTarget(self, loc, speed=1):
         '''Set the target used for eye tracking only.'''
         ''' Ignores speed for now. Eyes should always move fast '''
-
+        self.eyes_gazing = time.time()
         locBU = self.coordConvert(loc, self.eyeTargetLoc.current, self.eye_target_offset)
 
         self.eyeTargetLoc.transition = Wrappers.wrap(
