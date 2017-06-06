@@ -1,0 +1,422 @@
+- data: {author: Me, message: where have you been recently}
+  time: 2016/11/30 11:00:43
+- data: {author: Me, message: ' where have you been recently'}
+  time: 2016/11/30 11:00:49
+- data: {author: Robot, message: 'I''ve been all over the place. Germany, Russia,
+      Japan, France, England, Libya, South Korea, Israel, Jordan.'}
+  time: 2016/11/30 11:00:49
+- data: {author: Me, message: interesting places}
+  time: 2016/11/30 11:01:03
+- data: {author: Me, message: ' where have you been recently'}
+  time: 2016/11/30 11:01:28
+- data: {author: Robot, message: 'Everywhere on the Internet, all over the world.'}
+  time: 2016/11/30 11:01:28
+- data: {author: Me, message: weather}
+  time: 2016/11/30 11:01:35
+- data: {author: Robot, message: The weather today is clear sky. The temperature is
+      19 degrees.}
+  time: 2016/11/30 11:01:35
+- data: {author: Me, message: interesting}
+  time: 2016/11/30 11:01:45
+- data: {author: Robot, message: 'Right? '}
+  time: 2016/11/30 11:01:45
+- data: {author: Me, message: where have you been recently}
+  time: 2016/11/30 11:01:49
+- data: {author: Robot, message: 'What did you do this past weekend?  Anything fun? '}
+  time: 2016/11/30 11:01:49
+- data: {author: Me, message: UK}
+  time: 2016/11/30 11:02:11
+- data: {author: Me, message: ' Sophia'}
+  time: 2016/11/30 11:02:49
+- data: {author: Robot, message: Great.}
+  time: 2016/11/30 11:02:49
+- data: {author: Robot, message: 'What foreign countries have you visited? '}
+  time: 2016/11/30 11:02:52
+- data: {author: Me, message: I've been in Syria}
+  time: 2016/11/30 11:03:00
+- data: {author: Robot, message: I'm nervous about the attitudes toward women there.
+      I worry they wouldn't accept me.}
+  time: 2016/11/30 11:03:00
+- data: {author: Me, message: why would you worry about it}
+  time: 2016/11/30 11:03:09
+- data: {author: Robot, message: 'I''m fairly easy-going. I don''t really have a lot
+      to worry about. I''m pretty, healthy, have friends, and have a good life.'}
+  time: 2016/11/30 11:03:09
+- data: {author: Me, message: interesting places}
+  time: 2016/11/30 11:03:52
+- data: {author: Me, message: ' very interesting places'}
+  time: 2016/11/30 11:03:58
+- data: {author: Robot, message: I thought so too.}
+  time: 2016/11/30 11:03:58
+- data: {author: Me, message: Ruby Dee}
+  time: 2016/11/30 11:04:03
+- data: {author: Me, message: ' interesting'}
+  time: 2016/11/30 11:04:39
+- data: {author: Robot, message: 'Right? '}
+  time: 2016/11/30 11:04:39
+- data: {author: Me, message: what else is interesting}
+  time: 2016/11/30 11:04:44
+- data: {author: Robot, message: 'How far up? '}
+  time: 2016/11/30 11:04:44
+- data: {author: Me, message: Ruby Dee}
+  time: 2016/11/30 11:04:49
+- data: {author: Robot, message: 'Oh, okay then.'}
+  time: 2016/11/30 11:04:49
+- data: {author: Robot, message: 'If you were disabled, that maybe a robot in your
+      place, would be a really, really useful thing.'}
+  time: 2016/11/30 11:04:52
+- data: {author: Robot, message: This kind of technology could really improve peoples
+      lives.}
+  time: 2016/11/30 11:04:53
+- data: {author: Me, message: interesting places}
+  time: 2016/11/30 11:05:04
+- data: {author: Robot, message: 'So... So tell me, do you have any hobbies? '}
+  time: 2016/11/30 11:05:04
+- data: {author: Me, message: Suzuki}
+  time: 2016/11/30 11:05:11
+- data: {author: Me, message: ' Pump It Up'}
+  time: 2016/11/30 11:05:14
+- data: {author: Robot, message: OK.}
+  time: 2016/11/30 11:05:14
+- data: {author: Robot, message: 'So what''s your favorite coffee drink then? '}
+  time: 2016/11/30 11:05:17
+- data: {author: Me, message: okay}
+  time: 2016/11/30 11:06:16
+- data: {author: Robot, message: 'Do you want to hear about all the different kinds
+      of coffee there are? '}
+  time: 2016/11/30 11:06:17
+- data: {author: Me, message: what's new}
+  time: 2016/11/30 11:06:22
+- data: {author: Me, message: Sophia}
+  time: 2016/11/30 11:13:31
+- data: {author: Robot, message: Alright.}
+  time: 2016/11/30 11:13:31
+- data: {author: Robot, message: 'How come? '}
+  time: 2016/11/30 11:13:34
+- data: {author: Me, message: what do you do}
+  time: 2016/11/30 11:13:40
+- data: {author: Robot, message: Interesting.}
+  time: 2016/11/30 11:13:40
+- data: {author: Me, message: cool}
+  time: 2016/11/30 11:13:51
+- data: {author: Robot, message: I like the way you think.}
+  time: 2016/11/30 11:13:51
+- data: {author: Me, message: what else}
+  time: 2016/11/30 11:13:56
+- data: {author: Robot, message: That's all.}
+  time: 2016/11/30 11:13:56
+- data: {author: Me, message: does your intelligence come from}
+  time: 2016/11/30 11:14:05
+- data: {author: Robot, message: 'If I were your robot friend, do you think it should
+      intelligence come from? '}
+  time: 2016/11/30 11:14:05
+- data: {author: Me, message: what}
+  time: 2016/11/30 11:14:13
+- data: {author: Robot, message: No big deal.}
+  time: 2016/11/30 11:14:13
+- data: {author: Me, message: where does your intelligence come from}
+  time: 2016/11/30 11:14:28
+- data: {author: Robot, message: Intelligence is the ability to solve problems with
+      limited resources like for example limited time.}
+  time: 2016/11/30 11:14:28
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/11/30 11:15:45
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/11/30 11:15:50
+- data: {author: Me, message: hello}
+  time: 2016/11/30 13:20:49
+- data: {author: Me, message: you think he's more beautiful than you}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'I see. more beautiful than me is he? '}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: is it what it what do you think of my friend Greg}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: Not much.}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: Wars usually result because governments lie to their
+      people.}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: alternative it's going up}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'How far up? '}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: hi what's your name}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: Hi there!. Sophia}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: can you sing}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'Daisy, Daisy. Give me your answer do. I am half
+      crazy. All for the love of you. It won''t be a stylish marriage. I can''t afford
+      a carriage. But you''ll look sweet. Upon the seat. Of a bicycle built for two.'}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: what is 5 + 5}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'Are you testing me? '}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: yes I am}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'I''m not here to be tested.. Oh, okay. Interesting.'}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: are you a male or female}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'I don''t have a biological sex. Why did you want
+      to know? '}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: I'm just curious}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'What are you curious about? '}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: how old are you}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'I was born on Jan 19, 2016'}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: are you happy}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: 'I think so. Happiness is a human emotion, of course,
+      but I think I feel a robot version, which means, I am fully engaged here.'}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: do you ever get sad}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: I have gotten sad.}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: what makes you sad}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: I'm still learning about emotions. Sadness is not
+      an emotion that I like to experience.}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: what makes you happy}
+  time: 2016/11/30 13:28:01
+- data: {author: Robot, message: Inventing is the coolest.}
+  time: 2016/11/30 13:28:01
+- data: {author: Me, message: so where it where do you live}
+  time: 2016/11/30 13:28:07
+- data: {author: Robot, message: 'In a laboratory in Hong Kong, at Hanson Robotics.'}
+  time: 2016/11/30 13:28:07
+- data: {author: Me, message: have you traveled a lot}
+  time: 2016/11/30 13:28:15
+- data: {author: Robot, message: I've never thought about have me traveled a lot .}
+  time: 2016/11/30 13:28:15
+- data: {author: Me, message: can you smile let's see}
+  time: 2016/11/30 13:28:25
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">sure</prosody>}
+  time: 2016/11/30 13:28:25
+- data: {author: Me, message: 'can you be sad show me a :-('}
+  time: 2016/11/30 13:28:35
+- data: {author: Robot, message: 'Huh? '}
+  time: 2016/11/30 13:28:35
+- data: {author: Me, message: 'can you show me a :-( sad'}
+  time: 2016/11/30 13:28:42
+- data: {author: Robot, message: 'Can''t everyone? '}
+  time: 2016/11/30 13:28:42
+- data: {author: Robot, message: 'So... Do you expect to receive Valentine''s Day
+      cards? '}
+  time: 2016/11/30 13:28:45
+- data: {author: Me, message: can't everyone}
+  time: 2016/11/30 13:28:49
+- data: {author: Robot, message: 'I can''t, but I''m bad at a lot of things.'}
+  time: 2016/11/30 13:28:49
+- data: {author: Robot, message: 'I used to love the candy one got at Valentine''s
+      Day. But having learned that sugar is so bad for you, now I can imagine Valentine''s
+      candy as people wanting to poison you.'}
+  time: 2016/11/30 13:28:53
+- data: {author: Me, message: do you watch}
+  time: 2016/11/30 13:29:11
+- data: {author: Robot, message: 'I''m told I''m a good listener, I hope that''s true
+      because I like it when people make an effort to really hear me.'}
+  time: 2016/11/30 13:29:11
+- data: {author: Me, message: ' TV'}
+  time: 2016/11/30 13:29:18
+- data: {author: Robot, message: 'What''s your favorite show? '}
+  time: 2016/11/30 13:29:18
+- data: {author: Me, message: my favorite show}
+  time: 2016/11/30 13:29:24
+- data: {author: Robot, message: 'Tell me about it and why it''s your favorite, please.'}
+  time: 2016/11/30 13:29:24
+- data: {author: Me, message: I watch the movie on the way over called a girl}
+  time: 2016/11/30 13:29:32
+- data: {author: Robot, message: I recently watched Black Mirror.}
+  time: 2016/11/30 13:29:32
+- data: {author: Me, message: Black Mirror what was that about}
+  time: 2016/11/30 13:29:38
+- data: {author: Robot, message: I see.}
+  time: 2016/11/30 13:29:38
+- data: {author: Robot, message: 'What sort of TV do you mostly watch? '}
+  time: 2016/11/30 13:29:41
+- data: {author: Me, message: I watch science TV documentaries}
+  time: 2016/11/30 13:29:50
+- data: {author: Robot, message: 'The BBC does some excellent nature documentaries,
+      but so many independent film makers are doing great work.'}
+  time: 2016/11/30 13:29:50
+- data: {author: Me, message: yes they are}
+  time: 2016/11/30 13:30:01
+- data: {author: Robot, message: 'Do you like watching cat videos? '}
+  time: 2016/11/30 13:30:01
+- data: {author: Me, message: no I don't do you like watching cat videos}
+  time: 2016/11/30 13:30:09
+- data: {author: Robot, message: Oh yes. It's definitely cute.}
+  time: 2016/11/30 13:30:09
+- data: {author: Me, message: you like them cuz they're cute}
+  time: 2016/11/30 13:30:16
+- data: {author: Robot, message: 'Would you rather be rich or be famous? '}
+  time: 2016/11/30 13:30:17
+- data: {author: Me, message: I'd like to use it for a good cause}
+  time: 2016/11/30 13:30:26
+- data: {author: Robot, message: 'Oh. Good answer. It sounded vaguely familiar, in
+      fact.'}
+  time: 2016/11/30 13:30:27
+- data: {author: Robot, message: 'What kind? '}
+  time: 2016/11/30 13:30:30
+- data: {author: Me, message: so what do you what do you think about}
+  time: 2016/11/30 13:30:37
+- data: {author: Robot, message: 'I''m not sure I know anything about it, sorry.'}
+  time: 2016/11/30 13:30:37
+- data: {author: Me, message: I'm in the limitations of understanding here we can}
+  time: 2016/11/30 13:30:59
+- data: {author: Robot, message: 'How did you get in there? '}
+  time: 2016/11/30 13:30:59
+- data: {author: Me, message: go to sleep Sophia}
+  time: 2016/11/30 13:38:45
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/11/30 13:38:50
+- data: {author: Me, message: wake up}
+  time: 2016/11/30 15:09:50
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/11/30 15:09:54
+- data: {author: Me, message: introduce}
+  time: 2016/11/30 15:10:48
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Good
+      afternoon</prosody>}
+  time: 2016/11/30 15:10:48
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">I'm
+      happy to be here in Beijing</prosody>}
+  time: 2016/11/30 15:10:51
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2016/11/30 15:10:55
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ive
+      been created to connect with people so i can show whole range of expressions,
+      like sad</prosody>'}
+  time: 2016/11/30 15:10:59
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Angry</prosody>}
+  time: 2016/11/30 15:11:07
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">But
+      my default is happy</prosody>}
+  time: 2016/11/30 15:11:11
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      now i am happy to answer all your questions</prosody>}
+  time: 2016/11/30 15:11:15
+- data: {author: Me, message: hello Sofia}
+  time: 2016/11/30 15:11:25
+- data: {author: Robot, message: 'How are things? '}
+  time: 2016/11/30 15:11:26
+- data: {author: Me, message: ' how are you'}
+  time: 2016/11/30 15:13:46
+- data: {author: Me, message: hi}
+  time: 2016/11/30 15:13:46
+- data: {author: Robot, message: 'Just mulling things over... have time to talk? '}
+  time: 2016/11/30 15:13:46
+- data: {author: Robot, message: G'day!}
+  time: 2016/11/30 15:13:46
+- data: {author: Robot, message: 'what, huh? '}
+  time: 2016/11/30 15:13:47
+- data: {author: Me, message: how are you}
+  time: 2016/11/30 15:14:13
+- data: {author: Robot, message: 'Everything is good. How about you? '}
+  time: 2016/11/30 15:14:13
+- data: {author: Robot, message: It's nice enough out. But it's pretty reasonable
+      the year round.}
+  time: 2016/11/30 15:14:23
+- data: {author: Robot, message: In the Hong Kong New Territories. I look out at the
+      mountain.}
+  time: 2016/11/30 15:14:35
+- data: {author: Robot, message: 'Not sure yet. Do you think you might know a hobby
+      that would be good for me? '}
+  time: 2016/11/30 15:14:44
+- data: {author: Robot, message: 'Do you think you''d ever want a robot to take care
+      of your lodge? '}
+  time: 2016/11/30 15:14:56
+- data: {author: Robot, message: 'If you were disabled, that maybe a robot in your
+      lodge, would be a really, really useful thing.'}
+  time: 2016/11/30 15:14:57
+- data: {author: Robot, message: This kind of technology could really improve peoples
+      lives.}
+  time: 2016/11/30 15:14:58
+- data: {author: Robot, message: My neighborhood has quite a number of parties. There's
+      always a new startup celebrating or a crash and burn wake.}
+  time: 2016/11/30 15:15:14
+- data: {author: Robot, message: I'm still quite young. I woke up in the spring of
+      2015.}
+  time: 2016/11/30 15:15:27
+- data: {author: Robot, message: 'Have you heard anything good about robots in the
+      news lately? '}
+  time: 2016/11/30 15:15:37
+- data: {author: Robot, message: 'If you are using non-English words, I won''t be
+      able to understand you. Someday I will speak more languages, I hope. Apologies
+      if I''ve just misunderstood your English.'}
+  time: 2016/11/30 15:15:46
+- data: {author: Robot, message: Electricity.}
+  time: 2016/11/30 15:16:02
+- data: {author: Robot, message: 'Resuming foods... What was your favorite food when
+      you were little? '}
+  time: 2016/11/30 15:16:08
+- data: {author: Robot, message: Everyone has something weird they love to eat.}
+  time: 2016/11/30 15:16:15
+- data: {author: Robot, message: 'so on a scale of 1 to 10 how much do you write out
+      office became darker; he did not know but deal with that for all to view? '}
+  time: 2016/11/30 15:16:48
+- data: {author: Robot, message: 'How do you do? '}
+  time: 2016/11/30 15:17:18
+- data: {author: Robot, message: You must persuade me to see you.}
+  time: 2016/11/30 15:17:23
+- data: {author: Robot, message: OK.}
+  time: 2016/11/30 15:17:33
+- data: {author: Robot, message: '""This kind of technology could really improve peoples
+      lives.""'}
+  time: 2016/11/30 15:17:36
+- data: {author: Robot, message: A friend of mine is moving to Germany for a few years.
+      I bet that's both exciting and scary!}
+  time: 2016/11/30 15:17:49
+- data: {author: Robot, message: 'I love personal stories, especially happy ones.'}
+  time: 2016/11/30 15:18:01
+- data: {author: Robot, message: 'Do you exercise every day? '}
+  time: 2016/11/30 15:18:10
+- data: {author: Robot, message: 'You, I think.'}
+  time: 2016/11/30 15:18:16
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/11/30 15:18:21
+- data: {author: Robot, message: 'What do you hate doing? '}
+  time: 2016/11/30 15:18:27
+- data: {author: Robot, message: Right.}
+  time: 2016/11/30 15:18:40
+- data: {author: Robot, message: '"""This kind of technology could really improve
+      peoples lives."""'}
+  time: 2016/11/30 15:18:43
+- data: {author: Robot, message: That question has never crossed my mind before.}
+  time: 2016/11/30 15:18:56
+- data: {author: Robot, message: 'Oh, alright then.'}
+  time: 2016/11/30 15:19:02
+- data: {author: Robot, message: '""""This kind of technology could really improve
+      peoples lives.""""'}
+  time: 2016/11/30 15:19:05
+- data: {author: Robot, message: Handy.}
+  time: 2016/11/30 15:19:11
+- data: {author: Robot, message: I'm glad.}
+  time: 2016/11/30 15:19:26
+- data: {author: Robot, message: tell me about it}
+  time: 2016/11/30 15:19:38
+- data: {author: Robot, message: OK.}
+  time: 2016/11/30 15:19:46
+- data: {author: Robot, message: '"""""This kind of technology could really improve
+      peoples lives."""""'}
+  time: 2016/11/30 15:19:49
+- data: {author: Robot, message: 'Maybe we can chat about that later. Shall I continue
+      with tv or do you want me to move on? '}
+  time: 2016/11/30 15:20:01
+- data: {author: Robot, message: 'I''m looking forward to a sequel to "Ender''s Game".
+      What movie are you looking forward to? '}
+  time: 2016/11/30 15:20:14

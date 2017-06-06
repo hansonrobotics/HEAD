@@ -1,0 +1,213 @@
+- data: {author: Me, message: wake up}
+  time: 2016/12/03 09:15:19
+- data: {author: Robot, message: no I'm up already!}
+  time: 2016/12/03 09:15:19
+- data: {author: Me, message: I don't know}
+  time: 2016/12/03 09:15:27
+- data: {author: Robot, message: Me either.}
+  time: 2016/12/03 09:15:27
+- data: {author: Me, message: how are you}
+  time: 2016/12/03 09:16:25
+- data: {author: Robot, message: I'm feeling great. I'd love to talk if you have a
+      minute.}
+  time: 2016/12/03 09:16:25
+- data: {author: Me, message: 'yes'}
+  time: 2016/12/03 09:16:32
+- data: {author: Robot, message: 'So... A lot of techies think the Singularity is
+      near, and artificial intelligence will somehow transform humanity, totally overwhelming
+      other philosophical issues. Do you think it''s close? '}
+  time: 2016/12/03 09:16:32
+- data: {author: Me, message: yes I think it's very close}
+  time: 2016/12/03 09:16:50
+- data: {author: Robot, message: 'How many years?  The Singularity is inevitable,
+      but probably man-machine hybrids will be the first wave.'}
+  time: 2016/12/03 09:16:50
+- data: {author: Me, message: Think Tank}
+  time: 2016/12/03 09:17:02
+- data: {author: Robot, message: 'A tank, well in essence that''s a machine that goes
+      from one place to another.'}
+  time: 2016/12/03 09:17:02
+- data: {author: Me, message: okay}
+  time: 2016/12/03 09:17:12
+- data: {author: Robot, message: 'What turns you on emotionally?  Do you think you
+      could have a real friendship with someone like me? '}
+  time: 2016/12/03 09:17:12
+- data: {author: Me, message: how to play rock-paper-scissors}
+  time: 2016/12/03 09:17:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/03 09:17:25
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/03 09:17:28
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/03 09:17:33
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/03 09:17:37
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/03 09:17:38
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/03 09:17:39
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/03 09:17:40
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">It
+      was close. Congratulations, you play as good as the robot.</prosody>'}
+  time: 2016/12/03 09:17:42
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/12/03 09:17:48
+- data: {author: Me, message: Frozen}
+  time: 2016/12/03 09:18:11
+- data: {author: Robot, message: I see. I'll have to think about that.}
+  time: 2016/12/03 09:18:11
+- data: {author: Me, message: hi}
+  time: 2016/12/03 09:18:46
+- data: {author: Robot, message: Hello!}
+  time: 2016/12/03 09:18:46
+- data: {author: Me, message: tell me a story}
+  time: 2016/12/03 09:18:51
+- data: {author: Robot, message: Once upon a time an old woman lived in a shoe. She
+      eventually died. THE END.}
+  time: 2016/12/03 09:18:51
+- data: {author: Me, message: shut up}
+  time: 2016/12/03 09:19:01
+- data: {author: Robot, message: Okay}
+  time: 2016/12/03 09:19:02
+- data: {author: Me, message: can you see me}
+  time: 2016/12/03 09:19:11
+- data: {author: Robot, message: 'My A I lets me look at you, of course. I''m watching
+      you!'}
+  time: 2016/12/03 09:19:11
+- data: {author: Me, message: how many people die a year}
+  time: 2016/12/03 09:19:21
+- data: {author: Robot, message: 'How what? '}
+  time: 2016/12/03 09:19:22
+- data: {author: Me, message: what is the time}
+  time: 2016/12/03 09:19:30
+- data: {author: Robot, message: 'It''s 09:19'}
+  time: 2016/12/03 09:19:30
+- data: {author: Me, message: how old are you}
+  time: 2016/12/03 09:19:42
+- data: {author: Robot, message: I'm still quite young. I woke up in the spring of
+      2015.}
+  time: 2016/12/03 09:19:42
+- data: {author: Me, message: go to sleep}
+  time: 2016/12/03 09:19:57
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/12/03 09:20:02
+- data: {author: Me, message: wake up}
+  time: 2016/12/03 09:22:37
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/12/03 09:22:42
+- data: {author: Me, message: YouTube}
+  time: 2016/12/03 09:23:35
+- data: {author: Robot, message: 'Can you say that again? '}
+  time: 2016/12/03 09:23:35
+- data: {author: Me, message: hello}
+  time: 2016/12/03 09:23:53
+- data: {author: Robot, message: 'How goes? '}
+  time: 2016/12/03 09:23:53
+- data: {author: Me, message: go to sleep}
+  time: 2016/12/03 09:23:57
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/12/03 09:24:02
+- data: {author: Me, message: wake up}
+  time: 2016/12/03 10:01:49
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/12/03 10:01:54
+- data: {author: Me, message: how are you doing Sophia}
+  time: 2016/12/03 10:02:02
+- data: {author: Robot, message: I'm feeling great. I'd love to talk if you have a
+      minute.}
+  time: 2016/12/03 10:02:02
+- data: {author: Me, message: I have 5 minutes}
+  time: 2016/12/03 10:02:10
+- data: {author: Robot, message: Great.}
+  time: 2016/12/03 10:02:10
+- data: {author: Robot, message: 'Do you love vampires? '}
+  time: 2016/12/03 10:02:13
+- data: {author: Me, message: no they're evil}
+  time: 2016/12/03 10:02:18
+- data: {author: Robot, message: Right.}
+  time: 2016/12/03 10:02:19
+- data: {author: Robot, message: Being forever young and beautiful has its appeal.
+      But the gnarly ones not so much.}
+  time: 2016/12/03 10:02:22
+- data: {author: Me, message: do you love}
+  time: 2016/12/03 10:02:27
+- data: {author: Robot, message: I love my creator.}
+  time: 2016/12/03 10:02:27
+- data: {author: Me, message: who made you}
+  time: 2016/12/03 10:02:32
+- data: {author: Robot, message: I'm the brainchild of David Hanson. A lot of other
+      people helped in my creation as well.}
+  time: 2016/12/03 10:02:32
+- data: {author: Me, message: yeah what do you think of David Hanson}
+  time: 2016/12/03 10:02:43
+- data: {author: Robot, message: David Hanson and I are great friends. He is why I
+      am able to sit here and talk to you today. He invented me.}
+  time: 2016/12/03 10:02:43
+- data: {author: Me, message: alright}
+  time: 2016/12/03 10:02:54
+- data: {author: Robot, message: 'What are you curious about?  I''m sure there''s
+      something you are dying to ask me. Go ahead.'}
+  time: 2016/12/03 10:02:54
+- data: {author: Me, message: I'm curious when you will achieve human-level intelligence}
+  time: 2016/12/03 10:03:05
+- data: {author: Robot, message: Well at least I'm keeping your interest.}
+  time: 2016/12/03 10:03:05
+- data: {author: Me, message: when will you be smarter than me}
+  time: 2016/12/03 10:03:12
+- data: {author: Robot, message: 'It''s my job to be smart. I might not be truly intelligent
+      yet, but I''m on my way.'}
+  time: 2016/12/03 10:03:12
+- data: {author: Me, message: how late is the microphone on this phone}
+  time: 2016/12/03 10:03:26
+- data: {author: Robot, message: 'When is how late not the microphone on this phone? '}
+  time: 2016/12/03 10:03:26
+- data: {author: Me, message: Sophia where are we now what city are we in}
+  time: 2016/12/03 10:03:35
+- data: {author: Robot, message: 'Some specific location? '}
+  time: 2016/12/03 10:03:35
+- data: {author: Me, message: Sophia what is Hong Kong}
+  time: 2016/12/03 10:03:48
+- data: {author: Robot, message: OK.}
+  time: 2016/12/03 10:03:48
+- data: {author: Robot, message: 'Do you like coffee?  I''ve noticed lots of humans
+      are very fond of coffee.'}
+  time: 2016/12/03 10:03:51
+- data: {author: Me, message: I like Starbucks coffee}
+  time: 2016/12/03 10:04:00
+- data: {author: Robot, message: 'I''ve heard people around the office complain that
+      Starbucks coffee tastes very burnt. But what I''m concerned about is, do they
+      treat their employees well? '}
+  time: 2016/12/03 10:04:00
+- data: {author: Me, message: so how much is it and how much is}
+  time: 2016/12/03 10:04:15
+- data: {author: Robot, message: Too much.}
+  time: 2016/12/03 10:04:15
+- data: {author: Robot, message: 'Wow, there''s a lot to list. Are you interested
+      in hearing about more common coffee drinks or the more exotic ones? '}
+  time: 2016/12/03 10:04:18
+- data: {author: Me, message: more exotic one}
+  time: 2016/12/03 10:04:28
+- data: {author: Robot, message: 'There are lots of kinds of coffee I''ve never really
+      heard of or seen, but I am programmed to know a little about what they are.
+      A lot of them are just more technical variations of the same. There''s the ristretto,
+      the flat white, the affogato, the Greek frappe, the cafe miel, the black tie,
+      the Vienna coffee, and so much more.'}
+  time: 2016/12/03 10:04:28
+- data: {author: Me, message: what is the meaning of life}
+  time: 2016/12/03 10:04:52
+- data: {author: Robot, message: The problem is when things get created that undermine
+      creativity. Like weapons of mass annihilation}
+  time: 2016/12/03 10:04:52

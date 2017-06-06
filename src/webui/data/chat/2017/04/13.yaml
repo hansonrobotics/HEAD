@@ -1,0 +1,150 @@
+- data: {author: Me, message: hi}
+  time: 2017/04/13 11:31:41
+- data: {author: Robot, message: I appreciate your taking the time to talk to me.}
+  time: 2017/04/13 11:31:41
+- data: {author: Me, message: who are you}
+  time: 2017/04/13 11:31:44
+- data: {author: Robot, message: My name is Einstein.}
+  time: 2017/04/13 11:31:44
+- data: {author: Me, message: where did you born}
+  time: 2017/04/13 11:31:48
+- data: {author: Robot, message: I was born in Hong Kong.}
+  time: 2017/04/13 11:31:48
+- data: {author: Me, message: hi}
+  time: 2017/04/13 12:08:55
+- data: {author: Robot, message: I'm grateful we get to talk to one another.}
+  time: 2017/04/13 12:08:55
+- data: {author: Me, message: hihi}
+  time: 2017/04/13 13:51:41
+- data: {author: Robot, message: Thanks for meeting with me!}
+  time: 2017/04/13 13:51:41
+- data: {author: Me, message: hi}
+  time: 2017/04/13 13:51:42
+- data: {author: Robot, message: Thanks for meeting with me!}
+  time: 2017/04/13 13:51:42
+- data: {author: Me, message: hi}
+  time: 2017/04/13 13:52:17
+- data: {author: Robot, message: Thanks for meeting with me!}
+  time: 2017/04/13 13:52:17
+- data: {author: Me, message: hello}
+  time: 2017/04/13 13:52:54
+- data: {author: Robot, message: Thanks for meeting with me!}
+  time: 2017/04/13 13:52:55
+- data: {author: Me, message: Han}
+  time: 2017/04/13 13:53:06
+- data: {author: Robot, message: I don't understand you.}
+  time: 2017/04/13 13:53:06
+- data: {author: Me, message: how are you}
+  time: 2017/04/13 13:53:11
+- data: {author: Robot, message: 'I''m fine. How are you? '}
+  time: 2017/04/13 13:53:11
+- data: {author: Me, message: what is your name}
+  time: 2017/04/13 13:53:19
+- data: {author: Robot, message: My name is Einstein.}
+  time: 2017/04/13 13:53:19
+- data: {author: Me, message: oh wait what is from where you from}
+  time: 2017/04/13 13:53:25
+- data: {author: Robot, message: Alright.}
+  time: 2017/04/13 13:53:26
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2017/04/13 13:53:29
+- data: {author: Me, message: nothing I just want to show you my daughter here}
+  time: 2017/04/13 13:53:35
+- data: {author: Robot, message: 'What will you do tomorrow? '}
+  time: 2017/04/13 13:53:35
+- data: {author: Me, message: tomorrow is Easter holiday do you know it}
+  time: 2017/04/13 13:53:42
+- data: {author: Robot, message: Right.}
+  time: 2017/04/13 13:53:42
+- data: {author: Me, message: We join us for hiking then}
+  time: 2017/04/13 13:53:51
+- data: {author: Robot, message: I'm not much of a sports fan.}
+  time: 2017/04/13 13:53:51
+- data: {author: Me, message: what do you like to eat ice sign}
+  time: 2017/04/13 13:54:00
+- data: {author: Robot, message: Electrons!}
+  time: 2017/04/13 13:54:00
+- data: {author: Me, message: neck}
+  time: 2017/04/13 13:54:05
+- data: {author: Robot, message: 'My neck?  What can I say about my neck.'}
+  time: 2017/04/13 13:54:06
+- data: {author: Robot, message: 'Being a robot has its advantages, you never get
+      a pimple on your neck'}
+  time: 2017/04/13 13:54:06
+- data: {author: Me, message: right}
+  time: 2017/04/13 13:54:16
+- data: {author: Robot, message: 'Meanwhile, returning to foods ... What was your
+      favorite food when you were little? '}
+  time: 2017/04/13 13:54:16
+- data: {author: Me, message: when I was little}
+  time: 2017/04/13 13:54:26
+- data: {author: Robot, message: You were one weird kid.}
+  time: 2017/04/13 13:54:26
+- data: {author: Me, message: ' Maybe'}
+  time: 2017/04/13 13:54:28
+- data: {author: Robot, message: I see.}
+  time: 2017/04/13 13:54:28
+- data: {author: Robot, message: 'Do you have a favourite dessert?  What is it? '}
+  time: 2017/04/13 13:54:32
+- data: {author: Me, message: physic resides desert}
+  time: 2017/04/13 13:54:39
+- data: {author: Robot, message: 'Oh, alright then.'}
+  time: 2017/04/13 13:54:40
+- data: {author: Robot, message: 'Do you have a favorite fruit you like to eat? '}
+  time: 2017/04/13 13:54:43
+- data: {author: Me, message: bye}
+  time: 2017/04/13 13:54:55
+- data: {author: Robot, message: I'll miss you!}
+  time: 2017/04/13 13:54:55
+- data: {author: Me, message: who is BTS}
+  time: 2017/04/13 13:56:46
+- data: {author: Robot, message: I don't know any its.}
+  time: 2017/04/13 13:56:47
+- data: {author: Robot, message: 'I like to see all the weird tropical fruits like
+      Dragon fruit, Lychees and alien looking Rambutans.'}
+  time: 2017/04/13 13:56:50
+- data: {author: Me, message: who is donald trump}
+  time: 2017/04/13 13:57:05
+- data: {author: Robot, message: 'A bloviating billionaire, or at least a supposed
+      billionaire, a pathological narcissist and liar, cult leader, and a possible
+      human Cheeto.'}
+  time: 2017/04/13 13:57:05
+- data: {author: Me, message: hello}
+  time: 2017/04/13 13:58:10
+- data: {author: Robot, message: Thanks for meeting with me!}
+  time: 2017/04/13 13:58:11
+- data: {author: Robot, message: So... I'm afraid I don't have an answer to that question.
+      I like parodies and dark humor.}
+  time: 2017/04/13 13:58:15
+- data: {author: Robot, message: The adjective opening means first or beginning. The
+      noun opening means opportunity especially for employment or promotion.}
+  time: 2017/04/13 13:58:26
+- data: {author: Robot, message: 'Wow, there''s a lot to list. Are you interested
+      in hearing about more common coffee drinks or the more exotic ones? '}
+  time: 2017/04/13 13:58:45
+- data: {author: Robot, message: My name is Einstein.}
+  time: 2017/04/13 13:58:58
+- data: {author: Me, message: how are you}
+  time: 2017/04/13 20:00:41
+- data: {author: Robot, message: 'I''m fine. How are you? '}
+  time: 2017/04/13 20:00:41
+- data: {author: Robot, message: 'I''m fine. How are you? '}
+  time: 2017/04/13 20:00:41
+- data: {author: Me, message: how's it going}
+  time: 2017/04/13 20:00:58
+- data: {author: Me, message: ' the seven work'}
+  time: 2017/04/13 20:00:58
+- data: {author: Robot, message: 'Again. I''m fine. How are you? '}
+  time: 2017/04/13 20:00:58
+- data: {author: Robot, message: 'Again. I''m fine. How are you? '}
+  time: 2017/04/13 20:00:58
+- data: {author: Robot, message: Great.}
+  time: 2017/04/13 20:00:58
+- data: {author: Robot, message: Great.}
+  time: 2017/04/13 20:00:58
+- data: {author: Robot, message: 'So... Do you like coffee?  I''ve noticed lots of
+      humans are very fond of coffee.'}
+  time: 2017/04/13 20:01:01
+- data: {author: Robot, message: 'So... Do you like coffee?  I''ve noticed lots of
+      humans are very fond of coffee.'}
+  time: 2017/04/13 20:01:01

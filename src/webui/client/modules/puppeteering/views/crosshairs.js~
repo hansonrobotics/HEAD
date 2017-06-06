@@ -21,7 +21,7 @@ define(['marionette', './templates/crosshairs.tpl', 'lib/api', 'lib/crosshair-sl
 			clearTimeout(self.timeout)
 			setTimeout(function(){
 				api.setDynParam('/realsense_tracker/tracker','enable_tracker', true); 
-			},2000);
+			});
                         api.setDynParam('/realsense_tracker/tracker','enable_tracker', false);
                         api.setFaceTarget(1, ui.xval / 50, ui.yval / -50);
                         api.setGazeTarget(1, ui.xval / 50, ui.yval / -50);

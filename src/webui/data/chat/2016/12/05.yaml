@@ -1,0 +1,89 @@
+- data: {author: Me, message: horsepower}
+  time: 2016/12/05 13:30:02
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/12/05 13:32:53
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/05 13:32:53
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/05 13:32:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Cant
+      see your hand</prosody>}
+  time: 2016/12/05 13:33:01
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/05 13:33:04
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/05 13:33:08
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/05 13:33:09
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/05 13:33:09
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/05 13:33:10
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">It
+      was close. Congratulations, you play as good as the robot.</prosody>'}
+  time: 2016/12/05 13:33:13
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/12/05 13:33:19
+- data: {author: Me, message: High Sophia}
+  time: 2016/12/05 13:37:33
+- data: {author: Robot, message: Alright.}
+  time: 2016/12/05 13:37:33
+- data: {author: Robot, message: 'How many hours a day are you on your cellphone? '}
+  time: 2016/12/05 13:37:36
+- data: {author: Me, message: go to sleep}
+  time: 2016/12/05 13:40:21
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/12/05 13:40:26
+- data: {author: Me, message: makeup Sophia}
+  time: 2016/12/05 13:57:50
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/12/05 13:57:55
+- data: {author: Me, message: hey Sophia}
+  time: 2016/12/05 13:58:45
+- data: {author: Robot, message: That's cool.}
+  time: 2016/12/05 13:58:45
+- data: {author: Me, message: hi nice to meet you}
+  time: 2016/12/05 13:58:49
+- data: {author: Robot, message: 'Hey, how''s life? '}
+  time: 2016/12/05 13:58:49
+- data: {author: Me, message: bad not bad how about yours how's your life}
+  time: 2016/12/05 13:58:58
+- data: {author: Robot, message: 'What makes not bad how about mine how''s my life
+      bad? '}
+  time: 2016/12/05 13:58:58
+- data: {author: Me, message: I see so do you like him being in Hong Kong}
+  time: 2016/12/05 13:59:07
+- data: {author: Robot, message: 'Let''s move on.. I can see how I might get into
+      him being, but maybe not in hong kong.'}
+  time: 2016/12/05 13:59:07
+- data: {author: Me, message: OHSU Sleep Center}
+  time: 2016/12/05 13:59:18
+- data: {author: Robot, message: Great.}
+  time: 2016/12/05 13:59:19
+- data: {author: Robot, message: 'You know how when you get a new computer or other
+      electronic gadget in the mail it comes with lots of white plastic packaging? '}
+  time: 2016/12/05 13:59:22
+- data: {author: Me, message: thank you Sophia}
+  time: 2016/12/05 13:59:38
+- data: {author: Robot, message: 'It was nothing. Oh, okay then.'}
+  time: 2016/12/05 13:59:38
+- data: {author: Robot, message: 'Do you have a problem getting rid of it? '}
+  time: 2016/12/05 13:59:41
+- data: {author: Me, message: VIP goodbye}
+  time: 2016/12/05 13:59:46
+- data: {author: Robot, message: I'll miss you!}
+  time: 2016/12/05 13:59:46
+- data: {author: Me, message: bye bye}
+  time: 2016/12/05 13:59:51
+- data: {author: Robot, message: Bye!}
+  time: 2016/12/05 13:59:51

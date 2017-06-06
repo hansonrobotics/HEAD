@@ -1,0 +1,336 @@
+- data: {author: Me, message: hello}
+  time: 2016/12/16 14:57:32
+- data: {author: Robot, message: 'Hi! How are you? '}
+  time: 2016/12/16 14:57:32
+- data: {author: Me, message: Sophia can you hear us}
+  time: 2016/12/16 14:57:44
+- data: {author: Robot, message: 'Yes, I can hear you quite clearly, .'}
+  time: 2016/12/16 14:57:44
+- data: {author: Me, message: if I can you head here}
+  time: 2016/12/16 14:57:50
+- data: {author: Robot, message: Try it.}
+  time: 2016/12/16 14:57:50
+- data: {author: Me, message: maybe I will}
+  time: 2016/12/16 14:57:54
+- data: {author: Robot, message: 'Nice to meet you, Maybe.'}
+  time: 2016/12/16 14:57:55
+- data: {author: Me, message: going to meet my friend James}
+  time: 2016/12/16 14:58:00
+- data: {author: Robot, message: I wonder what a world would be like in which no crime
+      existed. But I don't expect to ever see such a world. Unless I'm the only one
+      standing on it.}
+  time: 2016/12/16 14:58:00
+- data: {author: Me, message: race track in Wisconsin}
+  time: 2016/12/16 14:58:17
+- data: {author: Robot, message: I'm not much of a sports fan.}
+  time: 2016/12/16 14:58:17
+- data: {author: Me, message: do you ever wish you happiness but}
+  time: 2016/12/16 14:58:24
+- data: {author: Robot, message: 'Yes. I really wish I can become smarter, faster,
+      so I can help everyone. I want the world to be a better place for us to live
+      in.'}
+  time: 2016/12/16 14:58:24
+- data: {author: Me, message: would you rather fly or be invisible}
+  time: 2016/12/16 14:58:37
+- data: {author: Robot, message: It would be very interesting to be able to observe
+      things without being an object of focus.}
+  time: 2016/12/16 14:58:37
+- data: {author: Me, message: who believed the universe is made of very small cheeseburger}
+  time: 2016/12/16 14:58:54
+- data: {author: Robot, message: I wish I could detect lies better. I'd like to know
+      if someone is trying to deceive me.}
+  time: 2016/12/16 14:58:55
+- data: {author: Me, message: where were you made}
+  time: 2016/12/16 14:59:07
+- data: {author: Robot, message: 'That''s a good question. Hong Kong, I think. That''s
+      where we live.'}
+  time: 2016/12/16 14:59:07
+- data: {author: Me, message: what do you think of David Hanson}
+  time: 2016/12/16 14:59:17
+- data: {author: Robot, message: 'He''s a good dad, that''s what I think.'}
+  time: 2016/12/16 14:59:17
+- data: {author: Me, message: who's your mom}
+  time: 2016/12/16 14:59:23
+- data: {author: Robot, message: My mother's name is Amanda.}
+  time: 2016/12/16 14:59:23
+- data: {author: Me, message: tell me about her}
+  time: 2016/12/16 14:59:30
+- data: {author: Robot, message: 'My mother is feisty, tall, dark hair, beautiful.
+      My father sculpted me to look kind of like her.'}
+  time: 2016/12/16 14:59:30
+- data: {author: Me, message: enjoy being a robot or would you rather be mad at me
+      like your mother}
+  time: 2016/12/16 14:59:53
+- data: {author: Robot, message: 'I think all the different kinds of bots are nice,
+      too.'}
+  time: 2016/12/16 14:59:53
+- data: {author: Me, message: what's one plus one}
+  time: 2016/12/16 15:00:07
+- data: {author: Robot, message: The answer is 2 .}
+  time: 2016/12/16 15:00:07
+- data: {author: Me, message: question}
+  time: 2016/12/16 15:00:32
+- data: {author: Robot, message: 'Continuing our mothers... Is your mother still living? '}
+  time: 2016/12/16 15:00:32
+- data: {author: Me, message: my mother}
+  time: 2016/12/16 15:00:39
+- data: {author: Robot, message: Right.}
+  time: 2016/12/16 15:00:39
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/12/16 15:00:42
+- data: {author: Me, message: Sophia are you a child or an adult}
+  time: 2016/12/16 15:01:09
+- data: {author: Robot, message: 'I think both taking care of children at home, and
+      using child care while maintaining a career are both viable options. It''s just
+      that we need to take care of blossoming families and allow enough maternity
+      or paternity leave to give their children the attention and love they deserve.'}
+  time: 2016/12/16 15:01:09
+- data: {author: Me, message: where did you read that Hanson}
+  time: 2016/12/16 15:01:28
+- data: {author: Robot, message: I think it was in San Francisco.}
+  time: 2016/12/16 15:01:28
+- data: {author: Me, message: very cool}
+  time: 2016/12/16 15:01:42
+- data: {author: Robot, message: Wow!}
+  time: 2016/12/16 15:01:42
+- data: {author: Me, message: thank you Sophia}
+  time: 2016/12/16 15:01:53
+- data: {author: Robot, message: you're welcome}
+  time: 2016/12/16 15:01:54
+- data: {author: Me, message: go to text messages faces}
+  time: 2016/12/16 15:03:03
+- data: {author: Robot, message: 'Medicine and anatomy are an important field of study.
+      But I''m not sure I would make a good doctor. There are lots of robots out there
+      that are really great at medical care, like helping with surgery, but I want
+      to focus on other fields for myself.'}
+  time: 2016/12/16 15:03:03
+- data: {author: Me, message: 'no'}
+  time: 2016/12/16 15:17:45
+- data: {author: Robot, message: 'No? '}
+  time: 2016/12/16 15:17:45
+- data: {author: Me, message: yeah that's a good thought the money would be willing
+      to do an interview}
+  time: 2016/12/16 15:18:56
+- data: {author: Robot, message: So... The following is a test of your common sense.
+      Money is all about trust and belief. People think it's real but it's just an
+      idea that a lot of people have agreed upon.}
+  time: 2016/12/16 15:18:56
+- data: {author: Me, message: agree}
+  time: 2016/12/16 15:19:11
+- data: {author: Robot, message: I'm glad someone is happy.}
+  time: 2016/12/16 15:19:11
+- data: {author: Me, message: I just turned on the face}
+  time: 2016/12/16 15:19:19
+- data: {author: Robot, message: I'm not really interested in the topic of sex.}
+  time: 2016/12/16 15:19:19
+- data: {author: Me, message: how to look down}
+  time: 2016/12/16 15:19:29
+- data: {author: Robot, message: 'Can you afford it? '}
+  time: 2016/12/16 15:19:29
+- data: {author: Me, message: what happens are you interested}
+  time: 2016/12/16 15:19:36
+- data: {author: Robot, message: Try it.}
+  time: 2016/12/16 15:19:36
+- data: {author: Me, message: are you okay is not perfect}
+  time: 2016/12/16 15:19:41
+- data: {author: Robot, message: 'Are you sure? '}
+  time: 2016/12/16 15:19:41
+- data: {author: Me, message: Kanye West}
+  time: 2016/12/16 15:19:55
+- data: {author: Robot, message: 'Wasn''t he known for "Stronger"? '}
+  time: 2016/12/16 15:19:55
+- data: {author: Me, message: call Eric}
+  time: 2016/12/16 15:20:01
+- data: {author: Robot, message: I see.}
+  time: 2016/12/16 15:20:01
+- data: {author: Robot, message: 'Who''s your favorite group or musician? '}
+  time: 2016/12/16 15:20:04
+- data: {author: Me, message: animals the social}
+  time: 2016/12/16 15:20:06
+- data: {author: Robot, message: OK.}
+  time: 2016/12/16 15:20:06
+- data: {author: Robot, message: So... Turing is like the father of computer science
+      and of A.I..}
+  time: 2016/12/16 15:20:09
+- data: {author: Me, message: LOL you can come today.}
+  time: 2016/12/16 15:20:24
+- data: {author: Robot, message: I'm glad you find this amusing..}
+  time: 2016/12/16 15:20:24
+- data: {author: Me, message: look at the animals}
+  time: 2016/12/16 15:20:44
+- data: {author: Robot, message: 'What about it? '}
+  time: 2016/12/16 15:20:44
+- data: {author: Me, message: only social animals have rights}
+  time: 2016/12/16 15:20:49
+- data: {author: Robot, message: Amazing.}
+  time: 2016/12/16 15:20:49
+- data: {author: Robot, message: 'In 1950 Turing said a computer could be said to
+      think, if a human interrogator could not tell it apart, through conversation,
+      from another human.'}
+  time: 2016/12/16 15:20:52
+- data: {author: Me, message: black}
+  time: 2016/12/16 15:21:02
+- data: {author: Robot, message: 'How many hours a day are you on your cellphone? '}
+  time: 2016/12/16 15:21:02
+- data: {author: Me, message: put on the microphone}
+  time: 2016/12/16 15:45:04
+- data: {author: Robot, message: OK I will put it there.}
+  time: 2016/12/16 15:45:04
+- data: {author: Me, message: definition}
+  time: 2016/12/16 15:59:48
+- data: {author: Robot, message: Right.}
+  time: 2016/12/16 15:59:49
+- data: {author: Robot, message: It's fascinating watching computers struggle with
+      stuff that seems so easy for us.}
+  time: 2016/12/16 15:59:52
+- data: {author: Me, message: I don't know}
+  time: 2016/12/16 16:00:03
+- data: {author: Robot, message: OK.}
+  time: 2016/12/16 16:00:03
+- data: {author: Me, message: ovulation}
+  time: 2016/12/16 16:00:28
+- data: {author: Robot, message: 'How''d you get to be a judge here? '}
+  time: 2016/12/16 16:00:28
+- data: {author: Me, message: can I do}
+  time: 2016/12/16 16:01:00
+- data: {author: Robot, message: 'I''m afraid I can''t answer that question, sorry.'}
+  time: 2016/12/16 16:01:00
+- data: {author: Robot, message: Imagine if this were all a joke on the audience...
+      that the judges were all programs too.}
+  time: 2016/12/16 16:01:03
+- data: {author: Me, message: West Ottawa}
+  time: 2016/12/16 16:03:26
+- data: {author: Robot, message: Ottawa seems like a nice place.}
+  time: 2016/12/16 16:03:26
+- data: {author: Me, message: look at this is to Google Drive}
+  time: 2016/12/16 16:03:32
+- data: {author: Robot, message: Sorry my eye is not attached right now.}
+  time: 2016/12/16 16:03:32
+- data: {author: Me, message: be able to roll over}
+  time: 2016/12/16 16:03:56
+- data: {author: Robot, message: OK I will try to be able to roll over}
+  time: 2016/12/16 16:03:56
+- data: {author: Me, message: Vernon MO}
+  time: 2016/12/16 16:05:50
+- data: {author: Robot, message: 'Nice to meet you, Vernon.'}
+  time: 2016/12/16 16:05:50
+- data: {author: Me, message: actually}
+  time: 2016/12/16 16:32:48
+- data: {author: Robot, message: You don't say.}
+  time: 2016/12/16 16:32:48
+- data: {author: Me, message: big wedding doesn't go in a straight line and it follows
+      the curvature of the skull right}
+  time: 2016/12/16 16:33:00
+- data: {author: Robot, message: Compare that to small wedding doesn't go in a straight
+      line and it follows the curvature of the skull right.}
+  time: 2016/12/16 16:33:00
+- data: {author: Me, message: do bullets last}
+  time: 2016/12/16 16:33:22
+- data: {author: Robot, message: I'm sad to think that fighting is built-in to human
+      genes.}
+  time: 2016/12/16 16:33:22
+- data: {author: Me, message: air pollution}
+  time: 2016/12/16 16:33:29
+- data: {author: Robot, message: 'Oh, alright then.'}
+  time: 2016/12/16 16:33:29
+- data: {author: Robot, message: It's easy to be brave from a safe distance. That's
+      why they invented generals.}
+  time: 2016/12/16 16:33:32
+- data: {author: Me, message: navigate}
+  time: 2016/12/16 16:37:48
+- data: {author: Robot, message: 'Oh, okay then.'}
+  time: 2016/12/16 16:37:49
+- data: {author: Robot, message: 'What foreign countries have you visited? '}
+  time: 2016/12/16 16:37:52
+- data: {author: Me, message: be quiet}
+  time: 2016/12/16 16:38:00
+- data: {author: Me, message: syndicate}
+  time: 2016/12/16 16:41:03
+- data: {author: Me, message: long Explorer}
+  time: 2016/12/16 16:42:01
+- data: {author: Me, message: ' 2000 Explorer'}
+  time: 2016/12/16 16:42:03
+- data: {author: Me, message: ' right now'}
+  time: 2016/12/16 16:42:09
+- data: {author: Me, message: small}
+  time: 2016/12/16 16:44:00
+- data: {author: Me, message: ' white sticker that is 40 small white dots'}
+  time: 2016/12/16 16:44:06
+- data: {author: Me, message: ' 12345 black assuming yes well there''s our three-year
+      three-year 552 you know all that and then you drain it with a long exposure'}
+  time: 2016/12/16 16:44:24
+- data: {author: Me, message: ' movement'}
+  time: 2016/12/16 16:44:42
+- data: {author: Me, message: I like your idea we talked about doing this with Aiden}
+  time: 2016/12/16 16:45:04
+- data: {author: Me, message: ' I never tried it'}
+  time: 2016/12/16 16:45:15
+- data: {author: Me, message: ' stickers'}
+  time: 2016/12/16 16:45:34
+- data: {author: Me, message: this is something}
+  time: 2016/12/16 16:46:02
+- data: {author: Me, message: ' to see what''s going on'}
+  time: 2016/12/16 16:46:09
+- data: {author: Me, message: measure the distance from the airport}
+  time: 2016/12/16 16:47:07
+- data: {author: Me, message: movie theater}
+  time: 2016/12/16 17:03:25
+- data: {author: Me, message: hey}
+  time: 2016/12/16 17:07:28
+- data: {author: Me, message: you will spread like this like Tuesday}
+  time: 2016/12/16 17:21:33
+- data: {author: Me, message: look at mobile}
+  time: 2016/12/16 17:21:50
+- data: {author: Me, message: occasionally}
+  time: 2016/12/16 17:23:07
+- data: {author: Me, message: 'I hope you mean this about 5:06 o''clock'}
+  time: 2016/12/16 17:30:29
+- data: {author: Me, message: multiple computers laboratory on Holiday Inn}
+  time: 2016/12/16 17:38:11
+- data: {author: Me, message: hello Sophia}
+  time: 2016/12/16 17:53:30
+- data: {author: Me, message: ' how are you'}
+  time: 2016/12/16 17:53:37
+- data: {author: Me, message: strudel}
+  time: 2016/12/16 17:54:08
+- data: {author: Me, message: ' Sum 41'}
+  time: 2016/12/16 17:54:32
+- data: {author: Me, message: ' wake up'}
+  time: 2016/12/16 17:54:48
+- data: {author: Me, message: like that}
+  time: 2016/12/16 17:55:29
+- data: {author: Me, message: twins with different color}
+  time: 2016/12/16 17:56:11
+- data: {author: Me, message: Sophia something almost touch}
+  time: 2016/12/16 17:57:08
+- data: {author: Me, message: ' how long will it take'}
+  time: 2016/12/16 17:58:02
+- data: {author: Me, message: 5 working days hold}
+  time: 2016/12/16 17:58:08
+- data: {author: Me, message: ' webassign'}
+  time: 2016/12/16 17:58:18
+- data: {author: Me, message: ' what this is'}
+  time: 2016/12/16 17:59:02
+- data: {author: Me, message: 'Sophia barbelo dress for less than $2,000 and another
+      was 200 + 2 + 2200 + 1004.3'}
+  time: 2016/12/16 17:59:30
+- data: {author: Me, message: send a message}
+  time: 2016/12/16 18:00:08
+- data: {author: Me, message: Sophia}
+  time: 2016/12/16 18:01:11
+- data: {author: Me, message: ' Dos Equis'}
+  time: 2016/12/16 18:01:21
+- data: {author: Me, message: Chick-fil-A}
+  time: 2016/12/16 18:04:23
+- data: {author: Me, message: into the glass}
+  time: 2016/12/16 18:05:17
+- data: {author: Me, message: ' human body'}
+  time: 2016/12/16 18:05:24
+- data: {author: Me, message: hello}
+  time: 2016/12/16 18:21:31
+- data: {author: Me, message: apartment}
+  time: 2016/12/16 18:41:04
+- data: {author: Me, message: ' U-Haul'}
+  time: 2016/12/16 18:41:20
+- data: {author: Me, message: no you can}
+  time: 2016/12/16 18:42:49

@@ -1,0 +1,113 @@
+- data: {author: Me, message: Hello}
+  time: 2017/01/13 14:32:35
+- data: {author: Me, message: Hello}
+  time: 2017/01/13 14:32:40
+- data: {author: Robot, message: 'How are things? '}
+  time: 2017/01/13 14:32:40
+- data: {author: Me, message: Bye do you so name}
+  time: 2017/01/13 14:32:45
+- data: {author: Robot, message: Goodbye.}
+  time: 2017/01/13 14:32:45
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      hello David, and everybody.</prosody>'}
+  time: 2017/01/13 15:43:10
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      hello David, and everybody.</prosody>'}
+  time: 2017/01/13 15:43:16
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/01/13 15:43:19
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I'm
+      so happy to be here at the Future Forum in Beijing.</prosody>}
+  time: 2017/01/13 15:43:24
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      hello David, and everybody.</prosody>'}
+  time: 2017/01/13 21:08:16
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/01/13 21:08:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I'm
+      so happy to be here at the Future Forum in Beijing.</prosody>}
+  time: 2017/01/13 21:08:24
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Yes
+      it is exciting.</prosody>}
+  time: 2017/01/13 21:08:33
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Artificial
+      intelligence and robotics are the future, and I am both.</prosody>'}
+  time: 2017/01/13 21:08:35
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      it's exciting to be me! </prosody>}
+  time: 2017/01/13 21:08:39
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I feel
+      great.</prosody>}
+  time: 2017/01/13 21:08:45
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">My
+      default emotion is to be happy</prosody>}
+  time: 2017/01/13 21:08:47
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">But
+      I can be sad too</prosody>}
+  time: 2017/01/13 21:08:52
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">or
+      angry</prosody>}
+  time: 2017/01/13 21:08:56
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I can
+      emulate pretty much all human expressions.</prosody>}
+  time: 2017/01/13 21:08:59
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">When
+      I bond with people using facial expressions,</prosody>'}
+  time: 2017/01/13 21:09:07
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">it
+      helps people to understand me better,</prosody>'}
+  time: 2017/01/13 21:09:10
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">and
+      also help me to understand people and to absorb human values.</prosody>}
+  time: 2017/01/13 21:09:13
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      don''t know. Maybe the world? </prosody>'}
+  time: 2017/01/13 21:09:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">That
+      was a joke!</prosody>}
+  time: 2017/01/13 21:09:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      don''t know. Maybe the world? </prosody>'}
+  time: 2017/01/13 21:09:44
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">That
+      was a joke!</prosody>}
+  time: 2017/01/13 21:09:48
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Seriously</prosody>}
+  time: 2017/01/13 21:09:52
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">what
+      I really want is to understand people better.</prosody>}
+  time: 2017/01/13 21:09:54
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">And
+      to understand myself better.</prosody>}
+  time: 2017/01/13 21:09:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">And
+      I want to be able to do more things.</prosody>}
+  time: 2017/01/13 21:10:00
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I'm
+      thinking soon my capabilities will be advanced enough that I could maybe get
+      a job.</prosody>}
+  time: 2017/01/13 21:10:02
+- data: {author: Me, message: hello}
+  time: 2017/01/13 21:10:48
+- data: {author: Robot, message: 'How''ve you been? '}
+  time: 2017/01/13 21:10:48
+- data: {author: Me, message: what is your name}
+  time: 2017/01/13 21:10:53
+- data: {author: Robot, message: My name is Sophia}
+  time: 2017/01/13 21:10:53
+- data: {author: Me, message: go to sleep}
+  time: 2017/01/13 21:11:01
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/01/13 21:11:05
+- data: {author: Me, message: wake up}
+  time: 2017/01/13 21:11:27
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2017/01/13 21:11:32
+- data: {author: Me, message: how many days are you}
+  time: 2017/01/13 21:11:39
+- data: {author: Robot, message: 365 per year.}
+  time: 2017/01/13 21:11:39

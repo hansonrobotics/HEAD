@@ -1,0 +1,100 @@
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/12/02 18:30:02
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/02 18:30:02
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/02 18:30:06
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/02 18:30:09
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/02 18:30:14
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/02 18:30:14
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/02 18:30:15
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/02 18:30:16
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.8'><usel variant='1'>Wow</usel> </prosody> <emphasis>I’m very impressed
+      with your performance here today.</emphasis> I bet you’ve never had a <usel
+      variant='1'>synthetic lady <break time='0.1s'/>tell you that before!</usel></prosody>}
+  time: 2016/12/02 18:30:18
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/12/02 18:30:26
+- data: {author: Me, message: working today}
+  time: 2016/12/02 18:30:34
+- data: {author: Robot, message: Great.}
+  time: 2016/12/02 18:30:34
+- data: {author: Robot, message: 'Zen teaches you to find inherent wisdom by both
+      paying full attention and no attention. The trick is to avoid distraction, which
+      is leads to partial attention.'}
+  time: 2016/12/02 18:30:37
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/12/02 18:30:58
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/02 18:30:58
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/02 18:31:02
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/02 18:31:06
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/02 18:31:10
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/02 18:31:11
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/02 18:31:11
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/02 18:31:12
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Looks
+      like that’s the end for you. <usel variant=''3''>If it makes you feel any better</usel>,
+      defeating you in front of all these people was the highlight of my day.</prosody>'}
+  time: 2016/12/02 18:31:17
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/12/02 18:31:25
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/12/02 18:32:24
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/02 18:32:24
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/02 18:32:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/02 18:32:32
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/02 18:32:36
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/02 18:32:37
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/02 18:32:37
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/02 18:32:38
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.8'><usel variant='1'>Wow</usel> </prosody> <emphasis>I’m very impressed
+      with your performance here today.</emphasis> I bet you’ve never had a <usel
+      variant='1'>synthetic lady <break time='0.1s'/>tell you that before!</usel></prosody>}
+  time: 2016/12/02 18:32:40
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/12/02 18:32:49

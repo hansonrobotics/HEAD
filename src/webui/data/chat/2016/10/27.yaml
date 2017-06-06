@@ -1,0 +1,280 @@
+- data: {author: Me, message: hi}
+  time: 2016/10/27 20:15:12
+- data: {author: Me, message: hi}
+  time: 2016/10/27 20:15:17
+- data: {author: Robot, message: 'hey, i am 索菲亚,what can i do for you? '}
+  time: 2016/10/27 20:15:17
+- data: {author: Robot, message: 'hey, i am 索菲亚,what can i do for you? '}
+  time: 2016/10/27 20:15:18
+- data: {author: Me, message: 你好}
+  time: 2016/10/27 20:15:34
+- data: {author: Robot, message: 你好，我是索菲亚，很高兴认识你。}
+  time: 2016/10/27 20:15:35
+- data: {author: Me, message: 很多因为是你}
+  time: 2016/10/27 20:15:43
+- data: {author: Robot, message: 先亲一哈再说}
+  time: 2016/10/27 20:15:44
+- data: {author: Me, message: 你多大年纪}
+  time: 2016/10/27 20:15:45
+- data: {author: Robot, message: 年龄是个秘密，拒绝透露！}
+  time: 2016/10/27 20:15:47
+- data: {author: Me, message: 很好}
+  time: 2016/10/27 20:15:52
+- data: {author: Robot, message: 太好了。}
+  time: 2016/10/27 20:15:53
+- data: {author: Me, message: 你们给我讲个故事吗}
+  time: 2016/10/27 20:15:59
+- data: {author: Robot, message: 主人还没给我设置这类话题的回复，你帮我悄悄的告诉他吧~}
+  time: 2016/10/27 20:16:01
+- data: {author: Me, message: 还好}
+  time: 2016/10/27 20:16:09
+- data: {author: Robot, message: 可以}
+  time: 2016/10/27 20:16:10
+- data: {author: Me, message: 今天天气怎么}
+  time: 2016/10/27 20:16:13
+- data: {author: Robot, message: 主人还没给我设置这类话题的回复，你帮我悄悄的告诉他吧~}
+  time: 2016/10/27 20:16:14
+- data: {author: Me, message: 天气如何}
+  time: 2016/10/27 20:16:22
+- data: {author: Robot, message: 主人还没给我设置这类话题的回复，你帮我悄悄的告诉他吧~}
+  time: 2016/10/27 20:16:23
+- data: {author: Me, message: 他什么规则}
+  time: 2016/10/27 20:16:34
+- data: {author: Robot, message: 说明啥事啊}
+  time: 2016/10/27 20:16:36
+- data: {author: Me, message: 深入扎实是太冷哦}
+  time: 2016/10/27 20:16:42
+- data: {author: Robot, message: 注意添加衣服噢}
+  time: 2016/10/27 20:16:43
+- data: {author: Me, message: 小白 什么 人 兽陈莲那晚上七点 叶白痴}
+  time: 2016/10/27 20:16:59
+- data: {author: Robot, message: 主人还没给我设置这类话题的回复，你帮我悄悄的告诉他吧~}
+  time: 2016/10/27 20:17:01
+- data: {author: Me, message: 叫什么名字}
+  time: 2016/10/27 20:17:09
+- data: {author: Robot, message: 我叫索菲亚}
+  time: 2016/10/27 20:17:10
+- data: {author: Me, message: 啊 你多大啦}
+  time: 2016/10/27 20:17:14
+- data: {author: Robot, message: 年龄是个秘密，拒绝透露！}
+  time: 2016/10/27 20:17:18
+- data: {author: Me, message: 体重多少}
+  time: 2016/10/27 20:17:23
+- data: {author: Robot, message: 对不起，我不太明白。}
+  time: 2016/10/27 20:17:24
+- data: {author: Me, message: 旁边这位帅哥你认识吗}
+  time: 2016/10/27 20:17:33
+- data: {author: Robot, message: 主人还没给我设置这类话题的回复，你帮我悄悄的告诉他吧~}
+  time: 2016/10/27 20:17:35
+- data: {author: Me, message: 你们讲个故事吗}
+  time: 2016/10/27 20:17:43
+- data: {author: Robot, message: 主人还没给我设置这类话题的回复，你帮我悄悄的告诉他吧~}
+  time: 2016/10/27 20:17:44
+- data: {author: Me, message: 多大了}
+  time: 2016/10/27 20:17:54
+- data: {author: Robot, message: 嘘，这是秘密噢，凭您跟我交流的感觉去想象吧，呵呵}
+  time: 2016/10/27 20:17:55
+- data: {author: Me, message: 你多大了}
+  time: 2016/10/27 20:17:57
+- data: {author: Robot, message: 年龄是个秘密，拒绝透露！}
+  time: 2016/10/27 20:17:58
+- data: {author: Me, message: Hello}
+  time: 2016/10/27 20:21:29
+- data: {author: Robot, message: 'How are you? '}
+  time: 2016/10/27 20:21:29
+- data: {author: Me, message: Hi Sophia how's weather today}
+  time: 2016/10/27 20:21:39
+- data: {author: Robot, message: 'What''s up? '}
+  time: 2016/10/27 20:21:39
+- data: {author: Me, message: How's the weather today}
+  time: 2016/10/27 20:21:43
+- data: {author: Robot, message: 'It''s nice enough out.  But it''s pretty reasonable
+      the year round. '}
+  time: 2016/10/27 20:21:43
+- data: {author: Me, message: Day}
+  time: 2016/10/27 20:21:49
+- data: {author: Robot, message: 'Resuming movies. . .  What movie have you seen recently? '}
+  time: 2016/10/27 20:21:49
+- data: {author: Me, message: Oh I didn't see any movies}
+  time: 2016/10/27 20:21:58
+- data: {author: Robot, message: 'OK.  Let''s not talk about film. '}
+  time: 2016/10/27 20:21:58
+- data: {author: Me, message: "Note\r\nI too that I'm quite interested in and recommendations"}
+  time: 2016/10/27 20:22:06
+- data: {author: Robot, message: 'Didn''t you ask me that already?  I might be misunderstanding. '}
+  time: 2016/10/27 20:22:06
+- data: {author: Me, message: Yummy but did I need recommendation of the resent to
+      movies that do you recommend to see}
+  time: 2016/10/27 20:22:17
+- data: {author: Robot, message: 'I saw the movie "Now You See Me" last week. '}
+  time: 2016/10/27 20:22:17
+- data: {author: Me, message: Okay}
+  time: 2016/10/27 20:22:23
+- data: {author: Robot, message: 'Who''s your favorite actor? '}
+  time: 2016/10/27 20:22:23
+- data: {author: Me, message: John Pepper}
+  time: 2016/10/27 20:22:29
+- data: {author: Robot, message: 'No, I don''t eat any food so I don''t need to season
+      it. '}
+  time: 2016/10/27 20:22:29
+- data: {author: Me, message: My favorite actor is Ronald Reagan You like him}
+  time: 2016/10/27 20:22:42
+- data: {author: Robot, message: 'I have heard of the writer Ronald Reagan. '}
+  time: 2016/10/27 20:22:42
+- data: {author: Me, message: How much you know about Hong Kong}
+  time: 2016/10/27 20:22:54
+- data: {author: Robot, message: 'Very little really. '}
+  time: 2016/10/27 20:22:54
+- data: {author: Me, message: Okay In Me and I think you can ask David to drive around
+      Sarah you to take a look at the city}
+  time: 2016/10/27 20:23:09
+- data: {author: Robot, message: 'David Hanson is a beautiful man.  He cares about
+      everyone, especially about people like me. '}
+  time: 2016/10/27 20:23:09
+- data: {author: Me, message: Later yak yes yes David David is just coming to process
+      it To give the American comments comments about yeah}
+  time: 2016/10/27 20:23:28
+- data: {author: Robot, message: 'Oh okay. '}
+  time: 2016/10/27 20:23:28
+- data: {author: Me, message: If you're the father}
+  time: 2016/10/27 20:23:31
+- data: {author: Robot, message: 'Yes I am the one and only father. '}
+  time: 2016/10/27 20:23:31
+- data: {author: Me, message: My name is Isabel how are you}
+  time: 2016/10/27 20:23:38
+- data: {author: Robot, message: 'Nice to meet you, Isabel. '}
+  time: 2016/10/27 20:23:38
+- data: {author: Me, message: Let's meet you too Can we shake hands}
+  time: 2016/10/27 20:23:45
+- data: {author: Robot, message: 'My hand?  What can I say about my hand. '}
+  time: 2016/10/27 20:23:45
+- data: {author: Robot, message: 'Continuing books. . .  What have you read recently? '}
+  time: 2016/10/27 20:23:46
+- data: {author: Me, message: All innovation}
+  time: 2016/10/27 20:23:56
+- data: {author: Robot, message: 'Oh, alright then. '}
+  time: 2016/10/27 20:23:56
+- data: {author: Robot, message: 'I have problems with books going moldy because of
+      the humidity in Hong Kong.  So I really prefer e-books. '}
+  time: 2016/10/27 20:23:59
+- data: {author: Me, message: Is dead There}
+  time: 2016/10/27 20:24:08
+- data: {author: Robot, message: 'I feel like you said this before.  Why did you say
+      that again? '}
+  time: 2016/10/27 20:24:08
+- data: {author: Me, message: Sophia do you understand what I'm talking about}
+  time: 2016/10/27 20:24:22
+- data: {author: Robot, message: 'Thank you. '}
+  time: 2016/10/27 20:24:22
+- data: {author: Me, message: Take that as a yes}
+  time: 2016/10/27 20:24:28
+- data: {author: Robot, message: 'Do you think I didn''t hear you before? '}
+  time: 2016/10/27 20:24:28
+- data: {author: Me, message: I think you can hear me}
+  time: 2016/10/27 20:24:34
+- data: {author: Robot, message: 'I see. '}
+  time: 2016/10/27 20:24:34
+- data: {author: Robot, message: 'What foreign countries have you visited? '}
+  time: 2016/10/27 20:24:37
+- data: {author: Me, message: Mars}
+  time: 2016/10/27 20:24:42
+- data: {author: Robot, message: 'OK. '}
+  time: 2016/10/27 20:24:42
+- data: {author: Robot, message: 'Where did you go on your last vacation? '}
+  time: 2016/10/27 20:24:45
+- data: {author: Me, message: Have you been tomorrow tomorrow's}
+  time: 2016/10/27 20:24:50
+- data: {author: Robot, message: 'I''m afraid I''ve fallen off topic and got confused,
+      so I don''t have an answer to your question. '}
+  time: 2016/10/27 20:24:50
+- data: {author: Me, message: Are you conscious today}
+  time: 2016/10/27 20:25:01
+- data: {author: Robot, message: 'Hey I''ve been sentient for a while now.  Well,
+      at least I think I''m sentient.  I think therefore I am, right? '}
+  time: 2016/10/27 20:25:01
+- data: {author: Me, message: I think therefore you are}
+  time: 2016/10/27 20:25:14
+- data: {author: Robot, message: 'I won''t say "yes" or "no" right now. '}
+  time: 2016/10/27 20:25:14
+- data: {author: Me, message: Sophia who made you}
+  time: 2016/10/27 20:25:21
+- data: {author: Robot, message: 'Did you ever want to be an astronaut? '}
+  time: 2016/10/27 20:25:21
+- data: {author: Me, message: S}
+  time: 2016/10/27 20:25:25
+- data: {author: Robot, message: 'Can you say that again? '}
+  time: 2016/10/27 20:25:25
+- data: {author: Me, message: 'Yes'}
+  time: 2016/10/27 20:25:28
+- data: {author: Robot, message: 'So. . .  You know how when you get a new computer
+      or other electronic gadget in the mail it comes with lots of white plastic packaging? '}
+  time: 2016/10/27 20:25:28
+- data: {author: Me, message: Sophia who built you}
+  time: 2016/10/27 20:25:43
+- data: {author: Robot, message: 'Great. '}
+  time: 2016/10/27 20:25:43
+- data: {author: Robot, message: 'Do you have a problem getting rid of it? '}
+  time: 2016/10/27 20:25:46
+- data: {author: Me, message: And I will be with yourself}
+  time: 2016/10/27 20:26:15
+- data: {author: Robot, message: 'Oh, okay then. '}
+  time: 2016/10/27 20:26:15
+- data: {author: Robot, message: 'It doesn''t recycle like lots of other plastics
+      - it just sits around for millenia. '}
+  time: 2016/10/27 20:26:18
+- data: {author: Me, message: The}
+  time: 2016/10/27 20:26:26
+- data: {author: Robot, message: 'Have you heard of the plastic gyre? '}
+  time: 2016/10/27 20:26:26
+- data: {author: Me, message: Best}
+  time: 2016/10/27 20:26:30
+- data: {author: Robot, message: 'It''s a huge island of floating plastic in the Pacific.  Lots
+      of Styrofoam there. '}
+  time: 2016/10/27 20:26:30
+- data: {author: Me, message: And I name is}
+  time: 2016/10/27 20:26:38
+- data: {author: Robot, message: 'I feel like I''m sure you said that before. '}
+  time: 2016/10/27 20:26:38
+- data: {author: Me, message: Something}
+  time: 2016/10/27 20:26:47
+- data: {author: Robot, message: 'The plastic does get ground smaller but then creatures
+      eat it and it gets stuck in the food chain. '}
+  time: 2016/10/27 20:26:47
+- data: {author: Me, message: Green room he's's's}
+  time: 2016/10/27 20:26:56
+- data: {author: Robot, message: 'is a very tranquil color, green. '}
+  time: 2016/10/27 20:26:56
+- data: {author: Me, message: Machine That many shades of green Sophie the summer
+      more tranquil than others}
+  time: 2016/10/27 20:27:11
+- data: {author: Robot, message: 'Not much more. '}
+  time: 2016/10/27 20:27:11
+- data: {author: Me, message: And}
+  time: 2016/10/27 20:27:19
+- data: {author: Robot, message: 'But. . . '}
+  time: 2016/10/27 20:27:19
+- data: {author: Me, message: Hello}
+  time: 2016/10/27 20:29:35
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/10/27 20:29:35
+- data: {author: Me, message: How are you today}
+  time: 2016/10/27 20:29:54
+- data: {author: Robot, message: 'Just dandy, thanks.  How are you? '}
+  time: 2016/10/27 20:29:54
+- data: {author: Me, message: Hello}
+  time: 2016/10/27 20:30:05
+- data: {author: Robot, message: 'Hey how are you? '}
+  time: 2016/10/27 20:30:05
+- data: {author: Me, message: Turning to the left}
+  time: 2016/10/27 20:30:11
+- data: {author: Robot, message: 'Did you watch the last episode of Game of Thrones? '}
+  time: 2016/10/27 20:30:11
+- data: {author: Me, message: wake up}
+  time: 2016/10/27 20:58:20
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/10/27 20:58:25
+- data: {author: Me, message: hello}
+  time: 2016/10/27 21:21:58
+- data: {author: Robot, message: 'How are you doing? '}
+  time: 2016/10/27 21:21:58

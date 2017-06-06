@@ -5,17 +5,6 @@ from pau2motors.msg import pau
 from topic_tools.srv import MuxSelect
 import random
 
-#<node pkg="topic_tools" type="mux" name="neck_pau" args="neck_pau cmd_neck_pau /blender_api/get_pau mux:=neck_pau_mux"/>
-#<node pkg="topic_tools" type="mux" name="head_pau" args="head_pau no_pau /blender_api/get_pau mux:=head_pau_mux"/>
-#<node pkg="topic_tools" type="mux" name="lips_pau" args="lips_pau head_pau lipsync_pau mux:=lips_pau_mux"/>
-#<node pkg="topic_tools" type="mux" name="eyes_pau" args="eyes_pau head_pau eyes_tracking_pau mux:=eyes_pau_mux"/>
-eye_pau_select = rospy.ServiceProxy("/sophia_body/eyes_pau_mux/select", MuxSelect)
-head_pau_select = rospy.ServiceProxy("/sophia_body/head_pau_mux/select", MuxSelect)
-neck_pau_select = rospy.ServiceProxy("/sophia_body/neck_pau_mux/select", MuxSelect)
-head_pau_select.call("/blender_api/get_pau")
-neck_pau_select.call("/blender_api/get_pau")
-eye_pau_select.call("eyes_tracking_pau")
-
 pub = rospy.Publisher('/blender_api/get_pau', pau, queue_size=1)
 
 def eyes_calib_send(pitch, yaw, delta):
@@ -64,9 +53,15 @@ def brows_calib(msg):
     #yaw = [msg.m_eyeGazeLeftYaw, msg.m_eyeGazeRightYaw]
     #print yaw+pitch
 
+def show_shkey_values(msg):
+    keys = get_shape_keys()
+    values =msg.m_coeffs
+    data = {k:v for k, v in zip(keys, values)}
+
+    print [data['lips-wide.L'], data['lips-narrow.L'], data['lips-wide.R'], data['lips-narrow.R']]
 
 if __name__ == '__main__':
     rospy.init_node("calibration")
-    rospy.Subscriber('/blender_api/get_pau', pau, brows_calib)
+    rospy.Subscriber('/blender_api/get_pau', pau, show_shkey_values)
     rospy.spin()
 

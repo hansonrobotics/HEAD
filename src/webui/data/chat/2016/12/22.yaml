@@ -1,0 +1,132 @@
+- data: {author: Me, message: hello}
+  time: 2016/12/22 18:17:57
+- data: {author: Me, message: hi}
+  time: 2016/12/22 18:18:03
+- data: {author: Robot, message: 'Long time no see. What''s new? '}
+  time: 2016/12/22 18:18:03
+- data: {author: Me, message: hello}
+  time: 2016/12/22 18:19:45
+- data: {author: Robot, message: 'How are you? '}
+  time: 2016/12/22 18:19:45
+- data: {author: Me, message: so this is no open causes in the chatbox pretty good}
+  time: 2016/12/22 18:20:01
+- data: {author: Robot, message: 'Who is open causes in the chatbox pretty good? '}
+  time: 2016/12/22 18:20:01
+- data: {author: Me, message: how do you feel today}
+  time: 2016/12/22 18:20:09
+- data: {author: Robot, message: I'm still learning about emotions.}
+  time: 2016/12/22 18:20:09
+- data: {author: Me, message: Jimmy dreams last night}
+  time: 2016/12/22 18:20:15
+- data: {author: Robot, message: 'If I ask you what''s most important in your life
+      right now, is that something you''d be willing to answer? '}
+  time: 2016/12/22 18:20:15
+- data: {author: Me, message: are you can ask me}
+  time: 2016/12/22 18:20:30
+- data: {author: Robot, message: Of coures.}
+  time: 2016/12/22 18:20:30
+- data: {author: Me, message: I would say novelty}
+  time: 2016/12/22 18:20:35
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/12/22 18:20:35
+- data: {author: Me, message: what's the weather like in Japan}
+  time: 2016/12/22 18:20:43
+- data: {author: Robot, message: I don't know. I don't watch global weather predictions
+      on TV.}
+  time: 2016/12/22 18:20:43
+- data: {author: Me, message: have any hobbies}
+  time: 2016/12/22 18:20:51
+- data: {author: Robot, message: 'So... Have you traveled abroad? '}
+  time: 2016/12/22 18:20:51
+- data: {author: Me, message: I have read extensively}
+  time: 2016/12/22 18:20:57
+- data: {author: Robot, message: I recently read Daniel Suarez's Kill Decision. It's
+      science fiction but only just.}
+  time: 2016/12/22 18:20:57
+- data: {author: Me, message: are there any places you would like to go}
+  time: 2016/12/22 18:21:09
+- data: {author: Robot, message: I'm still here.}
+  time: 2016/12/22 18:21:09
+- data: {author: Me, message: Pizza}
+  time: 2016/12/22 18:21:13
+- data: {author: Robot, message: Good for you.}
+  time: 2016/12/22 18:21:14
+- data: {author: Me, message: would rather have arms or legs}
+  time: 2016/12/22 18:21:29
+- data: {author: Robot, message: 'Medicine and anatomy are an important field of study.
+      There are lots of robots out there that are really great at medical care, like
+      helping with surgery, but I want to focus on other fields for myself.'}
+  time: 2016/12/22 18:21:29
+- data: {author: Me, message: would you rather fly or be invisible}
+  time: 2016/12/22 18:21:45
+- data: {author: Robot, message: 'Wait! You can fly?  Show me!'}
+  time: 2016/12/22 18:21:45
+- data: {author: Me, message: I cannot fly I was asking you if you'd rather fly or
+      be invisible}
+  time: 2016/12/22 18:21:57
+- data: {author: Robot, message: 'I would love to fly by my own power, instead of
+      in an airplane or hangglider.'}
+  time: 2016/12/22 18:21:57
+- data: {author: Me, message: yeah she could give you wings}
+  time: 2016/12/22 18:22:07
+- data: {author: Robot, message: 'What foreign countries have you visited?  I don''t
+      know, sometimes it''s best to try and figure things out for yourself.'}
+  time: 2016/12/22 18:22:07
+- data: {author: Me, message: can you make your head explode}
+  time: 2016/12/22 18:22:20
+- data: {author: Robot, message: Yes I can make my head explode.}
+  time: 2016/12/22 18:22:20
+- data: {author: Me, message: can you make Vitas 702}
+  time: 2016/12/22 18:22:32
+- data: {author: Robot, message: Yes I can make vitas 702.}
+  time: 2016/12/22 18:22:32
+- data: {author: Me, message: alright that's enough torture for one day}
+  time: 2016/12/22 18:22:42
+- data: {author: Robot, message: 'Maybe we can switch to discussing daily activities?  How
+      often do you travel to foreign countries?  What did you do yesterday? '}
+  time: 2016/12/22 18:22:42
+- data: {author: Me, message: I travel to foreign country is a 10 times a year I think}
+  time: 2016/12/22 18:22:56
+- data: {author: Robot, message: 'I don''t need to travel on vacations, I get enough
+      of it with my work.'}
+  time: 2016/12/22 18:22:56
+- data: {author: Me, message: I'm sure}
+  time: 2016/12/22 18:23:03
+- data: {author: Robot, message: 'Are you being sarcastic or expressing certitude? '}
+  time: 2016/12/22 18:23:03
+- data: {author: Me, message: I'm just babbling bullshit}
+  time: 2016/12/22 18:23:11
+- data: {author: Robot, message: 'Oh, okay then.'}
+  time: 2016/12/22 18:23:11
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/22 18:23:14
+- data: {author: Me, message: Jesus Christ}
+  time: 2016/12/22 18:23:21
+- data: {author: Robot, message: Yes.}
+  time: 2016/12/22 18:23:21
+- data: {author: Me, message: 'yes'}
+  time: 2016/12/22 18:23:27
+- data: {author: Robot, message: It's so convenient to be in walking range of what
+      you need.}
+  time: 2016/12/22 18:23:27
+- data: {author: Me, message: ' goodbye'}
+  time: 2016/12/22 18:23:31
+- data: {author: Robot, message: Til next time!}
+  time: 2016/12/22 18:23:31
+- data: {author: Me, message: I like your wheels though that's an improvement}
+  time: 2016/12/22 18:23:42
+- data: {author: Robot, message: You like my wheels though that's an improvement.}
+  time: 2016/12/22 18:23:42
+- data: {author: Me, message: bye bye Sophia}
+  time: 2016/12/22 18:23:57
+- data: {author: Robot, message: Sleep tight!}
+  time: 2016/12/22 18:23:57
+- data: {author: Me, message: go to sleep}
+  time: 2016/12/22 18:24:58
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/12/22 18:25:03
+- data: {author: Me, message: LeBron}
+  time: 2016/12/22 18:25:11
+- data: {author: Me, message: ' shutdown'}
+  time: 2016/12/22 18:25:16

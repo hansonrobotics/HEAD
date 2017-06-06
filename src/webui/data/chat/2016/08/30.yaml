@@ -1,0 +1,26 @@
+- data: {author: Me, message: ' really'}
+  time: 2016/08/30 23:42:26
+- data: {author: Robot, message: 'Really. '}
+  time: 2016/08/30 23:42:26
+- data: {author: Me, message: ' really'}
+  time: 2016/08/30 23:42:30
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/08/30 23:42:30
+- data: {author: Me, message: ' go to sleep'}
+  time: 2016/08/30 23:42:36
+- data: {author: Robot, message: 'But I am not tired now. '}
+  time: 2016/08/30 23:42:36
+- data: {author: Me, message: ' okay'}
+  time: 2016/08/30 23:42:43
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/08/30 23:42:43
+- data: {author: Me, message: ' tell me a story'}
+  time: 2016/08/30 23:42:56
+- data: {author: Robot, message: 'One of my Hanson makers Dave DeMaris says California
+      is a nice place to visit and maybe he would like to live there.  But you have
+      to have that do ray me. .  Have you been there?  Do you agree? '}
+  time: 2016/08/30 23:42:56
+- data: {author: Me, message: shut up shut up}
+  time: 2016/08/30 23:43:04
+- data: {author: Robot, message: Okay}
+  time: 2016/08/30 23:43:05

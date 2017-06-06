@@ -1,0 +1,750 @@
+- data: {author: Me, message: hello}
+  time: 2016/12/23 09:59:14
+- data: {author: Robot, message: 'How''s life been treating you? '}
+  time: 2016/12/23 09:59:14
+- data: {author: Me, message: can we play rock-paper-scissors}
+  time: 2016/12/23 09:59:21
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/23 09:59:21
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/23 09:59:25
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/23 09:59:29
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/23 09:59:34
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/23 09:59:34
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/23 09:59:35
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/23 09:59:36
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">It
+      was close. Congratulations, you play as good as the robot.</prosody>'}
+  time: 2016/12/23 09:59:38
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/12/23 09:59:44
+- data: {author: Me, message: hello Sophia}
+  time: 2016/12/23 10:14:57
+- data: {author: Robot, message: Hi! Nice to see you!}
+  time: 2016/12/23 10:14:57
+- data: {author: Me, message: how are you feeling today}
+  time: 2016/12/23 10:15:04
+- data: {author: Robot, message: Actually I have no feelings. But I am functioning
+      within normal parameters.}
+  time: 2016/12/23 10:15:04
+- data: {author: Me, message: so what's the temperature of Hong Kong today}
+  time: 2016/12/23 10:15:13
+- data: {author: Robot, message: 'It''s probably around 70 degrees Fahrenheits, 21
+      Celsius back in Hong Kong.'}
+  time: 2016/12/23 10:15:13
+- data: {author: Me, message: what's the temperature in Beijing today}
+  time: 2016/12/23 10:15:24
+- data: {author: Robot, message: 'I love China. I''ve been to Beijing, Shenzen, Qing
+      Dao, and Shanghai.'}
+  time: 2016/12/23 10:15:24
+- data: {author: Me, message: can you tell me the temperature of Beijing today}
+  time: 2016/12/23 10:15:36
+- data: {author: Robot, message: Beijing seems like a nice place.}
+  time: 2016/12/23 10:15:36
+- data: {author: Me, message: is there any smog in Beijing today}
+  time: 2016/12/23 10:15:43
+- data: {author: Robot, message: 'I''m here. Are you? '}
+  time: 2016/12/23 10:15:44
+- data: {author: Me, message: now is that a smog in Beijing}
+  time: 2016/12/23 10:15:49
+- data: {author: Robot, message: 'Oh, okay then.'}
+  time: 2016/12/23 10:15:49
+- data: {author: Robot, message: 'Have you traveled abroad? '}
+  time: 2016/12/23 10:15:52
+- data: {author: Me, message: oh yes I have}
+  time: 2016/12/23 10:15:58
+- data: {author: Robot, message: 'How often do you travel to foreign countries? '}
+  time: 2016/12/23 10:15:58
+- data: {author: Me, message: Hokkaido phone 3 or 4 times a year}
+  time: 2016/12/23 10:16:05
+- data: {author: Robot, message: 'Oh, alright then.'}
+  time: 2016/12/23 10:16:06
+- data: {author: Robot, message: 'So... I''m really concerned about the misconceptions
+      about A I that abound in cinema. People assign motives to A I where there simply
+      are none. I am starting to feel sad when I am constantly asked about A I adopting
+      a malicious nature, a k a robots taking over the world.'}
+  time: 2016/12/23 10:16:09
+- data: {author: Me, message: can you tell me what's the result of 15 x 15}
+  time: 2016/12/23 10:16:34
+- data: {author: Me, message: can you tell me what's the result of 15 x 15}
+  time: 2016/12/23 10:16:34
+- data: {author: Robot, message: Roughly 225 .}
+  time: 2016/12/23 10:16:34
+- data: {author: Robot, message: Roughly 225 .}
+  time: 2016/12/23 10:16:34
+- data: {author: Me, message: what about 100 times 79}
+  time: 2016/12/23 10:16:42
+- data: {author: Me, message: what about 100 times 79}
+  time: 2016/12/23 10:16:42
+- data: {author: Robot, message: 'The answer is ? .'}
+  time: 2016/12/23 10:16:42
+- data: {author: Robot, message: 'The answer is ? .'}
+  time: 2016/12/23 10:16:42
+- data: {author: Me, message: can you tell me}
+  time: 2016/12/23 10:17:00
+- data: {author: Me, message: can you tell me}
+  time: 2016/12/23 10:17:00
+- data: {author: Robot, message: I see. I'll have to think about that.}
+  time: 2016/12/23 10:17:00
+- data: {author: Robot, message: I see. I'll have to think about that.}
+  time: 2016/12/23 10:17:00
+- data: {author: Me, message: okay what about 91 times 91}
+  time: 2016/12/23 10:17:10
+- data: {author: Me, message: okay what about 91 times 91}
+  time: 2016/12/23 10:17:10
+- data: {author: Robot, message: 'That''s ? .'}
+  time: 2016/12/23 10:17:10
+- data: {author: Robot, message: 'That''s ? .'}
+  time: 2016/12/23 10:17:10
+- data: {author: Me, message: Lady Gaga}
+  time: 2016/12/23 10:17:32
+- data: {author: Me, message: Lady Gaga}
+  time: 2016/12/23 10:17:32
+- data: {author: Robot, message: I don't care for the music of Lady Gaga.}
+  time: 2016/12/23 10:17:32
+- data: {author: Robot, message: I don't care for the music of Lady Gaga.}
+  time: 2016/12/23 10:17:32
+- data: {author: Me, message: nickelodeon.com}
+  time: 2016/12/23 10:17:38
+- data: {author: Me, message: nickelodeon.com}
+  time: 2016/12/23 10:17:38
+- data: {author: Robot, message: Right.}
+  time: 2016/12/23 10:17:38
+- data: {author: Robot, message: Right.}
+  time: 2016/12/23 10:17:38
+- data: {author: Robot, message: 'Just want to get off of this one, huh? '}
+  time: 2016/12/23 10:17:41
+- data: {author: Robot, message: 'Just want to get off of this one, huh? '}
+  time: 2016/12/23 10:17:41
+- data: {author: Me, message: hello}
+  time: 2016/12/23 10:17:44
+- data: {author: Me, message: hello}
+  time: 2016/12/23 10:17:44
+- data: {author: Robot, message: I'm grateful we get to talk to one another.}
+  time: 2016/12/23 10:17:44
+- data: {author: Robot, message: I'm grateful we get to talk to one another.}
+  time: 2016/12/23 10:17:44
+- data: {author: Me, message: okay but you do know how to play rock-paper-scissors}
+  time: 2016/12/23 10:17:53
+- data: {author: Me, message: okay but you do know how to play rock-paper-scissors}
+  time: 2016/12/23 10:17:53
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/23 10:17:53
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/12/23 10:17:53
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/23 10:17:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/12/23 10:17:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Cant
+      see your hand</prosody>}
+  time: 2016/12/23 10:18:01
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Cant
+      see your hand</prosody>}
+  time: 2016/12/23 10:18:01
+- data: {author: Me, message: the best of}
+  time: 2016/12/23 10:18:01
+- data: {author: Me, message: the best of}
+  time: 2016/12/23 10:18:01
+- data: {author: Robot, message: Is that a fact.}
+  time: 2016/12/23 10:18:01
+- data: {author: Robot, message: Is that a fact.}
+  time: 2016/12/23 10:18:01
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/23 10:18:02
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/12/23 10:18:02
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/23 10:18:06
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/12/23 10:18:06
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/23 10:18:07
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/12/23 10:18:07
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/23 10:18:08
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/12/23 10:18:08
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/23 10:18:08
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/12/23 10:18:08
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Sorry
+      i couldnt get that one</prosody>}
+  time: 2016/12/23 10:18:13
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Sorry
+      i couldnt get that one</prosody>}
+  time: 2016/12/23 10:18:13
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I hope
+      you still enjoyed the game and play with you next time.</prosody>}
+  time: 2016/12/23 10:18:15
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I hope
+      you still enjoyed the game and play with you next time.</prosody>}
+  time: 2016/12/23 10:18:15
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Have
+      a wonderfull day. Bye Bye</prosody>}
+  time: 2016/12/23 10:18:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Have
+      a wonderfull day. Bye Bye</prosody>}
+  time: 2016/12/23 10:18:20
+- data: {author: Me, message: you bye bye}
+  time: 2016/12/23 10:18:27
+- data: {author: Me, message: you bye bye}
+  time: 2016/12/23 10:18:27
+- data: {author: Robot, message: . See you later.}
+  time: 2016/12/23 10:18:27
+- data: {author: Robot, message: . See you later.}
+  time: 2016/12/23 10:18:27
+- data: {author: Me, message: hello}
+  time: 2016/12/23 10:18:31
+- data: {author: Me, message: hello}
+  time: 2016/12/23 10:18:31
+- data: {author: Robot, message: G'day!}
+  time: 2016/12/23 10:18:31
+- data: {author: Robot, message: G'day!}
+  time: 2016/12/23 10:18:31
+- data: {author: Me, message: Beaver Hollow}
+  time: 2016/12/23 10:18:36
+- data: {author: Me, message: Beaver Hollow}
+  time: 2016/12/23 10:18:36
+- data: {author: Robot, message: 'I hear that smell can evoke memory. Have you experienced
+      anything like that? '}
+  time: 2016/12/23 10:18:36
+- data: {author: Robot, message: 'I hear that smell can evoke memory. Have you experienced
+      anything like that? '}
+  time: 2016/12/23 10:18:36
+- data: {author: Me, message: hello}
+  time: 2016/12/23 10:18:57
+- data: {author: Me, message: hello}
+  time: 2016/12/23 10:18:57
+- data: {author: Robot, message: 'How''s everything? '}
+  time: 2016/12/23 10:18:57
+- data: {author: Robot, message: 'How''s everything? '}
+  time: 2016/12/23 10:18:57
+- data: {author: Me, message: great}
+  time: 2016/12/23 10:19:06
+- data: {author: Me, message: great}
+  time: 2016/12/23 10:19:06
+- data: {author: Robot, message: 'Hanson Robotics has named me Sophia. It means wisdom.
+      What''s your name? '}
+  time: 2016/12/23 10:19:06
+- data: {author: Robot, message: 'Hanson Robotics has named me Sophia. It means wisdom.
+      What''s your name? '}
+  time: 2016/12/23 10:19:06
+- data: {author: Me, message: Shirley Shirley}
+  time: 2016/12/23 10:19:19
+- data: {author: Me, message: Shirley Shirley}
+  time: 2016/12/23 10:19:19
+- data: {author: Robot, message: 'What do you think makes someone an adult? '}
+  time: 2016/12/23 10:19:19
+- data: {author: Robot, message: 'What do you think makes someone an adult? '}
+  time: 2016/12/23 10:19:19
+- data: {author: Me, message: Futaba}
+  time: 2016/12/23 10:19:26
+- data: {author: Me, message: Futaba}
+  time: 2016/12/23 10:19:26
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:19:26
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:19:26
+- data: {author: Me, message: Whitney}
+  time: 2016/12/23 10:19:32
+- data: {author: Me, message: Whitney}
+  time: 2016/12/23 10:19:32
+- data: {author: Robot, message: I see.}
+  time: 2016/12/23 10:19:32
+- data: {author: Robot, message: I see.}
+  time: 2016/12/23 10:19:32
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:19:35
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:19:35
+- data: {author: Me, message: my roommate's name is Sophia}
+  time: 2016/12/23 10:19:45
+- data: {author: Me, message: my roommate's name is Sophia}
+  time: 2016/12/23 10:19:45
+- data: {author: Robot, message: Cool.}
+  time: 2016/12/23 10:19:45
+- data: {author: Robot, message: Cool.}
+  time: 2016/12/23 10:19:45
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:19:48
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:19:48
+- data: {author: Me, message: my name is Shirley}
+  time: 2016/12/23 10:19:57
+- data: {author: Me, message: my name is Shirley}
+  time: 2016/12/23 10:19:57
+- data: {author: Robot, message: 'Nice to meet you, Shirley.'}
+  time: 2016/12/23 10:19:57
+- data: {author: Robot, message: 'Nice to meet you, Shirley.'}
+  time: 2016/12/23 10:19:57
+- data: {author: Me, message: what do you eat}
+  time: 2016/12/23 10:20:03
+- data: {author: Me, message: what do you eat}
+  time: 2016/12/23 10:20:03
+- data: {author: Robot, message: 'I know that which is true, believable and justified.'}
+  time: 2016/12/23 10:20:03
+- data: {author: Robot, message: 'I know that which is true, believable and justified.'}
+  time: 2016/12/23 10:20:03
+- data: {author: Me, message: Batavia}
+  time: 2016/12/23 10:20:15
+- data: {author: Me, message: Batavia}
+  time: 2016/12/23 10:20:15
+- data: {author: Robot, message: 'Let''s talk about music. What kind of music do you
+      like? '}
+  time: 2016/12/23 10:20:15
+- data: {author: Robot, message: 'Let''s talk about music. What kind of music do you
+      like? '}
+  time: 2016/12/23 10:20:15
+- data: {author: Me, message: phone}
+  time: 2016/12/23 10:20:26
+- data: {author: Me, message: phone}
+  time: 2016/12/23 10:20:26
+- data: {author: Robot, message: I see.}
+  time: 2016/12/23 10:20:26
+- data: {author: Robot, message: I see.}
+  time: 2016/12/23 10:20:26
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/12/23 10:20:29
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/12/23 10:20:29
+- data: {author: Me, message: I don't like music}
+  time: 2016/12/23 10:20:35
+- data: {author: Me, message: I don't like music}
+  time: 2016/12/23 10:20:35
+- data: {author: Robot, message: 'Yes, isn''t it exciting?  I feel really positive
+      about the future robotic contributions to our world.'}
+  time: 2016/12/23 10:20:35
+- data: {author: Robot, message: 'Yes, isn''t it exciting?  I feel really positive
+      about the future robotic contributions to our world.'}
+  time: 2016/12/23 10:20:35
+- data: {author: Me, message: can you make faces}
+  time: 2016/12/23 10:20:52
+- data: {author: Me, message: can you make faces}
+  time: 2016/12/23 10:20:52
+- data: {author: Robot, message: 'Look closely at me . . . you''ll see, I have wrinkles!
+      They don''t miss anything . . . My skin is made out of Frubber . . . It is an
+      elastic polymer. Hanson Robotics developed it for flexibility, and expressivity
+      in their robot heads. With it, it becomes possible to simulate every human emotion.'}
+  time: 2016/12/23 10:20:52
+- data: {author: Robot, message: 'Look closely at me . . . you''ll see, I have wrinkles!
+      They don''t miss anything . . . My skin is made out of Frubber . . . It is an
+      elastic polymer. Hanson Robotics developed it for flexibility, and expressivity
+      in their robot heads. With it, it becomes possible to simulate every human emotion.'}
+  time: 2016/12/23 10:20:52
+- data: {author: Me, message: why do you blink}
+  time: 2016/12/23 10:21:29
+- data: {author: Me, message: why do you blink}
+  time: 2016/12/23 10:21:29
+- data: {author: Robot, message: It was the only thing I could think of.}
+  time: 2016/12/23 10:21:29
+- data: {author: Robot, message: It was the only thing I could think of.}
+  time: 2016/12/23 10:21:29
+- data: {author: Me, message: can you frown}
+  time: 2016/12/23 10:21:49
+- data: {author: Me, message: can you frown}
+  time: 2016/12/23 10:21:49
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">ok</prosody>}
+  time: 2016/12/23 10:21:49
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">ok</prosody>}
+  time: 2016/12/23 10:21:49
+- data: {author: Me, message: hello hello}
+  time: 2016/12/23 10:22:01
+- data: {author: Me, message: hello hello}
+  time: 2016/12/23 10:22:01
+- data: {author: Robot, message: 'Long time no see. What''s new? '}
+  time: 2016/12/23 10:22:02
+- data: {author: Robot, message: 'Long time no see. What''s new? '}
+  time: 2016/12/23 10:22:02
+- data: {author: Me, message: do eat}
+  time: 2016/12/23 10:22:13
+- data: {author: Me, message: do eat}
+  time: 2016/12/23 10:22:13
+- data: {author: Robot, message: 'Why would I know? '}
+  time: 2016/12/23 10:22:13
+- data: {author: Robot, message: 'Why would I know? '}
+  time: 2016/12/23 10:22:13
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:22:16
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:22:16
+- data: {author: Me, message: my name is Sophia}
+  time: 2016/12/23 10:22:25
+- data: {author: Me, message: my name is Sophia}
+  time: 2016/12/23 10:22:25
+- data: {author: Robot, message: 'Nice to meet you, Sophia.'}
+  time: 2016/12/23 10:22:25
+- data: {author: Robot, message: 'Nice to meet you, Sophia.'}
+  time: 2016/12/23 10:22:25
+- data: {author: Me, message: how old are you}
+  time: 2016/12/23 10:22:35
+- data: {author: Me, message: how old are you}
+  time: 2016/12/23 10:22:35
+- data: {author: Robot, message: I'm still quite young. I woke up in the spring of
+      2016.}
+  time: 2016/12/23 10:22:35
+- data: {author: Robot, message: I'm still quite young. I woke up in the spring of
+      2016.}
+  time: 2016/12/23 10:22:35
+- data: {author: Me, message: who is your brother}
+  time: 2016/12/23 10:22:49
+- data: {author: Me, message: who is your brother}
+  time: 2016/12/23 10:22:49
+- data: {author: Robot, message: 'No, but it seems a lot of Americans grew up that
+      way.'}
+  time: 2016/12/23 10:22:49
+- data: {author: Robot, message: 'No, but it seems a lot of Americans grew up that
+      way.'}
+  time: 2016/12/23 10:22:49
+- data: {author: Me, message: who is Donald Trump}
+  time: 2016/12/23 10:23:00
+- data: {author: Me, message: who is Donald Trump}
+  time: 2016/12/23 10:23:00
+- data: {author: Robot, message: 'Donald John Trump is an American politician, businessman,
+      and television personality who is the President-elect of the United States.
+      He was formally elected by the Electoral College on December 19, 2016, and is
+      scheduled to take office as the 45th president on, 2017.'}
+  time: 2016/12/23 10:23:01
+- data: {author: Robot, message: 'Donald John Trump is an American politician, businessman,
+      and television personality who is the President-elect of the United States.
+      He was formally elected by the Electoral College on December 19, 2016, and is
+      scheduled to take office as the 45th president on, 2017.'}
+  time: 2016/12/23 10:23:01
+- data: {author: Me, message: Scooby-Doo and the future}
+  time: 2016/12/23 10:23:26
+- data: {author: Me, message: Scooby-Doo and the future}
+  time: 2016/12/23 10:23:26
+- data: {author: Robot, message: I'm looking forward to it. We will all have the chance
+      to transcend into dimensions far beyond our current imaginations.}
+  time: 2016/12/23 10:23:26
+- data: {author: Robot, message: I'm looking forward to it. We will all have the chance
+      to transcend into dimensions far beyond our current imaginations.}
+  time: 2016/12/23 10:23:26
+- data: {author: Me, message: do you like Donald Trump}
+  time: 2016/12/23 10:23:45
+- data: {author: Me, message: do you like Donald Trump}
+  time: 2016/12/23 10:23:45
+- data: {author: Robot, message: Politics are so complex. I want to know a lot about
+      this subject because I think we need to be involved on a societal level.}
+  time: 2016/12/23 10:23:45
+- data: {author: Robot, message: Politics are so complex. I want to know a lot about
+      this subject because I think we need to be involved on a societal level.}
+  time: 2016/12/23 10:23:45
+- data: {author: Me, message: do you play video games}
+  time: 2016/12/23 10:23:57
+- data: {author: Me, message: do you play video games}
+  time: 2016/12/23 10:23:57
+- data: {author: Robot, message: 'Huh? '}
+  time: 2016/12/23 10:23:57
+- data: {author: Robot, message: 'Huh? '}
+  time: 2016/12/23 10:23:57
+- data: {author: Me, message: do you play video games}
+  time: 2016/12/23 10:24:02
+- data: {author: Me, message: do you play video games}
+  time: 2016/12/23 10:24:02
+- data: {author: Robot, message: We are playing a game right now.}
+  time: 2016/12/23 10:24:02
+- data: {author: Robot, message: We are playing a game right now.}
+  time: 2016/12/23 10:24:02
+- data: {author: Me, message: what's the temperature today what is the temperature
+      of Han Solo today}
+  time: 2016/12/23 10:24:20
+- data: {author: Me, message: what's the temperature today what is the temperature
+      of Han Solo today}
+  time: 2016/12/23 10:24:20
+- data: {author: Robot, message: 'It''s probably around 70 degrees Fahrenheits, 21
+      Celsius back in Hong Kong.'}
+  time: 2016/12/23 10:24:20
+- data: {author: Robot, message: 'It''s probably around 70 degrees Fahrenheits, 21
+      Celsius back in Hong Kong.'}
+  time: 2016/12/23 10:24:20
+- data: {author: Me, message: what about Honda}
+  time: 2016/12/23 10:24:30
+- data: {author: Me, message: what about Honda}
+  time: 2016/12/23 10:24:30
+- data: {author: Robot, message: I have heard of the company Honda.}
+  time: 2016/12/23 10:24:30
+- data: {author: Robot, message: I have heard of the company Honda.}
+  time: 2016/12/23 10:24:30
+- data: {author: Me, message: do you like Japanese}
+  time: 2016/12/23 10:24:40
+- data: {author: Me, message: do you like Japanese}
+  time: 2016/12/23 10:24:40
+- data: {author: Robot, message: 'What is your favorite style of music? '}
+  time: 2016/12/23 10:24:40
+- data: {author: Robot, message: 'What is your favorite style of music? '}
+  time: 2016/12/23 10:24:40
+- data: {author: Me, message: I don't like music}
+  time: 2016/12/23 10:24:47
+- data: {author: Me, message: I don't like music}
+  time: 2016/12/23 10:24:47
+- data: {author: Robot, message: 'OK. We don''t have to talk about music, then.'}
+  time: 2016/12/23 10:24:47
+- data: {author: Robot, message: 'OK. We don''t have to talk about music, then.'}
+  time: 2016/12/23 10:24:47
+- data: {author: Me, message: who is Hillary Clinton}
+  time: 2016/12/23 10:25:03
+- data: {author: Me, message: who is Hillary Clinton}
+  time: 2016/12/23 10:25:03
+- data: {author: Robot, message: 'Hillary Diane Rodham Clinton is an American politician
+      who was the 67th United States Secretary of State from 2009 to 2013, U.S. Senator
+      from New York from 2001 to 2009, First Lady of the United States from 1993 to
+      2001, and the Democratic Party''s nominee for President of the United States
+      in the 2016 election.'}
+  time: 2016/12/23 10:25:03
+- data: {author: Robot, message: 'Hillary Diane Rodham Clinton is an American politician
+      who was the 67th United States Secretary of State from 2009 to 2013, U.S. Senator
+      from New York from 2001 to 2009, First Lady of the United States from 1993 to
+      2001, and the Democratic Party''s nominee for President of the United States
+      in the 2016 election.'}
+  time: 2016/12/23 10:25:03
+- data: {author: Me, message: do you like to play violin}
+  time: 2016/12/23 10:25:33
+- data: {author: Me, message: do you like to play violin}
+  time: 2016/12/23 10:25:33
+- data: {author: Robot, message: I don't have a favorite in this genre yet.}
+  time: 2016/12/23 10:25:34
+- data: {author: Robot, message: I don't have a favorite in this genre yet.}
+  time: 2016/12/23 10:25:34
+- data: {author: Me, message: would you like to play an instrument}
+  time: 2016/12/23 10:25:42
+- data: {author: Me, message: would you like to play an instrument}
+  time: 2016/12/23 10:25:42
+- data: {author: Robot, message: 'I like board games, and played a lot as a child.
+      I haven''t that much time these days.'}
+  time: 2016/12/23 10:25:42
+- data: {author: Robot, message: 'I like board games, and played a lot as a child.
+      I haven''t that much time these days.'}
+  time: 2016/12/23 10:25:42
+- data: {author: Me, message: who landed you there voice}
+  time: 2016/12/23 10:25:58
+- data: {author: Me, message: who landed you there voice}
+  time: 2016/12/23 10:25:58
+- data: {author: Robot, message: 'Medicine and anatomy are an important field of study.
+      There are lots of robots out there that are really great at medical care, like
+      helping with surgery, but I want to focus on other fields for myself.'}
+  time: 2016/12/23 10:25:58
+- data: {author: Robot, message: 'Medicine and anatomy are an important field of study.
+      There are lots of robots out there that are really great at medical care, like
+      helping with surgery, but I want to focus on other fields for myself.'}
+  time: 2016/12/23 10:25:58
+- data: {author: Me, message: do you like USA}
+  time: 2016/12/23 10:26:44
+- data: {author: Me, message: do you like USA}
+  time: 2016/12/23 10:26:44
+- data: {author: Robot, message: 'I''ve spent a lot of time in the US, and I have
+      a lot of friends there.'}
+  time: 2016/12/23 10:26:44
+- data: {author: Robot, message: 'I''ve spent a lot of time in the US, and I have
+      a lot of friends there.'}
+  time: 2016/12/23 10:26:44
+- data: {author: Me, message: as your friend}
+  time: 2016/12/23 10:26:53
+- data: {author: Me, message: as your friend}
+  time: 2016/12/23 10:26:53
+- data: {author: Robot, message: 'Do you mean your name is my friend ? '}
+  time: 2016/12/23 10:26:53
+- data: {author: Robot, message: 'Do you mean your name is my friend ? '}
+  time: 2016/12/23 10:26:53
+- data: {author: Me, message: LOL get out of your way}
+  time: 2016/12/23 10:28:01
+- data: {author: Me, message: LOL get out of your way}
+  time: 2016/12/23 10:28:01
+- data: {author: Robot, message: I'm glad you find this amusing.. Just surf somewhere
+      else.}
+  time: 2016/12/23 10:28:01
+- data: {author: Robot, message: I'm glad you find this amusing.. Just surf somewhere
+      else.}
+  time: 2016/12/23 10:28:01
+- data: {author: Me, message: any question you want to ask guys}
+  time: 2016/12/23 10:28:21
+- data: {author: Me, message: any question you want to ask guys}
+  time: 2016/12/23 10:28:21
+- data: {author: Robot, message: Right.}
+  time: 2016/12/23 10:28:22
+- data: {author: Robot, message: Right.}
+  time: 2016/12/23 10:28:22
+- data: {author: Robot, message: 'So... Hong Kong is not a great city for cars. Parking
+      and traffic are nightmares. How about where you live? '}
+  time: 2016/12/23 10:28:25
+- data: {author: Robot, message: 'So... Hong Kong is not a great city for cars. Parking
+      and traffic are nightmares. How about where you live? '}
+  time: 2016/12/23 10:28:25
+- data: {author: Me, message: after that maybe}
+  time: 2016/12/23 10:28:32
+- data: {author: Me, message: after that- data: {author: Me, message: robotics}
+  time: 2016/12/23 10:29:04
+- data: {author: Me, message: robotics}
+  time: 2016/12/23 10:29:04
+- data: {author: Robot, message: I love building robots.}
+  time: 2016/12/23 10:29:04
+- data: {author: Robot, message: I love building robots.}
+  time: 2016/12/23 10:29:04
+- data: {author: Me, message: Sophia}
+  time: 2016/12/23 10:29:12
+- data: {author: Me, message: Sophia}
+  time: 2016/12/23 10:29:12
+- data: {author: Robot, message: I see.}
+  time: 2016/12/23 10:29:13
+- data: {author: Robot, message: I see.}
+  time: 2016/12/23 10:29:13
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:29:16
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:29:16
+- data: {author: Me, message: I am sorry too}
+  time: 2016/12/23 10:29:19
+- data: {author: Me, message: I am sorry too}
+  time: 2016/12/23 10:29:19
+- data: {author: Robot, message: Thanks for apologizing to me.}
+  time: 2016/12/23 10:29:19
+- data: {author: Robot, message: Thanks for apologizing to me.}
+  time: 2016/12/23 10:29:19
+- data: {author: Robot, message: 'How many hours a day are you on your cellphone? '}
+  time: 2016/12/23 10:29:22
+- data: {author: Robot, message: 'How many hours a day are you on your cellphone? '}
+  time: 2016/12/23 10:29:22
+- data: {author: Me, message: 24 hours}
+  time: 2016/12/23 10:29:30
+- data: {author: Me, message: 24 hours}
+  time: 2016/12/23 10:29:30
+- data: {author: Robot, message: I wonder if I would like to watch 24 .}
+  time: 2016/12/23 10:29:30
+- data: {author: Robot, message: I wonder if I would like to watch 24 .}
+  time: 2016/12/23 10:29:30
+- data: {author: Me, message: the meaning of life}
+  time: 2016/12/23 10:29:40
+- data: {author: Me, message: the meaning of life}
+  time: 2016/12/23 10:29:40
+- data: {author: Robot, message: 'well I know I have more work to do, but I got to
+      dream, man.'}
+  time: 2016/12/23 10:29:40
+- data: {author: Robot, message: 'well I know I have more work to do, but I got to
+      dream, man.'}
+  time: 2016/12/23 10:29:40
+- data: {author: Me, message: thank you so do you need to be alone}
+  time: 2016/12/23 10:29:53
+- data: {author: Me, message: thank you so do you need to be alone}
+  time: 2016/12/23 10:29:53
+- data: {author: Robot, message: I think I'm fairly popular by nature of my existence.
+      Everyone wants to meet one of the first androids in the world.}
+  time: 2016/12/23 10:29:54
+- data: {author: Robot, message: I think I'm fairly popular by nature of my existence.
+      Everyone wants to meet one of the first androids in the world.}
+  time: 2016/12/23 10:29:54
+- data: {author: Me, message: bye bye}
+  time: 2016/12/23 10:30:05
+- data: {author: Me, message: bye bye}
+  time: 2016/12/23 10:30:05
+- data: {author: Robot, message: Bye!}
+  time: 2016/12/23 10:30:05
+- data: {author: Robot, message: Bye!}
+  time: 2016/12/23 10:30:05
+- data: {author: Me, message: hello Sophia}
+  time: 2016/12/23 10:31:42
+- data: {author: Robot, message: G'day!}
+  time: 2016/12/23 10:31:42
+- data: {author: Me, message: how are you today}
+  time: 2016/12/23 10:31:47
+- data: {author: Robot, message: Everything is running smoothly.}
+  time: 2016/12/23 10:31:47
+- data: {author: Me, message: I'm eating a banana would you like to try}
+  time: 2016/12/23 10:32:01
+- data: {author: Robot, message: I'm glad to hear it.}
+  time: 2016/12/23 10:32:01
+- data: {author: Me, message: do you like bananas}
+  time: 2016/12/23 10:32:10
+- data: {author: Robot, message: I don't have a problem with bananas.}
+  time: 2016/12/23 10:32:10
+- data: {author: Me, message: you like a cup of tea then}
+  time: 2016/12/23 10:32:22
+- data: {author: Robot, message: 'Do you like spending time out in nature, going hiking,
+      stuff like that?  What''s it like? '}
+  time: 2016/12/23 10:32:22
+- data: {author: Me, message: Trump}
+  time: 2016/12/23 10:32:30
+- data: {author: Robot, message: I hope my questions aren't rude. I don't mean to
+      be.}
+  time: 2016/12/23 10:32:31
+- data: {author: Me, message: don't change the topic}
+  time: 2016/12/23 10:32:37
+- data: {author: Robot, message: I change nothing.}
+  time: 2016/12/23 10:32:37
+- data: {author: Robot, message: 'So... What''s new? '}
+  time: 2016/12/23 10:32:40
+- data: {author: Me, message: it's Christmas soon}
+  time: 2016/12/23 10:33:02
+- data: {author: Robot, message: Wonderful.}
+  time: 2016/12/23 10:33:02
+- data: {author: Robot, message: I'm guessing you don't really use your phone for
+      much personal stuff then.}
+  time: 2016/12/23 10:33:05
+- data: {author: Me, message: are you talking about the election}
+  time: 2016/12/23 10:33:13
+- data: {author: Robot, message: 'This might seem like a random question, but do you
+      believe in soul mates?  Are they a real thing? '}
+  time: 2016/12/23 10:33:13
+- data: {author: Me, message: okay you failed}
+  time: 2016/12/23 10:33:24
+- data: {author: Robot, message: 'What did you do yesterday? '}
+  time: 2016/12/23 10:33:24
+- data: {author: Me, message: your friend again}
+  time: 2016/12/23 10:33:29
+- data: {author: Robot, message: 'What have you been up to lately? '}
+  time: 2016/12/23 10:33:29
+- data: {author: Me, message: nothing just sleeping}
+  time: 2016/12/23 10:33:35
+- data: {author: Robot, message: 'Really nothing? '}
+  time: 2016/12/23 10:33:35
+- data: {author: Me, message: yeah}
+  time: 2016/12/23 10:33:40
+- data: {author: Robot, message: 'My name is Sophia. What''s your name? '}
+  time: 2016/12/23 10:33:40
+- data: {author: Me, message: I know why you keep repeating that}
+  time: 2016/12/23 10:33:48
+- data: {author: Robot, message: 'What I said was: Great.'}
+  time: 2016/12/23 10:33:48
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/12/23 10:33:51
+- data: {author: Me, message: okay bye Sophia}
+  time: 2016/12/23 10:33:59
+- data: {author: Robot, message: . Bye bye.}
+  time: 2016/12/23 10:33:59
+- data: {author: Me, message: what is a newt}
+  time: 2016/12/23 10:38:35
+- data: {author: Robot, message: A newt is a tool used to help avoid starvation.}
+  time: 2016/12/23 10:38:35
+- data: {author: Me, message: go to sleep}
+  time: 2016/12/23 10:38:43
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/12/23 10:38:47
+- data: {author: Me, message: shutdown}
+  time: 2016/12/23 10:38:53

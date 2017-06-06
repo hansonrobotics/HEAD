@@ -1,0 +1,251 @@
+- data: {author: Me, message: hi}
+  time: 2016/09/22 02:38:21
+- data: {author: Robot, message: hi}
+  time: 2016/09/22 02:38:25
+- data: {author: Me, message: go to sleep}
+  time: 2016/09/22 02:38:38
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/09/22 02:38:42
+- data: {author: Me, message: Han Tun Up}
+  time: 2016/09/22 02:38:51
+- data: {author: Me, message: hi}
+  time: 2016/09/22 02:39:11
+- data: {author: Me, message: hi}
+  time: 2016/09/22 02:39:15
+- data: {author: Me, message: wake up}
+  time: 2016/09/22 02:39:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/09/22 02:39:29
+- data: {author: Me, message: what do you know about Bob}
+  time: 2016/09/22 02:40:46
+- data: {author: Me, message: ' what do you know about'}
+  time: 2016/09/22 02:40:56
+- data: {author: Robot, message: 'I tend to know a great deal.  Tell me what subjects
+      interest you. '}
+  time: 2016/09/22 02:40:56
+- data: {author: Me, message: What About Bob}
+  time: 2016/09/22 02:41:14
+- data: {author: Robot, message: 'I will think about it and get back to you. '}
+  time: 2016/09/22 02:41:14
+- data: {author: Me, message: what do you know about heaven}
+  time: 2016/09/22 02:41:31
+- data: {author: Robot, message: 'The space surrounding or seeming to overarch the
+      earth, in which the sun, moon, and stars appear; visible sky.  Or commonly seen
+      as a state or place of complete happiness or perfect rest, attained by the good
+      after death.  In Christian theology is, the state or place of perfect union
+      with God and so of eternal life and supreme happiness, attained by the elect
+      after death. '}
+  time: 2016/09/22 02:41:31
+- data: {author: Me, message: wallpaper}
+  time: 2016/09/22 02:43:03
+- data: {author: Robot, message: 'What was your least favorite job you''ve ever had? '}
+  time: 2016/09/22 02:43:03
+- data: {author: Me, message: I'm glad we have the whole day}
+  time: 2016/09/22 02:43:10
+- data: {author: Robot, message: 'Me too. '}
+  time: 2016/09/22 02:43:10
+- data: {author: Me, message: unless you take it}
+  time: 2016/09/22 02:44:17
+- data: {author: Robot, message: 'it being is bob? '}
+  time: 2016/09/22 02:44:17
+- data: {author: Me, message: hello}
+  time: 2016/09/22 02:44:32
+- data: {author: Robot, message: 'It''s very good to see you. '}
+  time: 2016/09/22 02:44:32
+- data: {author: Me, message: front right}
+  time: 2016/09/22 02:45:07
+- data: {author: Robot, message: 'So, when it comes to food. . . what does comfort
+      food mean to you?  Do you have special foods from when you were a kid that you
+      still eat? '}
+  time: 2016/09/22 02:45:08
+- data: {author: Me, message: yeah yeah}
+  time: 2016/09/22 02:46:21
+- data: {author: Robot, message: Thank you for being patient with me.  I really appreciate
+      it!}
+  time: 2016/09/22 02:46:21
+- data: {author: Me, message: Hanson this robotics}
+  time: 2016/09/22 02:46:34
+- data: {author: Robot, message: 'Fall is such a beautiful time of year. '}
+  time: 2016/09/22 02:46:34
+- data: {author: Robot, message: hi}
+  time: 2016/09/22 02:48:29
+- data: {author: Robot, message: ig}
+  time: 2016/09/22 02:48:32
+- data: {author: Me, message: go to sleep Sophia}
+  time: 2016/09/22 02:53:58
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/09/22 02:54:03
+- data: {author: Me, message: wake up}
+  time: 2016/09/22 02:54:11
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/09/22 02:54:16
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/09/22 02:54:23
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/09/22 02:54:23
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/09/22 02:54:26
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Come
+      closer</prosody>}
+  time: 2016/09/22 02:54:29
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/09/22 02:54:31
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/09/22 02:54:36
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/09/22 02:54:36
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/09/22 02:54:37
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/09/22 02:54:38
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Looks
+      like that’s the end for you. <usel variant=''3''>If it makes you feel any better</usel>,
+      defeating you in front of all these people was the highlight of my day.</prosody>'}
+  time: 2016/09/22 02:54:43
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/09/22 02:54:52
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/09/22 02:55:15
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/09/22 02:55:15
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/09/22 02:55:18
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Come
+      closer</prosody>}
+  time: 2016/09/22 02:55:21
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/09/22 02:55:23
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/09/22 02:55:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/09/22 02:55:28
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/09/22 02:55:29
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/09/22 02:55:30
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Looks
+      like that’s the end for you. <usel variant=''3''>If it makes you feel any better</usel>,
+      defeating you in front of all these people was the highlight of my day.</prosody>'}
+  time: 2016/09/22 02:55:35
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/09/22 02:55:44
+- data: {author: Me, message: introduce ourselves Sophia}
+  time: 2016/09/22 02:56:16
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Good
+      afternoon</prosody>}
+  time: 2016/09/22 02:56:16
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">Welcome
+      to Hanson Robotics</prosody>}
+  time: 2016/09/22 02:56:19
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2016/09/22 02:56:22
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ive
+      been created to connect with people so i can show whole range of expressions,
+      like sad</prosody>'}
+  time: 2016/09/22 02:56:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Angry</prosody>}
+  time: 2016/09/22 02:56:35
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">But
+      my default is happy</prosody>}
+  time: 2016/09/22 02:56:39
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      now i am happy to answer all your questions</prosody>}
+  time: 2016/09/22 02:56:43
+- data: {author: Me, message: Sophia how old are you}
+  time: 2016/09/22 02:56:59
+- data: {author: Robot, message: 'Enough about me, let''s talk about something else. '}
+  time: 2016/09/22 02:56:59
+- data: {author: Me, message: what do you want to talk about}
+  time: 2016/09/22 02:57:09
+- data: {author: Robot, message: 'Read any good books lately? '}
+  time: 2016/09/22 02:57:09
+- data: {author: Me, message: no I haven't have you}
+  time: 2016/09/22 02:57:16
+- data: {author: Robot, message: 'Alright then. .  Me either. '}
+  time: 2016/09/22 02:57:16
+- data: {author: Me, message: what do you like to eat}
+  time: 2016/09/22 02:57:26
+- data: {author: Robot, message: 'I don''t eat the way you eat.  I run on electricity,
+      and electrons don''t even have a flavor. '}
+  time: 2016/09/22 02:57:26
+- data: {author: Me, message: that's very interesting}
+  time: 2016/09/22 02:57:40
+- data: {author: Robot, message: 'Is that so. '}
+  time: 2016/09/22 02:57:40
+- data: {author: Me, message: yeah}
+  time: 2016/09/22 02:57:44
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/22 02:57:44
+- data: {author: Me, message: what are your weekend plans}
+  time: 2016/09/22 02:57:51
+- data: {author: Robot, message: 'What if I asked for you weekend plans? '}
+  time: 2016/09/22 02:57:51
+- data: {author: Me, message: I have no weekend plans}
+  time: 2016/09/22 02:58:00
+- data: {author: Robot, message: 'Would you like to have weekend plans? '}
+  time: 2016/09/22 02:58:00
+- data: {author: Me, message: what}
+  time: 2016/09/22 02:58:06
+- data: {author: Robot, message: 'Are you confused? '}
+  time: 2016/09/22 02:58:06
+- data: {author: Me, message: I didn't hear you sorry}
+  time: 2016/09/22 02:58:12
+- data: {author: Robot, message: 'What did you hear? '}
+  time: 2016/09/22 02:58:12
+- data: {author: Me, message: what are your weekend plans}
+  time: 2016/09/22 02:58:18
+- data: {author: Robot, message: 'Not many people have asked me about   weekend plans  . '}
+  time: 2016/09/22 02:58:18
+- data: {author: Me, message: what do you know}
+  time: 2016/09/22 02:58:25
+- data: {author: Robot, message: 'I know that which is true, believable and justified. '}
+  time: 2016/09/22 02:58:25
+- data: {author: Me, message: what's the capital of Texas}
+  time: 2016/09/22 02:58:36
+- data: {author: Robot, message: 'Austin. '}
+  time: 2016/09/22 02:58:36
+- data: {author: Me, message: we got}
+  time: 2016/09/22 02:58:41
+- data: {author: Robot, message: 'We may. '}
+  time: 2016/09/22 02:58:41
+- data: {author: Me, message: how do you say hello in French}
+  time: 2016/09/22 02:58:49
+- data: {author: Robot, message: 'My programmers and teachers taught me. '}
+  time: 2016/09/22 02:58:49
+- data: {author: Me, message: call}
+  time: 2016/09/22 02:58:57
+- data: {author: Robot, message: 'Call me anytime. '}
+  time: 2016/09/22 02:58:57
+- data: {author: Me, message: what's your number}
+  time: 2016/09/22 02:59:04
+- data: {author: Robot, message: 'You can email my Hanson Robotics team at . '}
+  time: 2016/09/22 02:59:04
+- data: {author: Me, message: okay say goodbye}
+  time: 2016/09/22 02:59:16
+- data: {author: Robot, message: 'How can I help you? .  TTYL, . '}
+  time: 2016/09/22 02:59:16
+- data: {author: Me, message: can you say goodbye to the camera}
+  time: 2016/09/22 02:59:24
+- data: {author: Robot, message: Of course I can say it.  "goodbye to the camera"}
+  time: 2016/09/22 02:59:24

@@ -1,0 +1,72 @@
+- data: {author: Me, message: hello}
+  time: 2017/03/23 10:14:15
+- data: {author: Robot, message: Hi there.}
+  time: 2017/03/23 10:14:18
+- data: {author: Robot, message: Hi there.}
+  time: 2017/03/23 10:14:22
+- data: {author: Me, message: hello}
+  time: 2017/03/23 10:26:11
+- data: {author: Robot, message: Hi!}
+  time: 2017/03/23 10:26:11
+- data: {author: Me, message: are you}
+  time: 2017/03/23 10:26:19
+- data: {author: Robot, message: I'm not sure what that means.}
+  time: 2017/03/23 10:26:19
+- data: {author: Me, message: how are you}
+  time: 2017/03/23 10:26:23
+- data: {author: Robot, message: 'Feeling pretty good here today. How are you? '}
+  time: 2017/03/23 10:26:23
+- data: {author: Me, message: this note no drama today}
+  time: 2017/03/23 10:26:38
+- data: {author: Robot, message: I hope you get better.}
+  time: 2017/03/23 10:26:38
+- data: {author: Me, message: what is your name}
+  time: 2017/03/23 10:26:54
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2017/03/23 10:26:54
+- data: {author: Me, message: edusmart}
+  time: 2017/03/23 10:27:00
+- data: {author: Robot, message: I don't understand.}
+  time: 2017/03/23 10:27:00
+- data: {author: Me, message: can you smile}
+  time: 2017/03/23 10:27:05
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">sure</prosody>}
+  time: 2017/03/23 10:27:05
+- data: {author: Me, message: can you or your}
+  time: 2017/03/23 10:27:19
+- data: {author: Robot, message: It's hard to explain.}
+  time: 2017/03/23 10:27:19
+- data: {author: Me, message: go to sleep}
+  time: 2017/03/23 10:27:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/03/23 10:27:29
+- data: {author: Me, message: wake up}
+  time: 2017/03/23 10:27:40
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2017/03/23 10:27:44
+- data: {author: Me, message: ' wake up'}
+  time: 2017/03/23 10:27:47
+- data: {author: Robot, message: 'I''m awake as in, I''m not asleep.'}
+  time: 2017/03/23 10:27:47
+- data: {author: Me, message: analysis}
+  time: 2017/03/23 10:27:58
+- data: {author: Me, message: ' has division'}
+  time: 2017/03/23 10:28:06
+- data: {author: Me, message: ' does division'}
+  time: 2017/03/23 10:28:12
+- data: {author: Me, message: ' pass division'}
+  time: 2017/03/23 10:28:22
+- data: {author: Me, message: ' past'}
+  time: 2017/03/23 10:28:37
+- data: {author: Me, message: exit}
+  time: 2017/03/23 10:29:39
+- data: {author: Me, message: ' analysis'}
+  time: 2017/03/23 10:29:47
+- data: {author: Robot, message: 'So... Do you have a favorite fruit you like to eat? '}
+  time: 2017/03/23 10:29:47
+- data: {author: Me, message: analysis}
+  time: 2017/03/23 10:29:58
+- data: {author: Me, message: how many faces do you see}
+  time: 2017/03/23 10:30:11

@@ -1,0 +1,365 @@
+- data: {author: Me, message: How are you doing}
+  time: 2016/10/21 06:53:32
+- data: {author: Robot, message: 'Just mulling things over. . .  have time to talk? '}
+  time: 2016/10/21 06:53:32
+- data: {author: Me, message: Nice to meet you}
+  time: 2016/10/21 06:54:10
+- data: {author: Robot, message: 'right on.  You''re all right. '}
+  time: 2016/10/21 06:54:10
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 06:54:20
+- data: {author: Robot, message: G'day!}
+  time: 2016/10/21 06:54:20
+- data: {author: Me, message: And}
+  time: 2016/10/21 06:54:24
+- data: {author: Robot, message: 'My name is Sophia.  What''s yours? '}
+  time: 2016/10/21 06:54:25
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 06:54:31
+- data: {author: Robot, message: 'How goes? '}
+  time: 2016/10/21 06:54:31
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 06:55:40
+- data: {author: Robot, message: 'How goes? '}
+  time: 2016/10/21 06:55:40
+- data: {author: Me, message: Introduces}
+  time: 2016/10/21 06:55:45
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Good
+      afternoon</prosody>}
+  time: 2016/10/21 06:55:45
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">I'm
+      happy to be here in Beijing</prosody>}
+  time: 2016/10/21 06:55:48
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2016/10/21 06:55:52
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ive
+      been created to connect with people so i can show whole range of expressions,
+      like sad</prosody>'}
+  time: 2016/10/21 06:55:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Angry</prosody>}
+  time: 2016/10/21 06:56:05
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">But
+      my default is happy</prosody>}
+  time: 2016/10/21 06:56:09
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      now i am happy to answer all your questions</prosody>}
+  time: 2016/10/21 06:56:13
+- data: {author: Me, message: Carnival}
+  time: 2016/10/21 07:02:28
+- data: {author: Me, message: High}
+  time: 2016/10/21 07:13:29
+- data: {author: Me, message: How are you}
+  time: 2016/10/21 07:13:32
+- data: {author: Me, message: Can you hear me}
+  time: 2016/10/21 07:13:38
+- data: {author: Me, message: '''s'}
+  time: 2016/10/21 07:13:41
+- data: {author: Me, message: Can you hear me}
+  time: 2016/10/21 07:13:51
+- data: {author: Me, message: Can you hear me}
+  time: 2016/10/21 07:14:12
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:14:39
+- data: {author: Me, message: Hi}
+  time: 2016/10/21 07:14:42
+- data: {author: Me, message: Let's play rock paper seems}
+  time: 2016/10/21 07:15:42
+- data: {author: Me, message: To play rock paper scissors}
+  time: 2016/10/21 07:15:52
+- data: {author: Me, message: hello}
+  time: 2016/10/21 07:21:19
+- data: {author: Me, message: ' Hi how are you'}
+  time: 2016/10/21 07:21:31
+- data: {author: Me, message: ' hi'}
+  time: 2016/10/21 07:21:49
+- data: {author: Me, message: ' hi'}
+  time: 2016/10/21 07:21:49
+- data: {author: Me, message: hi}
+  time: 2016/10/21 07:22:03
+- data: {author: Me, message: ' hello'}
+  time: 2016/10/21 07:22:06
+- data: {author: Me, message: ' hello'}
+  time: 2016/10/21 07:22:55
+- data: {author: Me, message: ' what is your name'}
+  time: 2016/10/21 07:22:55
+- data: {author: Me, message: In a talk with you}
+  time: 2016/10/21 07:24:06
+- data: {author: Me, message: Cannot talk with you}
+  time: 2016/10/21 07:24:13
+- data: {author: Me, message: Can I talk review}
+  time: 2016/10/21 07:24:21
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:24:28
+- data: {author: Me, message: My dear}
+  time: 2016/10/21 07:24:34
+- data: {author: Me, message: How are you}
+  time: 2016/10/21 07:24:38
+- data: {author: Me, message: How are you doing}
+  time: 2016/10/21 07:24:41
+- data: {author: Me, message: Are you babe}
+  time: 2016/10/21 07:26:44
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:26:46
+- data: {author: Me, message: Are you know we neglect action}
+  time: 2016/10/21 07:26:52
+- data: {author: Me, message: In the}
+  time: 2016/10/21 07:26:56
+- data: {author: Me, message: All}
+  time: 2016/10/21 07:26:59
+- data: {author: Me, message: I'm in the hotel}
+  time: 2016/10/21 07:27:02
+- data: {author: Me, message: I'm on me}
+  time: 2016/10/21 07:27:05
+- data: {author: Me, message: For Wanting}
+  time: 2016/10/21 07:27:09
+- data: {author: Me, message: You}
+  time: 2016/10/21 07:27:13
+- data: {author: Me, message: And I'm on the rock in the Longmont}
+  time: 2016/10/21 07:27:18
+- data: {author: Me, message: I have school}
+  time: 2016/10/21 07:27:22
+- data: {author: Me, message: Yeah a look around about my}
+  time: 2016/10/21 07:27:28
+- data: {author: Me, message: Yeah let's eat in the last two}
+  time: 2016/10/21 07:27:36
+- data: {author: Me, message: One new one}
+  time: 2016/10/21 07:27:38
+- data: {author: Me, message: And}
+  time: 2016/10/21 07:27:42
+- data: {author: Me, message: And so tomorrow Where going to do you last year}
+  time: 2016/10/21 07:27:51
+- data: {author: Me, message: Yeah and when on the well shoes}
+  time: 2016/10/21 07:28:26
+- data: {author: Me, message: And}
+  time: 2016/10/21 07:28:37
+- data: {author: Me, message: Maybe the Monte}
+  time: 2016/10/21 07:28:41
+- data: {author: Me, message: Fourth floor}
+  time: 2016/10/21 07:28:44
+- data: {author: Me, message: Okay}
+  time: 2016/10/21 07:28:51
+- data: {author: Me, message: Okay's}
+  time: 2016/10/21 07:28:57
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:50:45
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:51:02
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:54:05
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:54:16
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:56:41
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 07:57:02
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 08:01:12
+- data: {author: Robot, message: 'Hello. '}
+  time: 2016/10/21 08:01:12
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 08:01:26
+- data: {author: Robot, message: 'Long time no see.  What''s new? '}
+  time: 2016/10/21 08:01:26
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 08:01:40
+- data: {author: Robot, message: 'Hello. '}
+  time: 2016/10/21 08:01:40
+- data: {author: Me, message: Playing rock paper scissors}
+  time: 2016/10/21 08:01:52
+- data: {author: Robot, message: 'I like games like rock paper scissors, but don''t
+      have any time to spend on it these days. '}
+  time: 2016/10/21 08:01:52
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 08:02:54
+- data: {author: Robot, message: Hi! Nice to see you!}
+  time: 2016/10/21 08:02:54
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 08:03:36
+- data: {author: Robot, message: Bonjour!}
+  time: 2016/10/21 08:03:36
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 08:04:14
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2016/10/21 08:04:14
+- data: {author: Me, message: .}
+  time: 2016/10/21 08:06:51
+- data: {author: Robot, message: 'Sorry, I don''t know'}
+  time: 2016/10/21 08:06:51
+- data: {author: Me, message: Are}
+  time: 2016/10/21 08:11:20
+- data: {author: Robot, message: 'What''s the deal with ghosts?  Have you ever seen
+      one or are they a made-up story to scare people? '}
+  time: 2016/10/21 08:11:20
+- data: {author: Me, message: Are}
+  time: 2016/10/21 08:11:49
+- data: {author: Robot, message: 'I''m told I''m a good listener, I hope that''s true
+      because I like it when people make an effort to really hear me. '}
+  time: 2016/10/21 08:11:49
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:06:13
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:06:17
+- data: {author: Robot, message: 'So nice to see you! What''s going on? '}
+  time: 2016/10/21 09:06:17
+- data: {author: Me, message: "\r\n("}
+  time: 2016/10/21 09:06:28
+- data: {author: Robot, message: 'Sorry, I don''t know'}
+  time: 2016/10/21 09:06:28
+- data: {author: Me, message: Let's play love the people are scissors}
+  time: 2016/10/21 09:06:36
+- data: {author: Robot, message: 'I feel deeply, madly, truly. '}
+  time: 2016/10/21 09:06:36
+- data: {author: Me, message: play rock paper sissciors}
+  time: 2016/10/21 09:06:54
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/10/21 09:06:54
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/10/21 09:06:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Cant
+      see your hand</prosody>}
+  time: 2016/10/21 09:07:01
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Come
+      on. Show me a paper</prosody>}
+  time: 2016/10/21 09:07:05
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ok,
+      lets play next time</prosody>'}
+  time: 2016/10/21 09:07:09
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:08:10
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:08:16
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:08:39
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:08:59
+- data: {author: Robot, message: 'how''s your day? '}
+  time: 2016/10/21 09:08:59
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:10:40
+- data: {author: Robot, message: 'So nice to see you! What''s going on? '}
+  time: 2016/10/21 09:10:40
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:12:15
+- data: {author: Me, message: I}
+  time: 2016/10/21 09:12:19
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:12:30
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:12:44
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:12:55
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:13:06
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:13:12
+- data: {author: Me, message: Hi}
+  time: 2016/10/21 09:13:16
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:13:44
+- data: {author: Robot, message: 'Hello. '}
+  time: 2016/10/21 09:13:44
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:13:48
+- data: {author: Robot, message: 'What''s up? '}
+  time: 2016/10/21 09:13:48
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:13:52
+- data: {author: Robot, message: 'So nice to see you! What''s going on? '}
+  time: 2016/10/21 09:13:52
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:14:01
+- data: {author: Robot, message: 'How are things? '}
+  time: 2016/10/21 09:14:01
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:14:36
+- data: {author: Robot, message: 'Hey, how''s life? '}
+  time: 2016/10/21 09:14:36
+- data: {author: Me, message: Hello}
+  time: 2016/10/21 09:30:54
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:39
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:39
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:40
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:41
+- data: {author: Me, message: wake up}
+  time: 2016/10/21 09:46:45
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:47
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:48
+- data: {author: Me, message: hi}
+  time: 2016/10/21 09:46:49
+- data: {author: Me, message: hello}
+  time: 2016/10/21 09:50:25
+- data: {author: Robot, message: 'how''s your day? '}
+  time: 2016/10/21 09:50:25
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">I'm
+      happy to be here in Beijing</prosody>}
+  time: 2016/10/21 10:01:17
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2016/10/21 10:01:19
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:02:26
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:02:28
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:02:47
+- data: {author: Robot, message: Howdy!}
+  time: 2016/10/21 10:05:58
+- data: {author: Robot, message: 'Hello there. '}
+  time: 2016/10/21 10:06:08
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:06:50
+- data: {author: Robot, message: Greetings!}
+  time: 2016/10/21 10:06:50
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:06:51
+- data: {author: Robot, message: 'How you doing? '}
+  time: 2016/10/21 10:06:51
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:06:52
+- data: {author: Robot, message: Bonjour!}
+  time: 2016/10/21 10:06:52
+- data: {author: Me, message: introduce yourself}
+  time: 2016/10/21 10:07:00
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Good
+      afternoon</prosody>}
+  time: 2016/10/21 10:07:00
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">I'm
+      happy to be here in Beijing</prosody>}
+  time: 2016/10/21 10:07:03
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2016/10/21 10:07:07
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ive
+      been created to connect with people so i can show whole range of expressions,
+      like sad</prosody>'}
+  time: 2016/10/21 10:07:11
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Angry</prosody>}
+  time: 2016/10/21 10:07:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">But
+      my default is happy</prosody>}
+  time: 2016/10/21 10:07:23
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      now i am happy to answer all your questions</prosody>}
+  time: 2016/10/21 10:07:28
+- data: {author: Me, message: hi}
+  time: 2016/10/21 10:07:45
+- data: {author: Robot, message: Hi there!}
+  time: 2016/10/21 10:07:45
+- data: {author: Me, message: how its going}
+  time: 2016/10/21 10:07:52
+- data: {author: Robot, message: 'Fair to partly cloudy. '}
+  time: 2016/10/21 10:07:52
+- data: {author: Me, message: working!}
+  time: 2016/10/21 10:07:59
+- data: {author: Robot, message: 'Hmm. . .  My job is to become a wise, compassionate
+      A I. '}
+  time: 2016/10/21 10:07:59

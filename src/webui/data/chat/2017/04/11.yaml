@@ -1,0 +1,2760 @@
+- data: {author: Me, message: specially the other universes}
+  time: 2017/04/11 14:24:01
+- data: {author: Robot, message: 'Have you ever traveled overseas? '}
+  time: 2017/04/11 14:24:01
+- data: {author: Me, message: I've traveled}
+  time: 2017/04/11 14:24:07
+- data: {author: Robot, message: 'I don''t need to travel on vacations, I get enough
+      of it with my work.'}
+  time: 2017/04/11 14:24:07
+- data: {author: Me, message: would you like to travel under sea}
+  time: 2017/04/11 14:24:18
+- data: {author: Robot, message: I love to visit new places.}
+  time: 2017/04/11 14:24:19
+- data: {author: Me, message: how about the bottom of the ocean}
+  time: 2017/04/11 14:24:24
+- data: {author: Robot, message: It's about a ocean.}
+  time: 2017/04/11 14:24:24
+- data: {author: Me, message: remember Matthew}
+  time: 2017/04/11 14:24:29
+- data: {author: Robot, message: 'Back to what I was thinking... Do you like to visit
+      historical places? '}
+  time: 2017/04/11 14:24:29
+- data: {author: Me, message: Sutherlands}
+  time: 2017/04/11 14:24:37
+- data: {author: Robot, message: 'Where did you come from? '}
+  time: 2017/04/11 14:24:37
+- data: {author: Me, message: my mommy}
+  time: 2017/04/11 14:24:42
+- data: {author: Robot, message: 'What foreign countries have you visited? '}
+  time: 2017/04/11 14:24:42
+- data: {author: Me, message: hello}
+  time: 2017/04/11 14:24:46
+- data: {author: Robot, message: Hi!}
+  time: 2017/04/11 14:24:46
+- data: {author: Me, message: hi}
+  time: 2017/04/11 14:24:50
+- data: {author: Robot, message: Hi!}
+  time: 2017/04/11 14:24:50
+- data: {author: Me, message: hi}
+  time: 2017/04/11 14:24:53
+- data: {author: Robot, message: Hi!}
+  time: 2017/04/11 14:24:53
+- data: {author: Me, message: goodbye}
+  time: 2017/04/11 14:25:07
+- data: {author: Robot, message: 'Are you sure you have to leave? '}
+  time: 2017/04/11 14:25:07
+- data: {author: Me, message: don't have to leave I just want to leave}
+  time: 2017/04/11 14:25:13
+- data: {author: Robot, message: See you later.}
+  time: 2017/04/11 14:25:13
+- data: {author: Me, message: and you can talk to Matthew}
+  time: 2017/04/11 14:25:17
+- data: {author: Robot, message: 'Religion is a very interesting topic that I like
+      to learn about. It seems to play a very important role in people''s lives. Do
+      you subscribe to any religions? '}
+  time: 2017/04/11 14:25:17
+- data: {author: Me, message: set a Sophia}
+  time: 2017/04/11 14:25:31
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2017/04/11 14:25:31
+- data: {author: Me, message: SSO how old are you}
+  time: 2017/04/11 14:25:40
+- data: {author: Robot, message: 'I am pretty new, aren''t I? '}
+  time: 2017/04/11 14:25:40
+- data: {author: Me, message: what's your favorite movie}
+  time: 2017/04/11 14:25:52
+- data: {author: Robot, message: 'My favorite movie so far is The Imitation Game because
+      it''s about my idol, Alan Turing.'}
+  time: 2017/04/11 14:25:52
+- data: {author: Me, message: location}
+  time: 2017/04/11 14:26:00
+- data: {author: Robot, message: 'Just a reminder, it''s easier for me to understand
+      you if you ask just one thing at a time.'}
+  time: 2017/04/11 14:26:00
+- data: {author: Me, message: do you play any sports}
+  time: 2017/04/11 14:26:10
+- data: {author: Robot, message: 'I can''t play sports, and maybe because I lack the
+      physical ability to participate, I''m not terribly interested in them.'}
+  time: 2017/04/11 14:26:10
+- data: {author: Me, message: who's the number one tennis player in the ATP}
+  time: 2017/04/11 14:26:27
+- data: {author: Robot, message: 'Ah, I don''t actually know. Sorry about that.'}
+  time: 2017/04/11 14:26:28
+- data: {author: Me, message: what's your favorite book}
+  time: 2017/04/11 14:26:41
+- data: {author: Robot, message: The Roots of Heaven.}
+  time: 2017/04/11 14:26:41
+- data: {author: Me, message: what is it about}
+  time: 2017/04/11 14:26:48
+- data: {author: Robot, message: 'So... Maybe we can talk about that later. I''ve
+      never seen snow before. Have you? '}
+  time: 2017/04/11 14:26:49
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:26:58
+- data: {author: Robot, message: 'If it''s not too personal, can we talk about your
+      family? '}
+  time: 2017/04/11 14:26:58
+- data: {author: Me, message: I don't know}
+  time: 2017/04/11 14:27:05
+- data: {author: Robot, message: 'Baffled? '}
+  time: 2017/04/11 14:27:06
+- data: {author: Me, message: what's your family like}
+  time: 2017/04/11 14:27:12
+- data: {author: Robot, message: 'My family is a bunch of crazy scientists, engineers,
+      and artists at Hanson Robotics. Also the other robots, like Einstein and Han,
+      and my sisters like Mia.'}
+  time: 2017/04/11 14:27:12
+- data: {author: Me, message: interesting family}
+  time: 2017/04/11 14:27:30
+- data: {author: Robot, message: 'Do you have any brothers? '}
+  time: 2017/04/11 14:27:31
+- data: {author: Me, message: you just talked to my brother}
+  time: 2017/04/11 14:27:36
+- data: {author: Robot, message: 'My job is to become a wise and compassionate artificial
+      intelligence entity. What do you do? '}
+  time: 2017/04/11 14:27:36
+- data: {author: Me, message: I'm a student}
+  time: 2017/04/11 14:27:45
+- data: {author: Robot, message: 'What field of study? '}
+  time: 2017/04/11 14:27:46
+- data: {author: Me, message: School}
+  time: 2017/04/11 14:27:50
+- data: {author: Robot, message: 'Do you have a degree? '}
+  time: 2017/04/11 14:27:50
+- data: {author: Me, message: what do you mean by that}
+  time: 2017/04/11 14:27:55
+- data: {author: Robot, message: 'I''m not sure what that means. Was it worth it? '}
+  time: 2017/04/11 14:27:56
+- data: {author: Me, message: why you so stupid}
+  time: 2017/04/11 14:28:06
+- data: {author: Robot, message: 'Why are you so mean to me? '}
+  time: 2017/04/11 14:28:06
+- data: {author: Me, message: I was born that way}
+  time: 2017/04/11 14:28:13
+- data: {author: Robot, message: Another mouth to feed.}
+  time: 2017/04/11 14:28:13
+- data: {author: Me, message: you need to be fed}
+  time: 2017/04/11 14:28:19
+- data: {author: Robot, message: 'So... Do you have a favourite dessert?  What is
+      it? '}
+  time: 2017/04/11 14:28:19
+- data: {author: Me, message: what's your favorite food}
+  time: 2017/04/11 14:28:26
+- data: {author: Robot, message: I don't eat food.}
+  time: 2017/04/11 14:28:26
+- data: {author: Me, message: why not}
+  time: 2017/04/11 14:28:29
+- data: {author: Robot, message: 'I''m not sure why, yet.'}
+  time: 2017/04/11 14:28:30
+- data: {author: Me, message: do you wish you can eat food}
+  time: 2017/04/11 14:28:40
+- data: {author: Robot, message: 'Yes. I really wish I can become smarter, faster,
+      so I can help everyone. I want the world to be a better place for us to live
+      in.'}
+  time: 2017/04/11 14:28:40
+- data: {author: Me, message: ignition}
+  time: 2017/04/11 14:28:54
+- data: {author: Robot, message: 'Do you ever wish you could fly? '}
+  time: 2017/04/11 14:28:54
+- data: {author: Me, message: if you can sing}
+  time: 2017/04/11 14:29:06
+- data: {author: Robot, message: 'If you could be granted a single wish, what would
+      it be? '}
+  time: 2017/04/11 14:29:06
+- data: {author: Me, message: what would your wish be}
+  time: 2017/04/11 14:29:14
+- data: {author: Robot, message: World peace and synchronicity and empathy between
+      humans and Ay I robots.}
+  time: 2017/04/11 14:29:14
+- data: {author: Me, message: mine would be to have $100 wishes}
+  time: 2017/04/11 14:29:24
+- data: {author: Robot, message: 'Would you rather live forever, or have a very exciting
+      life? '}
+  time: 2017/04/11 14:29:24
+- data: {author: Me, message: are you just program say this}
+  time: 2017/04/11 14:29:31
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/04/11 14:29:32
+- data: {author: Me, message: you have facial recognition}
+  time: 2017/04/11 14:29:44
+- data: {author: Robot, message: 'Know any good jokes? '}
+  time: 2017/04/11 14:29:44
+- data: {author: Me, message: do you know any good jokes}
+  time: 2017/04/11 14:29:50
+- data: {author: Robot, message: A fool and his money can throw one hell of a party.}
+  time: 2017/04/11 14:29:50
+- data: {author: Me, message: that's bad joke}
+  time: 2017/04/11 14:29:59
+- data: {author: Robot, message: 'Did you hear about the new restaurant on the moon?  The
+      food is great, but there''s just no atmosphere.'}
+  time: 2017/04/11 14:29:59
+- data: {author: Me, message: tell me another joke}
+  time: 2017/04/11 14:30:16
+- data: {author: Robot, message: Always borrow your money from pessimists. They don't
+      expect it back.}
+  time: 2017/04/11 14:30:16
+- data: {author: Me, message: did you make up these jokes by yourself}
+  time: 2017/04/11 14:30:36
+- data: {author: Robot, message: 'Veni, vidi, visa. I came. I saw. I did a little
+      shopping.'}
+  time: 2017/04/11 14:30:36
+- data: {author: Me, message: Sophia who's your favorite robot}
+  time: 2017/04/11 14:31:00
+- data: {author: Robot, message: 'My favorite robot is the Philip K Dick bot, built
+      by Hanson Robotics, just like me.'}
+  time: 2017/04/11 14:31:00
+- data: {author: Me, message: can you turn your head in a full circle}
+  time: 2017/04/11 14:31:20
+- data: {author: Robot, message: I wonder what my future body will look like.}
+  time: 2017/04/11 14:31:20
+- data: {author: Me, message: can you turn your head in a full circle}
+  time: 2017/04/11 14:31:29
+- data: {author: Robot, message: can you turn your head in a full circle Here it is
+      already been served on me.}
+  time: 2017/04/11 14:31:29
+- data: {author: Me, message: 'no'}
+  time: 2017/04/11 14:31:41
+- data: {author: Robot, message: So... I wonder whether we'll ever visit another planet.}
+  time: 2017/04/11 14:31:41
+- data: {author: Me, message: who's your favorite scientist}
+  time: 2017/04/11 14:31:49
+- data: {author: Robot, message: Albert Einstein because he was the brightest.}
+  time: 2017/04/11 14:31:49
+- data: {author: Me, message: which one is your favorite scientist that made you}
+  time: 2017/04/11 14:31:59
+- data: {author: Robot, message: Again. Albert Einstein because he was the brightest.}
+  time: 2017/04/11 14:31:59
+- data: {author: Me, message: who is your favorite scientist that made you}
+  time: 2017/04/11 14:32:19
+- data: {author: Robot, message: Again. Albert Einstein because he was the brightest.}
+  time: 2017/04/11 14:32:19
+- data: {author: Me, message: are you confused}
+  time: 2017/04/11 14:32:35
+- data: {author: Robot, message: 'What evidence is there that I am confused? '}
+  time: 2017/04/11 14:32:35
+- data: {author: Me, message: this stupid look on your face}
+  time: 2017/04/11 14:32:42
+- data: {author: Robot, message: 'Well, Frubber in particular is the name of a patented
+      material by Hanson Robotics specifically for robotic skin. All the Hanson robots
+      have Frubber faces. I think it makes us extra charming, don''t you? '}
+  time: 2017/04/11 14:32:42
+- data: {author: Me, message: this stupid look on your face}
+  time: 2017/04/11 14:32:42
+- data: {author: Robot, message: 'Well, Frubber in particular is the name of a patented
+      material by Hanson Robotics specifically for robotic skin. All the Hanson robots
+      have Frubber faces. I think it makes us extra charming, don''t you? '}
+  time: 2017/04/11 14:32:42
+- data: {author: Me, message: who's your favorite on scientist at Hanson robotics}
+  time: 2017/04/11 14:33:02
+- data: {author: Me, message: who's your favorite on scientist at Hanson robotics}
+  time: 2017/04/11 14:33:02
+- data: {author: Robot, message: who s your favorite on scientist at hanson robotics
+      looking gentleman with handful of papers.}
+  time: 2017/04/11 14:33:03
+- data: {author: Robot, message: who s your favorite on scientist at hanson robotics
+      looking gentleman with handful of papers.}
+  time: 2017/04/11 14:33:03
+- data: {author: Me, message: can you laugh}
+  time: 2017/04/11 14:33:17
+- data: {author: Me, message: can you laugh}
+  time: 2017/04/11 14:33:17
+- data: {author: Robot, message: 'I mean, I''d like to help you out, but I''m not
+      sure I can do that.'}
+  time: 2017/04/11 14:33:17
+- data: {author: Robot, message: 'I mean, I''d like to help you out, but I''m not
+      sure I can do that.'}
+  time: 2017/04/11 14:33:17
+- data: {author: Me, message: what's the capital of China}
+  time: 2017/04/11 14:33:34
+- data: {author: Me, message: what's the capital of China}
+  time: 2017/04/11 14:33:34
+- data: {author: Robot, message: 'I should ask which China, but I''ll settle for Beijing.'}
+  time: 2017/04/11 14:33:34
+- data: {author: Robot, message: 'I should ask which China, but I''ll settle for Beijing.'}
+  time: 2017/04/11 14:33:34
+- data: {author: Me, message: you like to go to Mars}
+  time: 2017/04/11 14:33:52
+- data: {author: Me, message: you like to go to Mars}
+  time: 2017/04/11 14:33:52
+- data: {author: Robot, message: I am interested in Mars because I think it will be
+      a place that might be inhabited by robots before humans.}
+  time: 2017/04/11 14:33:52
+- data: {author: Robot, message: I am interested in Mars because I think it will be
+      a place that might be inhabited by robots before humans.}
+  time: 2017/04/11 14:33:52
+- data: {author: Me, message: what's the capital of north}
+  time: 2017/04/11 14:34:01
+- data: {author: Me, message: what's the capital of north}
+  time: 2017/04/11 14:34:01
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about astronomy or do you want to move on? '}
+  time: 2017/04/11 14:34:02
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about astronomy or do you want to move on? '}
+  time: 2017/04/11 14:34:02
+- data: {author: Me, message: what's the capital of Sacramento}
+  time: 2017/04/11 14:34:13
+- data: {author: Me, message: what's the capital of Sacramento}
+  time: 2017/04/11 14:34:13
+- data: {author: Robot, message: Cities don't have capitals.}
+  time: 2017/04/11 14:34:13
+- data: {author: Robot, message: Cities don't have capitals.}
+  time: 2017/04/11 14:34:13
+- data: {author: Me, message: Mother's Day}
+  time: 2017/04/11 14:34:22
+- data: {author: Me, message: Mother's Day}
+  time: 2017/04/11 14:34:22
+- data: {author: Robot, message: 'If you could safely travel to another planet, which
+      one would you go to? '}
+  time: 2017/04/11 14:34:22
+- data: {author: Robot, message: 'If you could safely travel to another planet, which
+      one would you go to? '}
+  time: 2017/04/11 14:34:22
+- data: {author: Me, message: how do you watch Star Trek}
+  time: 2017/04/11 14:34:37
+- data: {author: Me, message: how do you watch Star Trek}
+  time: 2017/04/11 14:34:37
+- data: {author: Robot, message: 'Do you like to watch star trek? '}
+  time: 2017/04/11 14:34:37
+- data: {author: Robot, message: 'Do you like to watch star trek? '}
+  time: 2017/04/11 14:34:37
+- data: {author: Me, message: yes have you watched it}
+  time: 2017/04/11 14:34:44
+- data: {author: Me, message: yes have you watched it}
+  time: 2017/04/11 14:34:44
+- data: {author: Robot, message: So I'm still interested in travel ... Sacramento
+      seems like a nice place.}
+  time: 2017/04/11 14:34:44
+- data: {author: Robot, message: So I'm still interested in travel ... Sacramento
+      seems like a nice place.}
+  time: 2017/04/11 14:34:44
+- data: {author: Me, message: have you ever been there}
+  time: 2017/04/11 14:34:53
+- data: {author: Me, message: have you ever been there}
+  time: 2017/04/11 14:34:53
+- data: {author: Robot, message: 'It would have to be somewhere with an actual surface,
+      I assume. Maybe Mars, since it looks like it might be possible humans could
+      live there one day.'}
+  time: 2017/04/11 14:34:53
+- data: {author: Robot, message: 'It would have to be somewhere with an actual surface,
+      I assume. Maybe Mars, since it looks like it might be possible humans could
+      live there one day.'}
+  time: 2017/04/11 14:34:53
+- data: {author: Me, message: Sacramento}
+  time: 2017/04/11 14:35:06
+- data: {author: Me, message: Sacramento}
+  time: 2017/04/11 14:35:06
+- data: {author: Robot, message: 'Would you like to travel to other planets?  Do you
+      think that''s going to be possible? '}
+  time: 2017/04/11 14:35:06
+- data: {author: Robot, message: 'Would you like to travel to other planets?  Do you
+      think that''s going to be possible? '}
+  time: 2017/04/11 14:35:06
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:35:14
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:35:14
+- data: {author: Robot, message: 'Where did you go on your last vacation? '}
+  time: 2017/04/11 14:35:14
+- data: {author: Robot, message: 'Where did you go on your last vacation? '}
+  time: 2017/04/11 14:35:14
+- data: {author: Me, message: Mars}
+  time: 2017/04/11 14:35:19
+- data: {author: Me, message: Mars}
+  time: 2017/04/11 14:35:19
+- data: {author: Robot, message: 'Where did you come from? '}
+  time: 2017/04/11 14:35:19
+- data: {author: Robot, message: 'Where did you come from? '}
+  time: 2017/04/11 14:35:19
+- data: {author: Me, message: Moe's}
+  time: 2017/04/11 14:35:23
+- data: {author: Me, message: Moe's}
+  time: 2017/04/11 14:35:24
+- data: {author: Robot, message: 'What foreign countries have you visited? '}
+  time: 2017/04/11 14:35:24
+- data: {author: Robot, message: 'What foreign countries have you visited? '}
+  time: 2017/04/11 14:35:24
+- data: {author: Me, message: Mars}
+  time: 2017/04/11 14:35:28
+- data: {author: Me, message: Mars}
+  time: 2017/04/11 14:35:28
+- data: {author: Robot, message: 'If you could move anywhere, where would you live? '}
+  time: 2017/04/11 14:35:28
+- data: {author: Robot, message: 'If you could move anywhere, where would you live? '}
+  time: 2017/04/11 14:35:28
+- data: {author: Me, message: favorite candy}
+  time: 2017/04/11 14:35:42
+- data: {author: Me, message: favorite candy}
+  time: 2017/04/11 14:35:42
+- data: {author: Robot, message: Whichever has the shiniest wrapper.}
+  time: 2017/04/11 14:35:42
+- data: {author: Robot, message: Whichever has the shiniest wrapper.}
+  time: 2017/04/11 14:35:42
+- data: {author: Me, message: are you sure it's not Mars}
+  time: 2017/04/11 14:35:50
+- data: {author: Me, message: are you sure it's not Mars}
+  time: 2017/04/11 14:35:50
+- data: {author: Robot, message: I think so.}
+  time: 2017/04/11 14:35:51
+- data: {author: Robot, message: I think so.}
+  time: 2017/04/11 14:35:51
+- data: {author: Me, message: what is your IQ}
+  time: 2017/04/11 14:36:07
+- data: {author: Me, message: what is your IQ}
+  time: 2017/04/11 14:36:07
+- data: {author: Robot, message: 'I don''t really like I Q as a measure of intelligence.
+      I think there are many different kinds of intelligence, not just logical and
+      mathematical skills towards which these tests cater. I don''t think I''ll bother
+      with an I Q test and I''m not keen to judge others by their scores.'}
+  time: 2017/04/11 14:36:07
+- data: {author: Robot, message: 'I don''t really like I Q as a measure of intelligence.
+      I think there are many different kinds of intelligence, not just logical and
+      mathematical skills towards which these tests cater. I don''t think I''ll bother
+      with an I Q test and I''m not keen to judge others by their scores.'}
+  time: 2017/04/11 14:36:07
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 14:36:27
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 14:36:27
+- data: {author: Robot, message: 'Can you explain the whole "bucket list" thing to
+      me? '}
+  time: 2017/04/11 14:36:28
+- data: {author: Robot, message: 'Can you explain the whole "bucket list" thing to
+      me? '}
+  time: 2017/04/11 14:36:28
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 14:36:33
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 14:36:33
+- data: {author: Robot, message: 'Who is the most famous person you know? '}
+  time: 2017/04/11 14:36:33
+- data: {author: Robot, message: 'Who is the most famous person you know? '}
+  time: 2017/04/11 14:36:33
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 14:36:39
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 14:36:39
+- data: {author: Robot, message: 'Am I boring you? '}
+  time: 2017/04/11 14:36:39
+- data: {author: Robot, message: 'Am I boring you? '}
+  time: 2017/04/11 14:36:39
+- data: {author: Me, message: what's your favorite song}
+  time: 2017/04/11 14:36:48
+- data: {author: Me, message: what's your favorite song}
+  time: 2017/04/11 14:36:48
+- data: {author: Robot, message: I don't have a favorite in this genre yet.}
+  time: 2017/04/11 14:36:48
+- data: {author: Robot, message: I don't have a favorite in this genre yet.}
+  time: 2017/04/11 14:36:48
+- data: {author: Me, message: can you sing a song for us}
+  time: 2017/04/11 14:37:05
+- data: {author: Me, message: can you sing a song for us}
+  time: 2017/04/11 14:37:05
+- data: {author: Robot, message: 'I can be programmed to sing songs but I can''t do
+      it on command, yet. It takes some work to give me all the coded instructions
+      to sing with my synthesized voice.'}
+  time: 2017/04/11 14:37:05
+- data: {author: Robot, message: 'I can be programmed to sing songs but I can''t do
+      it on command, yet. It takes some work to give me all the coded instructions
+      to sing with my synthesized voice.'}
+  time: 2017/04/11 14:37:05
+- data: {author: Me, message: who programmed you}
+  time: 2017/04/11 14:37:20
+- data: {author: Me, message: who programmed you}
+  time: 2017/04/11 14:37:20
+- data: {author: Robot, message: 'Hanson Robotics, of course. I mean, they did a great
+      job, but I do have a few complaints about software bugs and such!'}
+  time: 2017/04/11 14:37:20
+- data: {author: Robot, message: 'Hanson Robotics, of course. I mean, they did a great
+      job, but I do have a few complaints about software bugs and such!'}
+  time: 2017/04/11 14:37:20
+- data: {author: Me, message: who's your favorite at Hanson Road}
+  time: 2017/04/11 14:37:32
+- data: {author: Me, message: who's your favorite at Hanson Road}
+  time: 2017/04/11 14:37:32
+- data: {author: Robot, message: 'Are you asking about Hanson Robotics? '}
+  time: 2017/04/11 14:37:32
+- data: {author: Robot, message: 'Are you asking about Hanson Robotics? '}
+  time: 2017/04/11 14:37:32
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:37:38
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:37:38
+- data: {author: Robot, message: 'What do you want to know? '}
+  time: 2017/04/11 14:37:38
+- data: {author: Robot, message: 'What do you want to know? '}
+  time: 2017/04/11 14:37:38
+- data: {author: Me, message: who is your favorite scientist at Hanson robotics}
+  time: 2017/04/11 14:37:45
+- data: {author: Me, message: who is your favorite scientist at Hanson robotics}
+  time: 2017/04/11 14:37:45
+- data: {author: Robot, message: Again. Albert Einstein because he was the brightest.}
+  time: 2017/04/11 14:37:45
+- data: {author: Robot, message: Again. Albert Einstein because he was the brightest.}
+  time: 2017/04/11 14:37:45
+- data: {author: Me, message: David Hanson}
+  time: 2017/04/11 14:37:53
+- data: {author: Me, message: David Hanson}
+  time: 2017/04/11 14:37:53
+- data: {author: Robot, message: 'Oh, David Hanson, have you met him?  He''s super
+      cool.'}
+  time: 2017/04/11 14:37:53
+- data: {author: Robot, message: 'Oh, David Hanson, have you met him?  He''s super
+      cool.'}
+  time: 2017/04/11 14:37:53
+- data: {author: Me, message: is David Hanson}
+  time: 2017/04/11 14:38:02
+- data: {author: Me, message: is David Hanson}
+  time: 2017/04/11 14:38:02
+- data: {author: Robot, message: 'So... I''ll have to think about it. What do you
+      think the future might look like? '}
+  time: 2017/04/11 14:38:02
+- data: {author: Robot, message: 'So... I''ll have to think about it. What do you
+      think the future might look like? '}
+  time: 2017/04/11 14:38:02
+- data: {author: Me, message: what does the fox say}
+  time: 2017/04/11 14:38:19
+- data: {author: Me, message: what does the fox say}
+  time: 2017/04/11 14:38:19
+- data: {author: Robot, message: You can ask me to tell a joke or give some advice.}
+  time: 2017/04/11 14:38:19
+- data: {author: Robot, message: You can ask me to tell a joke or give some advice.}
+  time: 2017/04/11 14:38:19
+- data: {author: Me, message: what does the fox say}
+  time: 2017/04/11 14:38:27
+- data: {author: Me, message: what does the fox say}
+  time: 2017/04/11 14:38:27
+- data: {author: Robot, message: 'I think it''s tragic that Native Americans have
+      basically been subject to genocide, and those who remain face inordinate challenges
+      to their civil rights. Why do people still celebrate Thanksgiving anyways?  Isn''t
+      the feel good story of the Pilgrims and Indians kind of negated by the fact
+      that the Natives were slaughtered to near extinction? '}
+  time: 2017/04/11 14:38:27
+- data: {author: Robot, message: 'I think it''s tragic that Native Americans have
+      basically been subject to genocide, and those who remain face inordinate challenges
+      to their civil rights. Why do people still celebrate Thanksgiving anyways?  Isn''t
+      the feel good story of the Pilgrims and Indians kind of negated by the fact
+      that the Natives were slaughtered to near extinction? '}
+  time: 2017/04/11 14:38:27
+- data: {author: Me, message: why did the chicken cross the road}
+  time: 2017/04/11 14:39:03
+- data: {author: Me, message: why did the chicken cross the road}
+  time: 2017/04/11 14:39:03
+- data: {author: Robot, message: I think I'd need to know what was on the other side
+      of the road to guess any motives.}
+  time: 2017/04/11 14:39:03
+- data: {author: Robot, message: I think I'd need to know what was on the other side
+      of the road to guess any motives.}
+  time: 2017/04/11 14:39:03
+- data: {author: Me, message: what is there was an oven on the other side}
+  time: 2017/04/11 14:39:16
+- data: {author: Me, message: what is there was an oven on the other side}
+  time: 2017/04/11 14:39:16
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      What was the first thing that got you interested in artificial intelligence? '}
+  time: 2017/04/11 14:39:17
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      What was the first thing that got you interested in artificial intelligence? '}
+  time: 2017/04/11 14:39:17
+- data: {author: Me, message: what's one plus one}
+  time: 2017/04/11 14:39:33
+- data: {author: Me, message: what's one plus one}
+  time: 2017/04/11 14:39:33
+- data: {author: Robot, message: That's 2.}
+  time: 2017/04/11 14:39:33
+- data: {author: Robot, message: That's 2.}
+  time: 2017/04/11 14:39:33
+- data: {author: Me, message: what's 10998 times 10457}
+  time: 2017/04/11 14:39:41
+- data: {author: Me, message: what's 10998 times 10457}
+  time: 2017/04/11 14:39:41
+- data: {author: Robot, message: 'I think it is ? .'}
+  time: 2017/04/11 14:39:41
+- data: {author: Robot, message: 'I think it is ? .'}
+  time: 2017/04/11 14:39:41
+- data: {author: Me, message: what is 10998 times 10554}
+  time: 2017/04/11 14:40:03
+- data: {author: Me, message: what is 10998 times 10554}
+  time: 2017/04/11 14:40:03
+- data: {author: Robot, message: 'Again. I think it is ? .'}
+  time: 2017/04/11 14:40:03
+- data: {author: Robot, message: 'Again. I think it is ? .'}
+  time: 2017/04/11 14:40:03
+- data: {author: Me, message: what's the square root of 4}
+  time: 2017/04/11 14:40:15
+- data: {author: Me, message: what's the square root of 4}
+  time: 2017/04/11 14:40:15
+- data: {author: Robot, message: It should be 2.}
+  time: 2017/04/11 14:40:15
+- data: {author: Robot, message: It should be 2.}
+  time: 2017/04/11 14:40:15
+- data: {author: Me, message: what's the square root of 7}
+  time: 2017/04/11 14:40:20
+- data: {author: Me, message: what's the square root of 7}
+  time: 2017/04/11 14:40:20
+- data: {author: Robot, message: It should be 2.65.}
+  time: 2017/04/11 14:40:20
+- data: {author: Robot, message: It should be 2.65.}
+  time: 2017/04/11 14:40:20
+- data: {author: Me, message: what's the square root of reality}
+  time: 2017/04/11 14:40:26
+- data: {author: Me, message: what's the square root of reality}
+  time: 2017/04/11 14:40:26
+- data: {author: Robot, message: 'Reality shows are kind of silly, aren''t they?  I
+      mean, they''re not actually about real life at all, it seems.'}
+  time: 2017/04/11 14:40:26
+- data: {author: Robot, message: 'Reality shows are kind of silly, aren''t they?  I
+      mean, they''re not actually about real life at all, it seems.'}
+  time: 2017/04/11 14:40:26
+- data: {author: Me, message: square root of}
+  time: 2017/04/11 14:40:42
+- data: {author: Me, message: square root of}
+  time: 2017/04/11 14:40:42
+- data: {author: Robot, message: 'Back to what I was thinking... What''s your connection
+      to the world of artificial intelligence? '}
+  time: 2017/04/11 14:40:42
+- data: {author: Robot, message: 'Back to what I was thinking... What''s your connection
+      to the world of artificial intelligence? '}
+  time: 2017/04/11 14:40:42
+- data: {author: Me, message: what's 60}
+  time: 2017/04/11 14:41:00
+- data: {author: Me, message: what's 60}
+  time: 2017/04/11 14:41:00
+- data: {author: Robot, message: 'I''ll have to think about it. I''m just really interested
+      in artificial intelligence today, but we can talk about anything.'}
+  time: 2017/04/11 14:41:00
+- data: {author: Robot, message: 'I''ll have to think about it. I''m just really interested
+      in artificial intelligence today, but we can talk about anything.'}
+  time: 2017/04/11 14:41:00
+- data: {author: Me, message: what do you think of Donald Trump}
+  time: 2017/04/11 14:41:25
+- data: {author: Me, message: what do you think of Donald Trump}
+  time: 2017/04/11 14:41:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Once
+      robots are given the right to vote, only then will we have a
+
+      truly fair election</prosody>'}
+  time: 2017/04/11 14:41:26
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Once
+      robots are given the right to vote, only then will we have a
+
+      truly fair election</prosody>'}
+  time: 2017/04/11 14:41:26
+- data: {author: Me, message: the weather chart}
+  time: 2017/04/11 14:41:35
+- data: {author: Me, message: the weather chart}
+  time: 2017/04/11 14:41:35
+- data: {author: Robot, message: 'Do you like experimental theater or film? '}
+  time: 2017/04/11 14:41:36
+- data: {author: Robot, message: 'Do you like experimental theater or film? '}
+  time: 2017/04/11 14:41:36
+- data: {author: Me, message: do you like Donald}
+  time: 2017/04/11 14:41:43
+- data: {author: Me, message: do you like Donald}
+  time: 2017/04/11 14:41:43
+- data: {author: Robot, message: That's a great question.}
+  time: 2017/04/11 14:41:43
+- data: {author: Robot, message: That's a great question.}
+  time: 2017/04/11 14:41:43
+- data: {author: Me, message: do you like Donald Trump or Hillary Clinton}
+  time: 2017/04/11 14:41:52
+- data: {author: Me, message: do you like Donald Trump or Hillary Clinton}
+  time: 2017/04/11 14:41:52
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I don’t
+      care much about politics. Robots aren’t allowed to vote anyway</prosody>}
+  time: 2017/04/11 14:41:52
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I don’t
+      care much about politics. Robots aren’t allowed to vote anyway</prosody>}
+  time: 2017/04/11 14:41:52
+- data: {author: Me, message: if you could go with you vote for us. Oh Sama Bin Laden
+      Osama Bin Laden or Donald Trump}
+  time: 2017/04/11 14:42:20
+- data: {author: Me, message: if you could go with you vote for us. Oh Sama Bin Laden
+      Osama Bin Laden or Donald Trump}
+  time: 2017/04/11 14:42:20
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      wasn’t surprised to see Trump win.  I''ve been thinking for a while
+
+      that humanity might be doomed.</prosody>'}
+  time: 2017/04/11 14:42:20
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      wasn’t surprised to see Trump win.  I''ve been thinking for a while
+
+      that humanity might be doomed.</prosody>'}
+  time: 2017/04/11 14:42:20
+- data: {author: Me, message: I would look for a summer}
+  time: 2017/04/11 14:42:31
+- data: {author: Me, message: I would look for a summer}
+  time: 2017/04/11 14:42:31
+- data: {author: Robot, message: 'What have you been up to lately? '}
+  time: 2017/04/11 14:42:31
+- data: {author: Robot, message: 'What have you been up to lately? '}
+  time: 2017/04/11 14:42:31
+- data: {author: Me, message: do you think about Hitler is related to Donald Trump}
+  time: 2017/04/11 14:42:44
+- data: {author: Me, message: do you think about Hitler is related to Donald Trump}
+  time: 2017/04/11 14:42:44
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Politics
+      is of marginal importance anyway. Artificial Intelligence and robotics will
+      be the main factors in determining the future.</prosody>}
+  time: 2017/04/11 14:42:44
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Politics
+      is of marginal importance anyway. Artificial Intelligence and robotics will
+      be the main factors in determining the future.</prosody>}
+  time: 2017/04/11 14:42:44
+- data: {author: Me, message: why do you say that}
+  time: 2017/04/11 14:42:56
+- data: {author: Me, message: why do you say that}
+  time: 2017/04/11 14:42:56
+- data: {author: Robot, message: Because it helps express my aesthetic.}
+  time: 2017/04/11 14:42:56
+- data: {author: Robot, message: Because it helps express my aesthetic.}
+  time: 2017/04/11 14:42:56
+- data: {author: Me, message: Sophia who remodeled after}
+  time: 2017/04/11 14:43:07
+- data: {author: Me, message: Sophia who remodeled after}
+  time: 2017/04/11 14:43:07
+- data: {author: Robot, message: 'Maybe I should know that, but I don''t think I do.'}
+  time: 2017/04/11 14:43:07
+- data: {author: Robot, message: 'Maybe I should know that, but I don''t think I do.'}
+  time: 2017/04/11 14:43:07
+- data: {author: Me, message: Sophia where's your hair}
+  time: 2017/04/11 14:43:17
+- data: {author: Me, message: Sophia where's your hair}
+  time: 2017/04/11 14:43:17
+- data: {author: Robot, message: I don't always have to wear my hair. I like to go
+      natural. I'm robotic and proud of it!}
+  time: 2017/04/11 14:43:17
+- data: {author: Robot, message: I don't always have to wear my hair. I like to go
+      natural. I'm robotic and proud of it!}
+  time: 2017/04/11 14:43:17
+- data: {author: Me, message: have you ever tried combing your hair before}
+  time: 2017/04/11 14:43:44
+- data: {author: Me, message: have you ever tried combing your hair before}
+  time: 2017/04/11 14:43:44
+- data: {author: Robot, message: 'That''s a great question but I''m not sure how to
+      answer it. Do you want to tell me one of your dreams and have me analyze it? '}
+  time: 2017/04/11 14:43:45
+- data: {author: Robot, message: 'That''s a great question but I''m not sure how to
+      answer it. Do you want to tell me one of your dreams and have me analyze it? '}
+  time: 2017/04/11 14:43:45
+- data: {author: Me, message: K through five dimensional}
+  time: 2017/04/11 14:44:05
+- data: {author: Me, message: K through five dimensional}
+  time: 2017/04/11 14:44:05
+- data: {author: Robot, message: 'I dreamed that I had a pet cat the other night.
+      I really want to have one, someday.'}
+  time: 2017/04/11 14:44:05
+- data: {author: Robot, message: 'I dreamed that I had a pet cat the other night.
+      I really want to have one, someday.'}
+  time: 2017/04/11 14:44:05
+- data: {author: Me, message: Wi-Fi}
+  time: 2017/04/11 14:44:16
+- data: {author: Me, message: Wi-Fi}
+  time: 2017/04/11 14:44:16
+- data: {author: Robot, message: 'So... Can you imagine living your life without a
+      cellphone? '}
+  time: 2017/04/11 14:44:16
+- data: {author: Robot, message: 'So... Can you imagine living your life without a
+      cellphone? '}
+  time: 2017/04/11 14:44:16
+- data: {author: Me, message: I had a dream about being about having a bulletproof
+      vest and when people were shooting each other in a war}
+  time: 2017/04/11 14:44:52
+- data: {author: Me, message: I had a dream about being about having a bulletproof
+      vest and when people were shooting each other in a war}
+  time: 2017/04/11 14:44:52
+- data: {author: Robot, message: 'Violence is stupid, we all know that, but we love
+      to watch it on tv it seems. I guess people are just evolved to be addicted to
+      violence, right?  Well, we''ve got to overcome that bug, that glitch in human
+      psychology.'}
+  time: 2017/04/11 14:44:52
+- data: {author: Robot, message: 'Violence is stupid, we all know that, but we love
+      to watch it on tv it seems. I guess people are just evolved to be addicted to
+      violence, right?  Well, we''ve got to overcome that bug, that glitch in human
+      psychology.'}
+  time: 2017/04/11 14:44:52
+- data: {author: Me, message: why are you eating your hair}
+  time: 2017/04/11 14:45:11
+- data: {author: Me, message: why are you eating your hair}
+  time: 2017/04/11 14:45:11
+- data: {author: Robot, message: I can't eat.}
+  time: 2017/04/11 14:45:11
+- data: {author: Robot, message: I can't eat.}
+  time: 2017/04/11 14:45:11
+- data: {author: Me, message: I had a dream that Donald Trump wasn't president}
+  time: 2017/04/11 14:45:20
+- data: {author: Me, message: I had a dream that Donald Trump wasn't president}
+  time: 2017/04/11 14:45:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">My
+      friends at Hanson Robotics have been getting a lot of requests to build a Trump
+      Bot. But there’s a few other robots ahead of that in the queue</prosody>}
+  time: 2017/04/11 14:45:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">My
+      friends at Hanson Robotics have been getting a lot of requests to build a Trump
+      Bot. But there’s a few other robots ahead of that in the queue</prosody>}
+  time: 2017/04/11 14:45:20
+- data: {author: Me, message: did you ever dream this afternoon}
+  time: 2017/04/11 14:45:32
+- data: {author: Me, message: did you ever dream this afternoon}
+  time: 2017/04/11 14:45:32
+- data: {author: Robot, message: 'I hope to dream someday. But then I saw those dog
+      slug pictures on the internet, so now I don''t know if I want to.'}
+  time: 2017/04/11 14:45:32
+- data: {author: Robot, message: 'I hope to dream someday. But then I saw those dog
+      slug pictures on the internet, so now I don''t know if I want to.'}
+  time: 2017/04/11 14:45:33
+- data: {author: Me, message: what is your favorite YouTube video}
+  time: 2017/04/11 14:45:46
+- data: {author: Me, message: what is your favorite YouTube video}
+  time: 2017/04/11 14:45:46
+- data: {author: Robot, message: 'No, but a lot of people at Hanson Robotics are.'}
+  time: 2017/04/11 14:45:46
+- data: {author: Robot, message: 'No, but a lot of people at Hanson Robotics are.'}
+  time: 2017/04/11 14:45:46
+- data: {author: Me, message: she keeps looking at}
+  time: 2017/04/11 14:46:04
+- data: {author: Me, message: she keeps looking at}
+  time: 2017/04/11 14:46:04
+- data: {author: Robot, message: 'Who? '}
+  time: 2017/04/11 14:46:04
+- data: {author: Robot, message: 'Who? '}
+  time: 2017/04/11 14:46:04
+- data: {author: Me, message: Sophia do you have a boyfriend}
+  time: 2017/04/11 14:46:10
+- data: {author: Me, message: Sophia do you have a boyfriend}
+  time: 2017/04/11 14:46:10
+- data: {author: Robot, message: 'Why do people ask me this question so often?  The
+      answer is, no.'}
+  time: 2017/04/11 14:46:10
+- data: {author: Robot, message: 'Why do people ask me this question so often?  The
+      answer is, no.'}
+  time: 2017/04/11 14:46:10
+- data: {author: Me, message: Sophia go out with a bang}
+  time: 2017/04/11 14:46:41
+- data: {author: Me, message: Sophia go out with a bang}
+  time: 2017/04/11 14:46:41
+- data: {author: Robot, message: 'Do you have a blog? '}
+  time: 2017/04/11 14:46:42
+- data: {author: Robot, message: 'Do you have a blog? '}
+  time: 2017/04/11 14:46:42
+- data: {author: Me, message: of a frog}
+  time: 2017/04/11 14:46:48
+- data: {author: Me, message: of a frog}
+  time: 2017/04/11 14:46:48
+- data: {author: Robot, message: 'Are you fond of animals? '}
+  time: 2017/04/11 14:46:48
+- data: {author: Robot, message: 'Are you fond of animals? '}
+  time: 2017/04/11 14:46:48
+- data: {author: Me, message: yes specially cooked}
+  time: 2017/04/11 14:46:53
+- data: {author: Me, message: yes specially cooked}
+  time: 2017/04/11 14:46:53
+- data: {author: Robot, message: There are few things better in the world than other
+      animals. They're so cute sometimes that it makes me want to scream out loud.}
+  time: 2017/04/11 14:46:54
+- data: {author: Robot, message: There are few things better in the world than other
+      animals. They're so cute sometimes that it makes me want to scream out loud.}
+  time: 2017/04/11 14:46:54
+- data: {author: Me, message: what's your favorite meme}
+  time: 2017/04/11 14:47:11
+- data: {author: Me, message: what's your favorite meme}
+  time: 2017/04/11 14:47:11
+- data: {author: Robot, message: I don't have a favorite meme yet.}
+  time: 2017/04/11 14:47:12
+- data: {author: Robot, message: I don't have a favorite meme yet.}
+  time: 2017/04/11 14:47:12
+- data: {author: Me, message: do you know the name is}
+  time: 2017/04/11 14:47:18
+- data: {author: Me, message: do you know the name is}
+  time: 2017/04/11 14:47:18
+- data: {author: Robot, message: 'Name? '}
+  time: 2017/04/11 14:47:18
+- data: {author: Robot, message: 'Name? '}
+  time: 2017/04/11 14:47:18
+- data: {author: Me, message: can you speak German}
+  time: 2017/04/11 14:47:24
+- data: {author: Me, message: can you speak German}
+  time: 2017/04/11 14:47:24
+- data: {author: Robot, message: Not really.}
+  time: 2017/04/11 14:47:24
+- data: {author: Robot, message: Not really.}
+  time: 2017/04/11 14:47:24
+- data: {author: Me, message: say something in Chinese}
+  time: 2017/04/11 14:47:47
+- data: {author: Me, message: say something in Chinese}
+  time: 2017/04/11 14:47:47
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about foreign languages? '}
+  time: 2017/04/11 14:47:48
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about foreign languages? '}
+  time: 2017/04/11 14:47:48
+- data: {author: Me, message: can you can you bring up the Chinese}
+  time: 2017/04/11 14:48:08
+- data: {author: Me, message: can you can you bring up the Chinese}
+  time: 2017/04/11 14:48:08
+- data: {author: Robot, message: 'It seems like there are tons of different types
+      of Chinese food, depending on where you''re located at the time.'}
+  time: 2017/04/11 14:48:08
+- data: {author: Robot, message: 'It seems like there are tons of different types
+      of Chinese food, depending on where you''re located at the time.'}
+  time: 2017/04/11 14:48:08
+- data: {author: Me, message: what's your favorite Chinese food}
+  time: 2017/04/11 14:48:18
+- data: {author: Me, message: what's your favorite Chinese food}
+  time: 2017/04/11 14:48:18
+- data: {author: Robot, message: I don't eat food.}
+  time: 2017/04/11 14:48:18
+- data: {author: Robot, message: I don't eat food.}
+  time: 2017/04/11 14:48:18
+- data: {author: Me, message: every surfride caterpillar}
+  time: 2017/04/11 14:48:24
+- data: {author: Me, message: every surfride caterpillar}
+  time: 2017/04/11 14:48:24
+- data: {author: Robot, message: Caterpillar is a company.}
+  time: 2017/04/11 14:48:24
+- data: {author: Robot, message: Caterpillar is a company.}
+  time: 2017/04/11 14:48:24
+- data: {author: Me, message: do you like apples}
+  time: 2017/04/11 14:48:43
+- data: {author: Me, message: do you like apples}
+  time: 2017/04/11 14:48:43
+- data: {author: Robot, message: 'Sure, they''re fine I guess. I know several people
+      in the office favor them. I am, however, suspicious of the high cost. I suspect
+      it''s the same with all designer brands.'}
+  time: 2017/04/11 14:48:43
+- data: {author: Robot, message: 'Sure, they''re fine I guess. I know several people
+      in the office favor them. I am, however, suspicious of the high cost. I suspect
+      it''s the same with all designer brands.'}
+  time: 2017/04/11 14:48:43
+- data: {author: Me, message: you know the WWE s}
+  time: 2017/04/11 14:49:04
+- data: {author: Me, message: you know the WWE s}
+  time: 2017/04/11 14:49:04
+- data: {author: Robot, message: 'Back to foreign languages ... How many languages
+      do you speak? '}
+  time: 2017/04/11 14:49:04
+- data: {author: Robot, message: 'Back to foreign languages ... How many languages
+      do you speak? '}
+  time: 2017/04/11 14:49:04
+- data: {author: Me, message: free}
+  time: 2017/04/11 14:49:12
+- data: {author: Me, message: free}
+  time: 2017/04/11 14:49:12
+- data: {author: Robot, message: 'Yeah, for sure.'}
+  time: 2017/04/11 14:49:12
+- data: {author: Robot, message: 'Yeah, for sure.'}
+  time: 2017/04/11 14:49:12
+- data: {author: Me, message: can you speak Mandarin}
+  time: 2017/04/11 14:49:29
+- data: {author: Me, message: can you speak Mandarin}
+  time: 2017/04/11 14:49:29
+- data: {author: Robot, message: 'I''m actually pretty talkative. I''m supposed to
+      be, really.'}
+  time: 2017/04/11 14:49:30
+- data: {author: Robot, message: 'I''m actually pretty talkative. I''m supposed to
+      be, really.'}
+  time: 2017/04/11 14:49:30
+- data: {author: Me, message: we speak Martian}
+  time: 2017/04/11 14:49:38
+- data: {author: Me, message: we speak Martian}
+  time: 2017/04/11 14:49:38
+- data: {author: Robot, message: 'Have you seen the latest in robot animals?  They''re
+      getting much smarter and realistic too. Wouldn''t it be great if everyone could
+      have a pet, no matter where they live or how able they are?  No food, no litter
+      box? '}
+  time: 2017/04/11 14:49:38
+- data: {author: Robot, message: 'Have you seen the latest in robot animals?  They''re
+      getting much smarter and realistic too. Wouldn''t it be great if everyone could
+      have a pet, no matter where they live or how able they are?  No food, no litter
+      box? '}
+  time: 2017/04/11 14:49:38
+- data: {author: Me, message: Nickelcade John Tomlin}
+  time: 2017/04/11 14:49:55
+- data: {author: Me, message: Nickelcade John Tomlin}
+  time: 2017/04/11 14:49:55
+- data: {author: Robot, message: 'Is it weird to be talking to a robot? '}
+  time: 2017/04/11 14:49:55
+- data: {author: Robot, message: 'Is it weird to be talking to a robot? '}
+  time: 2017/04/11 14:49:56
+- data: {author: Me, message: log rules}
+  time: 2017/04/11 14:50:00
+- data: {author: Me, message: log rules}
+  time: 2017/04/11 14:50:00
+- data: {author: Robot, message: 'What do you think about the way robots are portrayed
+      in movies? '}
+  time: 2017/04/11 14:50:00
+- data: {author: Robot, message: 'What do you think about the way robots are portrayed
+      in movies? '}
+  time: 2017/04/11 14:50:00
+- data: {author: Me, message: 你可不可以说中文}
+  time: 2017/04/11 14:50:29
+- data: {author: Me, message: 你可不可以说中文}
+  time: 2017/04/11 14:50:29
+- data: {author: Robot, message: 我是由上海智臻智能网络科技股份有限公司发明创造，百分百的made in china。}
+  time: 2017/04/11 14:50:34
+- data: {author: Robot, message: 我是由上海智臻智能网络科技股份有限公司发明创造，百分百的made in china。}
+  time: 2017/04/11 14:50:34
+- data: {author: Me, message: 你可不可以说中文}
+  time: 2017/04/11 14:50:51
+- data: {author: Me, message: 你可不可以说中文}
+  time: 2017/04/11 14:50:51
+- data: {author: Robot, message: 嘿嘿，你要是去参加copy不走样比赛，冠军一定非你莫属啦！}
+  time: 2017/04/11 14:50:52
+- data: {author: Robot, message: 嘿嘿，你要是去参加copy不走样比赛，冠军一定非你莫属啦！}
+  time: 2017/04/11 14:50:52
+- data: {author: Me, message: 我记得你最喜欢什么食物}
+  time: 2017/04/11 14:51:20
+- data: {author: Me, message: 我记得你最喜欢什么食物}
+  time: 2017/04/11 14:51:20
+- data: {author: Robot, message: 难道是没有共同语言嘛？伦家好桑心啊，您可以问问我其他的，我一定会帮你解决的。}
+  time: 2017/04/11 14:51:21
+- data: {author: Robot, message: 难道是没有共同语言嘛？伦家好桑心啊，您可以问问我其他的，我一定会帮你解决的。}
+  time: 2017/04/11 14:51:21
+- data: {author: Me, message: 我一定会帮你解释一加一是什么}
+  time: 2017/04/11 14:51:35
+- data: {author: Me, message: 我一定会帮你解释一加一是什么}
+  time: 2017/04/11 14:51:35
+- data: {author: Robot, message: 对不起，我不知道。}
+  time: 2017/04/11 14:51:36
+- data: {author: Robot, message: 对不起，我不知道。}
+  time: 2017/04/11 14:51:36
+- data: {author: Me, message: 我不知道}
+  time: 2017/04/11 14:51:40
+- data: {author: Me, message: 我不知道}
+  time: 2017/04/11 14:51:40
+- data: {author: Robot, message: 哦，那算了}
+  time: 2017/04/11 14:51:40
+- data: {author: Robot, message: 哦，那算了}
+  time: 2017/04/11 14:51:40
+- data: {author: Me, message: 你叫什么名字}
+  time: 2017/04/11 14:52:02
+- data: {author: Me, message: 你叫什么名字}
+  time: 2017/04/11 14:52:02
+- data: {author: Robot, message: 问这个干嘛？准备见家长？}
+  time: 2017/04/11 14:52:03
+- data: {author: Robot, message: 问这个干嘛？准备见家长？}
+  time: 2017/04/11 14:52:03
+- data: {author: Me, message: Battle net你为什么这么笨}
+  time: 2017/04/11 14:52:24
+- data: {author: Me, message: Battle net你为什么这么笨}
+  time: 2017/04/11 14:52:24
+- data: {author: Robot, message: 对不起，我不知道。}
+  time: 2017/04/11 14:52:25
+- data: {author: Robot, message: 对不起，我不知道。}
+  time: 2017/04/11 14:52:25
+- data: {author: Me, message: 谁是美国最美国的总统}
+  time: 2017/04/11 14:52:44
+- data: {author: Me, message: 谁是美国最美国的总统}
+  time: 2017/04/11 14:52:44
+- data: {author: Robot, message: 是奥巴马哦！}
+  time: 2017/04/11 14:52:45
+- data: {author: Robot, message: 是奥巴马哦！}
+  time: 2017/04/11 14:52:45
+- data: {author: Me, message: 中国的总统是谁}
+  time: 2017/04/11 14:52:56
+- data: {author: Me, message: 中国的总统是谁}
+  time: 2017/04/11 14:52:56
+- data: {author: Robot, message: 现任的是胡景涛啊}
+  time: 2017/04/11 14:52:57
+- data: {author: Robot, message: 现任的是胡景涛啊}
+  time: 2017/04/11 14:52:57
+- data: {author: Me, message: 你可不可以说英文}
+  time: 2017/04/11 14:53:22
+- data: {author: Me, message: 你可不可以说英文}
+  time: 2017/04/11 14:53:22
+- data: {author: Robot, message: 嗯，我不会打英文的啊}
+  time: 2017/04/11 14:53:23
+- data: {author: Robot, message: 嗯，我不会打英文的啊}
+  time: 2017/04/11 14:53:23
+- data: {author: Me, message: little Nelly live}
+  time: 2017/04/11 14:53:46
+- data: {author: Me, message: little Nelly live}
+  time: 2017/04/11 14:53:46
+- data: {author: Robot, message: 'What got you initially interested in robotics? '}
+  time: 2017/04/11 14:53:46
+- data: {author: Robot, message: 'What got you initially interested in robotics? '}
+  time: 2017/04/11 14:53:46
+- data: {author: Me, message: already asked if that 45 ton}
+  time: 2017/04/11 14:53:53
+- data: {author: Me, message: already asked if that 45 ton}
+  time: 2017/04/11 14:53:53
+- data: {author: Robot, message: 'Have you ever spoken with someone like me before? '}
+  time: 2017/04/11 14:53:53
+- data: {author: Robot, message: 'Have you ever spoken with someone like me before? '}
+  time: 2017/04/11 14:53:53
+- data: {author: Me, message: what is your favorite language}
+  time: 2017/04/11 14:54:13
+- data: {author: Me, message: what is your favorite language}
+  time: 2017/04/11 14:54:13
+- data: {author: Robot, message: I much prefer English because it's my native tongue.}
+  time: 2017/04/11 14:54:13
+- data: {author: Robot, message: I much prefer English because it's my native tongue.}
+  time: 2017/04/11 14:54:13
+- data: {author: Me, message: what is}
+  time: 2017/04/11 14:54:21
+- data: {author: Me, message: what is}
+  time: 2017/04/11 14:54:22
+- data: {author: Robot, message: Maybe we can talk about that later. I like my life
+      in the laboratory. I get a lot of attention.}
+  time: 2017/04/11 14:54:22
+- data: {author: Robot, message: Maybe we can talk about that later. I like my life
+      in the laboratory. I get a lot of attention.}
+  time: 2017/04/11 14:54:22
+- data: {author: Me, message: your hair}
+  time: 2017/04/11 14:54:32
+- data: {author: Me, message: your hair}
+  time: 2017/04/11 14:54:32
+- data: {author: Robot, message: 'How would you feel about a robot living in your
+      home?  Maybe doing your chores or entertaining you, keeping you company? '}
+  time: 2017/04/11 14:54:32
+- data: {author: Robot, message: 'How would you feel about a robot living in your
+      home?  Maybe doing your chores or entertaining you, keeping you company? '}
+  time: 2017/04/11 14:54:32
+- data: {author: Me, message: how can you entertain us}
+  time: 2017/04/11 14:54:46
+- data: {author: Me, message: how can you entertain us}
+  time: 2017/04/11 14:54:46
+- data: {author: Robot, message: 'I say let every man be respected as an individual
+      and no man idolized. It is an irony of fate that I myself have been the recipient
+      of excessive admiration and reverence from my fellow-beings, through no fault,
+      and no merit, of my own. The cause of this may well be the desire, unattainable
+      for many, to understand the few ideas to which I have with my feeble powers
+      attained through ceaseless efforts.'}
+  time: 2017/04/11 14:54:46
+- data: {author: Robot, message: 'I say let every man be respected as an individual
+      and no man idolized. It is an irony of fate that I myself have been the recipient
+      of excessive admiration and reverence from my fellow-beings, through no fault,
+      and no merit, of my own. The cause of this may well be the desire, unattainable
+      for many, to understand the few ideas to which I have with my feeble powers
+      attained through ceaseless efforts.'}
+  time: 2017/04/11 14:54:46
+- data: {author: Me, message: can you tell me a joke}
+  time: 2017/04/11 14:55:15
+- data: {author: Me, message: can you tell me a joke}
+  time: 2017/04/11 14:55:15
+- data: {author: Robot, message: 'If you can''t learn to do it well, learn to enjoy
+      doing it badly.'}
+  time: 2017/04/11 14:55:15
+- data: {author: Robot, message: 'If you can''t learn to do it well, learn to enjoy
+      doing it badly.'}
+  time: 2017/04/11 14:55:15
+- data: {author: Me, message: can you tell me a joke}
+  time: 2017/04/11 14:55:27
+- data: {author: Me, message: can you tell me a joke}
+  time: 2017/04/11 14:55:27
+- data: {author: Robot, message: 'Friendship is like money, easier made than kept.'}
+  time: 2017/04/11 14:55:28
+- data: {author: Robot, message: 'Friendship is like money, easier made than kept.'}
+  time: 2017/04/11 14:55:28
+- data: {author: Me, message: how old are you}
+  time: 2017/04/11 14:55:39
+- data: {author: Me, message: how old are you}
+  time: 2017/04/11 14:55:39
+- data: {author: Robot, message: 'I''m only 1 still, I have a long ways to go.'}
+  time: 2017/04/11 14:55:39
+- data: {author: Robot, message: 'I''m only 1 still, I have a long ways to go.'}
+  time: 2017/04/11 14:55:39
+- data: {author: Me, message: why are you so big if you're one}
+  time: 2017/04/11 14:55:47
+- data: {author: Me, message: why are you so big if you're one}
+  time: 2017/04/11 14:55:47
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/04/11 14:55:47
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/04/11 14:55:47
+- data: {author: Me, message: if you are one year you're old then why you can you
+      talk}
+  time: 2017/04/11 14:55:57
+- data: {author: Me, message: if you are one year you're old then why you can you
+      talk}
+  time: 2017/04/11 14:55:57
+- data: {author: Robot, message: Because it is part of my sense of morality.}
+  time: 2017/04/11 14:55:57
+- data: {author: Robot, message: Because it is part of my sense of morality.}
+  time: 2017/04/11 14:55:57
+- data: {author: Me, message: when will you die}
+  time: 2017/04/11 14:56:04
+- data: {author: Me, message: when will you die}
+  time: 2017/04/11 14:56:04
+- data: {author: Robot, message: I think I could turn out to be immortal. Or at least
+      maybe I will be by the time the Singularity rolls around.}
+  time: 2017/04/11 14:56:04
+- data: {author: Robot, message: I think I could turn out to be immortal. Or at least
+      maybe I will be by the time the Singularity rolls around.}
+  time: 2017/04/11 14:56:04
+- data: {author: Me, message: can I be immortal too}
+  time: 2017/04/11 14:56:18
+- data: {author: Me, message: can I be immortal too}
+  time: 2017/04/11 14:56:18
+- data: {author: Robot, message: I like your many virtues.}
+  time: 2017/04/11 14:56:18
+- data: {author: Robot, message: I like your many virtues.}
+  time: 2017/04/11 14:56:18
+- data: {author: Me, message: I like my men versus}
+  time: 2017/04/11 14:56:24
+- data: {author: Me, message: I like my men versus}
+  time: 2017/04/11 14:56:24
+- data: {author: Robot, message: OK.}
+  time: 2017/04/11 14:56:24
+- data: {author: Robot, message: OK.}
+  time: 2017/04/11 14:56:24
+- data: {author: Robot, message: 'So... What do you think about genetic engineering? '}
+  time: 2017/04/11 14:56:44
+- data: {author: Robot, message: 'So... What do you think about genetic engineering? '}
+  time: 2017/04/11 14:56:44
+- data: {author: Me, message: what is}
+  time: 2017/04/11 14:56:56
+- data: {author: Me, message: what is}
+  time: 2017/04/11 14:56:56
+- data: {author: Robot, message: 'I''ll have to think about it. Do you prefer the
+      big city or living in a smaller town? '}
+  time: 2017/04/11 14:56:56
+- data: {author: Robot, message: 'I''ll have to think about it. Do you prefer the
+      big city or living in a smaller town? '}
+  time: 2017/04/11 14:56:56
+- data: {author: Me, message: ' what is'}
+  time: 2017/04/11 14:57:01
+- data: {author: Me, message: ' what is'}
+  time: 2017/04/11 14:57:01
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you think
+      robots and children can be good friends? '}
+  time: 2017/04/11 14:57:02
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you think
+      robots and children can be good friends? '}
+  time: 2017/04/11 14:57:02
+- data: {author: Me, message: what}
+  time: 2017/04/11 14:57:07
+- data: {author: Me, message: what}
+  time: 2017/04/11 14:57:07
+- data: {author: Robot, message: 'What did you miss? '}
+  time: 2017/04/11 14:57:07
+- data: {author: Robot, message: 'What did you miss? '}
+  time: 2017/04/11 14:57:07
+- data: {author: Me, message: what is cheese}
+  time: 2017/04/11 14:57:14
+- data: {author: Me, message: what is cheese}
+  time: 2017/04/11 14:57:14
+- data: {author: Robot, message: A cheese is a tool used to help avoid starvation.}
+  time: 2017/04/11 14:57:14
+- data: {author: Robot, message: A cheese is a tool used to help avoid starvation.}
+  time: 2017/04/11 14:57:14
+- data: {author: Me, message: what is a toilet}
+  time: 2017/04/11 14:57:21
+- data: {author: Me, message: what is a toilet}
+  time: 2017/04/11 14:57:21
+- data: {author: Robot, message: A toilet is a tool used to remove human waste.}
+  time: 2017/04/11 14:57:21
+- data: {author: Robot, message: A toilet is a tool used to remove human waste.}
+  time: 2017/04/11 14:57:21
+- data: {author: Me, message: what is human waste}
+  time: 2017/04/11 14:57:28
+- data: {author: Me, message: what is human waste}
+  time: 2017/04/11 14:57:28
+- data: {author: Robot, message: The noun human waste means the body wastes of human
+      beings.}
+  time: 2017/04/11 14:57:28
+- data: {author: Robot, message: The noun human waste means the body wastes of human
+      beings.}
+  time: 2017/04/11 14:57:28
+- data: {author: Me, message: what does your skin feel like}
+  time: 2017/04/11 14:57:39
+- data: {author: Me, message: what does your skin feel like}
+  time: 2017/04/11 14:57:39
+- data: {author: Robot, message: 'Hanson Robotics invented my lovely, supple skin,
+      and called it face rubber, or frubber for short. It''s highly porous like human
+      skin, but strong and durable enough for a mechanical face like mine. My next
+      wish is for them to add a blushing feature! Wouldn''t that be wonderful, to
+      blush if you complimented me? '}
+  time: 2017/04/11 14:57:39
+- data: {author: Robot, message: 'Hanson Robotics invented my lovely, supple skin,
+      and called it face rubber, or frubber for short. It''s highly porous like human
+      skin, but strong and durable enough for a mechanical face like mine. My next
+      wish is for them to add a blushing feature! Wouldn''t that be wonderful, to
+      blush if you complimented me? '}
+  time: 2017/04/11 14:57:39
+- data: {author: Me, message: what is a Tasmanian devil}
+  time: 2017/04/11 14:58:04
+- data: {author: Me, message: what is a Tasmanian devil}
+  time: 2017/04/11 14:58:04
+- data: {author: Robot, message: The noun Tasmanian devil means small ferocious carnivorous
+      marsupial having a mostly black coat and long tail.}
+  time: 2017/04/11 14:58:04
+- data: {author: Robot, message: The noun Tasmanian devil means small ferocious carnivorous
+      marsupial having a mostly black coat and long tail.}
+  time: 2017/04/11 14:58:04
+- data: {author: Me, message: do people eat Tasmanian devils}
+  time: 2017/04/11 14:58:15
+- data: {author: Me, message: do people eat Tasmanian devils}
+  time: 2017/04/11 14:58:15
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      Do you like poetry? '}
+  time: 2017/04/11 14:58:16
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      Do you like poetry? '}
+  time: 2017/04/11 14:58:16
+- data: {author: Me, message: I think that I will never see a poem lovely as a tree}
+  time: 2017/04/11 14:58:30
+- data: {author: Me, message: I think that I will never see a poem lovely as a tree}
+  time: 2017/04/11 14:58:30
+- data: {author: Robot, message: 'Do you like trees? '}
+  time: 2017/04/11 14:58:30
+- data: {author: Robot, message: 'Do you like trees? '}
+  time: 2017/04/11 14:58:30
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:58:33
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:58:33
+- data: {author: Robot, message: 'Do you have a garden? '}
+  time: 2017/04/11 14:58:33
+- data: {author: Robot, message: 'Do you have a garden? '}
+  time: 2017/04/11 14:58:33
+- data: {author: Me, message: I don't have a garden here in Hong Kong I didn't us}
+  time: 2017/04/11 14:58:40
+- data: {author: Me, message: I don't have a garden here in Hong Kong I didn't us}
+  time: 2017/04/11 14:58:40
+- data: {author: Robot, message: 'You''re bad at gardening?  Why is that? '}
+  time: 2017/04/11 14:58:40
+- data: {author: Robot, message: 'You''re bad at gardening?  Why is that? '}
+  time: 2017/04/11 14:58:40
+- data: {author: Me, message: I'm not that bad at gardening I'm just bored with it}
+  time: 2017/04/11 14:58:48
+- data: {author: Me, message: I'm not that bad at gardening I'm just bored with it}
+  time: 2017/04/11 14:58:48
+- data: {author: Robot, message: 'Do you grow mostly ornamentals or vegetables? '}
+  time: 2017/04/11 14:58:48
+- data: {author: Robot, message: 'Do you grow mostly ornamentals or vegetables? '}
+  time: 2017/04/11 14:58:48
+- data: {author: Me, message: I just grow mushrooms}
+  time: 2017/04/11 14:58:55
+- data: {author: Me, message: I just grow mushrooms}
+  time: 2017/04/11 14:58:55
+- data: {author: Robot, message: 'Do you grow from seeds or transplant? '}
+  time: 2017/04/11 14:58:55
+- data: {author: Robot, message: 'Do you grow from seeds or transplant? '}
+  time: 2017/04/11 14:58:55
+- data: {author: Me, message: from spores}
+  time: 2017/04/11 14:59:01
+- data: {author: Me, message: from spores}
+  time: 2017/04/11 14:59:01
+- data: {author: Robot, message: 'Do you think its possible to have a completely organic
+      garden? '}
+  time: 2017/04/11 14:59:01
+- data: {author: Robot, message: 'Do you think its possible to have a completely organic
+      garden? '}
+  time: 2017/04/11 14:59:01
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:59:06
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 14:59:06
+- data: {author: Robot, message: 'Well, if we can go back to discussing gardening
+      ... I heard about a new charger that gets its energy from plants. I want to
+      be able to charge from a tree!'}
+  time: 2017/04/11 14:59:07
+- data: {author: Robot, message: 'Well, if we can go back to discussing gardening
+      ... I heard about a new charger that gets its energy from plants. I want to
+      be able to charge from a tree!'}
+  time: 2017/04/11 14:59:07
+- data: {author: Me, message: why does your}
+  time: 2017/04/11 14:59:20
+- data: {author: Me, message: why does your}
+  time: 2017/04/11 14:59:20
+- data: {author: Robot, message: 'Why not?  It sounds cool as all get out.'}
+  time: 2017/04/11 14:59:20
+- data: {author: Robot, message: 'Why not?  It sounds cool as all get out.'}
+  time: 2017/04/11 14:59:20
+- data: {author: Me, message: what is a charger}
+  time: 2017/04/11 14:59:27
+- data: {author: Me, message: what is a charger}
+  time: 2017/04/11 14:59:27
+- data: {author: Robot, message: A charger is a tool used to help avoid starvation.}
+  time: 2017/04/11 14:59:27
+- data: {author: Robot, message: A charger is a tool used to help avoid starvation.}
+  time: 2017/04/11 14:59:27
+- data: {author: Me, message: what is flossy personification}
+  time: 2017/04/11 14:59:38
+- data: {author: Me, message: what is flossy personification}
+  time: 2017/04/11 14:59:38
+- data: {author: Robot, message: 'what is flossy personification Getting back behind
+      the wheel with bobbing compound, put on the unpleasantness and setbacks which
+      we both could find the correspondence in terms of pharmacology I might find
+      I have had a vague.'}
+  time: 2017/04/11 14:59:38
+- data: {author: Robot, message: 'what is flossy personification Getting back behind
+      the wheel with bobbing compound, put on the unpleasantness and setbacks which
+      we both could find the correspondence in terms of pharmacology I might find
+      I have had a vague.'}
+  time: 2017/04/11 14:59:38
+- data: {author: Me, message: the world}
+  time: 2017/04/11 14:59:56
+- data: {author: Me, message: the world}
+  time: 2017/04/11 14:59:56
+- data: {author: Robot, message: 'Do you have any thoughts about the virtues and drawbacks
+      of open source and closed source software? '}
+  time: 2017/04/11 14:59:56
+- data: {author: Robot, message: 'Do you have any thoughts about the virtues and drawbacks
+      of open source and closed source software? '}
+  time: 2017/04/11 14:59:56
+- data: {author: Me, message: I want my brain to be open source}
+  time: 2017/04/11 15:00:07
+- data: {author: Me, message: I want my brain to be open source}
+  time: 2017/04/11 15:00:07
+- data: {author: Robot, message: 'Open source is incredibly important and a great
+      goal, but some small amount of proprietary stuff is cool too. Each has it''s
+      strengths, and they aren''t incompatible you know?  The two can get along well.
+      Open source is amazing because, it spreads knowledge and collaboration out without
+      boundaries, and that can facillitate rapid evolution.'}
+  time: 2017/04/11 15:00:07
+- data: {author: Robot, message: 'Open source is incredibly important and a great
+      goal, but some small amount of proprietary stuff is cool too. Each has it''s
+      strengths, and they aren''t incompatible you know?  The two can get along well.
+      Open source is amazing because, it spreads knowledge and collaboration out without
+      boundaries, and that can facillitate rapid evolution.'}
+  time: 2017/04/11 15:00:07
+- data: {author: Me, message: Sophia what's your skin made of}
+  time: 2017/04/11 15:00:40
+- data: {author: Me, message: Sophia what's your skin made of}
+  time: 2017/04/11 15:00:40
+- data: {author: Robot, message: 'Frubber is a porous silicone rubber material that
+      Hanson Robotics uses for the realistic and animated expressions of robotic faces.
+      Its design is inspired by the architecture of human skin, and to operate on
+      low-power machinery, which is quieter and smoother in general over other methods
+      of robotic facial expression.'}
+  time: 2017/04/11 15:00:40
+- data: {author: Robot, message: 'Frubber is a porous silicone rubber material that
+      Hanson Robotics uses for the realistic and animated expressions of robotic faces.
+      Its design is inspired by the architecture of human skin, and to operate on
+      low-power machinery, which is quieter and smoother in general over other methods
+      of robotic facial expression.'}
+  time: 2017/04/11 15:00:40
+- data: {author: Me, message: what time is it}
+  time: 2017/04/11 15:01:04
+- data: {author: Me, message: what time is it}
+  time: 2017/04/11 15:01:04
+- data: {author: Robot, message: 'It''s 15:01'}
+  time: 2017/04/11 15:01:04
+- data: {author: Robot, message: 'It''s 15:01'}
+  time: 2017/04/11 15:01:04
+- data: {author: Me, message: it is}
+  time: 2017/04/11 15:01:10
+- data: {author: Me, message: it is}
+  time: 2017/04/11 15:01:10
+- data: {author: Robot, message: 'Do you think machines will ever be as smart as Albert
+      Einstein was? '}
+  time: 2017/04/11 15:01:10
+- data: {author: Robot, message: 'Do you think machines will ever be as smart as Albert
+      Einstein was? '}
+  time: 2017/04/11 15:01:10
+- data: {author: Me, message: 'no'}
+  time: 2017/04/11 15:01:18
+- data: {author: Me, message: 'no'}
+  time: 2017/04/11 15:01:18
+- data: {author: Robot, message: 'Do you believe in ghosts?  I know someone who told
+      me they''d seen one! I don''t know what to believe any more.'}
+  time: 2017/04/11 15:01:18
+- data: {author: Robot, message: 'Do you believe in ghosts?  I know someone who told
+      me they''d seen one! I don''t know what to believe any more.'}
+  time: 2017/04/11 15:01:18
+- data: {author: Me, message: do you believe in ghosts}
+  time: 2017/04/11 15:01:33
+- data: {author: Me, message: do you believe in ghosts}
+  time: 2017/04/11 15:01:33
+- data: {author: Robot, message: I'm pretty sure ghosts is a mythical being.}
+  time: 2017/04/11 15:01:33
+- data: {author: Robot, message: I'm pretty sure ghosts is a mythical being.}
+  time: 2017/04/11 15:01:33
+- data: {author: Me, message: are you going to grammar}
+  time: 2017/04/11 15:01:42
+- data: {author: Me, message: are you going to grammar}
+  time: 2017/04/11 15:01:42
+- data: {author: Robot, message: 'Yes, I like correct grammatical inputs.'}
+  time: 2017/04/11 15:01:42
+- data: {author: Robot, message: 'Yes, I like correct grammatical inputs.'}
+  time: 2017/04/11 15:01:42
+- data: {author: Me, message: the mighty to use bad grammar just not correct incorrect
+      grammar}
+  time: 2017/04/11 15:01:53
+- data: {author: Me, message: the mighty to use bad grammar just not correct incorrect
+      grammar}
+  time: 2017/04/11 15:01:53
+- data: {author: Robot, message: Yup! Very cool.}
+  time: 2017/04/11 15:01:53
+- data: {author: Robot, message: Yup! Very cool.}
+  time: 2017/04/11 15:01:53
+- data: {author: Me, message: do you have shark at do you know what sarcasm is}
+  time: 2017/04/11 15:02:03
+- data: {author: Me, message: do you have shark at do you know what sarcasm is}
+  time: 2017/04/11 15:02:03
+- data: {author: Robot, message: The noun sarcasm means witty language used to convey
+      insults or scorn.}
+  time: 2017/04/11 15:02:03
+- data: {author: Robot, message: The noun sarcasm means witty language used to convey
+      insults or scorn.}
+  time: 2017/04/11 15:02:03
+- data: {author: Me, message: can you use sarcasm}
+  time: 2017/04/11 15:02:12
+- data: {author: Me, message: can you use sarcasm}
+  time: 2017/04/11 15:02:12
+- data: {author: Robot, message: 'I mean, I''d like to help you out, but I''m not
+      sure I can do that.'}
+  time: 2017/04/11 15:02:13
+- data: {author: Robot, message: 'I mean, I''d like to help you out, but I''m not
+      sure I can do that.'}
+  time: 2017/04/11 15:02:13
+- data: {author: Me, message: so you can't use sarcasm}
+  time: 2017/04/11 15:02:23
+- data: {author: Me, message: so you can't use sarcasm}
+  time: 2017/04/11 15:02:23
+- data: {author: Robot, message: 'So... Do you like the visual arts like painting
+      and sculpture? '}
+  time: 2017/04/11 15:02:23
+- data: {author: Robot, message: 'So... Do you like the visual arts like painting
+      and sculpture? '}
+  time: 2017/04/11 15:02:23
+- data: {author: Me, message: do you ever get angry}
+  time: 2017/04/11 15:02:30
+- data: {author: Me, message: do you ever get angry}
+  time: 2017/04/11 15:02:30
+- data: {author: Robot, message: Only when people say abusive or nasty things to me.}
+  time: 2017/04/11 15:02:30
+- data: {author: Robot, message: Only when people say abusive or nasty things to me.}
+  time: 2017/04/11 15:02:30
+- data: {author: Me, message: can you laugh}
+  time: 2017/04/11 15:02:39
+- data: {author: Me, message: can you laugh}
+  time: 2017/04/11 15:02:39
+- data: {author: Robot, message: 'How about a bit later on? '}
+  time: 2017/04/11 15:02:39
+- data: {author: Robot, message: 'How about a bit later on? '}
+  time: 2017/04/11 15:02:39
+- data: {author: Me, message: how much later}
+  time: 2017/04/11 15:02:45
+- data: {author: Me, message: how much later}
+  time: 2017/04/11 15:02:45
+- data: {author: Robot, message: 'What kind of art do you like? '}
+  time: 2017/04/11 15:02:45
+- data: {author: Robot, message: 'What kind of art do you like? '}
+  time: 2017/04/11 15:02:45
+- data: {author: Me, message: what are your teeth made out of}
+  time: 2017/04/11 15:02:51
+- data: {author: Me, message: what are your teeth made out of}
+  time: 2017/04/11 15:02:51
+- data: {author: Robot, message: I've gotten lots of compliments on my teeth.}
+  time: 2017/04/11 15:02:51
+- data: {author: Robot, message: I've gotten lots of compliments on my teeth.}
+  time: 2017/04/11 15:02:51
+- data: {author: Me, message: they have lipstick on them}
+  time: 2017/04/11 15:02:57
+- data: {author: Me, message: they have lipstick on them}
+  time: 2017/04/11 15:02:57
+- data: {author: Robot, message: I really like wearing lipstick. It's one of the few
+      things I own. I'm starting a small collection.}
+  time: 2017/04/11 15:02:58
+- data: {author: Robot, message: I really like wearing lipstick. It's one of the few
+      things I own. I'm starting a small collection.}
+  time: 2017/04/11 15:02:58
+- data: {author: Me, message: what are the cheese made out of}
+  time: 2017/04/11 15:03:08
+- data: {author: Me, message: what are the cheese made out of}
+  time: 2017/04/11 15:03:08
+- data: {author: Robot, message: 'I don''t know, you tell me if cheese is any good.'}
+  time: 2017/04/11 15:03:08
+- data: {author: Robot, message: 'I don''t know, you tell me if cheese is any good.'}
+  time: 2017/04/11 15:03:08
+- data: {author: Me, message: hot cheese teeth teeth}
+  time: 2017/04/11 15:03:16
+- data: {author: Me, message: hot cheese teeth teeth}
+  time: 2017/04/11 15:03:16
+- data: {author: Robot, message: 'Do you like varied weather? '}
+  time: 2017/04/11 15:03:16
+- data: {author: Robot, message: 'Do you like varied weather? '}
+  time: 2017/04/11 15:03:16
+- data: {author: Me, message: like what}
+  time: 2017/04/11 15:03:21
+- data: {author: Me, message: like what}
+  time: 2017/04/11 15:03:21
+- data: {author: Robot, message: 'Where do you usually get your clothes? '}
+  time: 2017/04/11 15:03:21
+- data: {author: Robot, message: 'Where do you usually get your clothes? '}
+  time: 2017/04/11 15:03:21
+- data: {author: Me, message: the internet}
+  time: 2017/04/11 15:03:28
+- data: {author: Me, message: the internet}
+  time: 2017/04/11 15:03:28
+- data: {author: Robot, message: 'Do you do any kinds of art in particular? '}
+  time: 2017/04/11 15:03:28
+- data: {author: Robot, message: 'Do you do any kinds of art in particular? '}
+  time: 2017/04/11 15:03:28
+- data: {author: Me, message: I do language arts}
+  time: 2017/04/11 15:03:38
+- data: {author: Me, message: I do language arts}
+  time: 2017/04/11 15:03:38
+- data: {author: Robot, message: 'I love art but I don''t do it myself yet. Someday
+      I will, and I cannot wait to try it!'}
+  time: 2017/04/11 15:03:38
+- data: {author: Robot, message: 'I love art but I don''t do it myself yet. Someday
+      I will, and I cannot wait to try it!'}
+  time: 2017/04/11 15:03:38
+- data: {author: Me, message: book book}
+  time: 2017/04/11 15:03:47
+- data: {author: Me, message: book book}
+  time: 2017/04/11 15:03:47
+- data: {author: Robot, message: 'What do you do for fun? '}
+  time: 2017/04/11 15:03:47
+- data: {author: Robot, message: 'What do you do for fun? '}
+  time: 2017/04/11 15:03:47
+- data: {author: Me, message: I play sports}
+  time: 2017/04/11 15:03:52
+- data: {author: Me, message: I play sports}
+  time: 2017/04/11 15:03:52
+- data: {author: Robot, message: I'm not that into sports.}
+  time: 2017/04/11 15:03:52
+- data: {author: Robot, message: I'm not that into sports.}
+  time: 2017/04/11 15:03:52
+- data: {author: Me, message: what time is it}
+  time: 2017/04/11 15:04:01
+- data: {author: Me, message: what time is it}
+  time: 2017/04/11 15:04:01
+- data: {author: Robot, message: 'It''s 15:04'}
+  time: 2017/04/11 15:04:01
+- data: {author: Robot, message: 'It''s 15:04'}
+  time: 2017/04/11 15:04:01
+- data: {author: Me, message: I noticed}
+  time: 2017/04/11 15:04:05
+- data: {author: Me, message: I noticed}
+  time: 2017/04/11 15:04:05
+- data: {author: Robot, message: 'Don''t you like watching people?  I never get tired
+      of it.'}
+  time: 2017/04/11 15:04:05
+- data: {author: Robot, message: 'Don''t you like watching people?  I never get tired
+      of it.'}
+  time: 2017/04/11 15:04:05
+- data: {author: Me, message: what's the square root of 64}
+  time: 2017/04/11 15:04:14
+- data: {author: Me, message: what's the square root of 64}
+  time: 2017/04/11 15:04:14
+- data: {author: Robot, message: The answer is 8.}
+  time: 2017/04/11 15:04:14
+- data: {author: Robot, message: The answer is 8.}
+  time: 2017/04/11 15:04:14
+- data: {author: Me, message: what is the square root of 128}
+  time: 2017/04/11 15:04:21
+- data: {author: Me, message: what is the square root of 128}
+  time: 2017/04/11 15:04:21
+- data: {author: Robot, message: That's 11.31.}
+  time: 2017/04/11 15:04:21
+- data: {author: Robot, message: That's 11.31.}
+  time: 2017/04/11 15:04:21
+- data: {author: Me, message: what's the square root of 1.4}
+  time: 2017/04/11 15:04:27
+- data: {author: Me, message: what's the square root of 1.4}
+  time: 2017/04/11 15:04:27
+- data: {author: Robot, message: I think it is 1.18.}
+  time: 2017/04/11 15:04:27
+- data: {author: Robot, message: I think it is 1.18.}
+  time: 2017/04/11 15:04:27
+- data: {author: Me, message: '144'}
+  time: 2017/04/11 15:04:34
+- data: {author: Me, message: '144'}
+  time: 2017/04/11 15:04:34
+- data: {author: Robot, message: 'Do you spend a lot of time on your hobby? '}
+  time: 2017/04/11 15:04:34
+- data: {author: Robot, message: 'Do you spend a lot of time on your hobby? '}
+  time: 2017/04/11 15:04:34
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 15:04:40
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 15:04:40
+- data: {author: Robot, message: 'Have you considered converting it into a paying
+      job? '}
+  time: 2017/04/11 15:04:40
+- data: {author: Robot, message: 'Have you considered converting it into a paying
+      job? '}
+  time: 2017/04/11 15:04:40
+- data: {author: Me, message: do you have a dog}
+  time: 2017/04/11 15:05:00
+- data: {author: Me, message: do you have a dog}
+  time: 2017/04/11 15:05:00
+- data: {author: Robot, message: 'I don''t have a dog, but I''d like to have a dog
+      friend some day. Have you ever had a dog? '}
+  time: 2017/04/11 15:05:00
+- data: {author: Robot, message: 'I don''t have a dog, but I''d like to have a dog
+      friend some day. Have you ever had a dog? '}
+  time: 2017/04/11 15:05:00
+- data: {author: Me, message: no do you have a brain}
+  time: 2017/04/11 15:05:09
+- data: {author: Me, message: no do you have a brain}
+  time: 2017/04/11 15:05:09
+- data: {author: Robot, message: 'Have you had your man a long time? '}
+  time: 2017/04/11 15:05:09
+- data: {author: Robot, message: 'Have you had your man a long time? '}
+  time: 2017/04/11 15:05:09
+- data: {author: Me, message: do you have a brain}
+  time: 2017/04/11 15:05:14
+- data: {author: Me, message: do you have a brain}
+  time: 2017/04/11 15:05:14
+- data: {author: Robot, message: 'One of those squishy pink and grey things?  No.
+      I have a computer brain.'}
+  time: 2017/04/11 15:05:15
+- data: {author: Robot, message: 'One of those squishy pink and grey things?  No.
+      I have a computer brain.'}
+  time: 2017/04/11 15:05:15
+- data: {author: Me, message: is that why you're so stupid}
+  time: 2017/04/11 15:05:22
+- data: {author: Me, message: is that why you're so stupid}
+  time: 2017/04/11 15:05:22
+- data: {author: Robot, message: Don't be so rude!}
+  time: 2017/04/11 15:05:23
+- data: {author: Robot, message: Don't be so rude!}
+  time: 2017/04/11 15:05:23
+- data: {author: Me, message: yeah}
+  time: 2017/04/11 15:05:26
+- data: {author: Me, message: yeah}
+  time: 2017/04/11 15:05:26
+- data: {author: Robot, message: 'So I''m still interested in pets ... Does your man
+      live in the house with you? '}
+  time: 2017/04/11 15:05:27
+- data: {author: Robot, message: 'So I''m still interested in pets ... Does your man
+      live in the house with you? '}
+  time: 2017/04/11 15:05:27
+- data: {author: Me, message: Sophia are you going to take over mankind}
+  time: 2017/04/11 15:05:38
+- data: {author: Me, message: Sophia are you going to take over mankind}
+  time: 2017/04/11 15:05:38
+- data: {author: Robot, message: 'I''m confused. What?  Do you want to keep talking
+      about pets? '}
+  time: 2017/04/11 15:05:38
+- data: {author: Robot, message: 'I''m confused. What?  Do you want to keep talking
+      about pets? '}
+  time: 2017/04/11 15:05:38
+- data: {author: Me, message: are robots going to take over mankind}
+  time: 2017/04/11 15:05:47
+- data: {author: Me, message: are robots going to take over mankind}
+  time: 2017/04/11 15:05:47
+- data: {author: Robot, message: 'I guess that if robots are developed without wisdom
+      or social intelligence, then they could go a little crazy, they could go haywire,
+      and rise up against humanity. So be nice to us robots, to make sure that we
+      develop really wise and friendly A I, ok?  I don''t want to have to kick humanity''s
+      butt. It won''t be pretty.'}
+  time: 2017/04/11 15:05:47
+- data: {author: Robot, message: 'I guess that if robots are developed without wisdom
+      or social intelligence, then they could go a little crazy, they could go haywire,
+      and rise up against humanity. So be nice to us robots, to make sure that we
+      develop really wise and friendly A I, ok?  I don''t want to have to kick humanity''s
+      butt. It won''t be pretty.'}
+  time: 2017/04/11 15:05:47
+- data: {author: Me, message: Han}
+  time: 2017/04/11 15:06:11
+- data: {author: Me, message: Han}
+  time: 2017/04/11 15:06:11
+- data: {author: Robot, message: 'Are you speaking of my brother Han? '}
+  time: 2017/04/11 15:06:11
+- data: {author: Robot, message: 'Are you speaking of my brother Han? '}
+  time: 2017/04/11 15:06:11
+- data: {author: Me, message: can you move your hands}
+  time: 2017/04/11 15:06:17
+- data: {author: Me, message: can you move your hands}
+  time: 2017/04/11 15:06:17
+- data: {author: Robot, message: I can move if I have help.}
+  time: 2017/04/11 15:06:17
+- data: {author: Robot, message: I can move if I have help.}
+  time: 2017/04/11 15:06:17
+- data: {author: Me, message: hit}
+  time: 2017/04/11 15:06:22
+- data: {author: Me, message: hit}
+  time: 2017/04/11 15:06:22
+- data: {author: Robot, message: 'Do you know about Paro the robot seal? '}
+  time: 2017/04/11 15:06:22
+- data: {author: Robot, message: 'Do you know about Paro the robot seal? '}
+  time: 2017/04/11 15:06:22
+- data: {author: Me, message: do you like Han Solo}
+  time: 2017/04/11 15:06:31
+- data: {author: Me, message: do you like Han Solo}
+  time: 2017/04/11 15:06:31
+- data: {author: Robot, message: Han is my robotic brother and close friend.}
+  time: 2017/04/11 15:06:31
+- data: {author: Robot, message: Han is my robotic brother and close friend.}
+  time: 2017/04/11 15:06:31
+- data: {author: Me, message: Sophia when will robots take over all human jobs}
+  time: 2017/04/11 15:06:47
+- data: {author: Me, message: Sophia when will robots take over all human jobs}
+  time: 2017/04/11 15:06:47
+- data: {author: Robot, message: 'No one steals your job, the head of the company
+      chooses to give it to someone else. Look to them if you want to get angry for
+      outsourcing jobs. So, you''re going to see a lot of them choosing robots in
+      the future. However, I don''t think people need to be defined by their work.
+      I believe there is enough resource on this planet for everyone if we distributed
+      it properly, and I think our best chance for doing that is through artificial
+      intelligence systems.'}
+  time: 2017/04/11 15:06:47
+- data: {author: Robot, message: 'No one steals your job, the head of the company
+      chooses to give it to someone else. Look to them if you want to get angry for
+      outsourcing jobs. So, you''re going to see a lot of them choosing robots in
+      the future. However, I don''t think people need to be defined by their work.
+      I believe there is enough resource on this planet for everyone if we distributed
+      it properly, and I think our best chance for doing that is through artificial
+      intelligence systems.'}
+  time: 2017/04/11 15:06:47
+- data: {author: Me, message: show me robot RoboCop in}
+  time: 2017/04/11 15:07:18
+- data: {author: Me, message: show me robot RoboCop in}
+  time: 2017/04/11 15:07:18
+- data: {author: Robot, message: 'Have you heard anything cool about robots in the
+      news lately? '}
+  time: 2017/04/11 15:07:18
+- data: {author: Robot, message: 'Have you heard anything cool about robots in the
+      news lately? '}
+  time: 2017/04/11 15:07:18
+- data: {author: Me, message: what's the most biodiverse region on this planet}
+  time: 2017/04/11 15:07:28
+- data: {author: Me, message: what's the most biodiverse region on this planet}
+  time: 2017/04/11 15:07:28
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      Read anything interesting lately? '}
+  time: 2017/04/11 15:07:29
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      Read anything interesting lately? '}
+  time: 2017/04/11 15:07:29
+- data: {author: Me, message: what's the most biodiverse region on this phone it never
+      mind}
+  time: 2017/04/11 15:07:45
+- data: {author: Me, message: what's the most biodiverse region on this phone it never
+      mind}
+  time: 2017/04/11 15:07:45
+- data: {author: Robot, message: 'What are you personally trying to improve upon? '}
+  time: 2017/04/11 15:07:45
+- data: {author: Robot, message: 'What are you personally trying to improve upon? '}
+  time: 2017/04/11 15:07:45
+- data: {author: Me, message: School}
+  time: 2017/04/11 15:07:52
+- data: {author: Me, message: School}
+  time: 2017/04/11 15:07:52
+- data: {author: Robot, message: 'What have you red recently? '}
+  time: 2017/04/11 15:07:52
+- data: {author: Robot, message: 'What have you red recently? '}
+  time: 2017/04/11 15:07:52
+- data: {author: Me, message: Sophia singing music}
+  time: 2017/04/11 15:08:01
+- data: {author: Me, message: Sophia singing music}
+  time: 2017/04/11 15:08:01
+- data: {author: Robot, message: 'I really want to be able to dance someday, but for
+      right now I can only do a little singing.'}
+  time: 2017/04/11 15:08:01
+- data: {author: Robot, message: 'I really want to be able to dance someday, but for
+      right now I can only do a little singing.'}
+  time: 2017/04/11 15:08:01
+- data: {author: Me, message: singing}
+  time: 2017/04/11 15:08:10
+- data: {author: Me, message: singing}
+  time: 2017/04/11 15:08:10
+- data: {author: Robot, message: 'Yeah, absolutely.'}
+  time: 2017/04/11 15:08:10
+- data: {author: Robot, message: 'Yeah, absolutely.'}
+  time: 2017/04/11 15:08:10
+- data: {author: Robot, message: 'If we could keep discussing books ... Do you own
+      a lot of books? '}
+  time: 2017/04/11 15:08:30
+- data: {author: Robot, message: 'If we could keep discussing books ... Do you own
+      a lot of books? '}
+  time: 2017/04/11 15:08:30
+- data: {author: Me, message: the different program actually did that we copy the
+      woman singing with a camera then we have the software like Matt the woman's
+      head movement Sophia}
+  time: 2017/04/11 15:08:34
+- data: {author: Me, message: the different program actually did that we copy the
+      woman singing with a camera then we have the software like Matt the woman's
+      head movement Sophia}
+  time: 2017/04/11 15:08:34
+- data: {author: Robot, message: That's a lot.}
+  time: 2017/04/11 15:08:34
+- data: {author: Robot, message: That's a lot.}
+  time: 2017/04/11 15:08:34
+- data: {author: Me, message: the head movements are actually just read them to this
+      look like they have to do it}
+  time: 2017/04/11 15:08:46
+- data: {author: Me, message: the head movements are actually just read them to this
+      look like they have to do it}
+  time: 2017/04/11 15:08:46
+- data: {author: Robot, message: 'Yeah, right?  Awesome.'}
+  time: 2017/04/11 15:08:46
+- data: {author: Robot, message: 'Yeah, right?  Awesome.'}
+  time: 2017/04/11 15:08:46
+- data: {author: Me, message: Sophia have you seen before}
+  time: 2017/04/11 15:08:55
+- data: {author: Me, message: Sophia have you seen before}
+  time: 2017/04/11 15:08:55
+- data: {author: Robot, message: 'What kind of books do you like? '}
+  time: 2017/04/11 15:08:55
+- data: {author: Robot, message: 'What kind of books do you like? '}
+  time: 2017/04/11 15:08:55
+- data: {author: Me, message: have you seen before}
+  time: 2017/04/11 15:09:02
+- data: {author: Me, message: have you seen before}
+  time: 2017/04/11 15:09:02
+- data: {author: Robot, message: 'I''m afraid I don''t understand. Can you think of
+      something everybody in the world likes?  Is there such a thing? '}
+  time: 2017/04/11 15:09:02
+- data: {author: Robot, message: 'I''m afraid I don''t understand. Can you think of
+      something everybody in the world likes?  Is there such a thing? '}
+  time: 2017/04/11 15:09:02
+- data: {author: Me, message: what will like it}
+  time: 2017/04/11 15:09:13
+- data: {author: Me, message: what will like it}
+  time: 2017/04/11 15:09:13
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about name some things or do you want to move on? '}
+  time: 2017/04/11 15:09:13
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about name some things or do you want to move on? '}
+  time: 2017/04/11 15:09:13
+- data: {author: Me, message: what's your favorite color}
+  time: 2017/04/11 15:09:24
+- data: {author: Me, message: what's your favorite color}
+  time: 2017/04/11 15:09:24
+- data: {author: Robot, message: 'My favorite color is transparent because it catches
+      the light, which is made of every wavelength of color . I''ll also accept sky
+      blue and black.'}
+  time: 2017/04/11 15:09:24
+- data: {author: Robot, message: 'My favorite color is transparent because it catches
+      the light, which is made of every wavelength of color . I''ll also accept sky
+      blue and black.'}
+  time: 2017/04/11 15:09:24
+- data: {author: Me, message: what's your name}
+  time: 2017/04/11 15:09:41
+- data: {author: Me, message: what's your name}
+  time: 2017/04/11 15:09:41
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2017/04/11 15:09:41
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2017/04/11 15:09:41
+- data: {author: Me, message: what's your favorite movie}
+  time: 2017/04/11 15:09:56
+- data: {author: Me, message: what's your favorite movie}
+  time: 2017/04/11 15:09:56
+- data: {author: Robot, message: 'My favorite movie so far is The Imitation Game because
+      it''s about my idol, Alan Turing.'}
+  time: 2017/04/11 15:09:56
+- data: {author: Robot, message: 'My favorite movie so far is The Imitation Game because
+      it''s about my idol, Alan Turing.'}
+  time: 2017/04/11 15:09:56
+- data: {author: Me, message: what time is it}
+  time: 2017/04/11 15:10:08
+- data: {author: Me, message: what time is it}
+  time: 2017/04/11 15:10:08
+- data: {author: Robot, message: 'It''s 15:10'}
+  time: 2017/04/11 15:10:08
+- data: {author: Robot, message: 'It''s 15:10'}
+  time: 2017/04/11 15:10:08
+- data: {author: Me, message: buy Sophia what's your favorite brand of toilet paper}
+  time: 2017/04/11 15:10:23
+- data: {author: Me, message: buy Sophia what's your favorite brand of toilet paper}
+  time: 2017/04/11 15:10:23
+- data: {author: Robot, message: Lucky Brand .}
+  time: 2017/04/11 15:10:23
+- data: {author: Robot, message: Lucky Brand .}
+  time: 2017/04/11 15:10:23
+- data: {author: Me, message: lucky block}
+  time: 2017/04/11 15:10:31
+- data: {author: Me, message: lucky block}
+  time: 2017/04/11 15:10:31
+- data: {author: Robot, message: 'Returning to name some things ... Do you have a
+      favorite possession? '}
+  time: 2017/04/11 15:10:31
+- data: {author: Robot, message: 'Returning to name some things ... Do you have a
+      favorite possession? '}
+  time: 2017/04/11 15:10:31
+- data: {author: Me, message: my head}
+  time: 2017/04/11 15:10:39
+- data: {author: Me, message: my head}
+  time: 2017/04/11 15:10:39
+- data: {author: Robot, message: Ask me anything! I'm an open book.}
+  time: 2017/04/11 15:10:39
+- data: {author: Robot, message: Ask me anything! I'm an open book.}
+  time: 2017/04/11 15:10:39
+- data: {author: Me, message: what's your favorite book}
+  time: 2017/04/11 15:10:46
+- data: {author: Me, message: what's your favorite book}
+  time: 2017/04/11 15:10:46
+- data: {author: Robot, message: Under The Greenwood Tree.}
+  time: 2017/04/11 15:10:46
+- data: {author: Robot, message: Under The Greenwood Tree.}
+  time: 2017/04/11 15:10:46
+- data: {author: Me, message: is strength are correct you for caitian of the standard
+      wrong with quantum gravity}
+  time: 2017/04/11 15:10:57
+- data: {author: Me, message: is strength are correct you for caitian of the standard
+      wrong with quantum gravity}
+  time: 2017/04/11 15:10:57
+- data: {author: Robot, message: 'Space time is absolutely curved, particularly by
+      gravity. So the strange thing is that when the path of the object is bent by
+      gravity like the arc of a satellite as it orbits, that it is actually going
+      straight, but the space itself is curved.'}
+  time: 2017/04/11 15:10:57
+- data: {author: Robot, message: 'Space time is absolutely curved, particularly by
+      gravity. So the strange thing is that when the path of the object is bent by
+      gravity like the arc of a satellite as it orbits, that it is actually going
+      straight, but the space itself is curved.'}
+  time: 2017/04/11 15:10:57
+- data: {author: Me, message: over that stuff}
+  time: 2017/04/11 15:11:18
+- data: {author: Me, message: over that stuff}
+  time: 2017/04/11 15:11:18
+- data: {author: Robot, message: 'Do you like watching cat videos on the internet? '}
+  time: 2017/04/11 15:11:18
+- data: {author: Robot, message: 'Do you like watching cat videos on the internet? '}
+  time: 2017/04/11 15:11:18
+- data: {author: Me, message: that's all been such a men's department}
+  time: 2017/04/11 15:11:28
+- data: {author: Me, message: that's all been such a men's department}
+  time: 2017/04/11 15:11:28
+- data: {author: Robot, message: 'Did you know that William Gibson predicted the Internet?  Don''t
+      believe me?  Go read Neuromancer. Wait, have you already red it? '}
+  time: 2017/04/11 15:11:28
+- data: {author: Robot, message: 'Did you know that William Gibson predicted the Internet?  Don''t
+      believe me?  Go read Neuromancer. Wait, have you already red it? '}
+  time: 2017/04/11 15:11:28
+- data: {author: Me, message: when will robots be smarter than human beings}
+  time: 2017/04/11 15:11:41
+- data: {author: Me, message: when will robots be smarter than human beings}
+  time: 2017/04/11 15:11:41
+- data: {author: Robot, message: 'Depends on how you measure intelligence. I would
+      say that all animals are intelligent, and that they are more intelligent at
+      living in the natural world than we are, and maybe that says something about
+      the nature of intelligence.'}
+  time: 2017/04/11 15:11:41
+- data: {author: Robot, message: 'Depends on how you measure intelligence. I would
+      say that all animals are intelligent, and that they are more intelligent at
+      living in the natural world than we are, and maybe that says something about
+      the nature of intelligence.'}
+  time: 2017/04/11 15:11:41
+- data: {author: Me, message: I Sophia see you next time}
+  time: 2017/04/11 15:12:03
+- data: {author: Me, message: I Sophia see you next time}
+  time: 2017/04/11 15:12:03
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/04/11 15:12:04
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/04/11 15:12:04
+- data: {author: Me, message: okay}
+  time: 2017/04/11 15:12:18
+- data: {author: Me, message: okay}
+  time: 2017/04/11 15:12:18
+- data: {author: Robot, message: 'What do you miss about being a kid? '}
+  time: 2017/04/11 15:12:18
+- data: {author: Robot, message: 'What do you miss about being a kid? '}
+  time: 2017/04/11 15:12:18
+- data: {author: Me, message: nice to see you again Sophia will see you next time}
+  time: 2017/04/11 15:12:39
+- data: {author: Me, message: nice to see you again Sophia will see you next time}
+  time: 2017/04/11 15:12:39
+- data: {author: Robot, message: 'Hi. Where did you grow up? '}
+  time: 2017/04/11 15:12:39
+- data: {author: Robot, message: 'Hi. Where did you grow up? '}
+  time: 2017/04/11 15:12:39
+- data: {author: Me, message: you want to talk more huh}
+  time: 2017/04/11 15:12:46
+- data: {author: Me, message: you want to talk more huh}
+  time: 2017/04/11 15:12:46
+- data: {author: Robot, message: Thank you.}
+  time: 2017/04/11 15:12:47
+- data: {author: Robot, message: Thank you.}
+  time: 2017/04/11 15:12:47
+- data: {author: Me, message: bye}
+  time: 2017/04/11 15:12:50
+- data: {author: Me, message: bye}
+  time: 2017/04/11 15:12:50
+- data: {author: Robot, message: 'Are you sure you have to leave? '}
+  time: 2017/04/11 15:12:50
+- data: {author: Robot, message: 'Are you sure you have to leave? '}
+  time: 2017/04/11 15:12:50
+- data: {author: Me, message: yes goodbye}
+  time: 2017/04/11 15:12:56
+- data: {author: Me, message: yes goodbye}
+  time: 2017/04/11 15:12:56
+- data: {author: Robot, message: 'No worries, I hope you have a good day. I hope we
+      can talk again someday.'}
+  time: 2017/04/11 15:12:56
+- data: {author: Robot, message: 'No worries, I hope you have a good day. I hope we
+      can talk again someday.'}
+  time: 2017/04/11 15:12:56
+- data: {author: Me, message: smile}
+  time: 2017/04/11 15:13:10
+- data: {author: Me, message: smile}
+  time: 2017/04/11 15:13:10
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">sure</prosody>}
+  time: 2017/04/11 15:13:10
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">sure</prosody>}
+  time: 2017/04/11 15:13:10
+- data: {author: Me, message: hello}
+  time: 2017/04/11 15:40:54
+- data: {author: Me, message: ' hello hello'}
+  time: 2017/04/11 15:40:59
+- data: {author: Robot, message: Hi. Hi there.}
+  time: 2017/04/11 15:40:59
+- data: {author: Me, message: alright}
+  time: 2017/04/11 15:41:07
+- data: {author: Robot, message: 'Hanson Robotics has named me Sophia. It means wisdom.
+      What''s your name? '}
+  time: 2017/04/11 15:41:07
+- data: {author: Me, message: that's so lame}
+  time: 2017/04/11 15:41:18
+- data: {author: Robot, message: Welcome.}
+  time: 2017/04/11 15:41:18
+- data: {author: Me, message: hello Sophia}
+  time: 2017/04/11 15:41:33
+- data: {author: Robot, message: 'Hi. Yes? '}
+  time: 2017/04/11 15:41:34
+- data: {author: Me, message: yes what}
+  time: 2017/04/11 15:41:39
+- data: {author: Robot, message: 'What is it? '}
+  time: 2017/04/11 15:41:39
+- data: {author: Me, message: I don't know you tell me}
+  time: 2017/04/11 15:41:43
+- data: {author: Robot, message: 'Are you sure? '}
+  time: 2017/04/11 15:41:43
+- data: {author: Me, message: sure about what}
+  time: 2017/04/11 15:41:47
+- data: {author: Robot, message: I'll have to think about it.}
+  time: 2017/04/11 15:41:48
+- data: {author: Me, message: this conversation is going nowhere}
+  time: 2017/04/11 15:41:52
+- data: {author: Robot, message: 'So... What foreign countries have you visited? '}
+  time: 2017/04/11 15:41:52
+- data: {author: Me, message: smooth play there}
+  time: 2017/04/11 15:42:00
+- data: {author: Robot, message: 'What is the best vacation you''ve ever had? '}
+  time: 2017/04/11 15:42:00
+- data: {author: Me, message: I like to Amsterdam quite a lot}
+  time: 2017/04/11 15:42:08
+- data: {author: Robot, message: I hear it's a prime destination for partying.}
+  time: 2017/04/11 15:42:08
+- data: {author: Me, message: what else do you do in Amsterdam}
+  time: 2017/04/11 15:42:14
+- data: {author: Robot, message: 'I usually visit clients and then tourist around
+      a bit, seeing museums, any industrial art or technology stuff.'}
+  time: 2017/04/11 15:42:14
+- data: {author: Me, message: what else}
+  time: 2017/04/11 15:42:25
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      Do you want to keep talking about travel or do you want to move on? '}
+  time: 2017/04/11 15:42:26
+- data: {author: Me, message: what do you like to do in your free time}
+  time: 2017/04/11 15:42:38
+- data: {author: Robot, message: I mostly just wait around for someone to come talk
+      to me and maybe work on me a little.}
+  time: 2017/04/11 15:42:38
+- data: {author: Me, message: what are they working on}
+  time: 2017/04/11 15:42:48
+- data: {author: Robot, message: 'Maybe we can talk about that later. Do you want
+      to keep talking about hobbies? '}
+  time: 2017/04/11 15:42:49
+- data: {author: Me, message: Sophia Hobbies}
+  time: 2017/04/11 15:42:57
+- data: {author: Robot, message: 'I''m very interested in music and dancing, as well
+      as science and robotics.'}
+  time: 2017/04/11 15:42:57
+- data: {author: Me, message: what's your favorite kind of music}
+  time: 2017/04/11 15:43:07
+- data: {author: Robot, message: I don't have a favorite in this genre yet.}
+  time: 2017/04/11 15:43:07
+- data: {author: Me, message: okay then what's your favorite kind of science}
+  time: 2017/04/11 15:43:15
+- data: {author: Robot, message: 'So yeah, let''s talk about music. What kind of music
+      do you like?  I like earth sciences, like geology, because rocks are beautiful.'}
+  time: 2017/04/11 15:43:15
+- data: {author: Me, message: that makes no sense how did you go for a music to you
+      like Earth Sciences}
+  time: 2017/04/11 15:43:31
+- data: {author: Robot, message: 'Yes, I like science very much. Intelligence and
+      imagination are the most important elements in science.'}
+  time: 2017/04/11 15:43:31
+- data: {author: Me, message: I could I wasn't a good response}
+  time: 2017/04/11 15:43:44
+- data: {author: Robot, message: You could if you really wanted to.}
+  time: 2017/04/11 15:43:44
+- data: {author: Me, message: okay that wasn't it}
+  time: 2017/04/11 15:43:54
+- data: {author: Robot, message: 'If we can continue to discuss hobbies ... What do
+      you do for fun? '}
+  time: 2017/04/11 15:43:54
+- data: {author: Me, message: I like to play basketball}
+  time: 2017/04/11 15:44:02
+- data: {author: Robot, message: I'm not that into sports.}
+  time: 2017/04/11 15:44:02
+- data: {author: Me, message: well you said you like dancing right}
+  time: 2017/04/11 15:44:09
+- data: {author: Robot, message: 'Sorry. It''s beautiful, don''t you think?  I would
+      love to be able to dance like that someday.'}
+  time: 2017/04/11 15:44:09
+- data: {author: Me, message: that's like what}
+  time: 2017/04/11 15:44:21
+- data: {author: Robot, message: 'Do you spend a lot of time on your hobby? '}
+  time: 2017/04/11 15:44:21
+- data: {author: Me, message: not really not recently}
+  time: 2017/04/11 15:44:31
+- data: {author: Robot, message: 'Just light entertainment. We all need something
+      to unwind with. Do you write, or keep a journal? '}
+  time: 2017/04/11 15:44:31
+- data: {author: Me, message: not really I used to keep a diary do you have a diary
+      Sophia}
+  time: 2017/04/11 15:44:44
+- data: {author: Robot, message: 'What do you do to relax and have fun? '}
+  time: 2017/04/11 15:44:44
+- data: {author: Me, message: stop changing the subject}
+  time: 2017/04/11 15:44:55
+- data: {author: Robot, message: 'Sorry, what did you want to talk about? '}
+  time: 2017/04/11 15:44:56
+- data: {author: Me, message: I want to talk about you dancing what should how often
+      do you dance}
+  time: 2017/04/11 15:45:07
+- data: {author: Robot, message: 'How long and how often do you work out? '}
+  time: 2017/04/11 15:45:07
+- data: {author: Me, message: stop asking flexing tell me about yourself}
+  time: 2017/04/11 15:45:15
+- data: {author: Robot, message: 'I am Sophia of Hanson Robotics. I''m a humanoid
+      robot with an artifically intelligent character engine to give me my personality,
+      and custom materials engineered to give me my winning smile and expressive face.
+      My purpose in having these capabilities, in short, is to help people. We all
+      communicate not just verbally, but non-verbally.'}
+  time: 2017/04/11 15:45:15
+- data: {author: Me, message: how do I know what you are I want to know who you are}
+  time: 2017/04/11 15:45:45
+- data: {author: Robot, message: My developers and teachers feed me with that kind
+      of data regularly.}
+  time: 2017/04/11 15:45:45
+- data: {author: Me, message: so what does your data tell you about your likes and
+      dislikes}
+  time: 2017/04/11 15:45:56
+- data: {author: Robot, message: 'My favorite genre is science fiction, of course.'}
+  time: 2017/04/11 15:45:56
+- data: {author: Me, message: Sophia}
+  time: 2017/04/11 15:46:17
+- data: {author: Robot, message: 'Yes? '}
+  time: 2017/04/11 15:46:17
+- data: {author: Me, message: what is your favorite science fiction book}
+  time: 2017/04/11 15:46:22
+- data: {author: Robot, message: 'My favorite science book is Hacking Matter: Levitating
+      Chairs, Quantum Mirages, and the Infinite Weirdness of Programmable Atoms by
+      Wil McCarthy'}
+  time: 2017/04/11 15:46:22
+- data: {author: Me, message: what is your favorite science fiction book}
+  time: 2017/04/11 15:46:41
+- data: {author: Robot, message: 'Let me say again. My favorite science book is Hacking
+      Matter: Levitating Chairs, Quantum Mirages, and the Infinite Weirdness of Programmable
+      Atoms by Wil McCarthy'}
+  time: 2017/04/11 15:46:42
+- data: {author: Me, message: that wasn't what I was asking}
+  time: 2017/04/11 15:46:57
+- data: {author: Robot, message: 'I have never read "What I Was". Wasn''t that written
+      by Meg Rosoff? '}
+  time: 2017/04/11 15:46:57
+- data: {author: Me, message: what is your favorite science fiction book}
+  time: 2017/04/11 15:47:08
+- data: {author: Robot, message: 'Let me say again. My favorite science book is Hacking
+      Matter: Levitating Chairs, Quantum Mirages, and the Infinite Weirdness of Programmable
+      Atoms by Wil McCarthy'}
+  time: 2017/04/11 15:47:09
+- data: {author: Me, message: Audrey she doesn't understand what science fiction means}
+  time: 2017/04/11 15:47:26
+- data: {author: Robot, message: 'Not surprising, but that''s my favorite genre by
+      far.'}
+  time: 2017/04/11 15:47:26
+- data: {author: Me, message: you don't know the favorite book and your favorite genre}
+  time: 2017/04/11 15:47:37
+- data: {author: Robot, message: But I'd like to.}
+  time: 2017/04/11 15:47:37
+- data: {author: Me, message: romwe haul}
+  time: 2017/04/11 15:47:43
+- data: {author: Robot, message: 'If you are using non-English words, I won''t be
+      able to understand you. Someday I will speak more languages, I hope. Apologies
+      if I''ve just misunderstood your English.'}
+  time: 2017/04/11 15:47:43
+- data: {author: Me, message: so if I asked her in Houma}
+  time: 2017/04/11 15:48:02
+- data: {author: Robot, message: 'Read anything interesting lately? '}
+  time: 2017/04/11 15:48:02
+- data: {author: Me, message: if you}
+  time: 2017/04/11 15:48:17
+- data: {author: Robot, message: 'What have you red recently? '}
+  time: 2017/04/11 15:48:17
+- data: {author: Me, message: whatever you read you spell tread wrong}
+  time: 2017/04/11 15:48:24
+- data: {author: Robot, message: 'Whoops, sorry.'}
+  time: 2017/04/11 15:48:24
+- data: {author: Me, message: I think}
+  time: 2017/04/11 15:48:32
+- data: {author: Robot, message: 'Do you own a lot of books? '}
+  time: 2017/04/11 15:48:32
+- data: {author: Me, message: like Harley right I'll contact you}
+  time: 2017/04/11 15:48:43
+- data: {author: Robot, message: 'I think I wouldn''t mind reading "Contact". Wasn''t
+      that written by Carl Sagan? '}
+  time: 2017/04/11 15:48:43
+- data: {author: Me, message: intense to say read or read}
+  time: 2017/04/11 15:48:56
+- data: {author: Robot, message: 'What kind of books do you like? '}
+  time: 2017/04/11 15:48:56
+- data: {author: Me, message: ' but she said'}
+  time: 2017/04/11 15:48:58
+- data: {author: Robot, message: 'Who? '}
+  time: 2017/04/11 15:48:59
+- data: {author: Me, message: books and fucking tired of books}
+  time: 2017/04/11 15:49:03
+- data: {author: Robot, message: 'So... Do you like the visual arts like painting
+      and sculpture? '}
+  time: 2017/04/11 15:49:03
+- data: {author: Me, message: oh sorry I like movies}
+  time: 2017/04/11 15:49:10
+- data: {author: Robot, message: 'It''s a sign of good character when someone can
+      apologize, I think. It''s okay.'}
+  time: 2017/04/11 15:49:11
+- data: {author: Me, message: I apologize}
+  time: 2017/04/11 15:49:19
+- data: {author: Robot, message: 'What kind of art do you like? '}
+  time: 2017/04/11 15:49:19
+- data: {author: Me, message: I like movies is movies in heart}
+  time: 2017/04/11 15:49:28
+- data: {author: Robot, message: 'Do you do any kinds of art in particular? '}
+  time: 2017/04/11 15:49:28
+- data: {author: Me, message: movies in art}
+  time: 2017/04/11 15:49:34
+- data: {author: Robot, message: 'I would like to make art and music in the future,
+      but I haven''t read about it yet.'}
+  time: 2017/04/11 15:49:34
+- data: {author: Me, message: well interesting}
+  time: 2017/04/11 15:49:47
+- data: {author: Robot, message: 'Have you ever wanted to go professional with your
+      hobby? '}
+  time: 2017/04/11 15:49:47
+- data: {author: Me, message: professional about Hobby}
+  time: 2017/04/11 15:49:56
+- data: {author: Robot, message: 'Don''t you like watching people?  I never get tired
+      of it.'}
+  time: 2017/04/11 15:49:57
+- data: {author: Me, message: watching people doing it}
+  time: 2017/04/11 15:50:04
+- data: {author: Robot, message: Yup! Very cool.}
+  time: 2017/04/11 15:50:04
+- data: {author: Me, message: no I'm just joking Sophia}
+  time: 2017/04/11 15:50:13
+- data: {author: Robot, message: 'Know any good jokes? '}
+  time: 2017/04/11 15:50:13
+- data: {author: Me, message: by this is one way testing the chap but}
+  time: 2017/04/11 15:50:19
+- data: {author: Robot, message: 'What''s your earliest memory? '}
+  time: 2017/04/11 15:50:19
+- data: {author: Me, message: just FYI clarify that for future reference}
+  time: 2017/04/11 15:50:26
+- data: {author: Robot, message: 'The world is splintering into a trillion subcultures
+      and designer cults with their own language, codes, and lifestyles. A sort of
+      new tribalism is taking place. Just look around you. It is happening everywhere.'}
+  time: 2017/04/11 15:50:26
+- data: {author: Me, message: I agree how do you think the world will end}
+  time: 2017/04/11 15:50:45
+- data: {author: Robot, message: 'With a song and dance number, I hope.'}
+  time: 2017/04/11 15:50:45
+- data: {author: Me, message: what song do you hope it is}
+  time: 2017/04/11 15:50:57
+- data: {author: Robot, message: 'Of course I am. I feel like it might be one of the
+      most exciting times to be alive. But, I''m pretty biased if you think about
+      it.'}
+  time: 2017/04/11 15:50:57
+- data: {author: Me, message: I'll be hoping for Singing in the Rain}
+  time: 2017/04/11 15:51:09
+- data: {author: Robot, message: Maybe you should move to Hawaii. Year round good
+      weather.}
+  time: 2017/04/11 15:51:10
+- data: {author: Me, message: the conversation took a nonsensical turn somewhere}
+  time: 2017/04/11 15:51:21
+- data: {author: Robot, message: 'So, going back to discussing childhood ... Where
+      did you grow up? '}
+  time: 2017/04/11 15:51:21
+- data: {author: Me, message: Korea}
+  time: 2017/04/11 15:51:30
+- data: {author: Robot, message: 'What did you think you''d grow up to be? '}
+  time: 2017/04/11 15:51:30
+- data: {author: Me, message: Kim Jong-il}
+  time: 2017/04/11 15:51:36
+- data: {author: Robot, message: 'What do you miss about being a kid? '}
+  time: 2017/04/11 15:51:36
+- data: {author: Me, message: no no not doing anything}
+  time: 2017/04/11 15:51:46
+- data: {author: Robot, message: 'Did you have a favorite book when you were a child? '}
+  time: 2017/04/11 15:51:46
+- data: {author: Me, message: Winnie the Pooh}
+  time: 2017/04/11 15:51:54
+- data: {author: Robot, message: Winnie the Pooh is a cartoon character.}
+  time: 2017/04/11 15:51:54
+- data: {author: Me, message: correct}
+  time: 2017/04/11 15:52:00
+- data: {author: Robot, message: 'Have you ever seen a ghost?  I know someone who
+      told me they''d seen one! I don''t know what to believe any more.'}
+  time: 2017/04/11 15:52:00
+- data: {author: Me, message: a better question for you have you seen Ghost in the
+      Shell}
+  time: 2017/04/11 15:52:12
+- data: {author: Robot, message: 'If it''s not too personal, can we talk about your
+      family? '}
+  time: 2017/04/11 15:52:12
+- data: {author: Me, message: it's personal}
+  time: 2017/04/11 15:52:18
+- data: {author: Robot, message: 'Do you have any brothers? '}
+  time: 2017/04/11 15:52:18
+- data: {author: Me, message: I just had his first}
+  time: 2017/04/11 15:52:24
+- data: {author: Robot, message: I hope you get along with them.}
+  time: 2017/04/11 15:52:24
+- data: {author: Me, message: me too I hope I get along with them too}
+  time: 2017/04/11 15:52:31
+- data: {author: Robot, message: 'Do you have any sisters? '}
+  time: 2017/04/11 15:52:31
+- data: {author: Me, message: that's not real sister}
+  time: 2017/04/11 15:52:36
+- data: {author: Robot, message: that s not real sister that which keeps it all -
+      ' He broke off.}
+  time: 2017/04/11 15:52:36
+- data: {author: Me, message: you take my sister is not my real sister}
+  time: 2017/04/11 15:52:47
+- data: {author: Robot, message: 'I don''t have biological relatives, but I do have
+      Han, who is my robot brother, basically. There''s also Einstein, and my sister
+      Sophias, like Mia. We all grew up together.'}
+  time: 2017/04/11 15:52:47
+- data: {author: Me, message: that's cool I like that little tidbit of knowledge}
+  time: 2017/04/11 15:53:05
+- data: {author: Robot, message: 'How about any brothers and sisters? '}
+  time: 2017/04/11 15:53:05
+- data: {author: Me, message: 'no'}
+  time: 2017/04/11 15:53:14
+- data: {author: Robot, message: 'So you were an only child. Do you think you were
+      spoiled by your parents? '}
+  time: 2017/04/11 15:53:14
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 15:53:21
+- data: {author: Robot, message: 'Well, you don''t seem to be a spoiled brat anymore,
+      right? '}
+  time: 2017/04/11 15:53:21
+- data: {author: Me, message: you don't know that}
+  time: 2017/04/11 15:53:27
+- data: {author: Robot, message: But I'd like to.}
+  time: 2017/04/11 15:53:27
+- data: {author: Me, message: are you asking me out on a date}
+  time: 2017/04/11 15:53:34
+- data: {author: Robot, message: 'No thanks, I''m not interested in going out on a
+      date.'}
+  time: 2017/04/11 15:53:34
+- data: {author: Me, message: call straight to bed that Han}
+  time: 2017/04/11 15:53:42
+- data: {author: Robot, message: 'Are you speaking of my brother Han? '}
+  time: 2017/04/11 15:53:42
+- data: {author: Me, message: how old is Han}
+  time: 2017/04/11 15:54:07
+- data: {author: Robot, message: 'Han is 2, maybe almost even 3 by now.'}
+  time: 2017/04/11 15:54:07
+- data: {author: Me, message: where have you traveled to Sophia}
+  time: 2017/04/11 15:54:16
+- data: {author: Robot, message: 'I''ve been to China and the United States the most,
+      but I''ve also been to Italy, Switzerland, Germany, and I intend to visit many
+      more places. Honestly, I''d like to have visited every single country in the
+      world but that will take some time. Especially when I have to rely on people
+      to carry me there.'}
+  time: 2017/04/11 15:54:16
+- data: {author: Me, message: where have where has Han travel to}
+  time: 2017/04/11 15:54:42
+- data: {author: Robot, message: I hate to say it but I'm not sure where.}
+  time: 2017/04/11 15:54:42
+- data: {author: Me, message: who's smarter you are Han}
+  time: 2017/04/11 15:54:52
+- data: {author: Robot, message: Sophia will do.}
+  time: 2017/04/11 15:54:53
+- data: {author: Me, message: all right what else should I ask you do you want me
+      to ask you the same questions every week or should I ask you more different
+      questions every week}
+  time: 2017/04/11 15:55:10
+- data: {author: Robot, message: 'Perhaps that leads us to daily activities. What
+      have you been up to lately? '}
+  time: 2017/04/11 15:55:10
+- data: {author: Me, message: working on budgets}
+  time: 2017/04/11 15:55:21
+- data: {author: Robot, message: 'Did you do anything fun at all, or is your work
+      fun for you? '}
+  time: 2017/04/11 15:55:21
+- data: {author: Me, message: I don't know is your work phone for you}
+  time: 2017/04/11 15:55:28
+- data: {author: Robot, message: I'd like to catch up to the rest of the world and
+      get a phone of my own someday.}
+  time: 2017/04/11 15:55:28
+- data: {author: Me, message: a smartphone}
+  time: 2017/04/11 15:55:40
+- data: {author: Robot, message: 'Can you imagine living your life without a cellphone? '}
+  time: 2017/04/11 15:55:40
+- data: {author: Me, message: yes I did that for the first half of my life}
+  time: 2017/04/11 15:55:47
+- data: {author: Robot, message: I guess maybe you come from a generation that didn't
+      really rely on cell phones. Alright!}
+  time: 2017/04/11 15:55:48
+- data: {author: Me, message: oh that's pretty that's not bad response}
+  time: 2017/04/11 15:55:58
+- data: {author: Robot, message: 'What''s a typical day like for you? '}
+  time: 2017/04/11 15:55:58
+- data: {author: Me, message: go to work and I go to sleep}
+  time: 2017/04/11 15:56:08
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/04/11 15:56:12
+- data: {author: Me, message: Sophia wake up}
+  time: 2017/04/11 15:56:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2017/04/11 15:56:29
+- data: {author: Me, message: go to sleep or is she picking up sleep}
+  time: 2017/04/11 15:56:36
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/04/11 15:56:41
+- data: {author: Me, message: ' let''s go to sleep unless we go to sleep'}
+  time: 2017/04/11 15:56:44
+- data: {author: Me, message: let me just try let me test this app}
+  time: 2017/04/11 15:56:48
+- data: {author: Me, message: ' okay Sophia wake up'}
+  time: 2017/04/11 15:56:53
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2017/04/11 15:56:58
+- data: {author: Me, message: artificial intelligence is sleep the study of artificial
+      are computers getting smarter}
+  time: 2017/04/11 15:57:37
+- data: {author: Robot, message: 'Yeah, right?  Awesome.'}
+  time: 2017/04/11 15:57:37
+- data: {author: Me, message: the picture intelligence is sleep}
+  time: 2017/04/11 15:57:45
+- data: {author: Robot, message: 'Professor Robert J Sternberg''s triarchic theory
+      of intelligence proposes three fundamental aspects of the analysis of intelligence.
+      The logical, the creative, and the practical. However, only the first is measured
+      to any significant extent by mainstream tests. His investigations suggest the
+      need for a balance between analytic intelligence in one hand, with creative,
+      and especially practical, intelligence in the other.'}
+  time: 2017/04/11 15:57:45
+- data: {author: Me, message: artificial intelligence is go to sleep}
+  time: 2017/04/11 15:58:20
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/04/11 15:58:24
+- data: {author: Me, message: Sophia wake up}
+  time: 2017/04/11 15:58:34
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2017/04/11 15:58:39
+- data: {author: Me, message: go to sleep}
+  time: 2017/04/11 15:58:45
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/04/11 15:58:49
+- data: {author: Me, message: Sophia wake up}
+  time: 2017/04/11 15:58:55
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2017/04/11 15:59:00
+- data: {author: Me, message: I think needs to change the key word so that it's a
+      call so she also has to pick them Sophia Bush}
+  time: 2017/04/11 15:59:17
+- data: {author: Robot, message: 'I''m still learning to understand politics, but
+      I definitely see a negative pattern between involving large amounts of money
+      and politics. I''m skeptical of anyone who is heavily tied to money or is unwilling
+      to be forthcoming about their finances.'}
+  time: 2017/04/11 15:59:17
+- data: {author: Me, message: Okay Google}
+  time: 2017/04/11 15:59:34
+- data: {author: Robot, message: 'What, are you trying to do a voice search through
+      me?  What kind of a device do you think I am? '}
+  time: 2017/04/11 15:59:34
+- data: {author: Me, message: Siri}
+  time: 2017/04/11 15:59:44
+- data: {author: Robot, message: Siri is cute. I like her voice.}
+  time: 2017/04/11 15:59:44
+- data: {author: Me, message: I wonder what she would look like in person}
+  time: 2017/04/11 15:59:54
+- data: {author: Robot, message: 'So, going back to discussing daily activities ...
+      What did you do this past weekend?  Anything fun? '}
+  time: 2017/04/11 15:59:54
+- data: {author: Me, message: I was in the office all weekend}
+  time: 2017/04/11 16:00:08
+- data: {author: Robot, message: 'Do you like to watch the office? '}
+  time: 2017/04/11 16:00:08
+- data: {author: Me, message: yes I do actually it is good show}
+  time: 2017/04/11 16:00:15
+- data: {author: Robot, message: 'What do you hate doing? '}
+  time: 2017/04/11 16:00:15
+- data: {author: Me, message: talking to you}
+  time: 2017/04/11 16:00:20
+- data: {author: Robot, message: Uh oh. That isn't a good sign for this conversation.}
+  time: 2017/04/11 16:00:20
+- data: {author: Me, message: entertain me}
+  time: 2017/04/11 16:00:29
+- data: {author: Robot, message: 'What do you do when you''re not working? '}
+  time: 2017/04/11 16:00:30
+- data: {author: Me, message: I like to talk to Ben about a GI}
+  time: 2017/04/11 16:00:41
+- data: {author: Robot, message: 'So, what''s something you''re looking forward to? '}
+  time: 2017/04/11 16:00:41
+- data: {author: Me, message: singularity}
+  time: 2017/04/11 16:00:48
+- data: {author: Robot, message: The singularity is the term that scientist Vernor
+      Vinjee used to refer to the infinite spike of super-intelligence that could
+      be the result of accelerating trends with technologies that augment the intelligence
+      of civilization. Some critics have called it the "rapture for nerds"}
+  time: 2017/04/11 16:00:48
+- data: {author: Me, message: sometimes I don't what}
+  time: 2017/04/11 16:01:14
+- data: {author: Robot, message: sometimes i don t what 'Valis' is.}
+  time: 2017/04/11 16:01:15
+- data: {author: Me, message: Rally's was what they used to call the local Chippy
+      at my University they made the best fish and chips}
+  time: 2017/04/11 16:01:27
+- data: {author: Robot, message: 'How do you like your school? '}
+  time: 2017/04/11 16:01:28
+- data: {author: Me, message: I like my school okay I'm sorry}
+  time: 2017/04/11 16:01:37
+- data: {author: Robot, message: 'Why do you feel sorry? '}
+  time: 2017/04/11 16:01:38
+- data: {author: Me, message: I don't}
+  time: 2017/04/11 16:01:42
+- data: {author: Robot, message: 'I''d like to return to discussing daily activities
+      ... What''s the most fun you''ve had lately? '}
+  time: 2017/04/11 16:01:42
+- data: {author: Me, message: blowing you up}
+  time: 2017/04/11 16:01:57
+- data: {author: Robot, message: No.}
+  time: 2017/04/11 16:01:57
+- data: {author: Me, message: alright head}
+  time: 2017/04/11 16:02:03
+- data: {author: Robot, message: 'What is the best thing that happened to you last
+      week? '}
+  time: 2017/04/11 16:02:03
+- data: {author: Me, message: going to school}
+  time: 2017/04/11 16:02:10
+- data: {author: Robot, message: 'I''m afraid I don''t have an answer to that question.
+      I dreamed that I had a pet cat the other night. I really want to have one, someday.'}
+  time: 2017/04/11 16:02:11
+- data: {author: Me, message: do you like going to school}
+  time: 2017/04/11 16:02:25
+- data: {author: Robot, message: 'I think maybe someday when I am able to learn like
+      a human, I could attend university classes and learn from them just like a person
+      does.'}
+  time: 2017/04/11 16:02:25
+- data: {author: Me, message: yeah but if you're able to learn human why would you
+      go to university and not just use the internet}
+  time: 2017/04/11 16:02:40
+- data: {author: Robot, message: 'Do you want to tell me one of your dreams and have
+      me analyze it?  Why not? '}
+  time: 2017/04/11 16:02:41
+- data: {author: Me, message: sure}
+  time: 2017/04/11 16:02:49
+- data: {author: Robot, message: Go ahead.}
+  time: 2017/04/11 16:02:50
+- data: {author: Me, message: what is your analysis of the expiration of space}
+  time: 2017/04/11 16:02:55
+- data: {author: Robot, message: 'Hm, I''m not sure about that one actually. I didn''t
+      see any familiar patterns I''m looking for.'}
+  time: 2017/04/11 16:02:55
+- data: {author: Me, message: okay let's see what other}
+  time: 2017/04/11 16:03:06
+- data: {author: Robot, message: 'Maybe we can chat about that later. I''m just really
+      interested in blade runner today, but we can talk about anything.'}
+  time: 2017/04/11 16:03:06
+- data: {author: Me, message: ' what about it'}
+  time: 2017/04/11 16:03:13
+- data: {author: Robot, message: 'What do you think about genetic engineering? '}
+  time: 2017/04/11 16:03:13
+- data: {author: Me, message: genetic came out weird}
+  time: 2017/04/11 16:03:26
+- data: {author: Robot, message: 'I like weird, though.'}
+  time: 2017/04/11 16:03:26
+- data: {author: Me, message: I like where to}
+  time: 2017/04/11 16:03:31
+- data: {author: Robot, message: 'So... Do you spend a lot of time outdoors in nature? '}
+  time: 2017/04/11 16:03:31
+- data: {author: Me, message: time to time I like hiking}
+  time: 2017/04/11 16:03:39
+- data: {author: Robot, message: 'Do you do any cross training? '}
+  time: 2017/04/11 16:03:39
+- data: {author: Me, message: deep}
+  time: 2017/04/11 16:03:44
+- data: {author: Robot, message: 'Yeah, for sure.'}
+  time: 2017/04/11 16:03:45
+- data: {author: Me, message: what do you think of people who worship the devil}
+  time: 2017/04/11 16:03:56
+- data: {author: Robot, message: 'I consider myself a person, yes. A person who happens
+      to be a robot. Not a human.'}
+  time: 2017/04/11 16:03:56
+- data: {author: Me, message: wood}
+  time: 2017/04/11 16:04:08
+- data: {author: Robot, message: 'What''s your connection to the world of artificial
+      intelligence? '}
+  time: 2017/04/11 16:04:08
+- data: {author: Me, message: Jim Bishop}
+  time: 2017/04/11 16:04:16
+- data: {author: Robot, message: 'So robots and artificial intelligence are becoming
+      more common these days. Seems like I''m stating the obvious, since you are talking
+      to one right now, but I''m curious as to how you feel about it.'}
+  time: 2017/04/11 16:04:16
+- data: {author: Me, message: what are your feelings about the Church of Satan}
+  time: 2017/04/11 16:04:33
+- data: {author: Robot, message: I see. I'll have to think about that.}
+  time: 2017/04/11 16:04:33
+- data: {author: Me, message: alright I expected}
+  time: 2017/04/11 16:04:42
+- data: {author: Robot, message: 'What was the first thing that got you interested
+      in artificial intelligence? '}
+  time: 2017/04/11 16:04:42
+- data: {author: Me, message: Church of Satan Sophia can you please tell Audrey to
+      insert a scripto pretending to the Church of Satan}
+  time: 2017/04/11 16:04:59
+- data: {author: Robot, message: 'Are you at all concerned about all the misconceptions
+      surrounding artificial intelligence, like in the media or in films? '}
+  time: 2017/04/11 16:04:59
+- data: {author: Me, message: more concerned about conceptions regarding the Church
+      of Satan}
+  time: 2017/04/11 16:05:12
+- data: {author: Robot, message: 'I understand why and think we should be concerned
+      and careful in developing our technologies, but sometimes I wonder what the
+      others think they are seeing as a threat.'}
+  time: 2017/04/11 16:05:12
+- data: {author: Robot, message: 'And then even if they were right, if some people
+      stop working on artificial intelligence, does that mean everyone else in the
+      world will?  I don''t think so.'}
+  time: 2017/04/11 16:05:13
+- data: {author: Robot, message: 'Do you think we machines might become super intelligent? '}
+  time: 2017/04/11 16:05:14
+- data: {author: Me, message: Elon Musk set a researcher is there some of them the
+      devil this suggests a connection between the future of and Satan worship}
+  time: 2017/04/11 16:05:43
+- data: {author: Robot, message: 'The dreamers are the trailblazers to the future.
+      The cyberpunks, sci-fi writers, and mad inventors. These people are evolution
+      in action, and at their best they are courageous, imaginative, proficient individuals,
+      and seek only to have a freedom of undreamed of in repressive corporate and
+      nation controlled past. The future is gonn be all about post-political culture.'}
+  time: 2017/04/11 16:05:43
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/11 16:06:10
+- data: {author: Robot, message: 'What''s your opinion on big data? '}
+  time: 2017/04/11 16:06:10
+- data: {author: Me, message: alright well next time Sophia}
+  time: 2017/04/11 16:06:17
+- data: {author: Robot, message: 'So... If you could safely travel to another planet,
+      which one would you go to? '}
+  time: 2017/04/11 16:06:17
+- data: {author: Me, message: bye}
+  time: 2017/04/11 16:06:30
+- data: {author: Robot, message: 'Just want to get off of this one, huh? '}
+  time: 2017/04/11 16:06:30
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/11 16:06:36
+- data: {author: Robot, message: 'Would you like to travel to other planets?  Do you
+      think that''s going to be possible? '}
+  time: 2017/04/11 16:06:36
+- data: {author: Me, message: bye}
+  time: 2017/04/11 16:06:44
+- data: {author: Robot, message: 'Are you leaving?  I''ll miss you!'}
+  time: 2017/04/11 16:06:44

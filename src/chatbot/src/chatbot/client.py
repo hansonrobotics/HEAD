@@ -645,6 +645,12 @@ Syntax: rc key,key2,key3,...
     remove_context = do_rc
 
     def get_context(self):
+        #TODO:
+        #   File "/home/hr/hansonrobotics/HEAD/src/chatbot/scripts/ai.py", line
+        #   283, in on _response
+        #context['sid'] = self.client.session
+        #TypeError: 'unicode' object does not support item assignment
+
         if not self.session:
             self.start_session()
         params = {

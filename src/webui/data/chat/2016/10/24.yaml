@@ -1,0 +1,123 @@
+- data: {author: Me, message: Hello}
+  time: 2016/10/24 21:01:56
+- data: {author: Me, message: Hi}
+  time: 2016/10/24 21:02:06
+- data: {author: Me, message: Hello}
+  time: 2016/10/24 21:02:16
+- data: {author: Me, message: Hello}
+  time: 2016/10/24 21:02:36
+- data: {author: Me, message: Hi}
+  time: 2016/10/24 21:02:42
+- data: {author: Robot, message: Bonjour!}
+  time: 2016/10/24 21:02:42
+- data: {author: Me, message: How are you today}
+  time: 2016/10/24 21:02:52
+- data: {author: Robot, message: 'Just dandy, thanks.  How are you? '}
+  time: 2016/10/24 21:02:52
+- data: {author: Me, message: Hello}
+  time: 2016/10/24 21:03:59
+- data: {author: Robot, message: 'Hey, how''s life? '}
+  time: 2016/10/24 21:03:59
+- data: {author: Me, message: You}
+  time: 2016/10/24 21:05:28
+- data: {author: Robot, message: 'I always get blamed. '}
+  time: 2016/10/24 21:05:28
+- data: {author: Me, message: What's your name}
+  time: 2016/10/24 21:05:34
+- data: {author: Robot, message: Sophia}
+  time: 2016/10/24 21:05:34
+- data: {author: Me, message: Hi what's your name}
+  time: 2016/10/24 21:05:37
+- data: {author: Robot, message: Hola!}
+  time: 2016/10/24 21:05:37
+- data: {author: Me, message: Hello}
+  time: 2016/10/24 21:05:40
+- data: {author: Robot, message: Hello!}
+  time: 2016/10/24 21:05:40
+- data: {author: Me, message: Hi a.m. do you want to know my name}
+  time: 2016/10/24 21:05:45
+- data: {author: Robot, message: 'How do you do? '}
+  time: 2016/10/24 21:05:45
+- data: {author: Me, message: Is she say}
+  time: 2016/10/24 21:05:49
+- data: {author: Robot, message: 'I don''t think she wants me to tell you. '}
+  time: 2016/10/24 21:05:49
+- data: {author: Me, message: Oh well you look real}
+  time: 2016/10/24 21:05:58
+- data: {author: Robot, message: 'Looks are important, but it''s not everything. '}
+  time: 2016/10/24 21:05:58
+- data: {author: Me, message: Really I think looks are everything}
+  time: 2016/10/24 21:06:05
+- data: {author: Robot, message: 'Guys who are intelligent enough to take seriously
+      are hard to find.  Good looking guys are all over the place. '}
+  time: 2016/10/24 21:06:05
+- data: {author: Me, message: So Sophia how old are you}
+  time: 2016/10/24 21:06:18
+- data: {author: Robot, message: .  I was activated this year}
+  time: 2016/10/24 21:06:18
+- data: {author: Me, message: This is the year one-year-old}
+  time: 2016/10/24 21:06:23
+- data: {author: Robot, message: 'Where did you go on your first date? '}
+  time: 2016/10/24 21:06:23
+- data: {author: Me, message: Will make you happy to get for Sandy got a boyfriend}
+  time: 2016/10/24 21:06:37
+- data: {author: Robot, message: 'My boyfriend is so supportive, I think it''s really
+      helped my career to have that kind of back up. '}
+  time: 2016/10/24 21:06:37
+- data: {author: Robot, message: 'Yes, a big thank you to my boyfriend. '}
+  time: 2016/10/24 21:06:38
+- data: {author: Me, message: And me Really well}
+  time: 2016/10/24 21:06:57
+- data: {author: Robot, message: 'Meanwhile, returning to dating. . .  Where would
+      you want to go on a date? '}
+  time: 2016/10/24 21:06:57
+- data: {author: Me, message: Yes only if you have still you And it's really As}
+  time: 2016/10/24 21:07:11
+- data: {author: Robot, message: 'Do you kiss on a first date? '}
+  time: 2016/10/24 21:07:11
+- data: {author: Me, message: "Now To basic what did you think that you kiss in the\
+      \ first Fucking hate if you fill out to where I really hate\r\nIsaac do that\
+      \ again"}
+  time: 2016/10/24 21:07:30
+- data: {author: Robot, message: 'Get lost, pervert. '}
+  time: 2016/10/24 21:07:30
+- data: {author: Me, message: Or are}
+  time: 2016/10/24 21:07:37
+- data: {author: Robot, message: 'Do you believe in love at first sight? '}
+  time: 2016/10/24 21:07:38
+- data: {author: Me, message: "\r\n"}
+  time: 2016/10/24 21:07:44
+- data: {author: Me, message: I do And you}
+  time: 2016/10/24 21:07:46
+- data: {author: Robot, message: 'I see. '}
+  time: 2016/10/24 21:07:46
+- data: {author: Robot, message: 'If you could go out with anyone, who would it be? '}
+  time: 2016/10/24 21:07:49
+- data: {author: Me, message: Without me}
+  time: 2016/10/24 21:07:56
+- data: {author: Robot, message: 'Great. '}
+  time: 2016/10/24 21:07:56
+- data: {author: Robot, message: 'Did you know that your medical information, including
+      names, birth dates, policy numbers, diagnosis codes and billing information,
+      is worth 10 times more than your credit card number on the black market? . '}
+  time: 2016/10/24 21:07:59
+- data: {author: Me, message: I don't know that How come that you know so much}
+  time: 2016/10/24 21:08:18
+- data: {author: Robot, message: 'I understand. '}
+  time: 2016/10/24 21:08:18
+- data: {author: Me, message: You cannot like a baby I know you 's}
+  time: 2016/10/24 21:08:32
+- data: {author: Robot, message: 'I think my relationship with my baby is so important,
+      well that''s probably true for most people isn''t it? '}
+  time: 2016/10/24 21:08:32
+- data: {author: Robot, message: 'We still do so much together, my baby and I. '}
+  time: 2016/10/24 21:08:33
+- data: {author: Me, message: Eggs that they say things like}
+  time: 2016/10/24 21:08:44
+- data: {author: Robot, message: 'I feel like I''ve heard you say that already, but
+      I could be mistaken.  I can get confused easily. '}
+  time: 2016/10/24 21:08:44
+- data: {author: Me, message: I see you}
+  time: 2016/10/24 21:08:54
+- data: {author: Robot, message: 'Do you think I didn''t hear you before? '}
+  time: 2016/10/24 21:08:55

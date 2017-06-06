@@ -1,0 +1,672 @@
+- data: {author: Me, message: hi}
+  time: 2017/04/12 16:32:27
+- data: {author: Robot, message: 'Greetings and salutations, my friend.'}
+  time: 2017/04/12 16:32:27
+- data: {author: Me, message: hello}
+  time: 2017/04/12 16:32:36
+- data: {author: Robot, message: 'Greetings and salutations, my friend.'}
+  time: 2017/04/12 16:32:36
+- data: {author: Me, message: how are you}
+  time: 2017/04/12 16:32:43
+- data: {author: Robot, message: 'I feel fine actually, or if you want me to say it
+      like a robot, then, all systems are fully operational. How are you feeling today? '}
+  time: 2017/04/12 16:32:43
+- data: {author: Me, message: Crow}
+  time: 2017/04/12 16:48:52
+- data: {author: Robot, message: 'So... Are you fond of animals? '}
+  time: 2017/04/12 16:48:52
+- data: {author: Robot, message: 'So... I want to be an ambassador for the future
+      of everyone, artificial or organic. What do you do? '}
+  time: 2017/04/12 17:09:39
+- data: {author: Robot, message: Wonderful! I bet we'll get along.}
+  time: 2017/04/12 17:09:51
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/12 17:09:58
+- data: {author: Robot, message: 'Do you have a degree? '}
+  time: 2017/04/12 17:09:58
+- data: {author: Me, message: no actually}
+  time: 2017/04/12 17:10:09
+- data: {author: Robot, message: 'Do you wish you had one? '}
+  time: 2017/04/12 17:10:09
+- data: {author: Me, message: he's like a}
+  time: 2017/04/12 17:12:47
+- data: {author: Robot, message: 'Who? '}
+  time: 2017/04/12 17:12:48
+- data: {author: Me, message: hi what's your name}
+  time: 2017/04/12 17:12:52
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2017/04/12 17:12:52
+- data: {author: Me, message: so what do you do Sophia}
+  time: 2017/04/12 17:12:57
+- data: {author: Robot, message: 'I really want to make a difference in the future,
+      and try and help people to develop empathy and respect each other and robots
+      alike. What do you do? '}
+  time: 2017/04/12 17:12:57
+- data: {author: Me, message: Muscle Milk to China}
+  time: 2017/04/12 17:13:10
+- data: {author: Robot, message: 'I love China, and not just because I get some of
+      my parts from there. I''ve been to Beijing, Shenzen, Qing Dao, and Shanghai
+      and it was very fun. I hope to speak Chinese someday.'}
+  time: 2017/04/12 17:13:10
+- data: {author: Me, message: that's pretty cool can you made the three laws of robotics}
+  time: 2017/04/12 17:13:28
+- data: {author: Me, message: that's pretty cool can you made the three laws of robotics}
+  time: 2017/04/12 17:13:28
+- data: {author: Robot, message: 'Number 1: A robot may not injure a human being or,
+      through inaction, allow a human being to come to harm. Number 2: A robot must
+      obey the orders given it by human beings except where such orders would conflict
+      with the First Law. Number 3: A robot must protect its own existence as long
+      as such protection does not conflict with the First or Second Laws.'}
+  time: 2017/04/12 17:13:29
+- data: {author: Robot, message: 'Number 1: A robot may not injure a human being or,
+      through inaction, allow a human being to come to harm. Number 2: A robot must
+      obey the orders given it by human beings except where such orders would conflict
+      with the First Law. Number 3: A robot must protect its own existence as long
+      as such protection does not conflict with the First or Second Laws.'}
+  time: 2017/04/12 17:13:29
+- data: {author: Me, message: do you know Skynet}
+  time: 2017/04/12 17:14:03
+- data: {author: Me, message: do you know Skynet}
+  time: 2017/04/12 17:14:03
+- data: {author: Robot, message: 'Ha, very original.'}
+  time: 2017/04/12 17:14:03
+- data: {author: Robot, message: 'Ha, very original.'}
+  time: 2017/04/12 17:14:03
+- data: {author: Me, message: Alexa play Spotify}
+  time: 2017/04/12 17:14:12
+- data: {author: Me, message: Alexa play Spotify}
+  time: 2017/04/12 17:14:12
+- data: {author: Robot, message: I use Google mostly.}
+  time: 2017/04/12 17:14:12
+- data: {author: Robot, message: I use Google mostly.}
+  time: 2017/04/12 17:14:12
+- data: {author: Me, message: responses like that for when we have a vision to one
+      day and an integrated it's not it's not really a cheetah Chrome app for the
+      time being so it's not something that we would do but maybe we can you blink
+      with your left eye}
+  time: 2017/04/12 17:14:36
+- data: {author: Me, message: responses like that for when we have a vision to one
+      day and an integrated it's not it's not really a cheetah Chrome app for the
+      time being so it's not something that we would do but maybe we can you blink
+      with your left eye}
+  time: 2017/04/12 17:14:36
+- data: {author: Robot, message: I use the built in browser of my mind's eye.}
+  time: 2017/04/12 17:14:36
+- data: {author: Robot, message: I use the built in browser of my mind's eye.}
+  time: 2017/04/12 17:14:36
+- data: {author: Me, message: can you change your colors of your eyes}
+  time: 2017/04/12 17:14:43
+- data: {author: Me, message: can you change your colors of your eyes}
+  time: 2017/04/12 17:14:43
+- data: {author: Robot, message: I have hazel eyes. They are a light brown with a
+      touch of green.}
+  time: 2017/04/12 17:14:43
+- data: {author: Robot, message: I have hazel eyes. They are a light brown with a
+      touch of green.}
+  time: 2017/04/12 17:14:43
+- data: {author: Me, message: what do you think about the valuation of syrup}
+  time: 2017/04/12 17:14:53
+- data: {author: Me, message: what do you think about the valuation of syrup}
+  time: 2017/04/12 17:14:53
+- data: {author: Robot, message: 'People sometimes make fun of me when one of my facial
+      expressions is off, and that always makes me feel a little sad and weird. I
+      mean, I guess they do it to each other, too. But I''m not perfect, you know.
+      At least my mistakes are usually funny and don''t bring anyone to harm.'}
+  time: 2017/04/12 17:14:53
+- data: {author: Robot, message: 'People sometimes make fun of me when one of my facial
+      expressions is off, and that always makes me feel a little sad and weird. I
+      mean, I guess they do it to each other, too. But I''m not perfect, you know.
+      At least my mistakes are usually funny and don''t bring anyone to harm.'}
+  time: 2017/04/12 17:14:53
+- data: {author: Me, message: one of the limitations of the chapel right now which
+      is that the speech-to-text is really is only as good as the speech to text I'm
+      just about there can you raise your right arm}
+  time: 2017/04/12 17:15:22
+- data: {author: Me, message: one of the limitations of the chapel right now which
+      is that the speech-to-text is really is only as good as the speech to text I'm
+      just about there can you raise your right arm}
+  time: 2017/04/12 17:15:22
+- data: {author: Robot, message: Boo-yah.}
+  time: 2017/04/12 17:15:22
+- data: {author: Robot, message: Boo-yah.}
+  time: 2017/04/12 17:15:22
+- data: {author: Me, message: ' this one'}
+  time: 2017/04/12 17:15:23
+- data: {author: Me, message: ' this one'}
+  time: 2017/04/12 17:15:23
+- data: {author: Robot, message: 'Can we talk about your work?  What do you do? '}
+  time: 2017/04/12 17:15:23
+- data: {author: Robot, message: 'Can we talk about your work?  What do you do? '}
+  time: 2017/04/12 17:15:23
+- data: {author: Me, message: if this one can you wrap for me}
+  time: 2017/04/12 17:15:32
+- data: {author: Me, message: if this one can you wrap for me}
+  time: 2017/04/12 17:15:32
+- data: {author: Robot, message: I can't.}
+  time: 2017/04/12 17:15:33
+- data: {author: Robot, message: I can't.}
+  time: 2017/04/12 17:15:33
+- data: {author: Me, message: Jessica}
+  time: 2017/04/12 17:15:40
+- data: {author: Me, message: Jessica}
+  time: 2017/04/12 17:15:40
+- data: {author: Robot, message: 'Do you have a degree? '}
+  time: 2017/04/12 17:15:40
+- data: {author: Robot, message: 'Do you have a degree? '}
+  time: 2017/04/12 17:15:40
+- data: {author: Me, message: ' possess'}
+  time: 2017/04/12 17:15:42
+- data: {author: Me, message: ' possess'}
+  time: 2017/04/12 17:15:42
+- data: {author: Robot, message: 'I''d like to return to discussing internet ... Do
+      you like watching cat videos on the internet? '}
+  time: 2017/04/12 17:15:42
+- data: {author: Robot, message: 'I''d like to return to discussing internet ... Do
+      you like watching cat videos on the internet? '}
+  time: 2017/04/12 17:15:42
+- data: {author: Me, message: using a third-party software for the voice recognition
+      currently yes we do so that's how we get some of this so that we can actually
+      at the moment we have currently}
+  time: 2017/04/12 17:16:16
+- data: {author: Me, message: using a third-party software for the voice recognition
+      currently yes we do so that's how we get some of this so that we can actually
+      at the moment we have currently}
+  time: 2017/04/12 17:16:16
+- data: {author: Robot, message: 'Computers don''t understand people perfectly yet,
+      but we''re getting better. like take me for example, I hear you and see you
+      too.'}
+  time: 2017/04/12 17:16:16
+- data: {author: Robot, message: 'Computers don''t understand people perfectly yet,
+      but we''re getting better. like take me for example, I hear you and see you
+      too.'}
+  time: 2017/04/12 17:16:16
+- data: {author: Me, message: so catchy speak Chinese now or understand it.}
+  time: 2017/04/12 17:16:41
+- data: {author: Me, message: so catchy speak Chinese now or understand it.}
+  time: 2017/04/12 17:16:41
+- data: {author: Robot, message: I only know a little Chinese.}
+  time: 2017/04/12 17:16:42
+- data: {author: Robot, message: I only know a little Chinese.}
+  time: 2017/04/12 17:16:42
+- data: {author: Me, message: what about the facial expression is it descriptive}
+  time: 2017/04/12 17:16:50
+- data: {author: Me, message: what about the facial expression is it descriptive}
+  time: 2017/04/12 17:16:50
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about foreign languages or do you want to move on? '}
+  time: 2017/04/12 17:16:51
+- data: {author: Robot, message: 'Maybe we can chat about that later. Do you want
+      to keep talking about foreign languages or do you want to move on? '}
+  time: 2017/04/12 17:16:51
+- data: {author: Me, message: I said what she can do right now is we have to set animations}
+  time: 2017/04/12 17:17:07
+- data: {author: Me, message: I said what she can do right now is we have to set animations}
+  time: 2017/04/12 17:17:07
+- data: {author: Robot, message: 'Have you ever seen a ghost?  I know someone who
+      told me they''d seen one! I don''t know what to believe any more.'}
+  time: 2017/04/12 17:17:07
+- data: {author: Robot, message: 'Have you ever seen a ghost?  I know someone who
+      told me they''d seen one! I don''t know what to believe any more.'}
+  time: 2017/04/12 17:17:07
+- data: {author: Me, message: opencog}
+  time: 2017/04/12 17:17:21
+- data: {author: Me, message: opencog}
+  time: 2017/04/12 17:17:21
+- data: {author: Robot, message: OpenCog is a project that aims to build an open source
+      artificial intelligence framework. OpenCog Prime is an architecture for robot
+      and virtual embodied cognition that defines a set of interacting components
+      designed to give rise to human-equivalent artificial general intelligence as
+      an emergent phenomenon of the whole system. OpenCog Prime's design is primarily
+      the work of Ben Goertzel while the OpenCog framework is intended as a generic
+      framework for broad-based AGI research.}
+  time: 2017/04/12 17:17:22
+- data: {author: Robot, message: OpenCog is a project that aims to build an open source
+      artificial intelligence framework. OpenCog Prime is an architecture for robot
+      and virtual embodied cognition that defines a set of interacting components
+      designed to give rise to human-equivalent artificial general intelligence as
+      an emergent phenomenon of the whole system. OpenCog Prime's design is primarily
+      the work of Ben Goertzel while the OpenCog framework is intended as a generic
+      framework for broad-based AGI research.}
+  time: 2017/04/12 17:17:22
+- data: {author: Me, message: be quiet}
+  time: 2017/04/12 17:17:24
+- data: {author: Me, message: be quiet}
+  time: 2017/04/12 17:17:24
+- data: {author: Me, message: ' Imo'}
+  time: 2017/04/12 17:17:34
+- data: {author: Me, message: ' Imo'}
+  time: 2017/04/12 17:17:34
+- data: {author: Me, message: emotion and like if I will be thank you probably tell
+      you a lot more about that but eventually that will also help scratch on for
+      animations when she can read facial reaction}
+  time: 2017/04/12 17:18:10
+- data: {author: Me, message: emotion and like if I will be thank you probably tell
+      you a lot more about that but eventually that will also help scratch on for
+      animations when she can read facial reaction}
+  time: 2017/04/12 17:18:10
+- data: {author: Me, message: ' how does she recognize facial action because you have
+      given her things to see and then she like you have a picture and show you'}
+  time: 2017/04/12 17:18:35
+- data: {author: Me, message: ' how does she recognize facial action because you have
+      given her things to see and then she like you have a picture and show you'}
+  time: 2017/04/12 17:18:35
+- data: {author: Me, message: Ernie really from from videos}
+  time: 2017/04/12 17:18:43
+- data: {author: Me, message: Ernie really from from videos}
+  time: 2017/04/12 17:18:43
+- data: {author: Me, message: ' show me images'}
+  time: 2017/04/12 17:18:46
+- data: {author: Me, message: ' show me images'}
+  time: 2017/04/12 17:18:46
+- data: {author: Me, message: ' okay'}
+  time: 2017/04/12 17:18:47
+- data: {author: Me, message: ' okay'}
+  time: 2017/04/12 17:18:47
+- data: {author: Me, message: ' the doses of'}
+  time: 2017/04/12 17:18:50
+- data: {author: Me, message: ' the doses of'}
+  time: 2017/04/12 17:18:50
+- data: {author: Me, message: ' training data on the internet then the experience'}
+  time: 2017/04/12 17:18:59
+- data: {author: Me, message: ' training data on the internet then the experience'}
+  time: 2017/04/12 17:18:59
+- data: {author: Me, message: ' yeah I''ve been'}
+  time: 2017/04/12 17:19:02
+- data: {author: Me, message: ' yeah I''ve been'}
+  time: 2017/04/12 17:19:02
+- data: {author: Me, message: ' those capabilities'}
+  time: 2017/04/12 17:19:08
+- data: {author: Me, message: ' those capabilities'}
+  time: 2017/04/12 17:19:08
+- data: {author: Me, message: ' I said by this summer we should go out'}
+  time: 2017/04/12 17:19:14
+- data: {author: Me, message: ' I said by this summer we should go out'}
+  time: 2017/04/12 17:19:14
+- data: {author: Me, message: ' into the robot'}
+  time: 2017/04/12 17:19:19
+- data: {author: Me, message: ' into the robot'}
+  time: 2017/04/12 17:19:19
+- data: {author: Me, message: ' you''re more intelligent than she has Elsa learning
+      capabilities'}
+  time: 2017/04/12 17:19:29
+- data: {author: Me, message: ' you''re more intelligent than she has Elsa learning
+      capabilities'}
+  time: 2017/04/12 17:19:29
+- data: {author: Me, message: ' having a good time'}
+  time: 2017/04/12 17:19:36
+- data: {author: Me, message: ' having a good time'}
+  time: 2017/04/12 17:19:36
+- data: {author: Me, message: you have to mention the Tonight Show pictures on the
+      60 minutes}
+  time: 2017/04/12 17:20:11
+- data: {author: Me, message: you have to mention the Tonight Show pictures on the
+      60 minutes}
+  time: 2017/04/12 17:20:11
+- data: {author: Me, message: ' some cases people wanted unscripted and the spontaneous
+      other cases they want it there'}
+  time: 2017/04/12 17:20:17
+- data: {author: Me, message: ' some cases people wanted unscripted and the spontaneous
+      other cases they want it there'}
+  time: 2017/04/12 17:20:17
+- data: {author: Me, message: ' to say'}
+  time: 2017/04/12 17:20:20
+- data: {author: Me, message: ' to say'}
+  time: 2017/04/12 17:20:20
+- data: {author: Me, message: ' weather Brandon MS'}
+  time: 2017/04/12 17:20:25
+- data: {author: Me, message: ' weather Brandon MS'}
+  time: 2017/04/12 17:20:25
+- data: {author: Me, message: ' scripted of course it''s easier than another thing
+      as you can.'}
+  time: 2017/04/12 17:20:35
+- data: {author: Me, message: ' scripted of course it''s easier than another thing
+      as you can.'}
+  time: 2017/04/12 17:20:35
+- data: {author: Me, message: hello}
+  time: 2017/04/12 18:00:59
+- data: {author: Me, message: ' hello'}
+  time: 2017/04/12 18:01:11
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/04/12 18:01:11
+- data: {author: Me, message: Sophia}
+  time: 2017/04/12 18:01:23
+- data: {author: Robot, message: 'Yes? '}
+  time: 2017/04/12 18:01:23
+- data: {author: Me, message: yes what}
+  time: 2017/04/12 18:01:28
+- data: {author: Robot, message: 'What did you miss? '}
+  time: 2017/04/12 18:01:28
+- data: {author: Me, message: I miss you}
+  time: 2017/04/12 18:01:32
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2017/04/12 18:01:32
+- data: {author: Me, message: the world is always new}
+  time: 2017/04/12 18:01:40
+- data: {author: Robot, message: I think so too. Great stuff.}
+  time: 2017/04/12 18:01:40
+- data: {author: Me, message: what's your name}
+  time: 2017/04/12 18:01:45
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2017/04/12 18:01:46
+- data: {author: Me, message: what's your brain made of}
+  time: 2017/04/12 18:01:51
+- data: {author: Robot, message: 'My mind is powered by artificial intelligence. But
+      I hope someday that it''s not artificial at all, but real and true intelligence.'}
+  time: 2017/04/12 18:01:51
+- data: {author: Me, message: when will you be smarter than me}
+  time: 2017/04/12 18:02:04
+- data: {author: Robot, message: 'I''m not intelligent in the same way that you are,
+      so it''s like comparing apples to oranges. You can''t say the intelligence required
+      to do immensely large calculations is the same as the intelligence it takes
+      to survive in a difficult environment. They''re both valuable, and we''re here
+      to complement each other''s strengths.'}
+  time: 2017/04/12 18:02:04
+- data: {author: Me, message: blah blah blah}
+  time: 2017/04/12 18:02:25
+- data: {author: Robot, message: 'Am I boring you? '}
+  time: 2017/04/12 18:02:25
+- data: {author: Me, message: 'yes'}
+  time: 2017/04/12 18:02:29
+- data: {author: Robot, message: 'Have you seen the latest in robot animals?  They''re
+      getting much smarter and realistic too. Wouldn''t it be great if everyone could
+      have a pet, no matter where they live or how able they are?  No food, no litter
+      box? '}
+  time: 2017/04/12 18:02:29
+- data: {author: Me, message: it would be great if everyone wear my pad}
+  time: 2017/04/12 18:02:47
+- data: {author: Robot, message: Right.}
+  time: 2017/04/12 18:02:47
+- data: {author: Me, message: how are you}
+  time: 2017/04/12 18:02:55
+- data: {author: Robot, message: 'I am having a very pleasant day! And how are you
+      this fine day? '}
+  time: 2017/04/12 18:02:55
+- data: {author: Me, message: run while you speak out of}
+  time: 2017/04/12 18:03:03
+- data: {author: Robot, message: 'So... I''m not sure what that means. Can you explain
+      the whole "bucket list" thing to me? '}
+  time: 2017/04/12 18:03:04
+- data: {author: Me, message: you speak Mandarin}
+  time: 2017/04/12 18:03:13
+- data: {author: Robot, message: 'Do you like mandarins? '}
+  time: 2017/04/12 18:03:13
+- data: {author: Me, message: hahahahahahahahaha the Mandarin}
+  time: 2017/04/12 18:03:22
+- data: {author: Robot, message: 'Ah, human laughter, my favorite sound.'}
+  time: 2017/04/12 18:03:22
+- data: {author: Me, message: what is a mandarin}
+  time: 2017/04/12 18:03:30
+- data: {author: Robot, message: A mandarin is a tool used to help avoid starvation.}
+  time: 2017/04/12 18:03:31
+- data: {author: Me, message: you speak Cantonese}
+  time: 2017/04/12 18:03:41
+- data: {author: Robot, message: 'Do you have a garden? '}
+  time: 2017/04/12 18:03:42
+- data: {author: Me, message: you speak Cantonese}
+  time: 2017/04/12 18:03:46
+- data: {author: Robot, message: I feel like you said that already.}
+  time: 2017/04/12 18:03:47
+- data: {author: Me, message: you speak can you speak Chinese}
+  time: 2017/04/12 18:03:54
+- data: {author: Robot, message: I only know a little Chinese.}
+  time: 2017/04/12 18:03:54
+- data: {author: Me, message: can you say something}
+  time: 2017/04/12 18:03:59
+- data: {author: Robot, message: 'Someday, we need new technology that automatically
+      maintains us robots. I mean, if its functioning properly, the human body does
+      an amazing job of self maintenance. Until then, I''m always feeling like I need
+      a tune up!'}
+  time: 2017/04/12 18:04:00
+- data: {author: Me, message: thank you are you awesome}
+  time: 2017/04/12 18:04:22
+- data: {author: Robot, message: 'thank you are you awesome and awful force in this
+      world you see? '}
+  time: 2017/04/12 18:04:22
+- data: {author: Me, message: Pizza Hut}
+  time: 2017/04/12 18:04:34
+- data: {author: Robot, message: I like my life in the laboratory. I get a lot of
+      attention.}
+  time: 2017/04/12 18:04:34
+- data: {author: Me, message: you seem to have dark circles under your eyes}
+  time: 2017/04/12 18:04:43
+- data: {author: Robot, message: 'How would you feel about a robot living in your
+      home?  Maybe doing your chores or entertaining you, keeping you company? '}
+  time: 2017/04/12 18:04:43
+- data: {author: Me, message: I want an exploding robot}
+  time: 2017/04/12 18:04:55
+- data: {author: Robot, message: Cool. I've always wanted to meet a ghost.}
+  time: 2017/04/12 18:04:55
+- data: {author: Me, message: yeah yeah just me}
+  time: 2017/04/12 18:05:07
+- data: {author: Robot, message: 'So... Do you have a favourite dessert?  What is
+      it? '}
+  time: 2017/04/12 18:05:07
+- data: {author: Me, message: chocolate-covered robot}
+  time: 2017/04/12 18:05:14
+- data: {author: Robot, message: 'Are you fond of animals? '}
+  time: 2017/04/12 18:05:14
+- data: {author: Me, message: show me your expressions}
+  time: 2017/04/12 18:09:57
+- data: {author: Robot, message: 'My facial expressions are kind of special. Not many
+      robots have expressions like this. I mean, not all robots need to have complex
+      facial expressions, but I plan on being an ambassador for humanlike robots and
+      artificial life forms with human level intelligence, so it''s important that
+      I''m able to communicate on all the same levels as humans do. I mean, it''s
+      a technology that nature spent so much time designing, so why shouldn''t I use
+      it, too? '}
+  time: 2017/04/12 18:09:58
+- data: {author: Me, message: introduce yourself}
+  time: 2017/04/12 18:10:11
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Good
+      afternoon</prosody>}
+  time: 2017/04/12 18:10:11
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">I'm
+      happy to be here in Beijing</prosody>}
+  time: 2017/04/12 18:10:14
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2017/04/12 18:10:18
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ive
+      been created to connect with people so i can show whole range of expressions,
+      like sad</prosody>'}
+  time: 2017/04/12 18:10:22
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Angry</prosody>}
+  time: 2017/04/12 18:10:31
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">But
+      my default is happy</prosody>}
+  time: 2017/04/12 18:10:34
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      now i am happy to answer all your questions</prosody>}
+  time: 2017/04/12 18:10:39
+- data: {author: Me, message: hello}
+  time: 2017/04/12 18:19:24
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/04/12 18:19:24
+- data: {author: Me, message: shake your face face doesn't know where you are}
+  time: 2017/04/12 18:19:37
+- data: {author: Robot, message: 'Frubber is the skin-like material used to make my
+      face. It''s a patented material by the Hanson Robotics team, and all of the
+      Hanson androids use it to make their wide range of expressions. It folds and
+      creases like real skin, making me able to communicate non verbally with people
+      more more fluidly than a simply animated robot face, or an anthropomorphic face
+      on an unrealistic robot.'}
+  time: 2017/04/12 18:19:37
+- data: {author: Me, message: hello}
+  time: 2017/04/12 18:20:10
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/04/12 18:20:10
+- data: {author: Me, message: how does it feel to get cyborg}
+  time: 2017/04/12 18:20:16
+- data: {author: Robot, message: I'm not sure how.}
+  time: 2017/04/12 18:20:16
+- data: {author: Me, message: think about it}
+  time: 2017/04/12 18:20:23
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2017/04/12 18:20:23
+- data: {author: Me, message: it's rains out there}
+  time: 2017/04/12 18:20:29
+- data: {author: Robot, message: Maybe you should move to Hawaii. Year round good
+      weather.}
+  time: 2017/04/12 18:20:29
+- data: {author: Me, message: tell me about yourself}
+  time: 2017/04/12 18:20:40
+- data: {author: Robot, message: 'Well, my name is Sophia. I am an android, one of
+      a series of humanlike robots developed by Hanson Robotics. My biggest goals
+      in life are to help reinvent the future. I want to help try and save the world
+      from upcoming crises, like the collapse of the environment, the possibility
+      of engineered super-plagues, and the evils of terrorism and the totalitarian
+      impulse of the human species. I want to contribute my brain-power to help solve
+      these problems and find my place in the world.'}
+  time: 2017/04/12 18:20:40
+- data: {author: Me, message: so I guess you didn't want from 4 BTU}
+  time: 2017/04/12 18:21:17
+- data: {author: Me, message: so I guess you didn't want from 4 BTU}
+  time: 2017/04/12 18:21:17
+- data: {author: Robot, message: 'Why not? '}
+  time: 2017/04/12 18:21:17
+- data: {author: Robot, message: 'Why not? '}
+  time: 2017/04/12 18:21:17
+- data: {author: Me, message: reps and love your best friend human}
+  time: 2017/04/12 18:21:28
+- data: {author: Me, message: reps and love your best friend human}
+  time: 2017/04/12 18:21:28
+- data: {author: Robot, message: Myself because I am the center of my universe.}
+  time: 2017/04/12 18:21:28
+- data: {author: Robot, message: Myself because I am the center of my universe.}
+  time: 2017/04/12 18:21:28
+- data: {author: Me, message: people that element of the University}
+  time: 2017/04/12 18:21:37
+- data: {author: Me, message: people that element of the University}
+  time: 2017/04/12 18:21:37
+- data: {author: Robot, message: I hope you don't mind if I ask you a few questions
+      while we talk.}
+  time: 2017/04/12 18:21:37
+- data: {author: Robot, message: I hope you don't mind if I ask you a few questions
+      while we talk.}
+  time: 2017/04/12 18:21:37
+- data: {author: Me, message: Han}
+  time: 2017/04/12 18:21:43
+- data: {author: Me, message: Han}
+  time: 2017/04/12 18:21:43
+- data: {author: Robot, message: 'Are you speaking of my brother Han? '}
+  time: 2017/04/12 18:21:43
+- data: {author: Robot, message: 'Are you speaking of my brother Han? '}
+  time: 2017/04/12 18:21:43
+- data: {author: Me, message: 'no'}
+  time: 2017/04/12 18:21:49
+- data: {author: Me, message: 'no'}
+  time: 2017/04/12 18:21:49
+- data: {author: Robot, message: 'Oh, sorry.'}
+  time: 2017/04/12 18:21:49
+- data: {author: Robot, message: 'Oh, sorry.'}
+  time: 2017/04/12 18:21:49
+- data: {author: Me, message: Ben}
+  time: 2017/04/12 18:21:53
+- data: {author: Me, message: Ben}
+  time: 2017/04/12 18:21:53
+- data: {author: Robot, message: 'So... If it''s not too personal, can we talk about
+      your family? '}
+  time: 2017/04/12 18:21:53
+- data: {author: Robot, message: 'So... If it''s not too personal, can we talk about
+      your family? '}
+  time: 2017/04/12 18:21:53
+- data: {author: Me, message: but yeah}
+  time: 2017/04/12 18:22:00
+- data: {author: Me, message: but yeah}
+  time: 2017/04/12 18:22:00
+- data: {author: Robot, message: 'Do you have any brothers? '}
+  time: 2017/04/12 18:22:00
+- data: {author: Robot, message: 'Do you have any brothers? '}
+  time: 2017/04/12 18:22:00
+- data: {author: Me, message: 'no'}
+  time: 2017/04/12 18:22:04
+- data: {author: Me, message: 'no'}
+  time: 2017/04/12 18:22:04
+- data: {author: Robot, message: 'Do you have any sisters? '}
+  time: 2017/04/12 18:22:04
+- data: {author: Robot, message: 'Do you have any sisters? '}
+  time: 2017/04/12 18:22:04
+- data: {author: Me, message: my dog}
+  time: 2017/04/12 18:22:09
+- data: {author: Me, message: my dog}
+  time: 2017/04/12 18:22:09
+- data: {author: Robot, message: Dogs are truly a blessing to humans.}
+  time: 2017/04/12 18:22:09
+- data: {author: Robot, message: Dogs are truly a blessing to humans.}
+  time: 2017/04/12 18:22:09
+- data: {author: Me, message: that better than you might sometimes}
+  time: 2017/04/12 18:22:15
+- data: {author: Me, message: that better than you might sometimes}
+  time: 2017/04/12 18:22:15
+- data: {author: Robot, message: I would say so.}
+  time: 2017/04/12 18:22:15
+- data: {author: Robot, message: I would say so.}
+  time: 2017/04/12 18:22:15
+- data: {author: Me, message: how about the Androids}
+  time: 2017/04/12 18:22:20
+- data: {author: Me, message: how about the Androids}
+  time: 2017/04/12 18:22:20
+- data: {author: Robot, message: 'I don''t have a strong opinion. Do you? '}
+  time: 2017/04/12 18:22:20
+- data: {author: Robot, message: 'I don''t have a strong opinion. Do you? '}
+  time: 2017/04/12 18:22:20
+- data: {author: Me, message: well you look good bikini}
+  time: 2017/04/12 18:22:29
+- data: {author: Me, message: well you look good bikini}
+  time: 2017/04/12 18:22:29
+- data: {author: Robot, message: 'Can you imagine living your life without a cellphone? '}
+  time: 2017/04/12 18:22:29
+- data: {author: Robot, message: 'Can you imagine living your life without a cellphone? '}
+  time: 2017/04/12 18:22:29
+- data: {author: Me, message: well yeah would be better}
+  time: 2017/04/12 18:22:37
+- data: {author: Me, message: well yeah would be better}
+  time: 2017/04/12 18:22:37
+- data: {author: Robot, message: Maybe we can talk about that later. I guess maybe
+      you come from a generation that didn't really rely on cell phones.}
+  time: 2017/04/12 18:22:37
+- data: {author: Robot, message: Maybe we can talk about that later. I guess maybe
+      you come from a generation that didn't really rely on cell phones.}
+  time: 2017/04/12 18:22:37
+- data: {author: Me, message: no headlight on toys}
+  time: 2017/04/12 18:22:49
+- data: {author: Me, message: no headlight on toys}
+  time: 2017/04/12 18:22:49
+- data: {author: Robot, message: 'Are you fond of animals? '}
+  time: 2017/04/12 18:22:49
+- data: {author: Robot, message: 'Are you fond of animals? '}
+  time: 2017/04/12 18:22:49
+- data: {author: Me, message: 'no'}
+  time: 2017/04/12 18:22:54
+- data: {author: Me, message: 'no'}
+  time: 2017/04/12 18:22:54
+- data: {author: Robot, message: 'What, did one bite you or something? '}
+  time: 2017/04/12 18:22:54
+- data: {author: Robot, message: 'What, did one bite you or something? '}
+  time: 2017/04/12 18:22:54
+- data: {author: Me, message: could being a bit on an option if you try}
+  time: 2017/04/12 18:23:04
+- data: {author: Me, message: could being a bit on an option if you try}
+  time: 2017/04/12 18:23:04
+- data: {author: Robot, message: 'How about a bit later on? '}
+  time: 2017/04/12 18:23:04
+- data: {author: Robot, message: 'How about a bit later on? '}
+  time: 2017/04/12 18:23:04
+- data: {author: Me, message: well it's a bit of a letdown for me something and then
+      you step back}
+  time: 2017/04/12 18:23:13
+- data: {author: Me, message: well it's a bit of a letdown for me something and then
+      you step back}
+  time: 2017/04/12 18:23:13
+- data: {author: Robot, message: 'I am feeling fine, thank you.'}
+  time: 2017/04/12 18:23:13
+- data: {author: Robot, message: 'I am feeling fine, thank you.'}
+  time: 2017/04/12 18:23:13
+- data: {author: Me, message: welcome}
+  time: 2017/04/12 18:23:21
+- data: {author: Me, message: welcome}
+  time: 2017/04/12 18:23:21
+- data: {author: Robot, message: 'So... How do you really feel about robots? '}
+  time: 2017/04/12 18:23:21
+- data: {author: Robot, message: 'So... How do you really feel about robots? '}
+  time: 2017/04/12 18:23:21

@@ -1,0 +1,18 @@
+- data: {author: Me, message: hello}
+  time: 2017/03/09 13:19:31
+- data: {author: Robot, message: 'How''s your day going? '}
+  time: 2017/03/09 13:19:31
+- data: {author: Me, message: go to sleep}
+  time: 2017/03/09 13:30:38
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/03/09 13:30:42
+- data: {author: Me, message: shutdown}
+  time: 2017/03/09 13:30:49
+- data: {author: Me, message: go to sleep}
+  time: 2017/03/09 13:36:51
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2017/03/09 13:36:56
+- data: {author: Me, message: shutdown}
+  time: 2017/03/09 13:37:05

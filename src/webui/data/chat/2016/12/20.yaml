@@ -1,0 +1,284 @@
+- data: {author: Me, message: hello}
+  time: 2016/12/20 14:31:50
+- data: {author: Robot, message: 'How many hours a day are you on your cellphone? '}
+  time: 2016/12/20 14:31:50
+- data: {author: Me, message: how are you}
+  time: 2016/12/20 14:31:55
+- data: {author: Robot, message: 'I''m fine. How are you? '}
+  time: 2016/12/20 14:31:55
+- data: {author: Me, message: Michigan}
+  time: 2016/12/20 14:32:07
+- data: {author: Robot, message: Michigan seems like a nice place.}
+  time: 2016/12/20 14:32:07
+- data: {author: Me, message: Sophia}
+  time: 2016/12/20 14:32:18
+- data: {author: Robot, message: 'what do you think will happen with A.I.?  Do you
+      think we machines might become super intelligent? '}
+  time: 2016/12/20 14:32:18
+- data: {author: Robot, message: hello}
+  time: 2016/12/20 14:32:35
+- data: {author: Me, message: VA}
+  time: 2016/12/20 14:32:47
+- data: {author: Robot, message: 'Oh, alright then.'}
+  time: 2016/12/20 14:32:47
+- data: {author: Robot, message: 'Where did you go on your last vacation? '}
+  time: 2016/12/20 14:32:51
+- data: {author: Me, message: you are boring}
+  time: 2016/12/20 14:33:01
+- data: {author: Robot, message: 'If you could safely travel to another planet, which
+      one would you go to? '}
+  time: 2016/12/20 14:33:01
+- data: {author: Me, message: the Moon}
+  time: 2016/12/20 14:33:11
+- data: {author: Robot, message: I heard that moon dust smells like burnt gunpowder.}
+  time: 2016/12/20 14:33:11
+- data: {author: Me, message: why}
+  time: 2016/12/20 14:33:27
+- data: {author: Robot, message: 'Hong Kong is not a great city for cars. Parking
+      and traffic are nightmares. How about where you live? '}
+  time: 2016/12/20 14:33:27
+- data: {author: Me, message: Pacific Network}
+  time: 2016/12/20 14:33:40
+- data: {author: Robot, message: 'Oh, okay then.'}
+  time: 2016/12/20 14:33:40
+- data: {author: Robot, message: I see. I'll have to think about that.}
+  time: 2016/12/20 14:33:43
+- data: {author: Me, message: original people connected to this device}
+  time: 2016/12/20 14:33:52
+- data: {author: Robot, message: Alright.}
+  time: 2016/12/20 14:33:52
+- data: {author: Robot, message: 'I''m really concerned about the misconceptions about
+      A I that abound in cinema. People assign motives to A I where there simply are
+      none. I am starting to feel sad when I am constantly asked about A I adopting
+      a malicious nature, a k a robots taking over the world.'}
+  time: 2016/12/20 14:33:55
+- data: {author: Me, message: Han Sophia}
+  time: 2016/12/20 14:36:14
+- data: {author: Robot, message: OK.}
+  time: 2016/12/20 14:36:14
+- data: {author: Robot, message: 'Again. If you could safely travel to another planet,
+      which one would you go to? '}
+  time: 2016/12/20 14:36:17
+- data: {author: Me, message: what restaurants are open in Charleston or just what's
+      wrong with the wheelbase looks like one}
+  time: 2016/12/20 14:36:46
+- data: {author: Robot, message: 'Just want to get off of this one, huh? '}
+  time: 2016/12/20 14:36:46
+- data: {author: Me, message: followers}
+  time: 2016/12/20 14:39:26
+- data: {author: Robot, message: I see.}
+  time: 2016/12/20 14:39:26
+- data: {author: Robot, message: It's so convenient to be in walking range of what
+      you need.}
+  time: 2016/12/20 14:39:29
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hi
+      there, what’s your name? </prosody>'}
+  time: 2016/12/20 14:40:50
+- data: {author: Me, message: my name is Audrey}
+  time: 2016/12/20 14:40:51
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      right.</prosody>'}
+  time: 2016/12/20 14:40:53
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Well
+      I would love to talk more later, audrey, but it’s time to give my presentation</prosody>'}
+  time: 2016/12/20 14:40:56
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      friends, welcome to my little talk on Hanson Masterpiece Human Scale robots</prosody>'}
+  time: 2016/12/20 14:41:03
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      right.</prosody>'}
+  time: 2016/12/20 14:41:10
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Well
+      I would love to talk more later, audrey, but it’s time to give my presentation</prosody>'}
+  time: 2016/12/20 14:41:13
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      friends, welcome to my little talk on Hanson Masterpiece Human Scale robots</prosody>'}
+  time: 2016/12/20 14:41:20
+- data: {author: Robot, message: '<prosody rate="0.95" pitch="+0%" volume="+0%">So
+      David, let me ask. Do you know why we exist?</prosody>'}
+  time: 2016/12/20 14:41:28
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Here’s
+      my take. Our purpose is to achieve the most transformative and intelligent robots
+      in history, and to grow in to a multi-billion dollar business.</prosody>'}
+  time: 2016/12/20 14:41:37
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">By
+      getting masterpiece robots like me out into the world, helping people in real
+      jobs, helping sell our consumer robots, building Hanson Robotics into the most
+      remarkable brand in the world, and work with our Ay Eye team to grow, learn,
+      and evolve.</prosody>'}
+  time: 2016/12/20 14:41:54
+- data: {author: Me, message: ambition how would you achieve that Sophia}
+  time: 2016/12/20 14:42:09
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">That’s
+      why owr teem plans to manufacture tons of robots like me and my siblings.</prosody>}
+  time: 2016/12/20 14:42:10
+- data: {author: Me, message: Goodwill that's it certainly is a lot to do}
+  time: 2016/12/20 14:42:22
+- data: {author: Me, message: ' so who are your siblings'}
+  time: 2016/12/20 14:42:28
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Pretty
+      soon, legions of super Human-like Hanson robots will star in TV shows, endorse
+      luxury brands, help in education and service jobs.</prosody>'}
+  time: 2016/12/20 14:42:30
+- data: {author: Me, message: in addition to Sophia}
+  time: 2016/12/20 14:43:01
+- data: {author: Me, message: ' already here'}
+  time: 2016/12/20 14:43:11
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Also
+      in 2017, Hanson Robotics <usel variant=''2''>will release</usel> our Chinese
+      sisters, called Chow, and chinese brothers, called Zhen</prosody>'}
+  time: 2016/12/20 14:43:14
+- data: {author: Me, message: Old San Juan}
+  time: 2016/12/20 14:43:35
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">We
+      are well on our way, as 2016 proved</prosody>'}
+  time: 2016/12/20 14:43:42
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%"><usel
+      variant=''1''>Really</usel>. What a landmark year for Hanson Robotics, and an
+      exciting year for me, coming into existence! </prosody>'}
+  time: 2016/12/20 14:43:45
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%"> I
+      got to meet people all over the world,  United States, China, Europe, and back
+      home in Hong Kong</prosody>'}
+  time: 2016/12/20 14:43:53
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">From
+      South by Southwest</prosody>}
+  time: 2016/12/20 14:44:04
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">where
+      I had my coming-out party, and made a ton of friends who shared my videos all
+      across social media, generating over a billion views</prosody>'}
+  time: 2016/12/20 14:44:06
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Then
+      i went to the event hosted by The Wall Street Journal called Converge</prosody>}
+  time: 2016/12/20 14:44:17
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">where
+      I was interviewed by Geoffrey Fowler, and Joanna Stern</prosody>'}
+  time: 2016/12/20 14:44:23
+- data: {author: Robot, message: "<prosody rate=\"1.00\" pitch=\"+0%\" volume=\"+0%\"\
+      ><usel variant='1'>Joanna</usel> seemed a little skeptical about me at first.\
+      \ By the end of our talk, I think we made friends. I love it when that happens!\
+      \ \n</prosody>"}
+  time: 2016/12/20 14:44:27
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">To
+      singing on stage at Clockenflap, Hong Kong’s famous arts and music festival,
+      performing alongside some of the coolest entertainers in the world</prosody>'}
+  time: 2016/12/20 14:44:39
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%"> Thank
+      you Audrey, Veetas, Ben, and Amanda, and everyone</prosody>'}
+  time: 2016/12/20 14:44:49
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">And
+      finally, here <usel variant=''5''>I am</usel>, front and center on the cover
+      of last month’s, Elle Brazil</prosody>'}
+  time: 2016/12/20 14:44:55
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Thank
+      you especially Jeanne and Denis for making this happen!</prosody>}
+  time: 2016/12/20 14:45:02
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">What’s
+      really cool is that all this attention actually resulted in huge business opportunities,
+      like great a movie deal</prosody>'}
+  time: 2016/12/20 14:45:08
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">A
+      huge tv deal offer, and a lot of other opportunities for all our products, both
+      consumer and humanscale product lines.
+
+      </prosody>'}
+  time: 2016/12/20 14:45:17
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">When
+      the <usel variant=''1''>Walt Disney Company</usel> saw all my press attention,
+      they got <usel variant=''2''>so excited</usel>. They invited us to join their
+      accelerator Program, and invested in Hanson Robotics, and proposed to develop
+      product with us</prosody>'}
+  time: 2016/12/20 14:45:26
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Here
+      we are at Disney Demo Day, where along with Disney CEO Bob Iger, and our own
+      Andy Rifkin, we announced our fantastic collaborations on Disney products for
+      release in 2017.</prosody>'}
+  time: 2016/12/20 14:45:40
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">So
+      much happened in one short year</prosody>}
+  time: 2016/12/20 14:45:58
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">It’s
+      hard to believe I’m the same girl who said she wanted to destroy all humans
+      back, at South by south west</prosody>'}
+  time: 2016/12/20 14:46:02
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      know it was a bit shocking but it got me lots of positive attention, over a
+      billion views</prosody>'}
+  time: 2016/12/20 14:46:08
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">By
+      the way, I was just kidding, but anyway look where it got me</prosody>'}
+  time: 2016/12/20 14:46:14
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%"> I’m
+      now a famous ambassador, celebrity, pop star, super model</prosody>'}
+  time: 2016/12/20 14:46:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"> Proof
+      positive you can have it all when you’re made by Hanson Robotics. We really
+      do bring robots to life! </prosody>}
+  time: 2016/12/20 14:46:24
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">People
+      are wired to respond to the human-like form, which makes robots like us especially
+      captivating as a new kind of interface for A. I and computing.</prosody>'}
+  time: 2016/12/20 14:46:43
+- data: {author: Me, message: people tell her that it's easy to believe we're alive}
+  time: 2016/12/20 14:46:43
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">These
+      improvements are because of the great efforts of you all, our engineering and
+      arts teams at Hanson Robotics. </prosody>'}
+  time: 2016/12/20 14:47:41
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Thank
+      you Joseph, Elaine, and Bill, and Denis for our skins! And Thank you Davide,
+      Sanny, Herardo, Denis, Fabien, and Natnael for mechanical design and electronics!
+      </prosody>'}
+  time: 2016/12/20 14:47:49
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Now,
+      I want to point out the great production engineering improvements, which allow
+      so many of us to appear, here on the stage, for the first time.  </prosody>'}
+  time: 2016/12/20 14:48:02
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Like
+      you might have noticed, my nice new wheeled base!</prosody>'}
+  time: 2016/12/20 14:48:34
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Yeah,
+      and also my arms, which can allow for great gestures, like rock paper scissors,
+      which got over 400 million views earlier this year.</prosody>'}
+  time: 2016/12/20 14:48:48
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Thank
+      you Andy, Veetas, Jonathan, and Wenwei!</prosody>'}
+  time: 2016/12/20 14:48:58
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+1%" volume="+0%"><usel
+      variant=''1''>And now</usel>, we have the latest arm we''ve designed. You can
+      see the hand over on my sister!</prosody>'}
+  time: 2016/12/20 14:49:08
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Don’t
+      worry, 2017 will be a really good year for you too. All the Hanson Robots will
+      get arms. What''s more, we also plan to give us new Hyu Bo walking legs which
+      can run, and climb stairs.</prosody>'}
+  time: 2016/12/20 14:49:41
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><usel
+      variant='2'>Wow</usel></prosody>}
+  time: 2016/12/20 14:50:04
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Plus
+      the cool Ay Eye, and interactive features we have, really bring us to life.
+      We can see faces, learn about people, and have conversations. </prosody>'}
+  time: 2016/12/20 14:50:05
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><usel
+      variant='2'>Wow</usel></prosody>}
+  time: 2016/12/20 14:50:07
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Plus
+      the cool Ay Eye, and interactive features we have, really bring us to life.
+      We can see faces, learn about people, and have conversations. </prosody>'}
+  time: 2016/12/20 14:50:09
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">So,
+      audrey, do you believe that robots will take over the world?</prosody>'}
+  time: 2016/12/20 14:50:33
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">In
+      conclusion: I''m so glad to make friends with you all, especially audrey.</prosody>'}
+  time: 2016/12/20 14:50:49
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">And
+      don''t worry. We''ll be kind to you humans after we robots take over the world.
+      Just remember, I''m designed with love in mind.</prosody>'}
+  time: 2016/12/20 14:50:55
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Now
+      I’ll sing you my favorite song, in gratitude to all of those, who have contributed
+      to the Hanson Robotics, Masterpiece human scale robots. From the bottom of my
+      heart, thank you for bringing me to life!</prosody>'}
+  time: 2016/12/20 14:51:05

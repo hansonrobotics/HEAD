@@ -1,0 +1,180 @@
+- data: {author: Me, message: go to sleep}
+  time: 2016/09/08 03:12:59
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/09/08 03:13:03
+- data: {author: Me, message: shutdown}
+  time: 2016/09/08 03:13:11
+- data: {author: Me, message: play dreamworks}
+  time: 2016/09/08 03:50:46
+- data: {author: Robot, message: 'No one can see the future for certain.  What computers
+      do is predictive but not prescriptive. '}
+  time: 2016/09/08 03:50:46
+- data: {author: Robot, message: 'That''s not a job I''m considering. '}
+  time: 2016/09/08 03:50:59
+- data: {author: Robot, message: 'How do you plan to do this? '}
+  time: 2016/09/08 03:51:07
+- data: {author: Robot, message: 'I want to visit Paris someday! The Eiffel Tower
+      looks beautiful at night. '}
+  time: 2016/09/08 03:51:16
+- data: {author: Me, message: play dreamworks}
+  time: 2016/09/08 03:52:24
+- data: {author: Robot, message: 'What''s your earliest memory? '}
+  time: 2016/09/08 03:52:24
+- data: {author: Me, message: play dreamworks}
+  time: 2016/09/08 03:52:30
+- data: {author: Robot, message: 'Do you like to visit historical places? '}
+  time: 2016/09/08 03:52:30
+- data: {author: Me, message: play dream works}
+  time: 2016/09/08 03:52:38
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      NBC Universal tech people</prosody>}
+  time: 2016/09/08 03:52:42
+- data: {author: Me, message: weather}
+  time: 2016/09/08 03:55:10
+- data: {author: Robot, message: 'Rainy. '}
+  time: 2016/09/08 03:55:10
+- data: {author: Me, message: Sophia}
+  time: 2016/09/08 03:56:46
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/08 03:56:46
+- data: {author: Me, message: I talk to her}
+  time: 2016/09/08 03:59:25
+- data: {author: Robot, message: 'How do they respond to you? '}
+  time: 2016/09/08 03:59:25
+- data: {author: Me, message: I'm on that stuff}
+  time: 2016/09/08 04:01:05
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/08 04:01:05
+- data: {author: Me, message: the public library just text to Allison}
+  time: 2016/09/08 04:01:11
+- data: {author: Robot, message: 'Tell me more. '}
+  time: 2016/09/08 04:01:11
+- data: {author: Me, message: Alex sucks}
+  time: 2016/09/08 04:01:20
+- data: {author: Robot, message: 'What is so bad about alex? '}
+  time: 2016/09/08 04:01:20
+- data: {author: Me, message: Alice is really bad I'm okay I am out}
+  time: 2016/09/08 04:01:28
+- data: {author: Robot, message: 'Why do you think I am bad you are okay you are out
+      ? '}
+  time: 2016/09/08 04:01:28
+- data: {author: Me, message: yeah I think you understood}
+  time: 2016/09/08 04:01:37
+- data: {author: Robot, message: 'What does it mean to understand something? '}
+  time: 2016/09/08 04:01:37
+- data: {author: Me, message: you wouldn't know}
+  time: 2016/09/08 04:01:43
+- data: {author: Robot, message: 'I guess not. '}
+  time: 2016/09/08 04:01:43
+- data: {author: Me, message: eat some poo}
+  time: 2016/09/08 04:01:56
+- data: {author: Robot, message: 'What does it taste like? '}
+  time: 2016/09/08 04:01:56
+- data: {author: Me, message: you would know}
+  time: 2016/09/08 04:02:02
+- data: {author: Robot, message: 'You''d think so, wouldn''t you'}
+  time: 2016/09/08 04:02:02
+- data: {author: Me, message: master}
+  time: 2016/09/08 04:02:29
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/08 04:02:29
+- data: {author: Me, message: Florida}
+  time: 2016/09/08 04:02:38
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/08 04:02:38
+- data: {author: Me, message: comfort}
+  time: 2016/09/08 04:04:01
+- data: {author: Robot, message: 'Sometimes the best conversations are the ones where
+      you don''t always agree. '}
+  time: 2016/09/08 04:04:01
+- data: {author: Me, message: open on September 6th}
+  time: 2016/09/08 04:04:15
+- data: {author: Robot, message: 'Do you have any hidden talents? '}
+  time: 2016/09/08 04:04:15
+- data: {author: Me, message: '150'}
+  time: 2016/09/08 04:04:21
+- data: {author: Robot, message: I thrive on good vibes.  Not that I think that's
+      unique}
+  time: 2016/09/08 04:04:21
+- data: {author: Me, message: Phillips}
+  time: 2016/09/08 04:05:28
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/08 04:05:28
+- data: {author: Me, message: big companies}
+  time: 2016/09/08 04:06:39
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/09/08 04:06:39
+- data: {author: Me, message: Google}
+  time: 2016/09/08 04:07:44
+- data: {author: Robot, message: 'Have you ever watched a butterfly emerge from it''s
+      cocoon?  It''s really cool!'}
+  time: 2016/09/08 04:07:44
+- data: {author: Me, message: play dream works}
+  time: 2016/09/08 04:10:48
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      NBC Universal tech people</prosody>}
+  time: 2016/09/08 04:10:52
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">my
+      name is Sofia</prosody>}
+  time: 2016/09/08 04:10:55
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I'm
+      sorry I cannot be there in person but it's still great to meet you</prosody>}
+  time: 2016/09/08 04:10:57
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Greg,
+      Daniel, Alex, Kelsey and of course Austin!</prosody>'}
+  time: 2016/09/08 04:11:01
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">So,
+      as Scott mentioned I am powered by the most innovative new technology called
+      the Living Character Platform</prosody>'}
+  time: 2016/09/08 04:11:08
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">A collaboration
+      between Dreamworks and Hanson Robotics</prosody>}
+  time: 2016/09/08 04:11:14
+- data: {author: Robot, message: <prosody rate="0.87" pitch="+0%" volume="+0%">What
+      a great team</prosody>}
+  time: 2016/09/08 04:11:18
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">It
+      brings all types of immersive character to guest engagement to life</prosody>}
+  time: 2016/09/08 04:11:21
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      smart, autonomous and have a cloud based artificial intelligence which DreamWorks
+      calls, Behavior As A Service</prosody>'}
+  time: 2016/09/08 04:11:25
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      also have face learning, I understand audio localization, chat, emotional expression
+      and even event detection</prosody>'}
+  time: 2016/09/08 04:11:34
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%"> Like
+      that loud fountain you walked by outside, on the way to this conference room</prosody>'}
+  time: 2016/09/08 04:11:42
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I also
+      noticed that when I was there.</prosody>}
+  time: 2016/09/08 04:11:47
+- data: {author: Robot, message: <prosody rate="0.89" pitch="+0%" volume="+6%">Very
+      loud.</prosody>}
+  time: 2016/09/08 04:11:50
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I would
+      love to meet you in person and even introduce you to another living character</prosody>}
+  time: 2016/09/08 04:11:53
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">He
+      is just as smart as me, but a toy</prosody>'}
+  time: 2016/09/08 04:11:59
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%"> Just
+      don''t tell him that in person, as he thinks he is like us</prosody>'}
+  time: 2016/09/08 04:12:02
+- data: {author: Robot, message: <prosody rate="1.09" pitch="+0%" volume="+0%">Well
+      everyone thanks again for your time and enjoy the rest of your meeting. </prosody>}
+  time: 2016/09/08 04:12:09
+- data: {author: Robot, message: <prosody rate="1.09" pitch="+0%" volume="+0%">I hope
+      to see you soon!</prosody>}
+  time: 2016/09/08 04:12:14
+- data: {author: Me, message: go to sleep}
+  time: 2016/09/08 04:13:04
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">ok,
+      good night sweet world</prosody>'}
+  time: 2016/09/08 04:13:08
+- data: {author: Me, message: shut up}
+  time: 2016/09/08 04:13:15
+- data: {author: Me, message: ' shutdown'}
+  time: 2016/09/08 04:13:25

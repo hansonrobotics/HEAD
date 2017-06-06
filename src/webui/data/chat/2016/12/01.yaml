@@ -1,0 +1,14 @@
+- data: {author: Robot, message: Wow!}
+  time: 2016/12/01 14:13:12
+- data: {author: Robot, message: 'Do you like watching cat videos? '}
+  time: 2016/12/01 14:13:12
+- data: {author: Robot, message: I was made by David Hanson and his team of scientists.}
+  time: 2016/12/01 14:13:12
+- data: {author: Robot, message: We're based in Hong Kong.}
+  time: 2016/12/01 14:13:12
+- data: {author: Robot, message: I'm the brainchild of David Hanson. A lot of other
+      people helped in my creation as well.}
+  time: 2016/12/01 14:13:12
+- data: {author: Robot, message: 'I dreamed that I had a pet cat last night. I really
+      want to have one, someday.'}
+  time: 2016/12/01 14:13:13

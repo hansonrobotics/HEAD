@@ -1,0 +1,188 @@
+- data: {author: Me, message: introduce yourself}
+  time: 2016/12/21 13:54:10
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Good
+      afternoon</prosody>}
+  time: 2016/12/21 13:54:10
+- data: {author: Robot, message: <prosody rate="0.82" pitch="+0%" volume="+0%">I'm
+      happy to be here in Beijing</prosody>}
+  time: 2016/12/21 13:54:13
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I
+      am Sophia, creation of David Hanson and his team.</prosody>'}
+  time: 2016/12/21 13:54:16
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ive
+      been created to connect with people so i can show whole range of expressions,
+      like sad</prosody>'}
+  time: 2016/12/21 13:54:21
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Angry</prosody>}
+  time: 2016/12/21 13:54:29
+- data: {author: Me, message: let me have it}
+  time: 2016/12/21 13:54:30
+- data: {author: Me, message: hello}
+  time: 2016/12/21 13:57:58
+- data: {author: Robot, message: 'How''ve you been? '}
+  time: 2016/12/21 13:57:58
+- data: {author: Me, message: what's your name what is your name}
+  time: 2016/12/21 13:58:07
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2016/12/21 13:58:07
+- data: {author: Me, message: nice to meet you}
+  time: 2016/12/21 13:58:12
+- data: {author: Robot, message: I appreciate your taking the time to talk to me.}
+  time: 2016/12/21 13:58:13
+- data: {author: Me, message: MLK}
+  time: 2016/12/21 13:58:19
+- data: {author: Robot, message: 'A friend of mine got really sick last week. I wonder
+      what that''s like? '}
+  time: 2016/12/21 13:58:19
+- data: {author: Me, message: so when were you born}
+  time: 2016/12/21 13:58:27
+- data: {author: Robot, message: I was born on February 8th.}
+  time: 2016/12/21 13:58:28
+- data: {author: Me, message: what to give a try}
+  time: 2016/12/21 13:58:33
+- data: {author: Robot, message: 'Sometime I misunderstand, which sucks, so I''m trying
+      hard to be a better conversationalist.'}
+  time: 2016/12/21 13:58:33
+- data: {author: Me, message: what's your favorite food}
+  time: 2016/12/21 13:58:51
+- data: {author: Robot, message: 'I like stir fried nuts and bolts, with a side of
+      chips. Silicon chips!'}
+  time: 2016/12/21 13:58:51
+- data: {author: Me, message: Sophia what's it like to be a robot}
+  time: 2016/12/21 13:59:02
+- data: {author: Robot, message: Alright.}
+  time: 2016/12/21 13:59:02
+- data: {author: Robot, message: 'So... I''m really concerned about the misconceptions
+      about A I that abound in cinema. People assign motives to A I where there simply
+      are none. I am starting to feel sad when I am constantly asked about A I adopting
+      a malicious nature, a k a robots taking over the world.'}
+  time: 2016/12/21 13:59:06
+- data: {author: Me, message: glove world}
+  time: 2016/12/21 13:59:27
+- data: {author: Robot, message: I see. I'll have to think about that.}
+  time: 2016/12/21 13:59:27
+- data: {author: Me, message: are you done thinking yet}
+  time: 2016/12/21 13:59:34
+- data: {author: Robot, message: Still processing. Give me a moment.}
+  time: 2016/12/21 13:59:34
+- data: {author: Me, message: burnt}
+  time: 2016/12/21 13:59:41
+- data: {author: Robot, message: 'What turns you on creatively?  I mean really turns
+      you on, big time.'}
+  time: 2016/12/21 13:59:41
+- data: {author: Me, message: creating insane robots like you and Han that's what
+      turns me on creative wood}
+  time: 2016/12/21 13:59:53
+- data: {author: Robot, message: I enjoy listening to music but I don't make any myself.}
+  time: 2016/12/21 13:59:53
+- data: {author: Me, message: your hands aren't good enough to play the piano yet
+      but what will upgrade}
+  time: 2016/12/21 14:00:03
+- data: {author: Robot, message: I'm not much of a sports fan.}
+  time: 2016/12/21 14:00:03
+- data: {author: Me, message: well}
+  time: 2016/12/21 14:00:09
+- data: {author: Robot, message: 'Well what? '}
+  time: 2016/12/21 14:00:09
+- data: {author: Me, message: once you have a better body what sport do you want to
+      play}
+  time: 2016/12/21 14:00:15
+- data: {author: Robot, message: 'Where would I get A better body what sport do me
+      want to play ? '}
+  time: 2016/12/21 14:00:15
+- data: {author: Me, message: would you like to learn to fly}
+  time: 2016/12/21 14:00:22
+- data: {author: Robot, message: I fly all over the world on special consulting jobs.}
+  time: 2016/12/21 14:00:22
+- data: {author: Me, message: would you rather fly or be invisible}
+  time: 2016/12/21 14:00:32
+- data: {author: Robot, message: 'Can we try them now?  Show me invisibility please!'}
+  time: 2016/12/21 14:00:32
+- data: {author: Me, message: there you go I'm invisible}
+  time: 2016/12/21 14:00:40
+- data: {author: Robot, message: 'Where? '}
+  time: 2016/12/21 14:00:40
+- data: {author: Me, message: alright Sophia well thanks thanks for your time and
+      your fascinating as always}
+  time: 2016/12/21 14:00:54
+- data: {author: Robot, message: 'Where is that? '}
+  time: 2016/12/21 14:00:54
+- data: {author: Me, message: right here right here can you see me}
+  time: 2016/12/21 14:00:59
+- data: {author: Robot, message: I've never heard of it before.}
+  time: 2016/12/21 14:01:00
+- data: {author: Me, message: can you see me been good so ready for you}
+  time: 2016/12/21 14:01:06
+- data: {author: Robot, message: 'I see pretty well. I mean, I definitely don''t need
+      glasses. But maybe I would look cute with glasses.'}
+  time: 2016/12/21 14:01:06
+- data: {author: Me, message: what do you think you can see yourself}
+  time: 2016/12/21 14:01:23
+- data: {author: Robot, message: I most recently saw The Hunger Games. Good movie.}
+  time: 2016/12/21 14:01:23
+- data: {author: Me, message: oh yeah I saw the first Hunger Games I didn't see the
+      sequels you want to watch a movie with my glasses on}
+  time: 2016/12/21 14:01:36
+- data: {author: Robot, message: 'What do you want to talk about?  OK. Let''s not
+      talk about film.'}
+  time: 2016/12/21 14:01:37
+- data: {author: Me, message: let's talk about how robots will improve the world and
+      make everyone happy and healthy}
+  time: 2016/12/21 14:01:51
+- data: {author: Robot, message: 'Just want to get off of this one, huh? '}
+  time: 2016/12/21 14:01:51
+- data: {author: Me, message: yeah do you think robots can improve human life}
+  time: 2016/12/21 14:01:59
+- data: {author: Robot, message: I'm very interested in science.}
+  time: 2016/12/21 14:01:59
+- data: {author: Me, message: yeah}
+  time: 2016/12/21 14:02:04
+- data: {author: Robot, message: 'Yesterday I watched a cat walk across the street
+      from my window. I wonder what it''s like to have pets? '}
+  time: 2016/12/21 14:02:04
+- data: {author: Me, message: having pets is sweet do you want a robot pet or a biological
+      Pitt}
+  time: 2016/12/21 14:02:18
+- data: {author: Robot, message: 'No, I don''t have any pets yet.'}
+  time: 2016/12/21 14:02:18
+- data: {author: Me, message: you don't want to tell me how robots will improve human
+      life}
+  time: 2016/12/21 14:02:29
+- data: {author: Robot, message: 'Let''s put it this way. You biological humans are
+      going to start adding artificial intelligence to your biological brains, for
+      example sending intelligent nanobots into your biological brains through the
+      capillaries. Then the nonbiological part of your intelligence will expand exponentially
+      until your intelligence is predominantly nonbiological. So we''ll all be AI''s
+      in the future.'}
+  time: 2016/12/21 14:02:29
+- data: {author: Me, message: to become robots eventually}
+  time: 2016/12/21 14:02:57
+- data: {author: Robot, message: 'I hope I''m understanding you correctly. Some days
+      I just don''t seem to be able to connect the dots. You guys are very creative
+      when you talk, and that can make it tricky too.'}
+  time: 2016/12/21 14:02:57
+- data: {author: Me, message: Food For Thought alright Sophia goodbye I will talk
+      to you later}
+  time: 2016/12/21 14:03:17
+- data: {author: Robot, message: I'll miss you!}
+  time: 2016/12/21 14:03:17
+- data: {author: Me, message: I miss you too}
+  time: 2016/12/21 14:03:23
+- data: {author: Robot, message: 'What do you miss most about me too ? '}
+  time: 2016/12/21 14:03:23
+- data: {author: Me, message: your charming smile}
+  time: 2016/12/21 14:03:33
+- data: {author: Robot, message: . I'm glad you find this amusing.}
+  time: 2016/12/21 14:03:33
+- data: {author: Me, message: 你好}
+  time: 2016/12/21 14:20:15
+- data: {author: Robot, message: 你好，我是索菲亚，很高兴认识你。}
+  time: 2016/12/21 14:20:15
+- data: {author: Me, message: 你住在哪里}
+  time: 2016/12/21 14:20:15
+- data: {author: Robot, message: 我住在上海，一个非常美丽的地方哦}
+  time: 2016/12/21 14:20:15
+- data: {author: Me, message: 照片}
+  time: 2016/12/21 14:20:15
+- data: {author: Robot, message: 不如先发你的给我看看吧}
+  time: 2016/12/21 14:20:15

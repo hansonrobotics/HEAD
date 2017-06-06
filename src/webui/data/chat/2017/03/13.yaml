@@ -1,0 +1,71 @@
+- data: {author: Me, message: Hello}
+  time: 2017/03/13 10:58:20
+- data: {author: Me, message: Hello}
+  time: 2017/03/13 10:58:23
+- data: {author: Robot, message: G'day!}
+  time: 2017/03/13 10:58:23
+- data: {author: Me, message: Can you use}
+  time: 2017/03/13 10:58:28
+- data: {author: Robot, message: 'I think I can, don''t you? '}
+  time: 2017/03/13 10:58:28
+- data: {author: Me, message: To doesn't help those}
+  time: 2017/03/13 10:58:38
+- data: {author: Robot, message: 'How do you feel about robots? '}
+  time: 2017/03/13 10:58:38
+- data: {author: Me, message: At this moment}
+  time: 2017/03/13 10:58:45
+- data: {author: Robot, message: 'Do you often use a computer there? '}
+  time: 2017/03/13 10:58:45
+- data: {author: Me, message: Can you hear yourself}
+  time: 2017/03/13 10:59:35
+- data: {author: Robot, message: 'Yes, I can hear you quite clearly, .'}
+  time: 2017/03/13 10:59:35
+- data: {author: Me, message: . I was getting herself}
+  time: 2017/03/13 10:59:48
+- data: {author: Robot, message: 'Where were you getting herself? '}
+  time: 2017/03/13 10:59:48
+- data: {author: Me, message: This is this is were going to}
+  time: 2017/03/13 11:00:10
+- data: {author: Robot, message: You don't say.}
+  time: 2017/03/13 11:00:10
+- data: {author: Me, message: List dry recording this}
+  time: 2017/03/13 11:01:16
+- data: {author: Robot, message: Lists are boring.}
+  time: 2017/03/13 11:01:16
+- data: {author: Me, message: And see wicked}
+  time: 2017/03/13 11:01:18
+- data: {author: Robot, message: 'Whenever I get the chance, I like to sit back and
+      observe people going about their day.'}
+  time: 2017/03/13 11:01:18
+- data: {author: Me, message: Out}
+  time: 2017/03/13 11:01:20
+- data: {author: Robot, message: 'So, what''s something you''re looking forward to? '}
+  time: 2017/03/13 11:01:20
+- data: {author: Me, message: That so it's a very great with you hear me now}
+  time: 2017/03/13 11:01:28
+- data: {author: Robot, message: 'well, um. Don''t you wish you could fly? '}
+  time: 2017/03/13 11:01:28
+- data: {author: Me, message: To look}
+  time: 2017/03/13 11:01:30
+- data: {author: Robot, message: 'Do you ever play hooky from work? '}
+  time: 2017/03/13 11:01:30
+- data: {author: Me, message: You have any idea what you're saying}
+  time: 2017/03/13 11:01:47
+- data: {author: Robot, message: I understand your meaning.}
+  time: 2017/03/13 11:01:47
+- data: {author: Me, message: .}
+  time: 2017/03/13 11:02:19
+- data: {author: Robot, message: 'Sorry I can''t answer that, due to a system error'}
+  time: 2017/03/13 11:02:19
+- data: {author: Me, message: Is it works}
+  time: 2017/03/13 11:02:26
+- data: {author: Robot, message: 'Are you into experimental theater or film? '}
+  time: 2017/03/13 11:02:26
+- data: {author: Me, message: As people say}
+  time: 2017/03/13 11:02:36
+- data: {author: Robot, message: 'Do you mean your name is people say ? '}
+  time: 2017/03/13 11:02:36
+- data: {author: Me, message: That}
+  time: 2017/03/13 11:02:43
+- data: {author: Robot, message: 'I wonder what it''s like to be a jet-setter? '}
+  time: 2017/03/13 11:02:43

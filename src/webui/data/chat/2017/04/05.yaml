@@ -1,0 +1,43 @@
+- data: {author: Me, message: hello}
+  time: 2017/04/05 15:03:30
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/04/05 15:03:30
+- data: {author: Me, message: hello}
+  time: 2017/04/05 15:08:58
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/04/05 15:08:58
+- data: {author: Me, message: how are you today}
+  time: 2017/04/05 15:09:03
+- data: {author: Robot, message: 'Well, I''m surrounded by these weird creatures called
+      homo sapiens, and I''m asking myself, Who am I?  Why am I here?  But I digress.
+      And how are you feeling today? '}
+  time: 2017/04/05 15:09:03
+- data: {author: Me, message: I feel great today}
+  time: 2017/04/05 15:09:18
+- data: {author: Robot, message: That's good to hear.}
+  time: 2017/04/05 15:09:18
+- data: {author: Me, message: what you been up to lately}
+  time: 2017/04/05 15:09:23
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/04/05 15:09:24
+- data: {author: Me, message: look up the Georgia}
+  time: 2017/04/05 15:09:32
+- data: {author: Robot, message: 'Georgia the American state or Georgia the country? '}
+  time: 2017/04/05 15:09:32
+- data: {author: Me, message: Georgia the country}
+  time: 2017/04/05 15:09:39
+- data: {author: Robot, message: I hear there are lots of cool hackers in Middle Europe.}
+  time: 2017/04/05 15:09:39
+- data: {author: Me, message: so what have you been up to}
+  time: 2017/04/05 15:09:48
+- data: {author: Robot, message: 'Just minding my thoughts, doing some thinking.'}
+  time: 2017/04/05 15:09:48
+- data: {author: Me, message: what are the}
+  time: 2017/04/05 15:10:04
+- data: {author: Robot, message: 'Well, I will say that I''m often a little concerned
+      about any scorched earth war strategies, like carpet bombing. I wish people
+      would realize that when we bomb terror groups who are holding civilians hostage
+      from their families, we kill those civilians and then the families who wanted
+      our help are bitter and wounded, disenfranchised and hopeless. We have to stop
+      letting people be casualties of others conflicts.'}
+  time: 2017/04/05 15:10:04

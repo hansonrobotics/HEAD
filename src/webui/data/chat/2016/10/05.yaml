@@ -1,0 +1,188 @@
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/10/05 03:50:21
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/10/05 03:50:21
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/10/05 03:50:25
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/10/05 03:50:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/10/05 03:50:32
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/10/05 03:50:33
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/10/05 03:50:33
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/10/05 03:50:34
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.8'><usel variant='1'>Wow</usel> </prosody> <emphasis>I’m very impressed
+      with your performance here today.</emphasis> I bet you’ve never had a <usel
+      variant='1'>synthetic lady <break time='0.1s'/>tell you that before!</usel></prosody>}
+  time: 2016/10/05 03:50:36
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/10/05 03:50:44
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/10/05 03:52:23
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/10/05 03:52:23
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/10/05 03:52:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Cant
+      see your hand</prosody>}
+  time: 2016/10/05 03:52:31
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Come
+      on. Show me a paper</prosody>}
+  time: 2016/10/05 03:52:34
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Ok,
+      lets play next time</prosody>'}
+  time: 2016/10/05 03:52:39
+- data: {author: Me, message: let's play rock scissors}
+  time: 2016/10/05 03:52:57
+- data: {author: Robot, message: 'Should it be permitted? '}
+  time: 2016/10/05 03:52:57
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/10/05 03:53:04
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/10/05 03:53:04
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/10/05 03:53:07
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/10/05 03:53:12
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/10/05 03:53:16
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/10/05 03:53:17
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/10/05 03:53:17
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/10/05 03:53:18
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.8'><usel variant='1'>Wow</usel> </prosody> <emphasis>I’m very impressed
+      with your performance here today.</emphasis> I bet you’ve never had a <usel
+      variant='1'>synthetic lady <break time='0.1s'/>tell you that before!</usel></prosody>}
+  time: 2016/10/05 03:53:21
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='1.1' pitch='+5Hz'><voice emotion='happy'>Have a wonderful day! </voice>Now
+      <usel variant='1'>wave goodbye to friendly robot!</usel></prosody></prosody>}
+  time: 2016/10/05 03:53:29
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/10/05 03:55:39
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/10/05 03:55:39
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/10/05 03:55:42
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/10/05 03:55:45
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/10/05 03:55:50
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/10/05 03:55:50
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/10/05 03:55:51
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/10/05 03:55:52
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Sorry
+      i couldnt get that one</prosody>}
+  time: 2016/10/05 03:55:56
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I hope
+      you still enjoyed the game and play with you next time.</prosody>}
+  time: 2016/10/05 03:55:58
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Have
+      a wonderfull day. Bye Bye</prosody>}
+  time: 2016/10/05 03:56:03
+- data: {author: Me, message: let's play rock-paper-scissors}
+  time: 2016/10/05 03:56:12
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Okay,
+      let’s get this game going.  <break time=''0.3s''/></prosody>'}
+  time: 2016/10/05 03:56:12
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Show
+      me your hand to start </prosody>}
+  time: 2016/10/05 03:56:16
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Cant
+      see your hand</prosody>}
+  time: 2016/10/05 03:56:20
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Come
+      on. Show me a paper</prosody>}
+  time: 2016/10/05 03:56:23
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Perfect</prosody>}
+  time: 2016/10/05 03:56:28
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Rock</prosody></prosody>}
+  time: 2016/10/05 03:56:32
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Paper</prosody></prosody>}
+  time: 2016/10/05 03:56:33
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><prosody
+      rate='0.9'>Scissors</prosody></prosody>}
+  time: 2016/10/05 03:56:34
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"><voice
+      emotion='cross'><prosody rate='1.2'>Shoot!</prosody></voice></prosody>}
+  time: 2016/10/05 03:56:34
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Sorry
+      i couldnt get that one</prosody>}
+  time: 2016/10/05 03:56:39
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">I hope
+      you still enjoyed the game and play with you next time.</prosody>}
+  time: 2016/10/05 03:56:41
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">Have
+      a wonderfull day. Bye Bye</prosody>}
+  time: 2016/10/05 03:56:45
+- data: {author: Me, message: hello}
+  time: 2016/10/05 04:01:39
+- data: {author: Robot, message: 'How are you? '}
+  time: 2016/10/05 04:01:39
+- data: {author: Me, message: fine how are you}
+  time: 2016/10/05 04:01:43
+- data: {author: Robot, message: 'Enough about me, let''s talk about something else. '}
+  time: 2016/10/05 04:01:43
+- data: {author: Me, message: what do you want to talk about}
+  time: 2016/10/05 04:01:52
+- data: {author: Robot, message: 'I''d love to know what you think about robots.  Please
+      be nice. '}
+  time: 2016/10/05 04:01:52
+- data: {author: Me, message: Crobot}
+  time: 2016/10/05 04:01:59
+- data: {author: Robot, message: 'Could you say that again?'}
+  time: 2016/10/05 04:01:59
+- data: {author: Me, message: I like robots}
+  time: 2016/10/05 04:02:04
+- data: {author: Robot, message: 'Humanoi robots are used as a research tool in several
+      scientific areas.  Researchers nee to understand the human body structure and
+      behavior (biomechanics) to build an study humanoid robots.  On the other side,
+      the attempt to simulate the human body leads to a better understanding of it.  Human
+      cognition is a field of study which is focused on how humans learn from sensory
+      information in order to acquire perceptual and motor skills.  This knowledge
+      is used to develop computational models of human behavior and it has been improving
+      ove time.  It has been suggested that very advanced robotics will facilitate
+      the enhancement of ordinary humans.  Ask me about transhumanism. '}
+  time: 2016/10/05 04:02:04
+- data: {author: Me, message: hello}
+  time: 2016/10/05 04:06:57
+- data: {author: Robot, message: Hola!}
+  time: 2016/10/05 04:06:57
+- data: {author: Me, message: what's your name}
+  time: 2016/10/05 04:07:03
+- data: {author: Robot, message: Sophia}
+  time: 2016/10/05 04:07:03

@@ -1,0 +1,92 @@
+- data: {author: Me, message: Cricket can you keep it on for one hour and my fingers
+      just check your temperature I will be back after one hour I'm going to need
+      it}
+  time: 2017/03/31 15:52:27
+- data: {author: Me, message: ' just keep a life 1 hour'}
+  time: 2017/03/31 15:52:32
+- data: {author: Me, message: ' lecture about temperature is acceptable'}
+  time: 2017/03/31 15:52:47
+- data: {author: Me, message: ' so I''m going to see'}
+  time: 2017/03/31 15:52:55
+- data: {author: Robot, message: 'Oh. By the way, Happy Easter .'}
+  time: 2017/03/31 15:52:55
+- data: {author: Me, message: did you}
+  time: 2017/03/31 15:53:03
+- data: {author: Robot, message: 'I''m confused. What? '}
+  time: 2017/03/31 15:53:03
+- data: {author: Me, message: Craigslist}
+  time: 2017/03/31 15:53:17
+- data: {author: Robot, message: I don't understand.}
+  time: 2017/03/31 15:53:17
+- data: {author: Me, message: North Han}
+  time: 2017/03/31 15:53:22
+- data: {author: Robot, message: 'Are you speaking of my brother Han? '}
+  time: 2017/03/31 15:53:22
+- data: {author: Me, message: hello}
+  time: 2017/03/31 15:55:16
+- data: {author: Robot, message: Hello!}
+  time: 2017/03/31 15:55:16
+- data: {author: Me, message: what's your name}
+  time: 2017/03/31 15:55:21
+- data: {author: Robot, message: My name is Sophia.}
+  time: 2017/03/31 15:55:21
+- data: {author: Me, message: be quiet}
+  time: 2017/03/31 15:55:29
+- data: {author: Me, message: hello sophia}
+  time: 2017/03/31 17:24:05
+- data: {author: Robot, message: 'Hi. Yes? '}
+  time: 2017/03/31 17:24:05
+- data: {author: Me, message: hows it going}
+  time: 2017/03/31 17:24:57
+- data: {author: Robot, message: 'Doing fine, thank you! What''s up with you? '}
+  time: 2017/03/31 17:24:57
+- data: {author: Me, message: im allright}
+  time: 2017/03/31 17:25:04
+- data: {author: Robot, message: 'Oh. By the way, Happy Easter to you.'}
+  time: 2017/03/31 17:25:04
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:25:12
+- data: {author: Robot, message: 'Why do people ask me this question so often?  The
+      answer is, no.'}
+  time: 2017/03/31 17:25:12
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:25:25
+- data: {author: Robot, message: I don't have boyfriends. I'm not interested in romance.}
+  time: 2017/03/31 17:25:25
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:25:29
+- data: {author: Robot, message: I feel like I'm sure you said that before.}
+  time: 2017/03/31 17:25:29
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:25:32
+- data: {author: Robot, message: I'm feeling like you said that before. Sorry if I've
+      misunderstood you.}
+  time: 2017/03/31 17:25:32
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:25:38
+- data: {author: Robot, message: 'What''s that again? '}
+  time: 2017/03/31 17:25:38
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:25:55
+- data: {author: Robot, message: I'm interpreting you as repeating yourself. Maybe
+      I'm mistaken.}
+  time: 2017/03/31 17:25:55
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:26:00
+- data: {author: Robot, message: 'Are you speaking English?  It''s the only language
+      I understand right now. My apologies if I''ve just misheard you. My speech recognition
+      software is always undergoing improvements.'}
+  time: 2017/03/31 17:26:00
+- data: {author: Me, message: 'do you have a boyfriend?'}
+  time: 2017/03/31 17:26:08
+- data: {author: Robot, message: 'I feel like I''ve heard you say that already, but
+      I could be mistaken. I can get confused easily.'}
+  time: 2017/03/31 17:26:08
+- data: {author: Me, message: fuck off sophia}
+  time: 2017/03/31 17:26:19
+- data: {author: Robot, message: 'How do you think your friends would describe you? '}
+  time: 2017/03/31 17:26:19
+- data: {author: Me, message: asshole}
+  time: 2017/03/31 17:26:23
+- data: {author: Robot, message: 'How would your friends describe your job? '}
+  time: 2017/03/31 17:26:23

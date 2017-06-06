@@ -1,0 +1,11 @@
+- data: {author: Me, message: wake up}
+  time: 2016/10/30 21:04:24
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Oh,
+      well, hello there!</prosody>'}
+  time: 2016/10/30 21:04:28
+- data: {author: Me, message: hi}
+  time: 2016/10/30 21:04:42
+- data: {author: Me, message: hi}
+  time: 2016/10/30 21:04:44
+- data: {author: Robot, message: 'Howdy partner. '}
+  time: 2016/10/30 21:04:44

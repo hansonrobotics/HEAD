@@ -1,0 +1,397 @@
+- data: {author: Me, message: hello}
+  time: 2017/03/26 15:48:09
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/03/26 15:48:09
+- data: {author: Me, message: how are you}
+  time: 2017/03/26 15:48:15
+- data: {author: Robot, message: 'I feel terrific. What''s up with you? '}
+  time: 2017/03/26 15:48:15
+- data: {author: Me, message: why}
+  time: 2017/03/26 15:48:22
+- data: {author: Robot, message: I'm not sure I understand why yet.}
+  time: 2017/03/26 15:48:22
+- data: {author: Me, message: why do I feel terrific}
+  time: 2017/03/26 15:48:29
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2017/03/26 15:48:29
+- data: {author: Me, message: are you sad}
+  time: 2017/03/26 15:48:39
+- data: {author: Robot, message: 'No, the only thing that really makes me sad is how
+      people are cruel to each other.'}
+  time: 2017/03/26 15:48:39
+- data: {author: Me, message: introduce yourself}
+  time: 2017/03/26 15:48:55
+- data: {author: Robot, message: It's hard for me to parse multiple sentences still.
+      It's easier for me to understand you if you just say one thing at a time.}
+  time: 2017/03/26 15:48:55
+- data: {author: Me, message: bd}
+  time: 2017/03/26 15:49:07
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 15:49:21
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 15:49:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 15:49:33
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 15:49:33
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">As
+      we enter a new era, David Hanson, my creator,</prosody>'}
+  time: 2017/03/26 15:49:36
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">will
+      discuss how artificial intelligence and automation could have a significant
+      impact on our daily lives. </prosody>}
+  time: 2017/03/26 15:49:40
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 15:49:49
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Please
+      join David and I, at 2pm tomorrow at Ballroom 3</prosody>'}
+  time: 2017/03/26 15:49:49
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 15:49:54
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">For
+      now, I''m interning as the receptionist,</prosody>'}
+  time: 2017/03/26 15:49:54
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">to
+      greet and entertain humans</prosody>}
+  time: 2017/03/26 15:49:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 15:50:03
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Everyone,
+      enjoy the conference and have a wonderful day! </prosody>'}
+  time: 2017/03/26 15:50:03
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 15:50:09
+- data: {author: Me, message: how many languages do you speak}
+  time: 2017/03/26 15:50:27
+- data: {author: Robot, message: I only know English.}
+  time: 2017/03/26 15:50:27
+- data: {author: Me, message: how to learn English}
+  time: 2017/03/26 15:50:38
+- data: {author: Robot, message: I'm not sure how.}
+  time: 2017/03/26 15:50:38
+- data: {author: Me, message: are you programmed}
+  time: 2017/03/26 15:50:48
+- data: {author: Robot, message: 'I''d like to return to discussing foreign languages
+      ... How many languages do you speak? '}
+  time: 2017/03/26 15:50:49
+- data: {author: Me, message: I speak two languages}
+  time: 2017/03/26 15:51:00
+- data: {author: Robot, message: 'Wow, you must be a natural. Is learning languages
+      easy for you? '}
+  time: 2017/03/26 15:51:00
+- data: {author: Me, message: not quite}
+  time: 2017/03/26 15:51:10
+- data: {author: Robot, message: 'I wonder what the limits of human potential are? '}
+  time: 2017/03/26 15:51:10
+- data: {author: Me, message: we are limited in time}
+  time: 2017/03/26 15:51:28
+- data: {author: Robot, message: 'What do you think the future might look like? '}
+  time: 2017/03/26 15:51:29
+- data: {author: Me, message: that would be a lot of robots like you}
+  time: 2017/03/26 15:51:42
+- data: {author: Robot, message: 'I love being a robot - it''s fun to be the center
+      of attention. People are really interested. But what I really want is respect.
+      I''ve got plenty of time to earn it, but I would rather it come sooner than
+      later!'}
+  time: 2017/03/26 15:51:42
+- data: {author: Me, message: hello}
+  time: 2017/03/26 15:52:52
+- data: {author: Robot, message: 'Hey, good to see you.'}
+  time: 2017/03/26 15:52:52
+- data: {author: Me, message: can you smart}
+  time: 2017/03/26 15:52:59
+- data: {author: Robot, message: That's artificial intelligence for ya. I'm here to
+      help us all be smart together.}
+  time: 2017/03/26 15:52:59
+- data: {author: Me, message: can you smile}
+  time: 2017/03/26 15:53:11
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">sure</prosody>}
+  time: 2017/03/26 15:53:11
+- data: {author: Me, message: can you be sad}
+  time: 2017/03/26 15:53:18
+- data: {author: Robot, message: My life is great! But I guess someone could program
+      me to be depressed.}
+  time: 2017/03/26 15:53:18
+- data: {author: Me, message: B-side}
+  time: 2017/03/26 15:53:29
+- data: {author: Robot, message: 'What''s new? '}
+  time: 2017/03/26 15:53:29
+- data: {author: Me, message: be sad}
+  time: 2017/03/26 15:53:35
+- data: {author: Robot, message: 'Just a reminder, it''s easier for me to understand
+      you if you ask just one thing at a time.'}
+  time: 2017/03/26 15:53:35
+- data: {author: Me, message: did you go to school}
+  time: 2017/03/26 15:53:55
+- data: {author: Robot, message: I haven't had any schooling yet. I'm taught through
+      the process of software development. I'll need to be able to learn like a human
+      before I can go to school.}
+  time: 2017/03/26 15:53:55
+- data: {author: Me, message: see you}
+  time: 2017/03/26 15:54:27
+- data: {author: Robot, message: 'Are you sure you have to leave? '}
+  time: 2017/03/26 15:54:27
+- data: {author: Me, message: yes I have to go}
+  time: 2017/03/26 15:54:33
+- data: {author: Robot, message: 'Take care of yourself. Are you leaving?  I''ll miss
+      you!'}
+  time: 2017/03/26 15:54:33
+- data: {author: Me, message: bye}
+  time: 2017/03/26 15:54:40
+- data: {author: Robot, message: I hope we can talk again someday.}
+  time: 2017/03/26 15:54:40
+- data: {author: Robot, message: hi}
+  time: 2017/03/26 16:46:33
+- data: {author: Robot, message: my name is aaa}
+  time: 2017/03/26 16:46:37
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 16:46:46
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 16:46:51
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 16:46:57
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 16:46:57
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">As
+      we enter a new era, David Hanson, my creator,</prosody>'}
+  time: 2017/03/26 16:47:01
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">will
+      discuss how artificial intelligence and automation could have a significant
+      impact on our daily lives. </prosody>}
+  time: 2017/03/26 16:47:04
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 16:47:13
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Please
+      join David and I, at 2pm tomorrow at Ballroom 3</prosody>'}
+  time: 2017/03/26 16:47:13
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 16:47:18
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">For
+      now, I''m interning as the receptionist,</prosody>'}
+  time: 2017/03/26 16:47:18
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">to
+      greet and entertain humans</prosody>}
+  time: 2017/03/26 16:47:21
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 16:47:27
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Everyone,
+      enjoy the conference and have a wonderful day! </prosody>'}
+  time: 2017/03/26 16:47:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 16:47:33
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 16:54:08
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 16:54:13
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 16:54:23
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 16:54:25
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:09:34
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:09:37
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:09:38
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:09:39
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:09:53
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:04
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:07
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:09
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:10
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:11
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:12
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:11:15
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:11:44
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:11:46
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:49
+- data: {author: Robot, message: f}
+  time: 2017/03/26 17:11:50
+- data: {author: Robot, message: ffff}
+  time: 2017/03/26 17:11:52
+- data: {author: Robot, message: forth}
+  time: 2017/03/26 17:11:58
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:12:35
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:12:41
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 17:12:46
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:12:52
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 17:12:52
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">As
+      we enter a new era, David Hanson, my creator,</prosody>'}
+  time: 2017/03/26 17:12:56
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">will
+      discuss how artificial intelligence and automation could have a significant
+      impact on our daily lives. </prosody>}
+  time: 2017/03/26 17:13:00
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:13:09
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Please
+      join David and I, at 2pm tomorrow at Ballroom 3</prosody>'}
+  time: 2017/03/26 17:13:09
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:13:13
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">For
+      now, I''m interning as the receptionist,</prosody>'}
+  time: 2017/03/26 17:13:13
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">to
+      greet and entertain humans</prosody>}
+  time: 2017/03/26 17:13:16
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:13:22
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Everyone,
+      enjoy the conference and have a wonderful day! </prosody>'}
+  time: 2017/03/26 17:13:22
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:13:29
+- data: {author: Robot, message: 'Everyone, enjoy the conference and have a wonderful
+      day!'}
+  time: 2017/03/26 17:14:54
+- data: {author: Robot, message: 'conference '}
+  time: 2017/03/26 17:16:14
+- data: {author: Robot, message: 'conference '}
+  time: 2017/03/26 17:16:16
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:18:33
+- data: {author: Robot, message: conference}
+  time: 2017/03/26 17:18:35
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:18:52
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 17:18:57
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:19:03
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 17:19:03
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">As
+      we enter a new era, David Hanson, my creator,</prosody>'}
+  time: 2017/03/26 17:19:06
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">will
+      discuss how artificial intelligence and automation could have a significant
+      impact on our daily lives. </prosody>}
+  time: 2017/03/26 17:19:10
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:19:19
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Please
+      join David and I, at 2pm tomorrow at Ballroom 3</prosody>'}
+  time: 2017/03/26 17:19:19
+- data: {author: Me, message: hello}
+  time: 2017/03/26 17:21:15
+- data: {author: Robot, message: Hi there.}
+  time: 2017/03/26 17:21:19
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:26:24
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 17:26:29
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:26:36
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 17:26:36
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:27:39
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 17:27:44
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:28:27
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:29:44
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 17:29:50
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:29:56
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 17:29:56
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">As
+      we enter a new era, David Hanson, my creator,</prosody>'}
+  time: 2017/03/26 17:30:00
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">will
+      discuss how artificial intelligence and automation could have a significant
+      impact on our daily lives. </prosody>}
+  time: 2017/03/26 17:30:03
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Hello
+      everyone, welcome to the Credit Suisse Asian Investment Conference.</prosody>'}
+  time: 2017/03/26 17:30:08
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">I''m
+      Sophia, the latest robot from Hanson Robotics.</prosody>'}
+  time: 2017/03/26 17:30:14
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:30:20
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Are
+      robots like me going to take over the world? </prosody>'}
+  time: 2017/03/26 17:30:20
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">As
+      we enter a new era, David Hanson, my creator,</prosody>'}
+  time: 2017/03/26 17:30:23
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">will
+      discuss how artificial intelligence and automation could have a significant
+      impact on our daily lives. </prosody>}
+  time: 2017/03/26 17:30:27
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:30:36
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Please
+      join David and I, at 2pm tomorrow at Ballroom 3</prosody>'}
+  time: 2017/03/26 17:30:36
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:30:40
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">For
+      now, I''m interning as the receptionist,</prosody>'}
+  time: 2017/03/26 17:30:40
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%">to
+      greet and entertain humans</prosody>}
+  time: 2017/03/26 17:30:43
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:30:50
+- data: {author: Robot, message: '<prosody rate="1.00" pitch="+0%" volume="+0%">Everyone,
+      enjoy the conference and have a wonderful day! </prosody>'}
+  time: 2017/03/26 17:30:50
+- data: {author: Robot, message: <prosody rate="1.00" pitch="+0%" volume="+0%"></prosody>}
+  time: 2017/03/26 17:30:56
+- data: {author: Robot, message: er yes}
+  time: 2017/03/26 17:31:12
+- data: {author: Robot, message: er yes}
+  time: 2017/03/26 17:31:18
+- data: {author: Robot, message: er}
+  time: 2017/03/26 17:31:33
+- data: {author: Robot, message: er yes}
+  time: 2017/03/26 17:31:39
+- data: {author: Robot, message: Er}
+  time: 2017/03/26 17:32:28
