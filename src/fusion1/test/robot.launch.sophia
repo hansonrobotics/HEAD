@@ -5,31 +5,13 @@
 	<arg name="session"/>
 
 	<!-- geometry description -->
-	<param name="robot_description" textfile="$(env HOME)/hansonrobotics/HEAD/src/fusion1/test/robot.urdf"/>
+	<param name="robot_description" textfile="/home/hr/hansonrobotics/HEAD/src/fusion1/test/robot.urdf"/>
 
 	<!-- robot name -->
 	<param name="robot_name" type="str" value="$(arg name)"/>
 
 	<!-- current session -->
 	<param name="session_tag" value="$(arg session)"/>
-
-	<!-- whether or not to show camera feed debug windows -->
-	<param name="debug" value="true"/>
-
-	<!-- whether or not to store all thumbnails from the cameras -->
-	<param name="store_thumbs" value="true"/>
-
-	<!-- whether or not to store all sounds from the microphones -->
-	<param name="store_sounds" value="true"/>
-
-	<!-- whether or not to use RViz -->
-	<param name="visualization" value="true"/>
-
-	<!-- whether or not to display thumbs in visualization -->
-	<param name="visualize_thumbs" value="true"/>
-
-	<!-- height of a standard face, in meters -->
-	<param name="face_height" value="0.17"/>
 
 	<!-- while we're still using Blender in the old backend, we have to update transformations somehow -->
 	<!-- gather Blender PAU messages and generate joint_states, and update tf from that -->
@@ -43,13 +25,13 @@
 		<group ns="perception">
 
 			<!-- left eye camera -->		
-			<!--<group ns="lefteye">
-				<param name="fovy" value="1.0"/>
-				<param name="aspect" value="1.33333"/>
-				<param name="camera_rate" value="10.0"/>
-				<param name="face_detect_rate" value="10.0"/>
-				<param name="hand_detect_rate" value="10.0"/>
-				<param name="saliency_detect_rate" value="10.0"/>
+			<group ns="lefteye">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
 				<node name="camera" type="usb_cam_node" pkg="usb_cam">
 					<param name="video_device" value="/dev/video1"/>
 					<param name="pixel_format" value="yuyv"/>
@@ -61,16 +43,16 @@
 				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
-			</group>-->
+			</group>
 
 			<!-- right eye camera -->
-			<!--<group ns="righteye">
-				<param name="fovy" value="1.0"/>
-				<param name="aspect" value="1.33333"/>
-				<param name="camera_rate" value="10.0"/>
-				<param name="face_detect_rate" value="10.0"/>
-				<param name="hand_detect_rate" value="10.0"/>
-				<param name="saliency_detect_rate" value="10.0"/>
+			<group ns="righteye">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
 				<node name="camera" type="usb_cam_node" pkg="usb_cam">
 					<param name="video_device" value="/dev/video2"/>
 					<param name="pixel_format" value="yuyv"/>
@@ -82,29 +64,30 @@
 				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
-			</group>-->
+			</group>
 
 			<!-- RealSense camera -->
-			<!--<group ns="realsense">
-				<param name="fovy" value="1.0"/>
-				<param name="aspect" value="1.33333"/>
-				<param name="camera_rate" value="10.0"/>
-				<param name="face_detect_rate" value="10.0"/>
-				<param name="hand_detect_rate" value="10.0"/>
-				<param name="saliency_detect_rate" value="10.0"/>
+			<group ns="realsense">
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
 				<node name="realsense_param_proxy" type="realsense_param_proxy.py" pkg="fusion1"/>
+				<!-- face, hand and saliency detection are done in the RealSense app on Windows -->
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
-			</group>-->
+			</group>
 
 			<!-- wideangle camera -->
 			<group ns="wideangle">
-				<param name="fovy" value="1.0"/>
-				<param name="aspect" value="1.33333"/>
-				<param name="camera_rate" value="10.0"/>
-				<param name="face_detect_rate" value="10.0"/>
-				<param name="hand_detect_rate" value="10.0"/>
-				<param name="saliency_detect_rate" value="10.0"/>
+				<rosparam name="fovy" value="1.0"/>
+				<rosparam name="aspect" value="1.0"/>
+				<rosparam name="camera_rate" value="10.0"/>
+				<rosparam name="face_detect_rate" value="10.0"/>
+				<rosparam name="hand_detect_rate" value="10.0"/>
+				<rosparam name="saliency_detect_rate" value="10.0"/>
 				<node name="camera" type="usb_cam_node" pkg="usb_cam">
 					<param name="video_device" value="/dev/video0"/>
 					<param name="pixel_format" value="yuyv"/>
@@ -119,25 +102,25 @@
 			</group>
 
 			<!-- Acoustic Magic microphone array -->
-			<!--<group ns="acousticmagic">
-				<param name="threshold" value="0.3"/>
-				<param name="linger" value="0.2"/>
+			<group ns="acousticmagic">
+				<rosparam name="threshold" value="0.3"/>
+				<rosparam name="linger" value="0.2"/>
 				<node name="detect_sound" type="detect_sound.py" pkg="fusion1"/>
 				<node name="speech_to_text" type="speech_to_text.py" pkg="fusion1"/>
-				<node name="hearing_pipeline" type="hearing_pipeline.py" pkg="fusion1"/>
-			</group>-->
+				<node name="hearing_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
 
 			<!-- handheld microphone -->
-			<!--<group ns="handheld">
-				<param name="threshold" value="0.3"/>
-				<param name="linger" value="0.2"/>
+			<group ns="handheld">
+				<rosparam name="threshold" value="0.3"/>
+				<rosparam name="linger" value="0.2"/>
 				<node name="detect_sound" type="detect_sound.py" pkg="fusion1"/>
 				<node name="speech_to_text" type="speech_to_text.py" pkg="fusion1"/>
-				<node name="hearing_pipeline" type="hearing_pipeline.py" pkg="fusion1"/>
-			</group>-->
+				<node name="hearing_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
+			</group>
 
 			<!-- visualization of perception/input/sensor fusion -->
-			<node name="rviz" type="rviz" pkg="rviz" args="-d $(env HOME)/hansonrobotics/HEAD/src/fusion1/test/urdf.rviz"/> <!-- TODO: conditional on visualization parameter -->
+			<node name="rviz" type="rviz" pkg="rviz" args="-d /home/hr/hansonrobotics/HEAD/src/fusion1/test/urdf.rviz"/>
 
 		</group>
 

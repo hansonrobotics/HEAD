@@ -382,47 +382,59 @@ class VisionPipeline(object):
 
     def __init__(self):
 
+        self.debug  =rospy.get_param("/debug")
+        self.store_thumbs = rospy.get_param("/store_thumbs")
+        self.visualization = rospy.get_param("/visualization")
+
         self.name = os.path.basename(rospy.get_namespace())
         self.session_tag = rospy.get_param("/session_tag")
         self.session_id = hash(self.session_tag) & 0xFFFFFFFF
 
         self.camera_id = hash(self.name) & 0xFFFFFFFF
 
-        today_tag = time.strftime("%Y%m%d")
-        camera_tag = self.name + "_%08X" % (self.camera_id & 0xFFFFFFFF)
-        self.thumb_dir = thumb_base_dir + "/" + today_tag + "/" + self.session_tag + "_%08X/" % (self.session_id & 0xFFFFFFFF) + camera_tag + "/"
-        if not os.path.exists(self.thumb_dir):
-            os.makedirs(self.thumb_dir)
+        if self.store_thumbs:
+            today_tag = time.strftime("%Y%m%d")
+            camera_tag = self.name + "_%08X" % (self.camera_id & 0xFFFFFFFF)
+            self.thumb_dir = thumb_base_dir + "/" + today_tag + "/" + self.session_tag + "_%08X/" % (self.session_id & 0xFFFFFFFF) + camera_tag + "/"
+            if not os.path.exists(self.thumb_dir):
+                os.makedirs(self.thumb_dir)
 
         self.cusers = {}
         self.chands = {}
         self.csaliencies = {}
 
-        self.face_sub = rospy.Subscriber("face",Face,self.HandleFace)
-        self.hand_sub = rospy.Subscriber("hand",Hand,self.HandleHand)
-        self.saliency_sub = rospy.Subscriber("saliency",Saliency,self.HandleSaliency)
+        # subscribers for raw face, hand and saliency nodes
+        self.face_sub = rospy.Subscriber("raw_face",Face,self.HandleFace)
+        self.hand_sub = rospy.Subscriber("raw_hand",Hand,self.HandleHand)
+        self.saliency_sub = rospy.Subscriber("raw_saliency",Saliency,self.HandleSaliency)
 
+        # request/response to/from face analysis node
         self.face_response_sub = rospy.Subscriber("face_response",FaceResponse,self.HandleFaceResponse)
         self.face_request_pub = rospy.Publisher("face_request",FaceRequest,queue_size=5)
 
+        # publishers for candidate user, hand and saliency
         self.cuser_pub = rospy.Publisher("cuser",CandidateUser,queue_size=5)
         self.chand_pub = rospy.Publisher("chand",CandidateHand,queue_size=5)
         self.csaliency_pub = rospy.Publisher("csaliency",CandidateSaliency,queue_size=5)
 
-        self.face_rviz_pub = rospy.Publisher("rviz_face",Marker,queue_size=5)
-        self.hand_rviz_pub = rospy.Publisher("rviz_hand",Marker,queue_size=5)
-        self.saliency_rviz_pub = rospy.Publisher("rviz_saliency",Marker,queue_size=5)
+        # rviz markers
+        if self.visualization:
+            self.face_rviz_pub = rospy.Publisher("rviz_face",Marker,queue_size=5)
+            self.hand_rviz_pub = rospy.Publisher("rviz_hand",Marker,queue_size=5)
+            self.saliency_rviz_pub = rospy.Publisher("rviz_saliency",Marker,queue_size=5)
 
         self.config_srv = Server(VisionConfig,self.HandleConfig)
 
         # for debugging
-        cv2.startWindowThread()
-        cv2.namedWindow(self.name)
-        self.frame_sub = rospy.Subscriber(self.name + "/camera/image_raw",Image,self.HandleFrame)
+        if self.debug:
+            cv2.startWindowThread()
+            cv2.namedWindow(self.name)
+            self.frame_sub = rospy.Subscriber(self.name + "/camera/image_raw",Image,self.HandleFrame)
 
 
     def HandleConfig(self,data,level):
 
+        print "{}".format(data)
         return data
 
 
@@ -468,14 +480,15 @@ class VisionPipeline(object):
             msg.thumb = data.thumb
             self.face_request_pub.publish(msg)
 
-        cuser_tag = "cuser_%08X" % (closest_cuser_id & 0xFFFFFFFF)
-        dir = self.thumb_dir + cuser_tag + "/"
-        if not os.path.exists(dir):
-            os.makedirs(dir)
-        thumb = opencv_bridge.imgmsg_to_cv2(data.thumb)
-        face_tag = "face_%08X" % (data.face_id & 0xFFFFFFFF)
-        thumb_file = dir + face_tag + thumb_ext
-        cv2.imwrite(thumb_file,thumb)
+        if self.store_thumbs:
+            cuser_tag = "cuser_%08X" % (closest_cuser_id & 0xFFFFFFFF)
+            dir = self.thumb_dir + cuser_tag + "/"
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            thumb = opencv_bridge.imgmsg_to_cv2(data.thumb)
+            face_tag = "face_%08X" % (data.face_id & 0xFFFFFFFF)
+            thumb_file = dir + face_tag + thumb_ext
+            cv2.imwrite(thumb_file,thumb)
 
 
     def HandleHand(self,data):

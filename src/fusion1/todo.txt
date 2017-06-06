@@ -1,3 +1,5 @@
+General TODO:
+
 * setup vision and hearing pipelines
 * build age estimation -> OpenBiometrics problem
 * build gender estimation -> OpenBiometrics problem
@@ -9,25 +11,38 @@
 * refactor saliency for all cameras
 * hook up rviz (analyze current perception ROS node)
 * make transformations work from motor positions (refactor current perception ROS node)
-+ refactor towards using dynamic reconfigure, instead of separate messages
-+ make sure camera FOV works correctly
-+ output sounds and speech to directories and CSV
-+ hook up realsense hands
-+ visualize users with id, age, gender etc. info using text markers
-+ hook up speech and audio localization from both microphones
+* refactor towards using dynamic reconfigure, instead of separate messages
+* disable/enable thumb storage
+* disable/enable sound storage
+* disable/enable debug windows
+* disable/enable rviz
+* make sure camera FOV works correctly
+* make face height global parameter
++ fuse observations (cusers between pipelines, chands between pipelines, saliency points between pipelines, cusers+saliency points, hands+saliency points, sounds+cusers, sounds+hands, sounds+salient points, speech+cusers, speech+salient points)
++ output established users, hands, salient points and speech
+- maintain global CSV file with parameters for stored faces (timestamp, anything already gathered from realsense, etc.)
+- refactor room luminance for all cameras
+- make wiki for the system
+
+RealSense leftover TODO:
+
++ hook up RealSense hands
 + implement saliency for RealSense, or use blob detection that comes with RealSense
-- access ROS parameters in the RealSense code
++ access ROS parameters in the RealSense code (with messages, dynamic reconfigure might still be too far off)
+- solve timing problem between Linux and Windows (first send ROS message to RealSense, wait for answer, the time difference divided by 2 is the general delay between Windows and Linux), this might not be necessary
+
+Visualization TODO:
+
++ visualize users in rviz
++ visualize saliency in rviz
+
+Audio leftover TODO:
+
++ output sounds and speech to directories and CSV
++ hook up speech and audio localization from both microphones
 - audio detection and streaming, refactor audio_stream and audio_sensor
 - google speech, continuous and regular, refactor google_speech
 - dragon speech, continuous and regular, append to RealSense
-- make 2D face detection 3D using camera FOV
-- maintain global CSV file with parameters for stored faces (timestamp, anything already gathered from realsense, etc.)
-- solve timing problem between Linux and Windows (first send ROS message to RealSense, wait for answer, the time difference divided by 2 is the general delay between Windows and Linux), this might not be necessary
-- refactor room luminance for all cameras
-- visualize saliency in rviz
-- fuse observations (needs discussion w/ OpenCog people and possibly David)
-- output to OpenCog (needs discussion w/ OpenCog people)
-- output classic ROS to (parts of) existing architecture
 
 
 
@@ -61,7 +76,3 @@ Towards OpenCog:
 		confidence of the translation (0..1)
 		localization of where the speech came from (angle, maybe quaternion)
 		confidence of the location
-
-Also, there are several things the fusion layer can still do that could be interesting for OpenCog:
-
-	- 

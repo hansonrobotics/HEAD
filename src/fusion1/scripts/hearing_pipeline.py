@@ -37,7 +37,13 @@ class HearingPipeline(object):
 
         self.hearing_pub = rospy.Publisher("hearing",Hearing,queue_size=5)
 
-        self.config_srv = Server(HearingConfig,HandleConfig)
+        self.config_srv = Server(HearingConfig,self.HandleConfig)
+
+
+    def HandleConfig(self,data,level):
+
+        print "{}".format(data)
+        return data
 
 
     def HandleSound(self,data):

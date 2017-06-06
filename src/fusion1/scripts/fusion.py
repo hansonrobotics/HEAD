@@ -36,6 +36,21 @@ class Fusion(object):
         self.timer = rospy.Timer(rospy.Duration(1.0 / self.rate),self.HandleTimer)
 
 
+    def HandleCandidateUser(self,data):
+
+        ()
+
+
+    def HandleCandidateHand(self,data):
+
+        ()
+
+
+    def HandleCandidateSaliency(self,data):
+
+        ()
+
+
     def HandleTimer(self,data):
 
         ts = data.current_expected

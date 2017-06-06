@@ -1,0 +1,1 @@
+make the entire perception system reconfigurable, so that when you plug in a new camera, you get a wizard that allows you to connect the wanted algorithms and rest of the / use this strategy for all components

@@ -23,7 +23,7 @@ class DetectSound(object):
 
     def HandleConfig(self,data):
 
-        print "detect_sound {:?}".format(data)
+        print "detect_sound {}".format(data)
 
 
 if __name__ == '__main__':

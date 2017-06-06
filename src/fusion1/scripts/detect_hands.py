@@ -29,21 +29,21 @@ class DetectHands(object):
         self.cur_image = Image()
         self.cur_ts = 0.0
 
-        rospy.wait_for_service("vision_pipeline")
-        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
         self.fovy = rospy.get_param("fovy")
         self.aspect = rospy.get_param("aspect")
-        self.rate = rospy.get_param("rate")
+        self.hand_detect_rate = rospy.get_param("hand_detect_rate")
+        rospy.wait_for_service("vision_pipeline")
+        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
 
         self.image_sub = rospy.Subscriber("camera/image_raw",Image,self.HandleImage)
-        self.hand_pub = rospy.Publisher("hand",Hand,queue_size=5)
+        self.hand_pub = rospy.Publisher("raw_hand",Hand,queue_size=5)
 
-        self.timer = rospy.Timer(rospy.Duration(self.period),self.HandleTimer)
+        self.timer = rospy.Timer(rospy.Duration(1.0 / self.hand_detect_rate),self.HandleTimer)
 
 
     def HandleConfig(self,data):
 
-        print "detect_hands {:?}".format(data)
+        print "detect_hands {}".format(data)
 
 
     def HandleImage(self,data):

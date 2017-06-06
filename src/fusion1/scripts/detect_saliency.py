@@ -36,17 +36,17 @@ class DetectSaliency(object):
         self.cur_ts = 0.0
         self.last_ts = 0.0
 
-        rospy.wait_for_service("vision_pipeline")
-        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
         self.fovy = rospy.get_param("fovy")
         self.aspect = rospy.get_param("aspect")
-        self.rate = rospy.get_param("rate")
+        self.saliency_detect_rate = rospy.get_param("saliency_detect_rate")
+        rospy.wait_for_service("vision_pipeline")
+        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
 
         self.image_sub = rospy.Subscriber("camera/image_raw",Image,self.HandleImage)
-        self.saliency_pub = rospy.Publisher("saliency",Saliency,queue_size=5)
+        self.saliency_pub = rospy.Publisher("raw_saliency",Saliency,queue_size=5)
         self.control_sub = rospy.Subscriber("vision_control",VisionControl,self.HandleVisionControl)
 
-        self.timer = rospy.Timer(rospy.Duration(self.period),self.HandleTimer)
+        self.timer = rospy.Timer(rospy.Duration(1.0 / self.saliency_detect_rate),self.HandleTimer)
 
         # for debugging
         #cv2.startWindowThread()
@@ -56,7 +56,7 @@ class DetectSaliency(object):
 
     def HandleConfig(self,data):
 
-        print "detect_saliency {:?}".format(data)
+        print "detect_saliency {}".format(data)
 
 
     def HandleImage(self,data):
@@ -147,13 +147,13 @@ class DetectSaliency(object):
         # and have the robot cycle through them at random; the robot will then appear to be glancing
         # at interesting things
         for point in points:
-            saliency = Saliency()
-            saliency.saliency_id = GenerateSaliencyID()
-            saliency.ts = self.cur_ts
-            saliency.pos.x = -1.0 + 2.0 * (point.x / float(covx))
-            saliency.pos.y = -1.0 + 2.0 * (point.y / float(covy))
-            saliency.confidence = point.z
-            self.saliency_pub.publish(saliency)
+            msg = Saliency()
+            msg.saliency_id = GenerateSaliencyID()
+            msg.ts = self.cur_ts
+            msg.pos.x = -1.0 + 2.0 * (point.x / float(covx))
+            msg.pos.y = -1.0 + 2.0 * (point.y / float(covy))
+            msg.confidence = point.z
+            self.saliency_pub.publish(msg)
 
         #cv2.imshow("faux saliency",cv2.resize(resized,(subx,suby),interpolation=cv2.INTER_LINEAR))
 

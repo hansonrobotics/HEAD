@@ -32,21 +32,23 @@ class DetectFaces(object):
         self.cur_frame = Image()
         self.cur_ts = 0.0
 
-        rospy.wait_for_service("vision_pipeline")
-        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
+        self.face_height = rospy.get_param("/face_height")
         self.fovy = rospy.get_param("fovy")
         self.aspect = rospy.get_param("aspect")
-        self.rate = rospy.get_param("rate")
+        self.face_detect_rate = rospy.get_param("face_detect_rate")
+        rospy.wait_for_service("vision_pipeline")
+        self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)        
 
         self.image_sub = rospy.Subscriber("camera/image_raw",Image,self.HandleImage)
-        self.face_pub = rospy.Publisher("face",Face,queue_size=5)
+        self.face_pub = rospy.Publisher("raw_face",Face,queue_size=5)
 
-        self.timer = rospy.Timer(rospy.Duration(1.0 / self.rate),self.HandleTimer)
+        self.timer = rospy.Timer(rospy.Duration(1.0 / self.face_detect_rate),self.HandleTimer)
 
 
     def HandleConfig(self,data):
 
-        print "detect_faces {:?}".format(data)
+        print "detect_faces {}".format(data)
+        return data
 
 
     def HandleImage(self,data):
@@ -71,25 +73,40 @@ class DetectFaces(object):
             if (w <= 0) or (h <= 0):
                 continue
 
-            face = Face()
-            face.face_id = GenerateFaceID()
-            face.ts = self.cur_ts
-            face.rect.origin.x = -1.0 + 2.0 * float(x) / float(self.cur_image.width)
-            face.rect.origin.y = -1.0 + 2.0 * float(y) / float(self.cur_image.height)
-            face.rect.size.x = 2.0 * float(w) / float(self.cur_image.width)
-            face.rect.size.y = 2.0 * float(h) / float(self.cur_image.height)
-            face.pos.x = face.rect.origin.x + face.rect.size.x / 2
-            face.pos.y = face.rect.origin.y + face.rect.size.y / 2
-            face.pos.z = 1.0
-            face.confidence = 1.0
-            face.smile = 0.0
-            face.frown = 0.0
-            face.expressions = []
-            face.landmarks = []
-            cvthumb = cv2.resize(color_image[y:y+h,x:x+w],(64,64))
-            face.thumb = opencv_bridge.cv2_to_imgmsg(cvthumb,encoding="8UC3")
+            # calculate distance to camera plane from fovy
+            d = 1.0 / math.tan(self.fovy)
 
-            self.face_pub.publish(face)
+            # calculate distance of the face to the camera
+            cx = face_height * d * float(self.cur_image.height) / float(h)
+
+            # convert camera coordinates to normalized coordinates on the camera plane
+            fy = -1.0 + 2.0 * float(x) / float(self.cur_image.width)
+            fz = 1.0 - 2.0 * float(y) / float(self.cur_image.height)
+
+            # project to face distance
+            cy = cx * fx / d
+            cz = cz * fz / d
+
+            # prepare message
+            msg = Face()
+            msg.face_id = GenerateFaceID()
+            msg.ts = self.cur_ts
+            msg.rect.origin.x = fy
+            msg.rect.origin.y = -fz
+            msg.rect.size.x = 2.0 * float(w) / float(self.cur_image.width)
+            msg.rect.size.y = 2.0 * float(h) / float(self.cur_image.height)
+            msg.pos.x = cx
+            msg.pos.y = cy
+            msg.pos.z = cz
+            msg.confidence = 1.0
+            msg.smile = 0.0
+            msg.frown = 0.0
+            msg.expressions = []
+            msg.landmarks = []
+            cvthumb = cv2.resize(color_image[y:y+h,x:x+w],(64,64))
+            msg.thumb = opencv_bridge.cv2_to_imgmsg(cvthumb,encoding="8UC3")
+
+            self.face_pub.publish(msg)
 
 
 if __name__ == '__main__':

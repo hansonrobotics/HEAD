@@ -18,7 +18,7 @@ class RealSenseParamProxy(object):
 
     def HandleConfig(self,data):
 
-        print "realsense_param_proxy {:?}".format(data)
+        print "realsense_param_proxy {}".format(data)
 
         msg = RealSenseParam()
         msg.ts = rospy.get_rostime()
