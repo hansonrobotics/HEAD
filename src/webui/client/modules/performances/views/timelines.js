@@ -199,13 +199,22 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.ui.timelineContainer.contextMenu({
                         menuSelector: this.ui.timelineContextMenu,
                         menuSelected: function(invokedOn, selectedMenu, position) {
+                            let container = self.ui.timelineContainer,
+                                offset = ($(container).scrollLeft() +
+                                    position.left - $(container).offset().left) / self.config.pxPerSec
+
                             switch ($(selectedMenu).data('action')) {
                                 case 'paste':
-                                    let container = self.ui.timelineContainer,
-                                        offset = ($(container).scrollLeft() +
-                                            position.left - $(container).offset().left) / self.config.pxPerSec
-
                                     self.pasteSelectedNodes(offset)
+                                    break
+                                case 'select_all':
+                                    self.selectAllNodes()
+                                    break
+                                case 'select_all_left':
+                                    self.selectAllNodesLeft(offset)
+                                    break
+                                case 'select_all_right':
+                                    self.selectAllNodesRight(offset)
                                     break
                             }
                         }
@@ -534,7 +543,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.model.nodes.remove(node)
                     node.destroy()
                 }
-                
+
                 this.deselectNodes()
             },
             pasteSelectedNodes: function(offset) {
@@ -572,6 +581,28 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 }
 
                 return nodes
+            },
+            selectAllNodes: function() {
+                let self = this
+                this.model.nodes.each(function(node) {
+                    self.selectNode(node)
+                })
+            },
+            selectAllNodesLeft: function(offset) {
+                let self = this
+                this.deselectNodes()
+                this.model.nodes.each(function(node) {
+                    if (node.get('start_time') < offset)
+                        self.selectNode(node)
+                })
+            },
+            selectAllNodesRight: function(offset) {
+                let self = this
+                this.deselectNodes()
+                this.model.nodes.each(function(node) {
+                    if (node.get('start_time') > offset)
+                        self.selectNode(node)
+                })
             },
             selectNode: function(node) {
                 if (this.selectedNodes.indexOf(node) === -1)
