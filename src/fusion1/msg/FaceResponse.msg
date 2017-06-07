@@ -1,6 +1,6 @@
 uint32 session_id
 uint32 camera_id
-uint32 puser_id
+uint32 cuser_id
 uint32 face_id
 time ts
 float32 age

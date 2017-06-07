@@ -8,35 +8,30 @@ import rospy
 import logging
 import time
 import dynamic_reconfigure.client
-from fusion1.msg import Sound,Speech
+from fusion1.msg import Sound
 
 
 # speech to text
-class SpeechToText(object):
+class DetectSoundHyst(object):
 
 
     def __init__(self):
 
-        self.threshold = 0.2
-        self.linger = 0.2
+        self.threshold = rospy.get_param("threshold")
+        self.linger = rospy.get_param("linger")
         self.dynparam = dynamic_reconfigure.client.Client("hearing_pipeline",timeout=30,config_callback=self.HandleConfig)        
-        self.sound_sub = rospy.Subscriber("sound",Sound,self.HandleSound)
-        self.speech_pub = rospy.Publisher("speech",Speech,queue_size=5)
+
+        self.sound_pub = rospy.Publisher("sound",Sound,queue_size=5)
 
 
-    def HandleConfig(self,data,level):
+    def HandleConfig(self,data):
 
         self.threshold = data.threshold
         self.linger = data.linger
 
-        
-    def HandleSound(self,data):
-
-        ()
-
 
 if __name__ == '__main__':
 
-    rospy.init_node('speech_to_text')
-    node = SpeechToText()
+    rospy.init_node('detect_sound')
+    node = DetectSoundHyst()
     rospy.spin()

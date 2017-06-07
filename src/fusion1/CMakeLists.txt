@@ -173,16 +173,20 @@ include_directories(
 # )
 install(PROGRAMS
   scripts/detect_faces.py
+  scripts/detect_faces_haar.py
   scripts/detect_hands.py
   scripts/detect_saliency.py
+  scripts/detect_saliency_ittikoch.py
   scripts/detect_sounds.py
+  scripts/detect_sounds_hyst.py
   scripts/face_analysis.py
   scripts/fusion.py
   scripts/gather_pau_states.py
   scripts/hearing_pipeline.py
-  scripts/partial_user.py
   scripts/realsense_param_proxy.py
   scripts/speech_to_text.py
+  scripts/speech_to_text_google.py
+  scripts/speech_to_text_realsense.py
   scripts/vision_pipeline.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

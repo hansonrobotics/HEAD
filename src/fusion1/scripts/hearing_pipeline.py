@@ -1,4 +1,8 @@
 #!/usr/bin/env python2.7
+
+# R2 Perception - Hanson Robotics Unified Perception System, v1.0
+# by Desmond Germans
+
 import os
 import rospy
 import numpy

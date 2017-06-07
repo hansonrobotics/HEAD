@@ -1,8 +1,0 @@
-(1.5 days to find this problem:)
-
-to compile openbr (so it doesn't crash when you want to detect age/gender/ID), also install opencv nonfree:
-
-	sudo add-apt-repository --yes ppa:xqms/opencv-nonfree
-	sudo apt-get update
-	sudo apt-get install libopencv-nonfree-dev
-

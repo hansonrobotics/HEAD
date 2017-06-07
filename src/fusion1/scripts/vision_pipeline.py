@@ -1,4 +1,8 @@
 #!/usr/bin/env python2.7
+
+# R2 Perception - Hanson Robotics Unified Perception System, v1.0
+# by Desmond Germans
+
 import os
 import rospy
 import numpy
@@ -31,7 +35,20 @@ full_points = 5
 
 
 serial_number = 0
+
 def GenerateCandidateUserID():
+    global serial_number
+    result = serial_number
+    serial_number += 1
+    return result
+
+def GenerateCandidateHandID():
+    global serial_number
+    result = serial_number
+    serial_number += 1
+    return result
+
+def GenerateCandidateSaliencyID():
     global serial_number
     result = serial_number
     serial_number += 1
@@ -450,12 +467,12 @@ class VisionPipeline(object):
 
         for cuser_id in self.cusers:
             face = self.cusers[cuser_id].Extrapolate(data.ts)
-            dx = data.pos.x - face.pos.x
-            dy = data.pos.y - face.pos.y
-            dz = data.pos.z - face.pos.z
+            dx = data.position.x - face.position.x
+            dy = data.position.y - face.position.y
+            dz = data.position.z - face.position.z
             d = sqrt(dx * dx + dy * dy + dz * dz)
             if (closest_cuser_id == 0) or (d < closest_dist):
-                closest_cuser_id = puser_id
+                closest_cuser_id = cuser_id
                 closest_dist = d
 
         if closest_dist < face_continuity_threshold_m:
@@ -474,7 +491,7 @@ class VisionPipeline(object):
             msg = FaceRequest()
             msg.session_id = self.session_id
             msg.camera_id = self.camera_id
-            msg.puser_id = closest_cuser_id
+            msg.cuser_id = closest_cuser_id
             msg.face_id = data.face_id
             msg.ts = data.ts
             msg.thumb = data.thumb
@@ -503,9 +520,9 @@ class VisionPipeline(object):
 
         for chand_id in self.chands:
             hand = self.chands[chand_id].Extrapolate(data.ts)
-            dx = data.pos.x - face.pos.x
-            dy = data.pos.y - face.pos.y
-            dz = data.pos.z - face.pos.z
+            dx = data.position.x - hand.position.x
+            dy = data.position.y - hand.position.y
+            dz = data.position.z - hand.position.z
             d = sqrt(dx * dx + dy * dy + dz * dz)
             if (closest_chand_id == 0) or (d < closest_dist):
                 closest_chand_id = chand_id
@@ -536,9 +553,9 @@ class VisionPipeline(object):
 
         for csaliency_id in self.csaliencies:
             saliency = self.csaliencies[csaliency_id].Extrapolate(data.ts)
-            dx = data.pos.x - face.pos.x
-            dy = data.pos.y - face.pos.y
-            dz = data.pos.z - face.pos.z
+            dx = data.position.x - hand.position.x
+            dy = data.position.y - hand.position.y
+            dz = data.position.z - hand.position.z
             d = sqrt(dx * dx + dy * dy + dz * dz)
             if (closest_chand_id == 0) or (d < closest_dist):
                 closest_chand_id = chand_id
@@ -580,23 +597,23 @@ class VisionPipeline(object):
         ts = rospy.get_rostime()
 
         # display users
-        for puser_id in self.pusers:
+        for cuser_id in self.cusers:
 
             # the face
-            face = self.pusers[puser_id].Extrapolate(ts)
-            x = int((0.5 + 0.5 * face.pos.x) * 640.0)
-            y = int((0.5 + 0.5 * face.pos.y) * 480.0)
+            face = self.cusers[cuser_id].Extrapolate(ts)
+            x = int((0.5 + 0.5 * face.position.x) * 640.0)
+            y = int((0.5 + 0.5 * face.position.y) * 480.0)
             cv2.circle(cvimage,(x,y),10,(0,255,255),2)
 
             # annotate with info if available
             label = ""
-            if self.pusers[puser_id].identity_confidence > 0.0:
-                label = self.pusers[puser_id].identity
-            if self.pusers[puser_id].age_confidence > 0.0:
+            if self.cusers[cuser_id].identity_confidence > 0.0:
+                label = self.cusers[cuser_id].identity
+            if self.cusers[cuser_id].age_confidence > 0.0:
                 if label != "":
                     label += ", "
-                label += str(int(self.pusers[puser_id].age)) + " y/o"
-            if self.pusers[puser_id].gender_confidence > 0.0:
+                label += str(int(self.cusers[cuser_id].age)) + " y/o"
+            if self.cusers[cuser_id].gender_confidence > 0.0:
                 if label != "":
                     label += ", "
                 if gender == 0:

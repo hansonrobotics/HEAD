@@ -12,7 +12,7 @@ from fusion1.msg import Sound,Speech
 
 
 # speech to text
-class SpeechToText(object):
+class SpeechToTextGoogle(object):
 
 
     def __init__(self):
@@ -26,8 +26,8 @@ class SpeechToText(object):
 
     def HandleConfig(self,data,level):
 
-        self.threshold = data.threshold
-        self.linger = data.linger
+        print "speech_to_text {}".format(data)
+        return data
 
         
     def HandleSound(self,data):
@@ -38,5 +38,5 @@ class SpeechToText(object):
 if __name__ == '__main__':
 
     rospy.init_node('speech_to_text')
-    node = SpeechToText()
+    node = SpeechToTextGoogle()
     rospy.spin()

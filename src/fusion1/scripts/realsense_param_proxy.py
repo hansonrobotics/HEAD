@@ -1,4 +1,8 @@
 #!/usr/bin/env python2.7
+
+# R2 Perception - Hanson Robotics Unified Perception System, v1.0
+# by Desmond Germans
+
 import os
 import rospy
 import time
@@ -11,14 +15,11 @@ class RealSenseParamProxy(object):
 
     def __init__(self):
 
-        rospy.wait_for_service("vision_pipeline")
         self.dynparam = dynamic_reconfigure.client.Client("vision_pipeline",timeout=30,config_callback=self.HandleConfig)
         self.param_pub = rospy.Publisher("realsense_param",RealSenseParam,queue_size=5)
 
 
     def HandleConfig(self,data):
-
-        print "realsense_param_proxy {}".format(data)
 
         msg = RealSenseParam()
         msg.ts = rospy.get_rostime()

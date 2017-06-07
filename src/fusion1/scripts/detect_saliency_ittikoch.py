@@ -10,6 +10,12 @@
 #     the raw salient points are published to 'raw_saliency' in the local namespace
 #     parameter updates are gathered from the 'vision_pipeline' parameter server
 
+# ITTI & KOCH: the algorithm is roughly based to the work of Itti & Koch in the early 2000s
+
+#     there are major artistic reductions for OpenCV2+Python+Hanson+Sophia context
+
+#     the solution can be viewed as a saliency-detecting CNN, but with handcrafted weights via traditional vision operations
+
 # the node should be called 'detect_saliency'
 
 import os
@@ -95,13 +101,6 @@ class DetectSaliency(object):
 
         if self.cur_ts == 0.0:
             return
-
-        # the algorithm is roughly based to the work of Itti & Koch in the early 2000s
-
-        # there are major artistic reductions for OpenCV2+Python+Hanson+Sophia context
-
-        # the solution can be viewed as a saliency-detecting CNN,
-        # but with handcrafted weights via traditional vision operations
 
         # convert ROS images to OpenCV and rescale to subx,suby, the working resolution
         # also, convert from BGR to YUV (which is more natural for vision tasks)

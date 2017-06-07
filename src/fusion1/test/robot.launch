@@ -56,9 +56,9 @@
 					<param name="width" value="320"/>
 					<param name="height" value="240"/>
 				</node>
-				<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+				<node name="detect_faces" type="detect_faces_haar.py" pkg="fusion1"/>
 				<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
+				<node name="detect_saliency" type="detect_saliency_ittikoch.py" pkg="fusion1"/>
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
 			</group>-->
@@ -77,15 +77,15 @@
 					<param name="width" value="320"/>
 					<param name="height" value="240"/>
 				</node>
-				<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+				<node name="detect_faces" type="detect_faces_haar.py" pkg="fusion1"/>
 				<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
+				<node name="detect_saliency" type="detect_saliency_ittikoch.py" pkg="fusion1"/>
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
 			</group>-->
 
 			<!-- RealSense camera -->
-			<!--<group ns="realsense">
+			<group ns="realsense">
 				<param name="fovy" value="1.0"/>
 				<param name="aspect" value="1.33333"/>
 				<param name="camera_rate" value="10.0"/>
@@ -95,10 +95,10 @@
 				<node name="realsense_param_proxy" type="realsense_param_proxy.py" pkg="fusion1"/>
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
-			</group>-->
+			</group>
 
 			<!-- wideangle camera -->
-			<group ns="wideangle">
+			<!--<group ns="wideangle">
 				<param name="fovy" value="1.0"/>
 				<param name="aspect" value="1.33333"/>
 				<param name="camera_rate" value="10.0"/>
@@ -111,19 +111,19 @@
 					<param name="width" value="640"/>
 					<param name="height" value="480"/>
 				</node>
-				<node name="detect_faces" type="detect_faces.py" pkg="fusion1"/>
+				<node name="detect_faces" type="detect_faces_haar.py" pkg="fusion1"/>
 				<node name="detect_hands" type="detect_hands.py" pkg="fusion1"/>
-				<node name="detect_saliency" type="detect_saliency.py" pkg="fusion1"/>
+				<node name="detect_saliency" type="detect_saliency_ittikoch.py" pkg="fusion1"/>
 				<node name="face_analysis" type="face_analysis.py" pkg="fusion1"/>
 				<node name="vision_pipeline" type="vision_pipeline.py" pkg="fusion1"/>
-			</group>
+			</group>-->
 
 			<!-- Acoustic Magic microphone array -->
 			<!--<group ns="acousticmagic">
 				<param name="threshold" value="0.3"/>
 				<param name="linger" value="0.2"/>
-				<node name="detect_sound" type="detect_sound.py" pkg="fusion1"/>
-				<node name="speech_to_text" type="speech_to_text.py" pkg="fusion1"/>
+				<node name="detect_sound_hyst" type="detect_sound.py" pkg="fusion1"/>
+				<node name="speech_to_text_google" type="speech_to_text.py" pkg="fusion1"/>
 				<node name="hearing_pipeline" type="hearing_pipeline.py" pkg="fusion1"/>
 			</group>-->
 
@@ -131,8 +131,8 @@
 			<!--<group ns="handheld">
 				<param name="threshold" value="0.3"/>
 				<param name="linger" value="0.2"/>
-				<node name="detect_sound" type="detect_sound.py" pkg="fusion1"/>
-				<node name="speech_to_text" type="speech_to_text.py" pkg="fusion1"/>
+				<node name="detect_sound_hyst" type="detect_sound.py" pkg="fusion1"/>
+				<node name="speech_to_text_google" type="speech_to_text.py" pkg="fusion1"/>
 				<node name="hearing_pipeline" type="hearing_pipeline.py" pkg="fusion1"/>
 			</group>-->
 

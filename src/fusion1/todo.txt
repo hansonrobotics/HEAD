@@ -18,32 +18,38 @@ General TODO:
 * disable/enable rviz
 * make sure camera FOV works correctly
 * make face height global parameter
+* hook up RealSense hands
+* access ROS parameters in the RealSense code (with messages, dynamic reconfigure might still be too far off)
++ make all nodes properly listen to dynamic reconfigure
++ documentation
 + fuse observations (cusers between pipelines, chands between pipelines, saliency points between pipelines, cusers+saliency points, hands+saliency points, sounds+cusers, sounds+hands, sounds+salient points, speech+cusers, speech+salient points)
 + output established users, hands, salient points and speech
 - maintain global CSV file with parameters for stored faces (timestamp, anything already gathered from realsense, etc.)
-- refactor room luminance for all cameras
-- make wiki for the system
+- refactor room luminance for all cameras (maybe add to saliency code)
+- detect_faces: Haar cascade -> ROS parameter
+- detect_saliency: also output the actual feature it triggered on
 
-RealSense leftover TODO:
-
-+ hook up RealSense hands
-+ implement saliency for RealSense, or use blob detection that comes with RealSense
-+ access ROS parameters in the RealSense code (with messages, dynamic reconfigure might still be too far off)
-- solve timing problem between Linux and Windows (first send ROS message to RealSense, wait for answer, the time difference divided by 2 is the general delay between Windows and Linux), this might not be necessary
 
 Visualization TODO:
 
 + visualize users in rviz
 + visualize saliency in rviz
 
-Audio leftover TODO:
+
+Back home:
 
 + output sounds and speech to directories and CSV
 + hook up speech and audio localization from both microphones
 - audio detection and streaming, refactor audio_stream and audio_sensor
 - google speech, continuous and regular, refactor google_speech
 - dragon speech, continuous and regular, append to RealSense
++ implement saliency for RealSense (needs video rescale and faster way to do the OpenCV algorithms)
 
+
+Descoped:
+
+- use dynamic reconfigure parameters for all RealSense configuration stuff (i.e. reduce status window on Windows side, join with removing the old topics and features later on)
+- solve timing problem between Linux and Windows (first send ROS message to RealSense, wait for answer, the time difference divided by 2 is the general delay between Windows and Linux), this might not be necessary
 
 
 Towards OpenCog:
@@ -76,3 +82,9 @@ Towards OpenCog:
 		confidence of the translation (0..1)
 		localization of where the speech came from (angle, maybe quaternion)
 		confidence of the location
+
+
+Face: 28558a3a6ce84fb5228c6afc3566f32b
+Hand: 6253b9f7372c469c55267f148fc989c3
+Saliency: d8d3b123b8387b96db653a2e592d4e65
+RealSenseParam: 391bf7fa8780bd9d4a2254dc9194b8b0
