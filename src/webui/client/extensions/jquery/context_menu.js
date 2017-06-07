@@ -25,6 +25,9 @@ $.fn.contextMenu = function(settings) {
                         settings.menuSelected.call(this, $invokedOn, $selectedMenu, {left: left, top: top})
                     })
 
+            if (typeof settings.menuOpened === 'function')
+                settings.menuOpened.call(this, $menu)
+
             $('body').trigger('click').on('click contextmenu', function removeMenu() {
                 $menu.remove()
                 $('body').off('click contextmenu', removeMenu)

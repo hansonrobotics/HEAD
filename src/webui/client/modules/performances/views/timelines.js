@@ -198,6 +198,13 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!this.readonly)
                     this.ui.timelineContainer.contextMenu({
                         menuSelector: this.ui.timelineContextMenu,
+                        menuOpened: function($menu) {
+                            let $paste = $menu.find('[data-action="paste"]').closest('li')
+                            if (app.state.get('node_clipboard'))
+                                $paste.removeClass('disabled')
+                            else
+                                $paste.addClass('disabled')
+                        },
                         menuSelected: function(invokedOn, selectedMenu, position) {
                             let container = self.ui.timelineContainer,
                                 offset = ($(container).scrollLeft() +
