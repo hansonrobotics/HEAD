@@ -401,3 +401,15 @@ class CommandWrappers:
     def getAnimationLength(req):
         return srv.GetAnimationLengthResponse(api.getAnimationLength(req.animation))
 
+    @service("~get_animation_length", srv.GetAnimationLength)
+    def getAnimationLength(req):
+        return srv.GetAnimationLengthResponse(api.getAnimationLength(req.animation))
+
+    @publish_live("~get_current_frame", msg.CurrentFrame)
+    def getCurrentFrame():
+        _msg = msg.CurrentFrame()
+        data = api.getCurrentFrame()
+        if data is not None:
+            _msg.name = data[0]
+            _msg.frame = data[1]
+        return _msg
