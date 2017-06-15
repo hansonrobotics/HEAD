@@ -215,7 +215,7 @@ define(['jquery', 'roslib', './utilities'], function ($, ROSLIB, utilities) {
          * @param success
          */
         getAvailableEmotionStates: function (success) {
-            success(["happy.001", "happy", "surprised", "sad", "irritated", "happy.002", "fear", "confused", "comprehending", "angry", "amused"])
+            success(["happy.001", "happy", "surprised", "sad", "irritated", "happy.002", "fear", "confused", "comprehending", "angry"])
             // api.topics.available_emotion_states.unsubscribe();
             // api.topics.available_emotion_states.removeAllListeners();
             // api.topics.available_emotion_states.subscribe(function (message) {
