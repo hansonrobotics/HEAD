@@ -61,6 +61,7 @@ add_message_files(
   Visemes.msg
   BlinkCycle.msg
   SaccadeCycle.msg
+  CurrentFrame.msg
 )
 
 ## Generate services in the 'srv' folder
