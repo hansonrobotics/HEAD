@@ -101,9 +101,12 @@ define(['backbone', 'lib/api', './node_config'], function(Backbone, api, NodeCon
 
                 if (param['edit_method'] && param['edit_method']['enum'].length > 0) {
                     property.enum = []
+                    property.options = {enum_titles: []}
+                    property.type = 'select'
 
                     $.each(param['edit_method']['enum'], function(i, attr) {
                         property.enum.push(attr.value)
+                        property.options.enum_titles.push(attr.description)
                     })
                 }
 

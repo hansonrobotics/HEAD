@@ -52,8 +52,8 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 this.editor.destroy()
             },
             setConfig: function() {
-                let all = this.schemaModel.getAllKeys()
-                let self = this,
+                let all = this.schemaModel.getAllKeys(),
+                    self = this,
                     config = this.model.toJSON(),
                     hiddenKeys = _.difference(all, _.keys(config))
 
@@ -122,7 +122,7 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                     attributes = {}
 
                 _.each(values, function(val, key) {
-                    if (val.constructor === Object)
+                    if (val && val.constructor === Object)
                         _.extend(attributes, self.getAttributes(val))
                     else
                         attributes[key] = val
