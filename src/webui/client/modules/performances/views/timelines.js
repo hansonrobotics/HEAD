@@ -273,7 +273,12 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             registerShortcuts: function() {
                 let self = this
-                if (!this.readonly) {
+                if (this.readonly) {
+                    Mousetrap.bind('ctrl+e', function(e) {
+                        self.layoutView.editCurrent()
+                        return false
+                    })
+                } else {
                     Mousetrap.bind('ctrl+a', function() {
                         self.toggleNodes()
                         return false
@@ -293,7 +298,17 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     })
 
                     Mousetrap.bind('ctrl+d', function(e) {
-                        self.deselectNodes()
+                        self.done()
+                        return false
+                    })
+
+                    Mousetrap.bind('ctrl+p', function(e) {
+                        self.toggleAutoPause()
+                        return false
+                    })
+
+                    Mousetrap.bind('ctrl+l', function(e) {
+                        self.loop()
                         return false
                     })
 
@@ -328,7 +343,9 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
             },
             unregisterShortcuts: function() {
-                if (!this.readonly) {
+                if (this.readonly) {
+                    Mousetrap.unbind('ctrl+e')
+                } else {
                     Mousetrap.unbind('ctrl+a')
                     Mousetrap.unbind('ctrl+c')
                     Mousetrap.unbind('ctrl+v')
