@@ -198,14 +198,30 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (!this.readonly)
                     this.ui.timelineContainer.contextMenu({
                         menuSelector: this.ui.timelineContextMenu,
+                        menuOpened: function($menu) {
+                            let $paste = $menu.find('[data-action="paste"]').closest('li')
+                            if (app.state.get('node_clipboard'))
+                                $paste.removeClass('disabled')
+                            else
+                                $paste.addClass('disabled')
+                        },
                         menuSelected: function(invokedOn, selectedMenu, position) {
+                            let container = self.ui.timelineContainer,
+                                offset = ($(container).scrollLeft() +
+                                    position.left - $(container).offset().left) / self.config.pxPerSec
+
                             switch ($(selectedMenu).data('action')) {
                                 case 'paste':
-                                    let container = self.ui.timelineContainer,
-                                        offset = ($(container).scrollLeft() +
-                                            position.left - $(container).offset().left) / self.config.pxPerSec
-
-                                    this.pasteSelectedNodes(offset)
+                                    self.pasteSelectedNodes(offset)
+                                    break
+                                case 'select_all':
+                                    self.selectAllNodes()
+                                    break
+                                case 'select_all_left':
+                                    self.selectAllNodesLeft(offset)
+                                    break
+                                case 'select_all_right':
+                                    self.selectAllNodesRight(offset)
                                     break
                             }
                         }
@@ -458,16 +474,20 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 $(el, this.ui.timelineContainer).contextMenu({
                     menuSelector: this.ui.nodeContextMenu,
                     menuSelected: function(invokedOn, selectedMenu) {
+                        if (!self.selectedNodes.length || self.selectedNodes.indexOf(node) === -1) {
+                            self.deselectNodes()
+                            self.selectNode(node)
+                        }
+
                         switch ($(selectedMenu).data('action')) {
                             case 'copy':
-                                if (self.selectedNodes.length && self.selectedNodes.indexOf(node) > -1) {
-                                    self.copySelectedNodes()
-                                } else {
-                                    let json = node.toJSON()
-                                    json['start_time'] = 0
-                                    delete json['id']
-                                    app.state.set('node_clipboard', json)
-                                }
+                                self.copySelectedNodes()
+                                break
+                            case 'invert':
+                                self.invertSelection()
+                                break
+                            case 'delete':
+                                self.deleteSelected()
                                 break
                         }
                     }
@@ -529,6 +549,27 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         this.initResizable(el)
                 }
             },
+            invertSelection: function() {
+                let self = this,
+                    selection = []
+
+                this.model.nodes.each(function(node) {
+                    if (!_.includes(self.selectedNodes, node))
+                        selection.push(node)
+                })
+
+                this.deselectNodes()
+                for (let node of selection)
+                    this.selectNode(node)
+            },
+            deleteSelected: function() {
+                for (let node of this.selectedNodes) {
+                    this.model.nodes.remove(node)
+                    node.destroy()
+                }
+
+                this.deselectNodes()
+            },
             pasteSelectedNodes: function(offset) {
                 let nodes = app.state.get('node_clipboard')
 
@@ -564,6 +605,28 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 }
 
                 return nodes
+            },
+            selectAllNodes: function() {
+                let self = this
+                this.model.nodes.each(function(node) {
+                    self.selectNode(node)
+                })
+            },
+            selectAllNodesLeft: function(offset) {
+                let self = this
+                this.deselectNodes()
+                this.model.nodes.each(function(node) {
+                    if (node.get('start_time') < offset)
+                        self.selectNode(node)
+                })
+            },
+            selectAllNodesRight: function(offset) {
+                let self = this
+                this.deselectNodes()
+                this.model.nodes.each(function(node) {
+                    if (node.get('start_time') > offset)
+                        self.selectNode(node)
+                })
             },
             selectNode: function(node) {
                 if (this.selectedNodes.indexOf(node) === -1)

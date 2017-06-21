@@ -16,6 +16,7 @@ $.fn.contextMenu = function(settings) {
                         left: left,
                         top: top
                     })
+                    .addClass('app-context-menu')
                     .off('click')
                     .on('click', 'a', function(e) {
                         let $invokedOn = $menu.data("invokedOn")
@@ -23,6 +24,9 @@ $.fn.contextMenu = function(settings) {
                         $menu.remove()
                         settings.menuSelected.call(this, $invokedOn, $selectedMenu, {left: left, top: top})
                     })
+
+            if (typeof settings.menuOpened === 'function')
+                settings.menuOpened.call(this, $menu)
 
             $('body').trigger('click').on('click contextmenu', function removeMenu() {
                 $menu.remove()

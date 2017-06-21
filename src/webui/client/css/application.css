@@ -350,3 +350,8 @@ span.select2-selection.select2-selection--single {
 .modal-dialog {
     margin-top: 70px;
 }
+
+.app-context-menu {
+    border: 1px solid #182933;
+    box-shadow: 2px 2px 2px 0 #182933;
+}
