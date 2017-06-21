@@ -685,20 +685,22 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     begin = node.get('start_time'),
                     end = begin + node.get('duration'),
                     available = false,
-                    el = $(node.get('el'))
+                    el = $(node.get('el')),
+                    nodeType = node.get('name'),
+                    nodeContainers = this.getTimelines(nodeType)
 
                 if (!el.length) {
                     self.createNodeEl(node)
                     el = $(node.get('el'))
                 }
 
-                $('.app-timeline-nodes', self.ui.timelineContainer).each(function() {
+                nodeContainers.each(function() {
                     available = true
 
                     $('.app-node', this).each(function() {
                         let model = self.model.nodes.findWhere({'el': this})
 
-                        if (model && model != node) {
+                        if (model && model !== node) {
                             let compareBegin = model.get('start_time'),
                                 compareEnd = compareBegin + model.get('duration')
 
@@ -716,12 +718,28 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
 
                 if (!available) {
-                    self.addTimeline()
-                    $('.app-timeline-nodes:last-child').append(el)
+                    self.addTimeline(nodeType)
+                    this.getTimelines(nodeType).last().append(el)
                 }
+
+                this.removeEmptyTimelines()
             },
-            addTimeline: function() {
-                this.ui.timelineContainer.append($('<div>').addClass('app-timeline-nodes'))
+            getTimelines: function(nodeType) {
+                return $('.app-timeline-nodes[data-type="' + nodeType + '"]', this.ui.timelineContainer)
+            },
+            addTimeline: function(nodeType) {
+                let nodeContainer = $('<div>').addClass('app-timeline-nodes')
+
+                if (nodeType) {
+                    nodeContainer.attr('data-type', nodeType)
+                    let last = this.ui.timelineContainer.find('.app-timeline-nodes[data-type="' + nodeType + '"]').last()
+                    if (last.length) {
+                        last.after(nodeContainer)
+                        return
+                    }
+                }
+
+                this.ui.timelineContainer.append(nodeContainer)
             },
             getTimelineWidth: function() {
                 return this.model.getDuration() * this.config.pxPerSec
