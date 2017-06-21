@@ -1,6 +1,7 @@
 define(['marionette', './controller'], function (Marionette, controller) {
     var Router = Marionette.AppRouter.extend({
         'appRoutes': {
+            'status': 'status',
             'admin': 'system',
             'admin/monitor': 'system',
             'admin/monitor/motors': 'motors',
