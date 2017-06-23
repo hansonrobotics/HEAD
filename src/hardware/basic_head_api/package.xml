@@ -47,6 +47,7 @@
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
   <run_depend>dynamic_reconfigure</run_depend>
+  <run_depend>ros_pololu</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

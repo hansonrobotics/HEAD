@@ -23,7 +23,7 @@ import time
 import logging
 import rospy
 from pau2motors.msg import pau
-from Pau2Motors import Pau2Motors
+from pau2motors.Pau2Motors import Pau2Motors
 from dynamic_reconfigure.server import Server
 from pau2motors.cfg import Pau2motorsConfig
 
