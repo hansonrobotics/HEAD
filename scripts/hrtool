@@ -475,6 +475,7 @@ install_other_deps() {
 
     # For chatbot
     $SUDO pip2 install num2words
+    $SUDO pip2 install Jinja2
 
     # For Chinese tts
     $SUDO pip2 install ${PIP_OPTS} pinyin==0.2.5
