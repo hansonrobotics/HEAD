@@ -6,6 +6,21 @@ import logging
 
 logger = logging.getLogger('hr.chatbot.utils')
 
+OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
+CITY_LIST_FILE = os.environ.get('CITY_LIST_FILE')
+
+cities = None
+
+def query_city_info(name):
+    global cities
+    if cities is None:
+        if CITY_LIST_FILE:
+            with open(CITY_LIST_FILE) as f:
+                cities = json.load(f)
+    for city in cities:
+        if name.title() in city['name']:
+            return city
+
 def str_cleanup(text):
     if text:
         text = text.strip()
@@ -63,9 +78,23 @@ def get_location():
 
 def get_weather(city):
     if city:
-        OPENWEATHERAPPID = os.environ.get('OPENWEATHERAPPID')
         try:
-            response = requests.get('http://api.openweathermap.org/data/2.5/weather', timeout=5, params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+            response = requests.get(
+                'http://api.openweathermap.org/data/2.5/weather',
+                timeout=5,
+                params={'q': city, 'appid': OPENWEATHERAPPID}).json()
+        except Exception as ex:
+            logger.error(ex)
+            return
+        return response
+
+def get_weather_by_id(city_id):
+    if city_id:
+        try:
+            response = requests.get(
+                'http://api.openweathermap.org/data/2.5/weather',
+                timeout=5,
+                params={'id': city_id, 'appid': OPENWEATHERAPPID}).json()
         except Exception as ex:
             logger.error(ex)
             return
