@@ -471,7 +471,7 @@ def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs
                     response.get('trace') or 'No trace'))
                 break
 
-    if re.match('.*{.*}.*', answer):
+    if answer and re.match('.*{.*}.*', answer):
         logger.info("Template answer {}".format(answer))
         try:
             answer = render(answer)
