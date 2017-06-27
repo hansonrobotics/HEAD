@@ -477,7 +477,9 @@ def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs
             answer = render(answer)
             response['text'] = answer
         except Exception as ex:
-            logger.error(ex)
+            answer = ''
+            response['text'] = ''
+            logger.error("Error in rendering template, {}".format(ex))
 
     dummy_character = get_character('dummy', lang)
     if not answer and dummy_character:

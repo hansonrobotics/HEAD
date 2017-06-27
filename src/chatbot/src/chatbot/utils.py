@@ -3,6 +3,7 @@ import os
 import requests
 import subprocess
 import logging
+import json
 
 logger = logging.getLogger('hr.chatbot.utils')
 
