@@ -475,6 +475,7 @@ def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs
         logger.info("Template answer {}".format(answer))
         try:
             answer = render(answer)
+            response['text'] = answer
         except Exception as ex:
             logger.error(ex)
 
