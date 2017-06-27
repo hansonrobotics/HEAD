@@ -188,14 +188,16 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             updateTimelineOrder: function(success) {
                 if (this.currentPerformance) {
                     let self = this,
-                        timelines = new PerformanceCollection()
+                        timelines = []
+
                     this.queueCollection.each(function(item, i) {
                         let p = item.get('performance')
                         p.set('name', (i + 1).toString())
-                        timelines.push(p)
+                        timelines.push(p.toJSON())
+                        p.unset('previous_id')
                     })
 
-                    this.currentPerformance.save({'timelines': timelines.toJSON()}, {
+                    this.currentPerformance.save({'timelines': timelines}, {
                         success: function() {
                             if (!self.editting)
                                 self.refreshCurrentPerformance()
@@ -421,7 +423,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     allowEdit: this.allowEdit
                 }, options))
 
-                this.listenTo(this.timelinesView, 'close', function() {
+                this.listenTo(this.timelinesView, 'edit:done', function() {
                     this.refreshCurrentPerformance()
                 })
 

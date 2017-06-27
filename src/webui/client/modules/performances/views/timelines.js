@@ -91,7 +91,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             done: function() {
                 let self = this
                 this.layoutView.changeCheck(function() {
-                    self.close()
+                    self.doneEditing()
                 })
             },
             backup: function() {
@@ -104,8 +104,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.model.set(this.performanceBackup)
                 }
             },
-            close: function() {
-                this.trigger('close')
+            doneEditing: function() {
+                this.trigger('edit:done')
             },
             editCurrent: function() {
                 this.layoutView.editCurrent()
