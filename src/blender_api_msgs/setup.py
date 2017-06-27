@@ -3,7 +3,7 @@
 from setuptools import setup, find_packages
 setup(
     name = "roscom-blender-api",
-    version = "0.2",
+    version = "0.3.0",
     package_dir = {'': 'src',},
     packages = find_packages('src'),
     entry_points = {
