@@ -16,7 +16,7 @@ def render_weather(t):
         weather_prop = parse_weather(weather)
         desc = weather_prop['weather']
         temperature = weather_prop['temperature']
-        return t.render(weather_desc=desc, temperature=temperature)
+        return t.render(weatherdesc=desc, temperature=temperature, location=city)
 
 def render_location(t):
     location = get_location()
