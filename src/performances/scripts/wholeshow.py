@@ -20,6 +20,7 @@ import dynamic_reconfigure.client
 from chatbot.msg import ChatMessage
 from dynamic_reconfigure.server import Server
 from performances.cfg import WholeshowConfig
+from performances.nodes import pause
 logger = logging.getLogger('hr.performance.wholeshow')
 rospack = rospkg.RosPack()
 
@@ -221,6 +222,12 @@ class WholeShow(HierarchicalMachine):
             on = False
             self.performance_runner(random.choice(analysis_performances))
 
+        # Check if performance is not waiting for same keyword while its running
+        if self.state == 'performing' and self.config['chat_during_performance']:
+            keywords = rospy.get_param('/performances/keywords_listening', False)
+            # Don't pass the keywords if pause node waits for same keyword (i.e resume performance).
+            if keywords and pause.event_matched(keywords, msg.utterance):
+                on = False
         if on:
             self.speech_pub.publish(msg)
 

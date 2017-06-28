@@ -99,12 +99,13 @@ app.post('/expressions/update/:name', function(req, res) {
 app.get('/attention_regions/:name', function(req, res) {
     let regions = yamlIO.readFile(path.join(argv.config, req.params['name'], 'attention_regions.yaml') || [])
     // TODO: remove when configs are updated
-    if ('attention_regions' in regions) regions = regions['attention_regions']
+    if ('regions' in regions) regions = regions['regions']
     res.json(regions)
 })
 
 app.post('/attention_regions/:name', function(req, res) {
-    res.json({error: !yamlIO.writeFile(path.join(argv.config, req.params['name'], 'attention_regions.yaml'), req.body)})
+    ros.updateRegions(req.params['name'], req.body)
+    res.json({error: !yamlIO.writeFile(path.join(argv.config, req.params['name'], 'attention_regions.yaml'), {regions: req.body})})
 })
 
 app.post('/animations/update/:name', function(req, res) {
