@@ -121,7 +121,7 @@ if [[ -z $NAME ]]; then
     if [[ $AUTONAME == 1 ]]; then
         info "Discovering robot name"
         while [[ -z $NAME ]]; do
-            NAME=$($BASEDIR/discover.py --dirname $BASEDIR/../src/robots_config|grep "robot name"|cut -d: -f2)
+            NAME=$($BASEDIR/discover.py --dirname $BASEDIR/robots_config |grep "robot name"|cut -d: -f2)
             if [[ -z $NAME ]]; then
                 error "Can't discover robot name"
             fi
@@ -186,7 +186,7 @@ fi
 
 export ROS_PYTHON_LOG_CONFIG_FILE="$BASEDIR/python_logging.conf"
 export ROSCONSOLE_FORMAT='[${logger}][${severity}] [${time}]: ${message}'
-export ROBOTS_CONFIG_DIR=$HR_WORKSPACE/HEAD/src/robots_config
+export ROBOTS_CONFIG_DIR=$BASEDIR/robots_config
 export HR_CHARACTER_PATH=$HR_WORKSPACE/HEAD/src/chatbot/scripts/characters
 export HR_CHATBOT_REVISION=$(git -C $HR_WORKSPACE/HEAD log -1 --format='%h' 2>/dev/null)
 export LOCATION_SERVER_HOST=52.41.5.107
