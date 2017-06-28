@@ -299,3 +299,8 @@ class EvaAPI(RigAPI):
             frames = 1+frame_range[1]-frame_range[0]
             return frames / bpy.context.scene.render.fps
 
+    def getCurrentFrame(self):
+        if bpy.context.object.animation_data.action is not None:
+            name = bpy.context.object.animation_data.action.name
+            frame = bpy.context.scene.frame_current
+            return (name, frame)
