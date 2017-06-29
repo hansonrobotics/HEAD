@@ -1,13 +1,22 @@
 import os
 from jinja2 import Template, Environment, meta
 from renderers import render_weather, render_location
+import logging
+
+logger = logging.getLogger('hr.chatbot.server.template')
 
 def render(string):
     t = Template(string)
     func = get_render_func(string)
     if func is not None:
-        rendered_text = func(t)
-        return rendered_text
+        try:
+            return func(t)
+        except Exception as ex:
+            logger.error("Rendering error, {}".format(ex))
+            return t.render()
+    else:
+        logger.error("Render is not found for template {}".format(string))
+        return t.render()
 
 def get_render_func(string):
     func = None
