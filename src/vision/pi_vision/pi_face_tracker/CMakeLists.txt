@@ -86,6 +86,12 @@ install(PROGRAMS
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+install(DIRECTORY
+  params
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+
 find_package(catkin COMPONENTS rostest)
 add_rostest(test/test_pi_face_tracker.test)
 

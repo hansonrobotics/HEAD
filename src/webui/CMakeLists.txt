@@ -153,6 +153,9 @@ catkin_package(
 install(PROGRAMS
   scripts/node_configuration.py
   scripts/logging_controller.py
+  scripts/chatbot_controller.py
+  scripts/motors_controller.py
+  scripts/dxl_controller.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
