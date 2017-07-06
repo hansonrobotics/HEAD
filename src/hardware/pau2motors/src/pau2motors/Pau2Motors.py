@@ -10,5 +10,8 @@ class Pau2Motors:
     motor_commanders = []
 
     for motor_entry in motors_yaml:
-      motor_commanders.append(MotorCmder(motor_entry))
+      try:
+        motor_commanders.append(MotorCmder(motor_entry))
+      except:
+        print "Failed to create motor Entry {}".format(motor_entry)
     self.motor_commanders = motor_commanders
