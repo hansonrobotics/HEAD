@@ -1,26 +1,26 @@
-var ROSLIB = require('roslib'),
+let ROSLIB = require('roslib'),
     url = 'ws://localhost:9090',
     ros = new ROSLIB.Ros({
         url: url
-    });
+    })
 
-ros.on('connection', function () {
-    console.log('Connected to websocket server.');
-});
+ros.on('connection', function() {
+    console.log('Connected to websocket server.')
+})
 
-ros.on('error', function (error) {
-    console.log('Error connecting to websocket server: \n', error);
+ros.on('error', function(error) {
+    console.log('Error connecting to websocket server: \n', error)
     console.log('Retrying in 2 seconds')
-    setTimeout(function () {
-        ros.connect(url);
-    }, 2000);
-});
+    setTimeout(function() {
+        ros.connect(url)
+    }, 2000)
+})
 
-ros.on('close', function () {
-    console.log('Connection to websocket server closed.');
-});
+ros.on('close', function() {
+    console.log('Connection to websocket server closed.')
+})
 
-var self = module.exports = {
+let self = module.exports = {
     instance: ros,
     services: {
         updateMotors: new ROSLIB.Service({
@@ -38,6 +38,56 @@ var self = module.exports = {
                 ros: ros,
                 name: '/performances/set_properties',
                 serviceType: 'performances/SetProperties'
+            }),
+            load: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/load',
+                messageType: 'performances/Load'
+            }),
+            load_performance: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/load_performance',
+                messageType: 'performances/LoadPerformance'
+            }),
+            unload: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/unload',
+                messageType: 'std_srvs/Trigger'
+            }),
+            current: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/current',
+                messageType: 'performances/Current'
+            }),
+            run: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/run',
+                messageType: 'performances/Run'
+            }),
+            run_by_name: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/run_by_name',
+                messageType: 'performances/RunByName'
+            }),
+            run_full_performance: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/run_full_performance',
+                messageType: 'performances/RunByName'
+            }),
+            stop: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/stop',
+                messageType: 'performances/Stop'
+            }),
+            pause: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/pause',
+                messageType: 'performances/Pause'
+            }),
+            resume: new ROSLIB.Service({
+                ros: ros,
+                name: '/performances/resume',
+                messageType: 'performances/Resume'
             })
         },
         updateExpressions: new ROSLIB.Service({
@@ -53,41 +103,48 @@ var self = module.exports = {
             messageType: 'pi_face_tracker/Faces'
         })
     },
-    updateMotors: function (robot_name, motors) {
+    updateMotors: function(robot_name, motors) {
         this.services.updateMotors.callService({
             robot_name: robot_name,
             motors: JSON.stringify(motors)
-        }, function (res) {
-            console.log(res);
-        });
+        })
     },
-    lookAt: function (point) {
+    lookAt: function(point) {
         this.topics.lookAt.publish(new ROSLIB.Message({
             faces: [{
                 id: 1,
                 point: point,
                 attention: 0.99
             }]
-        }));
+        }))
     },
     performances: {
-        reloadProperties: function () {
-            self.services.performances.reload_properties.callService();
+        reloadProperties: function(options) {
+            options = options || {}
+            self.services.performances.reload_properties.callService({},
+                function() {
+                    if (options.success) options.success()
+                }, function() {
+                    if (options.error) options.error()
+                })
         },
-        setProperties: function (id, properties, options) {
+        setProperties: function(id, properties, options) {
+            options = options || {}
             self.services.performances.set_properties.callService({
                 id: id,
                 properties: JSON.stringify(properties)
-            }, function (response) {
-                if (options.success) options.success(response);
-            });
+            }, function(response) {
+                if (options.success) options.success(response)
+            }, function() {
+                if (options.error) options.error()
+            })
         }
     },
-    updateExpressions: function (robot_name) {
+    updateExpressions: function(robot_name) {
         this.services.updateExpressions.callService({
             robot_name: robot_name,
-        }, function (res) {
-            console.log(res);
-        });
+        }, function(res) {
+            console.log(res)
+        })
     },
-};
+}

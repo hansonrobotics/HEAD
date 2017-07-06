@@ -228,6 +228,22 @@ app.post('/performance/variables/:path(*)?', function(req, res) {
     res.json(writePerformanceProperties(req.params['path'], {variables: req.body}))
 })
 
+// recursively require and use all routers
+let routers = require('./routers'),
+    requireRouters = function(routers) {
+        _.forIn(routers, function(val, key) {
+            switch (typeof val) {
+                case 'function':
+                    app.use(path.join('/api', key), val)
+                    break
+                case 'object':
+                    requireRouters(val)
+                    break
+            }
+        })
+    }
+requireRouters(routers)
+
 if (argv.ssl) {
     let privateKey = fs.readFileSync(path.join(__dirname, 'ssl', 'key.pem')),
         certificate = fs.readFileSync(path.join(__dirname, 'ssl', 'cert.crt'))
