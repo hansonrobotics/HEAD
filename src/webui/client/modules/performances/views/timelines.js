@@ -1040,7 +1040,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         self.$el.fadeOut(null, function() {
                             self.model.destroy()
 
-                            if (self.layoutView.queueCollection.length)
+                            if (self.queue.length)
                                 self.layoutView.editCurrent()
                             else
                                 self.layoutView.refreshCurrentPerformance()
