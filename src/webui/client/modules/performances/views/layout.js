@@ -183,10 +183,16 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     let item = this.queueCollection.at(i),
                         timeline = timelines.at(i)
 
-                    if (item)
+                    if (item) {
                         item.get('performance').set(timeline.toJSON())
-                    else
+
+                    } else
                         this.queueCollection.add(new QueueItem({performance: timeline}))
+                }
+
+                if (this.editing) {
+                    this.timelinesView.changed = false
+                    this.highlight(this.timelinesView.model)
                 }
             },
             updateTimelineOrder: function(success) {
@@ -204,6 +210,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         success: function() {
                             if (!self.editing)
                                 self.refreshCurrentPerformance()
+
                             if (success) success()
                         }
                     })
@@ -370,7 +377,11 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 this.queueCollection.reset()
             },
             highlight: function(item) {
+                if (item instanceof Performance)
+                    item = this.queueCollection.find({performance: item})
+
                 let el = this.ui.queueContainer.find('[data-model-cid=' + item.cid + ']')
+
                 if (!el.hasClass('active')) {
                     this.ui.queueContainer.find('.app-performance').removeClass('active')
                     el.addClass('active')
