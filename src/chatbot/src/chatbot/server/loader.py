@@ -54,10 +54,10 @@ def load_characters(character_path):
                 characters.extend(
                     AIMLCharacterLoader.load(os.path.join(path, yaml_file)))
 
-    for c in characters:
-        if c.type == TYPE_CS:
-            c.set_host(CS_HOST)
-            c.set_port(CS_PORT)
+        for c in characters:
+            if c.type == TYPE_CS:
+                c.set_host(CS_HOST)
+                c.set_port(CS_PORT)
 
     logger.info("Add characters \n{}".format(pprint.pformat(characters)))
     return characters
