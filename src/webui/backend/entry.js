@@ -9,7 +9,6 @@ let express = require('express'),
     bodyParser = require('body-parser'),
     mkdirp = require('mkdirp'),
     PythonShell = require('python-shell'),
-    ros = require('./lib/ros'),
     _ = require('lodash'),
     shared_performances_folder = 'shared',
     argv = require('yargs').options({
@@ -34,7 +33,8 @@ let express = require('express'),
             describe: 'Enable ssl',
             type: 'boolean'
         }
-    }).usage('Usage: $0 [options]').help('h').alias('h', 'help').argv
+    }).usage('Usage: $0 [options]').help('h').alias('h', 'help').argv,
+    ros = require('./lib/ros')(argv.robot)
 
 app.use(bodyParser.urlencoded({extended: false, limit: '5mb'}))
 app.use(bodyParser.json({limit: '5mb'}))
@@ -76,6 +76,11 @@ app.get('/monitor/status', function(req, res) {
 
 app.get('/motors/get/:name', function(req, res) {
     res.json({motors: yamlIO.readFile(path.join(argv.config, req.params['name'], 'motors_settings.yaml')) || []})
+})
+
+app.get('/say/:text', function(req, res) {
+    ros.say(req.params['text']);
+    res.json({result: true})
 })
 
 app.post('/motors/update/:name', function(req, res) {
