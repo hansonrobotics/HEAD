@@ -90,4 +90,11 @@ var self = module.exports = {
             console.log(res);
         });
     },
+    updateRegions: function(robot_name, regions){
+        var regions_param = new ROSLIB.Param({
+            ros: ros,
+            name: '/'+robot_name+'/regions'
+        });
+        regions_param.set(regions);
+    }
 };

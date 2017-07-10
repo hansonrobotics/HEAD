@@ -314,19 +314,25 @@ class pause(Node):
         if not response.success:
             self.runner.resume()
 
+    # This function needs to be reused in wholeshow to make sure consistent matching
+    @staticmethod
+    def event_matched(param, msg):
+        params = str(param).lower().split(',')
+        matched = False
+        for p in params:
+            try:
+                str(msg or '').lower().index(p.strip())
+                matched = True
+                continue
+            except ValueError:
+                matched = matched or False
+        return matched
+
+
     def event_callback(self, msg=None):
         if self.data['event_param']:
             # Check if any comma separated
-            params = str(self.data['event_param']).lower().split(',')
-            matched = False
-            for p in params:
-                try:
-                    str(msg or '').lower().index(p.strip())
-                    matched = True
-                    continue
-                except ValueError:
-                    matched = matched or False
-            if not matched:
+            if not self.event_matched(self.data['event_param'], msg):
                 return False
         if self.data['on_event']:
             self.start_performance()
@@ -348,6 +354,11 @@ class pause(Node):
             topic = str(self.data['topic'] or '').strip()
             if topic != 'ROSPARAM':
                 self.subscriber = self.runner.register(topic, self.event_callback)
+                # Paused SPEECH event should not be forwarded to chatbot if its enabled.
+                # The filtering is in wholeshow node
+                if self.data['event_param']:
+                    # Currently only single PAUSE node can listen for keywords, so global param is fine.
+                    rospy.set_param('/performances/keywords_listening', self.data['event_param'])
             else:
                 if self.data['event_param']:
                     if rospy.get_param(self.data['event_param'], False):
@@ -539,7 +550,8 @@ class attention(Node):
         self.topic = 'look_at'
         self.times_shown = 0
 
-    def get_random_axis_position(self, regions, axis):
+    @staticmethod
+    def get_random_axis_position(regions, axis):
         """
         :param regions: list of dictionaries
         :param axis: string 'x' or 'y'
@@ -576,19 +588,16 @@ class attention(Node):
                     if not position:
                         position = regions[i][axis] + (regions[i]['width'] if axis == 'x' else regions[i]['height']) * (
                             (rval - length[0]) / (length[1] - length[0]))
-
         return position, matched
 
-    # returns random coordinate from the region
-    def get_point(self, region):
-        regions = rospy.get_param(
-            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id), "properties/regions"), [])
-        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in regions
-                   if r['type'] == region]
-
+    @staticmethod
+    # Gets x,y,z from given regions based on region type
+    def get_point_from_regions(all_regions, region_type):
+        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in all_regions
+                   if r['type'] == region_type]
         if regions:
-            y, matched = self.get_random_axis_position(regions, 'x')
-            z, matched = self.get_random_axis_position(matched, 'y')
+            y, matched = attention.get_random_axis_position(regions, 'x')
+            z, matched = attention.get_random_axis_position(matched, 'y')
 
             return {
                 'x': 1,
@@ -598,6 +607,14 @@ class attention(Node):
         else:
             # Look forward
             return {'x': 1, 'y': 0, 'z': 0}
+
+    # returns random coordinate from the region
+    def get_point(self, region):
+        regions = rospy.get_param(
+            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id), "properties/regions"), [])
+        return self.get_point_from_regions(regions, region)
+
+
 
     def set_point(self, point):
         speed = 1 if 'speed' not in self.data else self.data['speed']
