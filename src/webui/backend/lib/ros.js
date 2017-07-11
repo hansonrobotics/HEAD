@@ -21,8 +21,7 @@ ros.on('close', function () {
 });
 
 var self = module.exports = function(robot_name){
-    console.log(robot_name);
-    return {
+    self =  {
         instance: ros,
         services: {
             updateMotors: new ROSLIB.Service({
@@ -113,4 +112,5 @@ var self = module.exports = function(robot_name){
             regions_param.set(regions);
         }
     }
+    return self
 };
