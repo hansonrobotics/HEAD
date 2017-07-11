@@ -416,9 +416,11 @@ if __name__ == '__main__':
     option = parser.parse_args()
 
     if option.verbose:
-        root_logger.setLevel(logging.INFO)
+        fh.setLevel(logging.INFO)
+        sh.setLevel(logging.INFO)
     else:
-        root_logger.setLevel(logging.WARN)
+        fh.setLevel(logging.INFO)
+        sh.setLevel(logging.WARN)
 
     if 'HR_CHATBOT_SERVER_EXT_PATH' in os.environ:
         sys.path.insert(0, os.path.expanduser(

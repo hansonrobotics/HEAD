@@ -498,7 +498,7 @@ def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs
 
         sess.last_used_character = hit_character
 
-        if answer.lower().strip().endswith('?'):
+        if is_question(answer.lower().strip()):
             if hit_character.dynamic_level:
                 sess.open_character = hit_character
                 logger.info("Set open dialog character {}".format(
@@ -508,6 +508,11 @@ def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs
 
     response['trace'] = cross_trace
     return response
+
+def is_question(question):
+    if not isinstance(question, unicode):
+        question = question.decode('utf-8')
+    return question.endswith('?') or question.endswith('？')
 
 def get_responding_characters(lang, sid):
     sess = session_manager.get_session(sid)
