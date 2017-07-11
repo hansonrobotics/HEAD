@@ -103,6 +103,9 @@ define(['application', 'backbone', 'lib/api', './node_collection', 'underscore',
             },
             parse: function(response) {
                 for (let attr of ['previous_id', 'ignore_nodes']) {
+                    _.each(response['timelines'], function(t) {
+                        delete t[attr]
+                    })
                     delete response[attr]
                     this.unset(attr)
                 }
