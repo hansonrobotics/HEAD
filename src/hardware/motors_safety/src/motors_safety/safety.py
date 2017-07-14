@@ -73,7 +73,7 @@ class Safety():
 
     def update_load(self, msg):
         for s in msg.motor_states:
-            self.motor_loads[s['id']] = s['load']
+            self.motor_loads[s.id] = s.load
 
     # check if motor is dynamixel
     def is_dynamixel(self, m):
@@ -252,11 +252,11 @@ class Safety():
                     self.rules[m][r]['started'] = False
                     self.rules[m][r]['limit'] = 1
                     return
-            limit = 1.0
+            limit = rule['limit']
             if rule['started'] + rule['t1']+rule['t2'] > time.time():
                 if rule['limit'] == 1:
                     # Prevent motor for going further
-                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions['m'])
+                    limit = self.get_relative_pos(m,rule['direction'], self.motor_positions[m])
                 if extreme:
                     # Rapidly decrease limit towards neutral
                     limit -= 1.0 / ROS_RATE

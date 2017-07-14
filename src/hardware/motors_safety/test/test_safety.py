@@ -30,6 +30,7 @@ class MotorSafetyTest(unittest.TestCase):
             'default': 0.1,
             'min': -0.5,
             'max': 1.5,
+            'hardware': 'pololu'
         },
         {
             'name': 'motor2',
@@ -37,6 +38,7 @@ class MotorSafetyTest(unittest.TestCase):
             'default': 0,
             'min': -0.6,
             'max': 1.2,
+            'hardware': 'dynamixel'
         },
     ]
     _TEST_RULES = {
@@ -82,6 +84,8 @@ class MotorSafetyTest(unittest.TestCase):
 
     def setUp(self):
         self.motors = self._TEST_MOTORS
+        self.motor_states_pub = rospy.Publisher("safe/motor_states", MotorStateList, queue_size=10)
+        time.sleep(self._TIMEOUT)
         self.safety = Safety()
         # Message was passed
         self.proxy_pass = False
@@ -92,7 +96,6 @@ class MotorSafetyTest(unittest.TestCase):
         # Create publishers and subscribers for testing
         self.pub = {}
         self.sub = {}
-        self.motor_states_pub = rospy.Publisher("safe/motor_states", MotorStateList, queue_size=10)
 
         for m in self.motors:
             if motor_type(m) == 'pololu':
@@ -273,8 +276,11 @@ class MotorSafetyTest(unittest.TestCase):
         start = time.time()
         self.send_motor_state(2, -0.45)
         time.sleep(self._TIMEOUT)
+        self.assertEqual(self.safety.motor_loads[2], -0.45, msg="Current laod {} expected {}"
+                         .format(self.safety.motor_loads[2], -0.45))
         self.safety.timing()
-        self.assertEqual(self.safety.rules['motor2'][1]['started'], start, msg="Wrong starting time")
+        self.assertEqual(self.safety.rules['motor2'][1]['started'], start, msg="Wrong starting time was {} wxpected {}"
+                         .format(self.safety.rules['motor2'][1]['started'], start))
         # Check value before starting to decline
         mock_time.return_value = start + 0.99
         self.safety.timing()
@@ -307,9 +313,12 @@ class MotorSafetyTest(unittest.TestCase):
         time.sleep(self._TIMEOUT)
         self.safety.timing()
 
-        # The expected value should be same as the last value after motor is recovered
         expected = self.safe_val
-        self.assertNotEqual(expected, self.safety.get_abs_pos('motor2','min',0.95), msg="Expected value should be different")
+        self.assertNotEqual(self.safety.rules['motor2'][1]['limit'], 1,
+                            msg="Limit should be lower than 1. current limit is {}"
+                            .format(self.safety.rules['motor2'][1]['limit']))
+        self.assertNotEqual(expected, self.safety.get_abs_pos('motor2','min',0.95),
+                            msg="Expected {} should be different".format(expected))
         self.proxy_pass = False
         msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
         self.pub['motor2'].publish(msg)
@@ -332,7 +341,7 @@ class MotorSafetyTest(unittest.TestCase):
         self.pub['motor2'].publish(msg)
         time.sleep(self._TIMEOUT)
         self.assertMessageVal(expected, m, equal=False)
-        # Limit is beack to extreme position after multiple timing calls
+        # Limit is back to extreme position after multiple timing calls
         # Should be similar number of calls as for decreasing the limit
         self.safety.timing()
         self.safety.timing()
