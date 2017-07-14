@@ -6,6 +6,8 @@ from std_msgs.msg import Float64, String
 from dynamixel_msgs.msg import MotorStateList
 import blendedNum
 from blendedNum.plumbing import Pipes
+from realsense_ros.cfg import TrackerConfig
+import math
 
 import time
 
@@ -70,6 +72,11 @@ class Safety():
                     self.rules[m][i]['started'] = False
                     self.rules[m][i]['target'] = blendedNum.LiveTarget(
                             self.motor_positions[m], Pipes.moving_average(r['time']), self.motor_positions[m])
+                if r['type'] == 'sine':
+                    self.rules[m][i]['started'] = False
+                    self.rules[m][i]['func'] = lambda t, r=r: r['value_offset']+r['amplitude']*math.sin(r['phase_offset'] + t*r['phase_mult'])
+                    self.rules[m][i]['base'] = self.motor_positions[m]
+
 
     def update_load(self, msg):
         for s in msg.motor_states:
@@ -116,7 +123,8 @@ class Safety():
                 v = self.rule_slack(v, r)
             if r['type'] == 'smooth':
                 v = self.rule_smooth(v, r)
-
+            if r['type'] == 'sine':
+                v = self.rule_sine(v, r)
         if dynamixel:
             msg.data = v
         else:
@@ -133,6 +141,16 @@ class Safety():
         v = rule['target'].current
         return v
 
+    def rule_sine(self, v, rule):
+        if not rule['enabled']:
+            return v
+        if not rule['started']:
+            rule['started'] = time.time()
+        rule['base'] = v
+        # Need to make sure it doesnt get executed on same time with timing rule.
+        return v+rule['func'](time.time() - rule['started'])
+
+
     def rule_smooth_time(self, m, rule):
         # Wait for rule to start
         if not self.rules[m][rule]['started']:
@@ -144,6 +162,15 @@ class Safety():
         # Ensure the minimum commands are sent by ROS rate.
         if self.rules[m][rule]['target'].dt > (1.0/float(ROS_RATE)-0.01):
             self.set_motor_abs_pos(m, self.rules[m][rule]['target'].current)
+
+    def rule_sine_time(self, m, rule):
+        # Wait for rule to start
+        if not self.rules[m][rule]['enabled']:
+            return
+        if not self.rules[m][rule]['started']:
+            return
+        r = self.rules[m][rule]
+        self.set_motor_abs_pos(m, r['base'] + r['func'](time.time() - r['started']))
 
     def rule_slack(self, v, rule):
         if rule['dir'] != 0:
@@ -202,6 +229,8 @@ class Safety():
                     self.rule_loading(m,i)
                 if r['type'] == 'smooth':
                     self.rule_smooth_time(m,i)
+                if r['type'] == 'sine':
+                    self.rule_sine_time(m,i)
 
     def rule_timing(self, m, r):
         # Rule is active
@@ -303,6 +332,12 @@ class Safety():
         else:
             self.sync = False
 
+    def enable_sines(self, disable=False):
+        for m, rules in self.rules.items():
+            for i,r in enumerate(rules):
+                # Process timing rules
+                if r['type'] == 'sine':
+                    self.rules[m][i]['enabled'] = not disable
 
 if __name__ == '__main__':
     rospy.init_node('motors_safety')

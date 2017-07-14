@@ -51,6 +51,14 @@ class MotorSafetyTest(unittest.TestCase):
                 't2': 1,
                 't3': 5,
                 't4': 1,
+            },
+            {
+                'type': 'sine',
+                'enabled': False,
+                'amplitude': 0.1,
+                'phase_offset': 0.0,
+                'phase_mult': 10,
+                'value_offset': 0.0,
             }
         ],
         'motor2': [
@@ -111,7 +119,7 @@ class MotorSafetyTest(unittest.TestCase):
         time.sleep(self._TIMEOUT)
 
         pass
-    # Checks the recieved messages for given values
+    # Checks the received messages for given values
     def check_safe_msgs(self, msg, motor):
         if self.ignore_msgs:
             return
@@ -352,6 +360,34 @@ class MotorSafetyTest(unittest.TestCase):
         self.pub['motor2'].publish(msg)
         time.sleep(self._TIMEOUT)
         self.assertMessageVal(m['default'] + (m['min']-m['default'])*0.99,m)
+
+    # Testing sine generation
+    @patch('time.time', mock_time)
+    def test_sines(self):
+        m = self.motors[0]
+        start = time.time()
+        time.sleep(self._TIMEOUT)
+        self.safety.enable_sines()
+        self.assertTrue(self.safety.rules['motor1'][1]['enabled'], "Rule is not enabled")
+        self.assertFalse(self.safety.rules['motor1'][1]['started'], "Rule should not be started until "
+                                                                    "first message recieved")
+        self.send_default_messages()
+        time.sleep(self._TIMEOUT)
+        self.assertTrue(self.safety.rules['motor1'][1]['started'], "Rule should be started already")
+
+        self.proxy_pass = False
+        msg = self.create_msg(m, m['default'])
+        self.pub['motor1'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        self.assertEqual(self.safe_val, m['default'], "safe val is {} default 0.1".format(self.safe_val))
+        self.safety.timing()
+        self.assertEqual(self.safe_val, m['default'], "Value should remain same if time hasnt changed")
+        mock_time.return_value += start+0.1
+        self.safety.timing()
+        time.sleep(self._TIMEOUT)
+        self.assertNotEqual(self.safe_val, m['default'], "Value changed after some time")
+        self.safety.enable_sines(disable=True)
+
 
 
 if __name__ == "__main__":
