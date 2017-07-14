@@ -30,6 +30,7 @@ class MotorSafetyTest(unittest.TestCase):
             'default': 0.1,
             'min': -0.5,
             'max': 1.5,
+            'hardware': 'pololu'
         },
         {
             'name': 'motor2',
@@ -37,6 +38,7 @@ class MotorSafetyTest(unittest.TestCase):
             'default': 0,
             'min': -0.6,
             'max': 1.2,
+            'hardware': 'dynamixel'
         },
     ]
     _TEST_RULES = {
@@ -49,6 +51,14 @@ class MotorSafetyTest(unittest.TestCase):
                 't2': 1,
                 't3': 5,
                 't4': 1,
+            },
+            {
+                'type': 'sine',
+                'enabled': False,
+                'amplitude': 0.1,
+                'phase_offset': 0.0,
+                'phase_mult': 10,
+                'value_offset': 0.0,
             }
         ],
         'motor2': [
@@ -82,6 +92,8 @@ class MotorSafetyTest(unittest.TestCase):
 
     def setUp(self):
         self.motors = self._TEST_MOTORS
+        self.motor_states_pub = rospy.Publisher("safe/motor_states", MotorStateList, queue_size=10)
+        time.sleep(self._TIMEOUT)
         self.safety = Safety()
         # Message was passed
         self.proxy_pass = False
@@ -92,7 +104,6 @@ class MotorSafetyTest(unittest.TestCase):
         # Create publishers and subscribers for testing
         self.pub = {}
         self.sub = {}
-        self.motor_states_pub = rospy.Publisher("safe/motor_states", MotorStateList, queue_size=10)
 
         for m in self.motors:
             if motor_type(m) == 'pololu':
@@ -108,7 +119,7 @@ class MotorSafetyTest(unittest.TestCase):
         time.sleep(self._TIMEOUT)
 
         pass
-    # Checks the recieved messages for given values
+    # Checks the received messages for given values
     def check_safe_msgs(self, msg, motor):
         if self.ignore_msgs:
             return
@@ -273,8 +284,11 @@ class MotorSafetyTest(unittest.TestCase):
         start = time.time()
         self.send_motor_state(2, -0.45)
         time.sleep(self._TIMEOUT)
+        self.assertEqual(self.safety.motor_loads[2], -0.45, msg="Current laod {} expected {}"
+                         .format(self.safety.motor_loads[2], -0.45))
         self.safety.timing()
-        self.assertEqual(self.safety.rules['motor2'][1]['started'], start, msg="Wrong starting time")
+        self.assertEqual(self.safety.rules['motor2'][1]['started'], start, msg="Wrong starting time was {} wxpected {}"
+                         .format(self.safety.rules['motor2'][1]['started'], start))
         # Check value before starting to decline
         mock_time.return_value = start + 0.99
         self.safety.timing()
@@ -307,9 +321,12 @@ class MotorSafetyTest(unittest.TestCase):
         time.sleep(self._TIMEOUT)
         self.safety.timing()
 
-        # The expected value should be same as the last value after motor is recovered
         expected = self.safe_val
-        self.assertNotEqual(expected, self.safety.get_abs_pos('motor2','min',0.95), msg="Expected value should be different")
+        self.assertNotEqual(self.safety.rules['motor2'][1]['limit'], 1,
+                            msg="Limit should be lower than 1. current limit is {}"
+                            .format(self.safety.rules['motor2'][1]['limit']))
+        self.assertNotEqual(expected, self.safety.get_abs_pos('motor2','min',0.95),
+                            msg="Expected {} should be different".format(expected))
         self.proxy_pass = False
         msg = self.create_msg(m, self.safety.get_abs_pos('motor2','min',0.95))
         self.pub['motor2'].publish(msg)
@@ -332,7 +349,7 @@ class MotorSafetyTest(unittest.TestCase):
         self.pub['motor2'].publish(msg)
         time.sleep(self._TIMEOUT)
         self.assertMessageVal(expected, m, equal=False)
-        # Limit is beack to extreme position after multiple timing calls
+        # Limit is back to extreme position after multiple timing calls
         # Should be similar number of calls as for decreasing the limit
         self.safety.timing()
         self.safety.timing()
@@ -343,6 +360,34 @@ class MotorSafetyTest(unittest.TestCase):
         self.pub['motor2'].publish(msg)
         time.sleep(self._TIMEOUT)
         self.assertMessageVal(m['default'] + (m['min']-m['default'])*0.99,m)
+
+    # Testing sine generation
+    @patch('time.time', mock_time)
+    def test_sines(self):
+        m = self.motors[0]
+        start = time.time()
+        time.sleep(self._TIMEOUT)
+        self.safety.enable_sines()
+        self.assertTrue(self.safety.rules['motor1'][1]['enabled'], "Rule is not enabled")
+        self.assertFalse(self.safety.rules['motor1'][1]['started'], "Rule should not be started until "
+                                                                    "first message recieved")
+        self.send_default_messages()
+        time.sleep(self._TIMEOUT)
+        self.assertTrue(self.safety.rules['motor1'][1]['started'], "Rule should be started already")
+
+        self.proxy_pass = False
+        msg = self.create_msg(m, m['default'])
+        self.pub['motor1'].publish(msg)
+        time.sleep(self._TIMEOUT)
+        self.assertEqual(self.safe_val, m['default'], "safe val is {} default 0.1".format(self.safe_val))
+        self.safety.timing()
+        self.assertEqual(self.safe_val, m['default'], "Value should remain same if time hasnt changed")
+        mock_time.return_value += start+0.1
+        self.safety.timing()
+        time.sleep(self._TIMEOUT)
+        self.assertNotEqual(self.safe_val, m['default'], "Value changed after some time")
+        self.safety.enable_sines(disable=True)
+
 
 
 if __name__ == "__main__":
