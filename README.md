@@ -4,8 +4,8 @@
 [![Build Status](http://61.92.69.39:8080/buildStatus/icon?job=ci-HEAD)](http://61.92.69.39:8080/view/hansonrobotics/job/ci-HEAD/)
 
  - [Prerequisites](#prereq)
- - [TL;DR](#tldr)
- - [Native install, build and run](#steps)
+ - [Install with hrtool (new)](#hrtool)
+ - [Native install, build and run (legacy)](#steps)
  - [Other options of hrtool](#options)
  - [LXC Install, build and run directions](#lxcsteps)
  - [Troubleshooting](#trbshoot)
@@ -35,19 +35,11 @@ performance pipeline and infrastructure:
  * Ubuntu 14.04 is installed. **Only Ubuntu 14.04 is supported**.
  * X Server is running.
  * Use root or create user with the ability to gain root privileges.
+ 
+## <a name="hrtool"></a>Install with hrtool (new)
+Refer to https://github.com/hansonrobotics/hrtool
 
-## <a name="tldr"></a>TL;DR
-
-Install dependencies, get source code, build. This may take several hours for the first time.
-
-1. `curl https://raw.githubusercontent.com/hansonrobotics/HEAD/master/scripts/hr/get_hr.bash|bash`
-2. `hr install all`
-
-Then run
-
-`~/hansonrobotics/HEAD/scripts/dev.sh`
-
-## <a name="steps"></a>Native install, build and run
+## <a name="steps"></a>Native install, build and run (legacy)
 Use these instructions, if you are willing to install the system
 "natively" on your machine (i.e. into the root file system).
 Otherwise, use the LXC instructions, further down below.  Install
@@ -89,13 +81,13 @@ sudo apt-get install wget (Run apt-get update first if wget is not found)
 
 * Run
 
-`cd ~/hansonrobotics/HEAD/scripts && ./dev.sh`
+`cd ~/hansonrobotics/HEAD/scripts && ./main.sh robot`
 
 * Open a web browser
 
 HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
-## <a name="options"></a>Other options of hrtool
+### <a name="options"></a>Other options of hrtool
 
 **The hrtool script is located in `~/hansonrobotics/HEAD/scripts`**
 
@@ -129,7 +121,7 @@ HTTP: http://127.0.0.1:8000/ or HTTPS: https://127.0.0.1:4000/
 
 `./vision.sh cmt` #For running with cmt/pi_vision
 
-## <a name="lxcsteps"></a>LXC Install, build and run directions
+### <a name="lxcsteps"></a>LXC Install, build and run directions
 
 LXC -- Linux Containers -- is a tool that allows you to run a virtualized
 operating system container on your machine.  Because each container can
