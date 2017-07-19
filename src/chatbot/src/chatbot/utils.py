@@ -4,6 +4,9 @@ import requests
 import subprocess
 import logging
 import json
+import pandas as pd
+import numpy as np
+import datetime as dt
 
 logger = logging.getLogger('hr.chatbot.utils')
 
@@ -127,6 +130,15 @@ def check_online(url, port='80'):
         return False
     return True
 
+def get_emotion(timedelta=3):
+    emotion_file = os.path.expanduser('~/.hr/chatbot/data/emotion.csv')
+    if os.path.isfile(emotion_file):
+        df = pd.read_csv(emotion_file, header=None, parse_dates=[0])
+        df.columns = ['Datetime', 'Emotion']
+        df = df[(dt.datetime.now()-df['Datetime'])/np.timedelta64(1, 's')<timedelta]
+        if not df.empty:
+            return df.tail(1).iloc[0].Emotion
+
 if __name__ == '__main__':
     logging.basicConfig()
     text = '''My mind is built using Hanson Robotics' character engine, a simulated humanlike brain that runs inside a personal computer. Within this framework, Hanson has modelled Phil's personality and emotions, allowing you to talk with Phil through me, using speech recognition, natural language understanding, and computer vision such as face recognition, and animation of the robotic muscles in my face.'''
@@ -146,3 +158,4 @@ if __name__ == '__main__':
     print str_cleanup(None)
     print check_online('google.com')
     print check_online('duckduckgo.com', 80)
+    print get_emotion()
