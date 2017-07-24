@@ -547,7 +547,7 @@ class attention(Node):
     # Find current region at runtime
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
-        self.topic = 'look_at'
+        self.topic = ['look_at', 'gaze_at']
         self.times_shown = 0
 
     @staticmethod
@@ -618,7 +618,8 @@ class attention(Node):
 
     def set_point(self, point):
         speed = 1 if 'speed' not in self.data else self.data['speed']
-        self.runner.topics[self.topic].publish(Target(point['x'], point['y'], point['z'], speed))
+        for topic in self.topic:
+            self.runner.topics[topic].publish(Target(point['x'], point['y'], point['z'], speed))
 
     def cont(self, run_time):
         if 'attention_region' in self.data and self.data['attention_region'] != 'custom':
@@ -635,14 +636,14 @@ class look_at(attention):
     # Find current region at runtime
     def __init__(self, data, runner):
         attention.__init__(self, data, runner)
-        self.topic = 'look_at'
+        self.topic = ['look_at', 'gaze_at']
 
 
 class gaze_at(attention):
     # Find current region at runtime
     def __init__(self, data, runner):
         attention.__init__(self, data, runner)
-        self.topic = 'gaze_at'
+        self.topic = ['gaze_at']
 
 
 class settings(Node):
