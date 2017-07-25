@@ -14,7 +14,8 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             ui: {
                 addNewButton: '.app-add-new-button',
-                timelineContainer: '.app-timelines',
+                timelines: '.app-timelines',
+                timelinesContainer: '.app-timelines-container',
                 editContainer: '.app-edit-container',
                 timelineNodes: '.app-timeline-nodes .app-node',
                 nodes: '.app-nodes .app-node',
@@ -169,7 +170,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
                 if (this.readonly) {
                     this.ui.editContainer.hide()
-                    this.ui.timelineContainer.addClass('readonly')
+                    this.ui.timelines.addClass('readonly')
                 }
 
                 this.ui.doneButton.fadeIn()
@@ -196,7 +197,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 })
 
                 if (!this.readonly)
-                    this.ui.timelineContainer.contextMenu({
+                    this.ui.timelinesContainer.contextMenu({
                         menuSelector: this.ui.timelineContextMenu,
                         menuOpened: function($menu) {
                             let $paste = $menu.find('[data-action="paste"]').closest('li')
@@ -206,7 +207,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                 $paste.addClass('disabled')
                         },
                         menuSelected: function(invokedOn, selectedMenu, position) {
-                            let container = self.ui.timelineContainer,
+                            let container = self.ui.timelines,
                                 offset = ($(container).scrollLeft() +
                                     position.left - $(container).offset().left) / self.config.pxPerSec
 
@@ -471,7 +472,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.listenTo(node, 'change', this.updateNodeEl)
                 this.updateNodeEl(node)
 
-                $(el, this.ui.timelineContainer).contextMenu({
+                $(el, this.ui.timelines).contextMenu({
                     menuSelector: this.ui.nodeContextMenu,
                     menuSelected: function(invokedOn, selectedMenu) {
                         if (!self.selectedNodes.length || self.selectedNodes.indexOf(node) === -1) {
@@ -746,7 +747,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             arrangeNodes: function() {
                 let self = this
 
-                this.ui.timelineContainer.find('.app-timeline-nodes').remove()
+                this.ui.timelines.find('.app-timeline-nodes').remove()
                 this.model.nodes.each(function(node) {
                     self.placeNode(node)
                 })
@@ -805,28 +806,28 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 this.removeEmptyTimelines()
             },
             getTimelines: function(nodeType) {
-                return $('.app-timeline-nodes[data-type="' + nodeType + '"]', this.ui.timelineContainer)
+                return $('.app-timeline-nodes[data-type="' + nodeType + '"]', this.ui.timelines)
             },
             addTimeline: function(nodeType) {
                 let nodeContainer = $('<div>').addClass('app-timeline-nodes')
 
                 if (nodeType) {
                     nodeContainer.attr('data-type', nodeType)
-                    let last = this.ui.timelineContainer.find('.app-timeline-nodes[data-type="' + nodeType + '"]').last()
+                    let last = this.ui.timelines.find('.app-timeline-nodes[data-type="' + nodeType + '"]').last()
                     if (last.length) {
                         last.after(nodeContainer)
                         return
                     }
                 }
 
-                this.ui.timelineContainer.append(nodeContainer)
+                this.ui.timelines.append(nodeContainer)
             },
             getTimelineWidth: function() {
                 return this.model.getDuration() * this.config.pxPerSec
             },
             updateTimelineWidth: function() {
                 let timelineWidth = this.getTimelineWidth(),
-                    containerWidth = this.ui.timelineContainer.width(),
+                    containerWidth = this.ui.timelines.width(),
                     width = Math.max(timelineWidth, containerWidth),
                     scale = d3.scaleLinear().domain([0, width / this.config.pxPerSec]).range([0, width])
 
@@ -837,7 +838,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                 if (timelineWidth < containerWidth || !containerWidth)
                     width = '100%'
 
-                this.ui.timelineContainer.find('.app-timeline-nodes').css('width', width)
+                this.ui.timelines.find('.app-timeline-nodes').css('width', width)
                 this.ui.scrollContainer.perfectScrollbar('update')
             },
             sortPerformances: function() {
