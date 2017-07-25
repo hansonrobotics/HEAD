@@ -14,7 +14,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                     regionClass: FadeInRegion
                 },
                 queue: {
-                    el: '.app-queue-region',
+                    el: '.app-queue-region'
                 },
                 timeline: {
                     el: '.app-timeline-region',
@@ -32,8 +32,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 emptyNotice: '.app-empty-notice',
                 saveChangesModal: '.app-save-changes-confirmation',
                 saveChanges: '.app-save-changes',
-                discardChanges: '.app-discard-changes',
-                timelineContainer: '.app-timeline-container'
+                discardChanges: '.app-discard-changes'
             },
             events: {
                 'click @ui.languageButton': 'changeLanguage',
@@ -103,16 +102,24 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             registerShortcuts: function() {
                 let self = this
                 Mousetrap.bind('y', function() {
-                    self.ui.saveChanges.click()
+                    if (self.editing)
+                        self.ui.saveChanges.click()
                 })
 
                 Mousetrap.bind('n', function() {
-                    self.ui.discardChanges.click()
+                    if (self.editing)
+                        self.ui.discardChanges.click()
+                })
+
+                Mousetrap.bind('ctrl+m', function(e) {
+                    if (self.editing)
+                        self.addNewTimeline()
                 })
             },
             unregisterShortcuts: function() {
                 Mousetrap.unbind('y')
                 Mousetrap.unbind('n')
+                Mousetrap.unbind('ctrl+m')
             },
             onDestroy: function() {
                 this.syncedPerformance.disableSync()
@@ -313,7 +320,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             },
             remove: function(item) {
                 let self = this
-                bootbox.confirm("Are you sure?", function(result) {
+                bootbox.confirm('Are you sure?', function(result) {
                     if (result) {
                         self.queueCollection.remove(item)
                         item.get('performance').destroy()
@@ -380,11 +387,13 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 if (item instanceof Performance)
                     item = this.queueCollection.find({performance: item})
 
-                let el = this.ui.queueContainer.find('[data-model-cid=' + item.cid + ']')
+                if (item instanceof QueueCollection) {
+                    let el = this.ui.queueContainer.find('[data-model-cid=' + item.cid + ']')
 
-                if (!el.hasClass('active')) {
-                    this.ui.queueContainer.find('.app-performance').removeClass('active')
-                    el.addClass('active')
+                    if (!el.hasClass('active')) {
+                        this.ui.queueContainer.find('.app-performance').removeClass('active')
+                        el.addClass('active')
+                    }
                 }
             },
             changeCheck: function(callback, cancelCallback) {
