@@ -72,14 +72,14 @@ define(['application', 'marionette', './templates/settings.tpl', 'json-editor', 
                 if (typeof self.schemaModel.getGroupName === 'function') {
                     _.each(config, function(val, key) {
                         let groupName = self.schemaModel.getGroupName(key),
-                            parentEditor = self.editor.getEditor(path.dirname(groupName.replace('.', '/')).replace('/', '.')),
-                            editor = self.editor.getEditor(groupName)
+                            editor = self.editor.getEditor(groupName),
+                            parent = editor.parent
 
-                        if (parentEditor)
-                            parentEditor.addObjectProperty(key)
-
-                        if (editor)
+                        if (editor) {
+                            if (parent) parent.addObjectProperty(key)
                             editor.setValue(val)
+                            if (parent) parent.refreshValue()
+                        }
                     })
 
                     if (!_.isEmpty(config))
