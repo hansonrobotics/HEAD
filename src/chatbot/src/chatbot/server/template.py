@@ -1,6 +1,6 @@
 import os
 from jinja2 import Template, Environment, meta
-from renderers import render_weather, render_location
+from renderers import render_weather, render_location, render_face_emotion
 import logging
 
 logger = logging.getLogger('hr.chatbot.server.template')
@@ -10,7 +10,7 @@ def render(string):
     func = get_render_func(string)
     if func is not None:
         try:
-            return func(t)
+            return func(t) or t.render()
         except Exception as ex:
             logger.error("Rendering error, {}".format(ex))
             return t.render()
@@ -27,6 +27,8 @@ def get_render_func(string):
         func = render_weather
     if 'location' in variables:
         func = render_location
+    if 'faceemotion' in variables:
+        func = render_face_emotion
     return func
 
 if __name__ == '__main__':
@@ -39,5 +41,9 @@ if __name__ == '__main__':
     print string
 
     string = """I think you are in {{ location }}. """
+    string  = render(string)
+    print string
+
+    string = """{% if faceemotion is not defined %} I can't tell. How do you feel? {% else %} You look {{ faceemotion }}. {% endif %}"""
     string  = render(string)
     print string
