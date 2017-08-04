@@ -139,6 +139,17 @@ def get_emotion(timedelta=3):
         if not df.empty:
             return df.tail(1).iloc[0].Emotion
 
+def get_detected_object(timedelta=10):
+    object_file = os.path.expanduser('~/.hr/chatbot/data/objects.csv')
+    if os.path.isfile(object_file):
+        df = pd.read_csv(object_file, header=None, parse_dates=[0])
+        df.columns = ['Datetime', 'Item']
+        df = df[(dt.datetime.now()-df['Datetime'])/np.timedelta64(1, 's')<timedelta]
+        if not df.empty:
+            item = df.tail(1).iloc[0].Item
+            logger.warn("Get item {}".format(item))
+            return item
+
 if __name__ == '__main__':
     logging.basicConfig()
     text = '''My mind is built using Hanson Robotics' character engine, a simulated humanlike brain that runs inside a personal computer. Within this framework, Hanson has modelled Phil's personality and emotions, allowing you to talk with Phil through me, using speech recognition, natural language understanding, and computer vision such as face recognition, and animation of the robotic muscles in my face.'''
@@ -159,3 +170,6 @@ if __name__ == '__main__':
     print check_online('google.com')
     print check_online('duckduckgo.com', 80)
     print get_emotion()
+
+
+    print get_detected_object(100)

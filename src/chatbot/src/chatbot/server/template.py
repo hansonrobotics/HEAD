@@ -1,6 +1,6 @@
 import os
 from jinja2 import Template, Environment, meta
-from renderers import render_weather, render_location, render_face_emotion
+from renderers import *
 import logging
 
 logger = logging.getLogger('hr.chatbot.server.template')
@@ -29,6 +29,8 @@ def get_render_func(string):
         func = render_location
     if 'faceemotion' in variables:
         func = render_face_emotion
+    if 'objectdetected' in variables:
+        func = render_object_detected
     return func
 
 if __name__ == '__main__':
@@ -45,5 +47,9 @@ if __name__ == '__main__':
     print string
 
     string = """{% if faceemotion is not defined %} I can't tell. How do you feel? {% else %} You look {{ faceemotion }}. {% endif %}"""
+    string  = render(string)
+    print string
+
+    string = """{% if objectdetected is not defined %} Sorry, I don't know what's that. {% else %} Is that {{ objectdetected }}. {% endif %}"""
     string  = render(string)
     print string

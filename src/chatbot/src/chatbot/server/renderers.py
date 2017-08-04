@@ -1,6 +1,6 @@
 import time
 import json
-from chatbot.utils import get_location, get_weather_by_id, parse_weather, query_city_info, get_emotion
+from chatbot.utils import *
 
 def render_weather(t):
     if hasattr(t.module, 'location'):
@@ -31,3 +31,10 @@ def render_face_emotion(t):
     emotion = get_emotion(3) # the the emotion in the past 3 secs
     if emotion is not None:
         return t.render(faceemotion=emotion)
+
+def render_object_detected(t):
+    time.sleep(3)
+    item = get_detected_object(10)
+    if item is not None:
+        item = ' '.join(item.split('_'))
+        return t.render(objectdetected=item)
