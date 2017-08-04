@@ -5,6 +5,7 @@ import openface
 import random
 import pandas as pd
 import logging
+import pickle
 from openface.data import iterImgs
 from sklearn.preprocessing import LabelEncoder
 from sklearn.svm import SVC
@@ -104,6 +105,7 @@ class TrainUtil(object):
         labelsNum = le.transform(labels_data)
         clf = SVC(C=1, kernel='linear', probability=True)
         try:
+            logger.info("Start training")
             clf.fit(embeddings_data, labelsNum)
         except ValueError as ex:
             logger.error(ex)
