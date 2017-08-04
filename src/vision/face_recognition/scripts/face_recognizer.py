@@ -99,6 +99,7 @@ class FaceRecognizer(object):
         self._lock = threading.RLock()
         self.colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255),
             (255, 255, 0), (255, 0, 255), (0, 255, 255) ]
+        self.known_names = rospy.get_param('known_names', [])
 
     def load_classifier(self, model):
         if os.path.isfile(model):
@@ -274,6 +275,10 @@ class FaceRecognizer(object):
                 return None, None, None
             predictions = self.clf.predict_proba(rep).ravel()
             maxI = np.argmax(predictions)
+            label = self.le.inverse_transform(maxI)
+            if label not in self.known_names:
+                logger.info("{} is not in known names".format(label))
+                continue
             persons.append(self.le.inverse_transform(maxI))
             confidences.append(predictions[maxI])
             bboxes.append(box)
