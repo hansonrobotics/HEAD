@@ -245,7 +245,7 @@ class expression(Node):
         try:
             self.runner.topics['expression'].publish(
                 MakeFaceExpr('Neutral', self._magnitude(self.data['magnitude'])))
-            time.sleep(self.duration)
+            time.sleep(min(1,self.duration))
             logger.info("Neutral expression")
             self.runner.services['head_pau_mux']("/blender_api/get_pau")
             logger.info("Call head_pau_mux topic {}".format("/blender_api/get_pau"))
