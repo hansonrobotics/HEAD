@@ -47,13 +47,18 @@ from std_msgs.msg import String
 
 CWD = os.path.dirname(os.path.abspath(__file__))
 HR_MODELS = os.environ.get('HR_MODELS', os.path.expanduser('~/.hr/cache/models'))
-ARCHIVE_DIR = os.path.expanduser('~/.hr/faces')
+DATA_DIR = os.path.join(os.path.expanduser('~/.hr/data'), 'faces')
+DATA_ARCHIVE_DIR = os.path.join(DATA_DIR, 'archive')
+CLASSIFIER_DIR = os.path.join(DATA_DIR, 'classifier')
+DEFAULT_CLASSIFIER_DIR = os.path.join(HR_MODELS, 'classifier')
 DLIB_FACEPREDICTOR = os.path.join(HR_MODELS,
                     'shape_predictor_68_face_landmarks.dat')
 NETWORK_MODEL = os.path.join(HR_MODELS, 'nn4.small2.v1.t7')
-CLASSIFIER_DIR = os.path.join(HR_MODELS, 'classifier')
 logger = logging.getLogger('hr.vision.face_recognition.face_recognizer')
 
+for d in [DATA_DIR, DATA_ARCHIVE_DIR, CLASSIFIER_DIR]:
+    if not os.path.isdir(d):
+        os.makedirs(d)
 
 class FaceRecognizer(object):
 
@@ -77,12 +82,14 @@ class FaceRecognizer(object):
         self.max_face_count = 10
         self.train = False
         self.enable = True
-        self.data_root = os.path.join(CWD, 'faces')
-        self.train_dir = os.path.join(self.data_root, 'training-images')
-        self.aligned_dir = os.path.join(self.data_root, 'aligned-images')
-        self.classifier_dir = CLASSIFIER_DIR
+        self.train_dir = os.path.join(DATA_DIR, 'training-images')
+        self.aligned_dir = os.path.join(DATA_DIR, 'aligned-images')
         self.clf, self.le = None, None
-        self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
+        classifier = os.path.join(CLASSIFIER_DIR, 'classifier.pkl')
+        if os.path.isfile(classifier):
+            self.load_classifier(classifier)
+        else:
+            self.load_classifier(os.path.join(DEFAULT_CLASSIFIER_DIR, 'classifier.pkl'))
         self.node_name = rospy.get_name()
         self.multi_faces = False
         self.threshold = 0.5
@@ -165,12 +172,14 @@ class FaceRecognizer(object):
                 else:
                     os.remove(imgObject.path)
                     logger.warn("No face was detected in {}. Removed.".format(imgObject.path))
+            else:
+                logger.debug("Skip image {}".format(imgName))
 
     def gen_data(self):
         face_reps = []
         labels = []
-        reps_fname = "{}/reps.csv".format(self.aligned_dir)
-        label_fname = "{}/labels.csv".format(self.aligned_dir)
+        reps_fname = "{}/reps.csv".format(CLASSIFIER_DIR)
+        label_fname = "{}/labels.csv".format(CLASSIFIER_DIR)
         for imgObject in iterImgs(self.aligned_dir):
             reps = self.net.forward(imgObject.getRGB())
             face_reps.append(reps)
@@ -206,10 +215,12 @@ class FaceRecognizer(object):
 
     def train_model(self):
         with self._lock:
+            name = self.face_name
+            logger.info("Training model")
             self.event_pub.publish('training')
             self.prepare()
-            label_fname = "{}/labels.csv".format(self.aligned_dir)
-            reps_fname = "{}/reps.csv".format(self.aligned_dir)
+            label_fname = "{}/labels.csv".format(CLASSIFIER_DIR)
+            reps_fname = "{}/reps.csv".format(CLASSIFIER_DIR)
             labels, embeddings = None, None
             if os.path.isfile(label_fname) and \
                         os.path.isfile(reps_fname):
@@ -222,8 +233,8 @@ class FaceRecognizer(object):
                 return
 
             # append the existing data
-            original_label_fname = "{}/labels.csv".format(self.classifier_dir)
-            original_reps_fname = "{}/reps.csv".format(self.classifier_dir)
+            original_label_fname = "{}/labels.csv".format(DEFAULT_CLASSIFIER_DIR)
+            original_reps_fname = "{}/reps.csv".format(DEFAULT_CLASSIFIER_DIR)
             if os.path.isfile(original_label_fname) and \
                         os.path.isfile(original_reps_fname):
                 labels2 = pd.read_csv(original_label_fname, header=None)
@@ -250,12 +261,13 @@ class FaceRecognizer(object):
                 logger.info("Update label file {}".format(label_fname))
                 logger.info("Update representation file {}".format(reps_fname))
 
-                classifier_fname = "{}/classifier.pkl".format(self.aligned_dir)
+                classifier_fname = "{}/classifier.pkl".format(CLASSIFIER_DIR)
                 with open(classifier_fname, 'w') as f:
                     pickle.dump((le, clf), f)
                 logger.info("Model saved to {}".format(classifier_fname))
 
                 self.load_classifier(classifier_fname)
+                self.known_names.append(self.face_name)
                 self.event_pub.publish('end')
             else:
                 self.event_pub.publish('abort')
@@ -284,24 +296,26 @@ class FaceRecognizer(object):
             bboxes.append(box)
         return persons, confidences, bboxes
 
+    def overlay_image(self, image, faces):
+        i = 0
+        for face in sorted(faces,
+                key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
+            b = face.bbox
+            p = face.name
+            landmarks = face.landmarks
+            cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 2)
+            cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.colors[i], 2)
+            for j in range(landmarks.num_parts):
+                point = landmarks.part(j)
+                x = int(point.x)
+                y = int(point.y)
+                cv2.circle(image, (x,y), 1, self.colors[i], 1)
+            i += 1
+            i = i%6
+
     def republish(self, ros_image):
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
-        if self.faces:
-            i = 0
-            for face in sorted(self.faces,
-                    key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
-                b = face.bbox
-                p = face.name
-                landmarks = face.landmarks
-                cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 2)
-                cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.colors[i], 2)
-                for j in range(landmarks.num_parts):
-                    point = landmarks.part(j)
-                    x = int(point.x)
-                    y = int(point.y)
-                    cv2.circle(image, (x,y), 1, self.colors[i], 1)
-                i += 1
-                i = i%6
+        self.overlay_image(image, self.faces)
         self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
 
     def image_cb(self, ros_image):
@@ -358,39 +372,40 @@ class FaceRecognizer(object):
                     self.faces = []
                     rospy.set_param('{}/face_visible'.format(self.node_name), False)
                     rospy.set_param('{}/current_persons'.format(self.node_name),'')
-            msgs = Faces()
-            for face in self.faces:
-                msg = Face()
-                msg.faceid = face.name
-                msg.left = face.bbox.left()
-                msg.top = face.bbox.top()
-                msg.right = face.bbox.right()
-                msg.bottom = face.bbox.bottom()
-                msg.confidence = face.confidence
-                msgs.faces.append(msg)
-            self.faces_pub.publish(msgs)
+            self.publish_faces(self.faces)
         self.republish(ros_image)
 
-    def archive(self, remove=False):
-        archive_fname = os.path.join(ARCHIVE_DIR, 'faces-{}'.format(
+    def publish_faces(self, faces):
+        msgs = Faces()
+        for face in faces:
+            msg = Face()
+            msg.faceid = face.name
+            msg.left = face.bbox.left()
+            msg.top = face.bbox.top()
+            msg.right = face.bbox.right()
+            msg.bottom = face.bbox.bottom()
+            msg.confidence = face.confidence
+            msgs.faces.append(msg)
+        self.faces_pub.publish(msgs)
+
+    def archive(self):
+        archive_fname = os.path.join(DATA_ARCHIVE_DIR, 'faces-{}'.format(
                 dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S')))
-        shutil.make_archive(archive_fname, 'gztar', root_dir=CWD, base_dir='faces')
-        if remove:
-            shutil.rmtree(self.train_dir, ignore_errors=True)
-            shutil.rmtree(self.aligned_dir, ignore_errors=True)
+        shutil.make_archive(archive_fname, 'gztar', root_dir=DATA_DIR)
 
     def reset(self):
-        self.archive(True)
-        self.load_classifier(os.path.join(self.classifier_dir, 'classifier.pkl'))
+        shutil.rmtree(self.train_dir, ignore_errors=True)
+        shutil.rmtree(self.aligned_dir, ignore_errors=True)
+        shutil.rmtree(os.path.join(CLASSIFIER_DIR, 'classifier.pkl'), ignore_errors=True)
+        self.load_classifier(os.path.join(DEFAULT_CLASSIFIER_DIR, 'classifier.pkl'))
+        logger.warn("Model is reset to default")
 
     def save_model(self):
         files = ['labels.csv', 'reps.csv', 'classifier.pkl']
         files = [os.path.join(self.aligned_dir, f) for f in files]
         if all([os.path.isfile(f) for f in files]):
-            if not os.path.isdir(self.classifier_dir):
-                os.makedirs(self.classifier_dir)
             for f in files:
-                shutil.copy(f, os.path.join(self.classifier_dir))
+                shutil.copy(f, os.path.join(CLASSIFIER_DIR))
             logger.info("Model is saved")
             self.archive()
             return True
