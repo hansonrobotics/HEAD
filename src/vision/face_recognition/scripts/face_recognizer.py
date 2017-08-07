@@ -85,9 +85,16 @@ class FaceRecognizer(object):
         self.train_dir = os.path.join(DATA_DIR, 'training-images')
         self.aligned_dir = os.path.join(DATA_DIR, 'aligned-images')
         self.clf, self.le = None, None
+        self.known_names = rospy.get_param('known_names', [])
         classifier = os.path.join(CLASSIFIER_DIR, 'classifier.pkl')
         if os.path.isfile(classifier):
             self.load_classifier(classifier)
+            label_fname = "{}/local_labels.csv".format(CLASSIFIER_DIR)
+            if os.path.isfile(label_fname):
+                df = pd.read_csv(label_fname, header=None)
+                if not df.empty:
+                    for name in set(df[0].tolist()):
+                        self.known_names.append(name)
         else:
             self.load_classifier(os.path.join(DEFAULT_CLASSIFIER_DIR, 'classifier.pkl'))
         self.node_name = rospy.get_name()
@@ -106,7 +113,6 @@ class FaceRecognizer(object):
         self._lock = threading.RLock()
         self.colors = [ (255, 0, 0), (0, 255, 0), (0, 0, 255),
             (255, 255, 0), (255, 0, 255), (0, 255, 255) ]
-        self.known_names = rospy.get_param('known_names', [])
 
     def load_classifier(self, model):
         if os.path.isfile(model):
@@ -180,6 +186,8 @@ class FaceRecognizer(object):
         labels = []
         reps_fname = "{}/reps.csv".format(CLASSIFIER_DIR)
         label_fname = "{}/labels.csv".format(CLASSIFIER_DIR)
+        local_reps_fname = "{}/local_reps.csv".format(CLASSIFIER_DIR)
+        local_label_fname = "{}/local_labels.csv".format(CLASSIFIER_DIR)
         for imgObject in iterImgs(self.aligned_dir):
             reps = self.net.forward(imgObject.getRGB())
             face_reps.append(reps)
@@ -187,6 +195,8 @@ class FaceRecognizer(object):
         if face_reps and labels and not self.stop_training.is_set():
             pd.DataFrame(face_reps).to_csv(reps_fname, header=False, index=False)
             pd.DataFrame(labels).to_csv(label_fname, header=False, index=False)
+            pd.DataFrame(face_reps).to_csv(local_reps_fname, header=False, index=False)
+            pd.DataFrame(labels).to_csv(local_label_fname, header=False, index=False)
             logger.info("Generated label file {}".format(label_fname))
             logger.info("Generated representation file {}".format(reps_fname))
 
@@ -197,6 +207,8 @@ class FaceRecognizer(object):
         detected_faces = self.face_detector(image)
         if detected_faces:
             face = max(detected_faces, key=lambda rect: rect.width() * rect.height())
+            self.faces = [FaceRecognizer.Face('sample',1,face,None)]
+            self.republish(image, self.faces)
             if crop:
                 image = image[face.top():face.bottom(), face.left():face.right()]
                 if image.size == 0:
@@ -302,20 +314,22 @@ class FaceRecognizer(object):
                 key=lambda x: x.bbox.width()*x.bbox.height(), reverse=True):
             b = face.bbox
             p = face.name
-            landmarks = face.landmarks
             cv2.rectangle(image, (b.left(), b.top()), (b.right(), b.bottom()), self.colors[i], 2)
             cv2.putText(image, p, (b.left(), b.top()-10), cv2.FONT_HERSHEY_SIMPLEX, 1, self.colors[i], 2)
-            for j in range(landmarks.num_parts):
-                point = landmarks.part(j)
-                x = int(point.x)
-                y = int(point.y)
-                cv2.circle(image, (x,y), 1, self.colors[i], 1)
+            landmarks = face.landmarks
+            if landmarks:
+                for j in range(landmarks.num_parts):
+                    point = landmarks.part(j)
+                    x = int(point.x)
+                    y = int(point.y)
+                    cv2.circle(image, (x,y), 1, self.colors[i], 1)
             i += 1
             i = i%6
 
-    def republish(self, ros_image):
-        image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
-        self.overlay_image(image, self.faces)
+    def republish(self, image, faces):
+        if isinstance(image, Image):
+            image = self.bridge.imgmsg_to_cv2(image, "bgr8")
+        self.overlay_image(image, faces)
         self.imgpub.publish(self.bridge.cv2_to_imgmsg(image, 'bgr8'))
 
     def image_cb(self, ros_image):
@@ -324,13 +338,14 @@ class FaceRecognizer(object):
 
         self.count += 1
         if self.count % 30 != 0:
-            self.republish(ros_image)
+            self.republish(ros_image, self.faces)
             return
         image = self.bridge.imgmsg_to_cv2(ros_image, "bgr8")
         if self.train:
             self.collect_face(image)
             if self.face_count == self.max_face_count:
                 try:
+                    self.faces = []
                     self.training_job = threading.Thread(target=self.train_model)
                     self.training_job.deamon = True
                     self.training_job.start()
@@ -373,7 +388,7 @@ class FaceRecognizer(object):
                     rospy.set_param('{}/face_visible'.format(self.node_name), False)
                     rospy.set_param('{}/current_persons'.format(self.node_name),'')
             self.publish_faces(self.faces)
-        self.republish(ros_image)
+        self.republish(ros_image, self.faces)
 
     def publish_faces(self, faces):
         msgs = Faces()
@@ -440,6 +455,7 @@ class FaceRecognizer(object):
         self.train = config.train
         if self.train:
             if self.face_name:
+                self.face_name = self.face_name.lower()
                 self.event_pub.publish('start')
                 self.stop_training.clear()
                 self.face_count = 0
