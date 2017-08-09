@@ -5,6 +5,7 @@ from distutils.core import setup
 
 setup(
     version='0.0.1',
+    name='performances',
     packages=['performances'],
     package_dir={'': 'src'}
 )
