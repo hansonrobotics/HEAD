@@ -1,22 +1,48 @@
 #!/usr/bin/env python
 
+import os
 import rospy
 import math
 import struct
 import numpy as np
 from collections import deque
-from std_msgs.msg import Float32, UInt8MultiArray
+import wave
+import contextlib
+import logging
+
+from std_msgs.msg import Float32, UInt8MultiArray, String
 from audio_stream.msg import audiodata
 from audio_stream.frequency_estimator import freq_from_fft
+
+from pocketsphinx.pocketsphinx import *
+from sphinxbase.sphinxbase import *
+
+import webrtcvad
+vad = webrtcvad.Vad()
+
+MODELDIR = "/opt/hansonrobotics/share/pocketsphinx/model"
+
+logger = logging.getLogger('hr.audio_stream.audio_sensor')
+# Create a decoder with certain model
+config = Decoder.default_config()
+config.set_string('-hmm', os.path.join(MODELDIR, 'en-us/en-us'))
+config.set_string('-lm', os.path.join(MODELDIR, 'en-us/en-us.lm.bin'))
+config.set_string('-dict', os.path.join(MODELDIR, 'en-us/cmudict-en-us.dict'))
+decoder = Decoder(config)
 
 class AudioSensor(object):
 
     def __init__(self):
         self.pub = rospy.Publisher(
             'audio_sensors', audiodata, queue_size=1)
+        self.chat_event_pub = rospy.Publisher(
+            'chat_events', String, queue_size=1)
         self.d = deque(maxlen=5)
         self.freqs = deque(maxlen=5)
         self.rate = rospy.get_param('audio_rate', 16000)
+        self.speech = False
+        self.speech_buf = deque(maxlen=5)
+        self.chat_start = False
 
         # https://en.wikipedia.org/wiki/Voice_frequency
         # The voiced speech of a typical adult male will have a fundamental
@@ -55,12 +81,49 @@ class AudioSensor(object):
                 return True
         return False
 
+    def vad_change_event(self):
+        if not self.speech:
+            self.speech_buf.clear()
+            if self.chat_start:
+                self.chat_event_pub.publish('speechstop')
+                self.chat_start = False
+
+    def get_text(self):
+        try:
+            if self.speech_buf:
+                decoder.start_utt()
+                for buf in self.speech_buf:
+                    decoder.process_raw(buf, False, False)
+                decoder.end_utt()
+                self.speech_buf.clear()
+                text = [seg.word for seg in decoder.seg()]
+                self.current_speech_buf_len = 0
+                if text and len(text) > 2:
+                    return ' '.join(text[1:-1])
+        except Exception as ex:
+            logger.error(ex)
+
     def audio_cb(self, msg):
         AudioData = self.convData(msg.data)
         Decibel = self.get_decibel(AudioData)
         freq = freq_from_fft(AudioData, self.rate)
         self.d.append(Decibel)
         self.freqs.append(freq)
+
+        frame = msg.data[:960] # 30ms
+        speech = vad.is_speech(frame, self.rate)
+        if self.speech != speech:
+            self.speech = speech
+            self.vad_change_event()
+        if self.speech:
+            self.speech_buf.append(msg.data)
+        if not self.speech or len(self.speech_buf) == self.speech_buf.maxlen:
+            text = self.get_text()
+            if text:
+                logger.info('Best hypothesis segments: {}'.format(text))
+                if not self.chat_start:
+                    self.chat_event_pub.publish('speechstart')
+                    self.chat_start = True
 
         msg2 = audiodata()
         msg2.Decibel = Decibel
