@@ -18,21 +18,24 @@ from pocketsphinx.pocketsphinx import *
 from sphinxbase.sphinxbase import *
 
 import webrtcvad
-vad = webrtcvad.Vad()
 
 MODELDIR = "/opt/hansonrobotics/share/pocketsphinx/model"
 
 logger = logging.getLogger('hr.audio_stream.audio_sensor')
-# Create a decoder with certain model
-config = Decoder.default_config()
-config.set_string('-hmm', os.path.join(MODELDIR, 'en-us/en-us'))
-config.set_string('-lm', os.path.join(MODELDIR, 'en-us/en-us.lm.bin'))
-config.set_string('-dict', os.path.join(MODELDIR, 'en-us/cmudict-en-us.dict'))
-decoder = Decoder(config)
 
 class AudioSensor(object):
 
     def __init__(self):
+        self.decocer_config = Decoder.default_config()
+        self.decocer_config.set_string(
+            '-hmm', os.path.join(MODELDIR, 'en-us/en-us'))
+        self.decocer_config.set_string(
+            '-lm', os.path.join(MODELDIR, 'en-us/en-us.lm.bin'))
+        self.decocer_config.set_string(
+            '-dict', os.path.join(MODELDIR, 'en-us/cmudict-en-us.dict'))
+        self.decoder = Decoder(self.decocer_config)
+        self.vad = webrtcvad.Vad()
+
         self.pub = rospy.Publisher(
             'audio_sensors', audiodata, queue_size=1)
         self.chat_event_pub = rospy.Publisher(
@@ -91,12 +94,12 @@ class AudioSensor(object):
     def get_text(self):
         try:
             if self.speech_buf:
-                decoder.start_utt()
+                self.decoder.start_utt()
                 for buf in self.speech_buf:
-                    decoder.process_raw(buf, False, False)
-                decoder.end_utt()
+                    self.decoder.process_raw(buf, False, False)
+                self.decoder.end_utt()
                 self.speech_buf.clear()
-                text = [seg.word for seg in decoder.seg()]
+                text = [seg.word for seg in self.decoder.seg()]
                 self.current_speech_buf_len = 0
                 if text and len(text) > 2:
                     return ' '.join(text[1:-1])
@@ -111,7 +114,7 @@ class AudioSensor(object):
         self.freqs.append(freq)
 
         frame = msg.data[:960] # 30ms
-        speech = vad.is_speech(frame, self.rate)
+        speech = self.vad.is_speech(frame, self.rate)
         if self.speech != speech:
             self.speech = speech
             self.vad_change_event()
@@ -122,7 +125,7 @@ class AudioSensor(object):
             if text:
                 logger.info('Best hypothesis segments: {}'.format(text))
                 if not self.chat_start:
-                    self.chat_event_pub.publish('speechstart')
+                    self.chat_event_pub.publish('speechstart:{}'.format(text))
                     self.chat_start = True
 
         msg2 = audiodata()
