@@ -14,7 +14,7 @@ define(['application', './templates/layout.tpl', 'lib/api', 'modules/motors/view
                 addAnimation: '.app-add-animation',
                 enableTorque: '.app-enable-torque',
                 disableTorque: '.app-disable-torque',
-                updateMotorState: '.app-read-values',
+                readValues: '.app-read-values',
                 expressions: '.app-expressions',
                 animationsColumn: '.app-animations-column',
                 motorsColumn: '.app-motors-column'
