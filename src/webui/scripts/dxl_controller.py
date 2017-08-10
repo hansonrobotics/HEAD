@@ -63,7 +63,7 @@ class DxlController:
                 states.angles.append(angle)
                 states.loads.append(state.load)
                 states.temperatures.append(state.temperature)
-                states.error.append(state.error)
+                states.errors.append(state.error)
 
         return states
 
