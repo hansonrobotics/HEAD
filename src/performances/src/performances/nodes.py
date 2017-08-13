@@ -245,7 +245,7 @@ class expression(Node):
         try:
             self.runner.topics['expression'].publish(
                 MakeFaceExpr('Neutral', self._magnitude(self.data['magnitude'])))
-            time.sleep(min(1,self.duration))
+            time.sleep(min(1, self.duration))
             logger.info("Neutral expression")
             self.runner.services['head_pau_mux']("/blender_api/get_pau")
             logger.info("Call head_pau_mux topic {}".format("/blender_api/get_pau"))
@@ -302,17 +302,33 @@ class pause(Node):
         if 'event_param' not in self.data.keys():
             self.data['event_param'] = False
 
-    def start_performance(self):
-        if self.subscriber:
-            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-            self.subscriber = None
-        req = RunByNameRequest()
-        req.id = str(self.data['on_event'] or '').strip()
-        if self.timer:
-            self.timer.cancel()
-        response = self.runner.run_full_performance_callback(req)
-        if not response.success:
-            self.runner.resume()
+    def resume_interrupted(self, msg):
+        print 'resume inter: ' + str(msg)
+        if msg.event == 'idle':
+            self.runner.unregister('events', self.resume_interrupted)
+            self.runner.resume_interrupted()
+
+    def start_performance(self, msg):
+        print 'msg:' + str(msg)
+        if msg.event == 'idle':
+            self.runner.unregister('events', self.start_performance)
+
+            if self.subscriber:
+                self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
+                self.subscriber = None
+
+            req = RunByNameRequest()
+            req.id = str(self.data['on_event'] or '').strip()
+            if self.timer:
+                self.timer.cancel()
+
+            response = self.runner.run_full_performance_callback(req)
+            if response.success:
+                print '------------------'
+                self.runner.register('events', self.resume_interrupted)
+                print '------------------'
+            else:
+                self.runner.resume()
 
     # This function needs to be reused in wholeshow to make sure consistent matching
     @staticmethod
@@ -328,14 +344,14 @@ class pause(Node):
                 matched = matched or False
         return matched
 
-
     def event_callback(self, msg=None):
         if self.data['event_param']:
             # Check if any comma separated
             if not self.event_matched(self.data['event_param'], msg):
                 return False
         if self.data['on_event']:
-            self.start_performance()
+            self.runner.interrupt()
+            self.runner.register('events', self.start_performance)
         else:
             self.resume()
 
@@ -350,6 +366,7 @@ class pause(Node):
 
     def start(self, run_time):
         self.runner.pause()
+
         if 'topic' in self.data:
             topic = str(self.data['topic'] or '').strip()
             if topic != 'ROSPARAM':
@@ -393,7 +410,8 @@ class chat_pause(Node):
     def start(self, run_time):
         if 'message' in self.data and self.data['message']:
             self.runner.pause()
-            self.runner.topics['chatbot'].publish(ChatMessage(utterance=self.data['message'], confidence=100, source='performances'))
+            self.runner.topics['chatbot'].publish(
+                ChatMessage(utterance=self.data['message'], confidence=100, source='performances'))
 
             def speech_event_callback(event):
                 if event.data == 'stop':
@@ -593,7 +611,8 @@ class attention(Node):
     @staticmethod
     # Gets x,y,z from given regions based on region type
     def get_point_from_regions(all_regions, region_type):
-        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in all_regions
+        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in
+                   all_regions
                    if r['type'] == region_type]
         if regions:
             y, matched = attention.get_random_axis_position(regions, 'x')
@@ -611,10 +630,9 @@ class attention(Node):
     # returns random coordinate from the region
     def get_point(self, region):
         regions = rospy.get_param(
-            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id), "properties/regions"), [])
+            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id),
+                               "properties/regions"), [])
         return self.get_point_from_regions(regions, region)
-
-
 
     def set_point(self, point):
         speed = 1 if 'speed' not in self.data else self.data['speed']
