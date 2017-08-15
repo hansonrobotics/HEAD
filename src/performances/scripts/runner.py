@@ -95,7 +95,7 @@ class Runner:
         rospy.Service('~stop', srv.Stop, self.stop_callback)
         rospy.Service('~current', srv.Current, self.current_callback)
         # Shared subscribers for nodes
-        rospy.Subscriber('~events', Event, self.event_callback)
+        rospy.Subscriber('~events', Event, self.runner_event_callback)
         rospy.Subscriber('/' + self.robot_name + '/speech_events', String,
                          lambda msg: self.notify('speech_events', msg))
         rospy.Subscriber('/' + self.robot_name + '/speech', ChatMessage, self.speech_callback)
@@ -563,9 +563,9 @@ class Runner:
     def speech_callback(self, msg):
         self.notify('SPEECH', msg.utterance)
 
-    def event_callback(self, msg):
+    def runner_event_callback(self, msg):
         print 'EVENT: ' + msg.event
-        self.notify('events', msg)
+        self.notify('RUNNER', msg.event)
 
     @staticmethod
     def is_param(param):

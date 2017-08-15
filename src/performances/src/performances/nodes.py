@@ -295,6 +295,9 @@ class pause(Node):
         Node.__init__(self, data, runner)
         self.subscriber = False
         self.timer = False
+        self.resume_interrupted_ref = None
+        self.start_performance_ref = None
+
         if 'topic' not in self.data.keys():
             self.data['topic'] = False
         if 'on_event' not in self.data.keys():
@@ -302,16 +305,16 @@ class pause(Node):
         if 'event_param' not in self.data.keys():
             self.data['event_param'] = False
 
-    def resume_interrupted(self, msg):
-        print 'resume inter: ' + str(msg)
-        if msg.event == 'idle':
-            self.runner.unregister('events', self.resume_interrupted)
+    def resume_interrupted(self, event):
+        print 'resume inter: ' + str(event)
+        if event == 'idle':
+            self.runner.unregister('RUNNER', self.resume_interrupted_ref)
             self.runner.resume_interrupted()
 
-    def start_performance(self, msg):
-        print 'msg:' + str(msg)
-        if msg.event == 'idle':
-            self.runner.unregister('events', self.start_performance)
+    def start_performance(self, event):
+        print 'msg:' + str(event)
+        if event == 'idle':
+            self.runner.unregister('RUNNER', self.start_performance_ref)
 
             if self.subscriber:
                 self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
@@ -325,7 +328,7 @@ class pause(Node):
             response = self.runner.run_full_performance_callback(req)
             if response.success:
                 print '------------------'
-                self.runner.register('events', self.resume_interrupted)
+                self.resume_interrupted_ref = self.runner.register('RUNNER', self.resume_interrupted)
                 print '------------------'
             else:
                 self.runner.resume()
@@ -351,7 +354,7 @@ class pause(Node):
                 return False
         if self.data['on_event']:
             self.runner.interrupt()
-            self.runner.register('events', self.start_performance)
+            self.start_performance_ref = self.runner.register('RUNNER', self.start_performance)
         else:
             self.resume()
 
