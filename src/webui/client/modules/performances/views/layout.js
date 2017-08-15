@@ -89,11 +89,11 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 this.syncedPerformance = new Performance()
                 this.syncedPerformance.enableSync(this.syncCallback)
 
-                this.performances.fetch({
-                    reset: true,
+                self.showCurrent({
                     success: function() {
-                        if (!self.performances.get(self.dir))
-                            self.showCurrent()
+                        self.performances.fetch({
+                            reset: true
+                        })
                     }
                 })
 
@@ -126,9 +126,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 app.changeCheck = null
                 this.unregisterShortcuts()
             },
-            setCurrentPerformance: function(p, options) {
-                options = options || {}
-
+            setCurrentPerformance: function(p, options={}) {
                 if (this.currentPerformance)
                     this.stopListening(this.currentPerformance)
 
@@ -237,8 +235,9 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 else
                     this.ui.container.removeClass('container-fluid').addClass('container')
             },
-            showCurrent: function() {
+            showCurrent: function(options) {
                 let self = this
+                options = options || {}
 
                 this.syncedPerformance.fetchCurrent({
                     success: function(response) {
@@ -254,12 +253,13 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                             if (self.syncedPerformance.id)
                                 self.performancesView.navigate(self.syncedPerformance.id)
 
-                            if (!response.performance) {
+                            if (!response.performance)
                                 self.destroyTimeline()
-                            }
-                        } else {
+                        } else
                             self.performancesView.back(self.syncedPerformance.id)
-                        }
+
+                        if (options.success)
+                            options.success()
                     }
                 })
             },
