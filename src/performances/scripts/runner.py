@@ -29,8 +29,6 @@ logger = logging.getLogger('hr.performances')
 
 class Runner:
     def __init__(self):
-        logger.info('Starting performances node')
-
         self.robot_name = rospy.get_param('/robot_name')
         self.robots_config_dir = rospy.get_param('/robots_config_dir')
         self.running = False
@@ -54,6 +52,8 @@ class Runner:
         self.worker = Thread(target=self.worker)
         self.worker.setDaemon(True)
         rospy.init_node('performances')
+        logger.info('Starting performances node')
+
         self.services = {
             'head_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/head_pau_mux/select', MuxSelect),
             'neck_pau_mux': rospy.ServiceProxy('/' + self.robot_name + '/neck_pau_mux/select', MuxSelect),
@@ -124,7 +124,7 @@ class Runner:
         self.stop()
         with self.lock:
             if self.running_performance:
-                print 'unloading'
+                logger.info('unloading')
                 self.running_performance = None
                 self.topics['running_performance'].publish(String(json.dumps(None)))
 
@@ -270,7 +270,7 @@ class Runner:
 
     def load_performance(self, performance):
         with self.lock:
-            print 'load: ' + performance['id']
+            logger.info('load: {0}'.format(performance.get('id', 'NO ID')))
             self.validate_performance(performance)
             self.running_performance = performance
             self.topics['running_performance'].publish(String(json.dumps(performance)))
@@ -280,7 +280,7 @@ class Runner:
 
     def run(self, start_time, unload_finished=False):
         self.stop()
-        print 'run at: ' + str(start_time)
+        logger.info('run at: {0}'.format(start_time))
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
@@ -325,8 +325,7 @@ class Runner:
                 self.paused = False
                 self.topics['tts_control'].publish('shutup')
 
-        print 'stop at: ' + str(stop_time)
-        # print traceback.print_stack()
+        logger.info('stop at: {0}'.format(stop_time))
         return stop_time
 
     def stop_callback(self, request=None):
@@ -374,8 +373,8 @@ class Runner:
         found = len(self.interrupted) > 0
 
         if found:
-            print 'resume interrupted'
             data = self.interrupted.pop()
+            logger.info('resume interrupted: {0}'.format(data['performance'].get('id', 'NO ID')))
             self.load_performance(data['performance'])
             self.run(data['time'])
 
@@ -406,7 +405,6 @@ class Runner:
                 running = True
                 self.running_nodes = [Node.createNode(node, self, self.start_time - offset, timeline.get('id', '')) for node in
                          timeline['nodes']]
-                print 'nodes: ' + str(self.running_nodes)
                 pid = timeline.get('id', '')
                 finished = None
                 pause = pid and self.get_property(os.path.dirname(pid), 'pause_behavior')
@@ -451,8 +449,6 @@ class Runner:
 
                 offset += self.get_timeline_duration(timeline)
 
-                print 'worker done at: ' + str(run_time)
-
                 with self.lock:
                     autopause = self.autopause and finished is False and i < len(timelines) - 1
 
@@ -490,9 +486,6 @@ class Runner:
             try:
                 self.observers[event][i](msg)
             except TypeError as e:
-                print event
-                print msg
-                print e
                 # Remove dead methods
                 del self.observers[event][i]
 
@@ -564,7 +557,7 @@ class Runner:
         self.notify('SPEECH', msg.utterance)
 
     def runner_event_callback(self, msg):
-        print 'EVENT: ' + msg.event
+        logger.info('runner: {0}'.format(msg.event))
         self.notify('RUNNER', msg.event)
 
     @staticmethod

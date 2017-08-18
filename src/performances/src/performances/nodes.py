@@ -306,13 +306,11 @@ class pause(Node):
             self.data['event_param'] = False
 
     def resume_interrupted(self, event):
-        print 'resume inter: ' + str(event)
         if event == 'idle':
             self.runner.unregister('RUNNER', self.resume_interrupted_ref)
             self.runner.resume_interrupted()
 
     def start_performance(self, event):
-        print 'msg:' + str(event)
         if event == 'idle':
             self.runner.unregister('RUNNER', self.start_performance_ref)
 
@@ -327,9 +325,7 @@ class pause(Node):
 
             response = self.runner.run_full_performance_callback(req)
             if response.success:
-                print '------------------'
                 self.resume_interrupted_ref = self.runner.register('RUNNER', self.resume_interrupted)
-                print '------------------'
             else:
                 self.runner.resume()
 
