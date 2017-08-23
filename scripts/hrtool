@@ -656,7 +656,7 @@ install_openface() {
     MD5SUMS["celeb-classifier.nn4.small2.v1.pkl"]=199a2c0d32fd0f22f14ad2d248280475
     MD5SUMS["shape_predictor_68_face_landmarks.dat.bz2"]=677a91476056de0507f1915adc7ef86a
     wget_cache http://openface-models.storage.cmusatyalab.org/nn4.small2.v1.t7
-    wget_cache http://openface-models.storage.cmusatyalab.org/celeb-classifier.nn4.small2.v1.pkl
+    wget_cache https://raw.githubusercontent.com/aybassiouny/OpenFaceCpp/master/models/openface/celeb-classifier.nn4.small2.v1.pkl
     if [[ ! -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat ]]; then
         wget_cache http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2
         bunzip2 -f ${HR_CACHE}/shape_predictor_68_face_landmarks.dat.bz2
