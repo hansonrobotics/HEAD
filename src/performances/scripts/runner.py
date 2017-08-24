@@ -46,11 +46,12 @@ class Runner:
         self.variables = {}
         # References to event subscribing node callbacks
         self.observers = {}
-        self.interrupted = []
+        self.interrupted_performances = []
         # Performances that already played as alternatives. Used to maximize different performance in single demo
         self.performances_played = {}
         self.worker = Thread(target=self.worker)
         self.worker.setDaemon(True)
+        self.queue = []
         rospy.init_node('performances')
         logger.info('Starting performances node')
 
@@ -145,12 +146,15 @@ class Runner:
             return srv.RunByNameResponse(False)
         return srv.RunByNameResponse(self.run(0.0))
 
-    def run_full_performance_callback(self, request):
+    def run_full_performance(self, id, start_time=0.0, unload_finished=False):
         self.stop()
-        performances = self.load_folder(request.id) or self.load(request.id)
+        performances = self.load_folder(id) or self.load(id)
         if not performances:
-            return srv.RunByNameResponse(False)
-        return srv.RunByNameResponse(self.run(0.0, unload_finished=True))
+            return False
+        return self.run(start_time, unload_finished=unload_finished)
+
+    def run_full_performance_callback(self, request):
+        return self.run_full_performance(request.id, unload_finished=True)
 
     def load_folder(self, id):
         if id.startswith('shared'):
@@ -279,13 +283,14 @@ class Runner:
         return srv.RunResponse(self.run(request.startTime))
 
     def run(self, start_time, unload_finished=False):
+        start_time = float(start_time or 0)
         self.stop()
-        logger.info('run at: {0}'.format(start_time))
         # Wait for worker to stop performance and enter waiting before proceeding
         self.run_condition.acquire()
         with self.lock:
             success = self.running_performance and len(self.running_performance) > 0
             if success:
+                logger.info('Running performance #' + self.running_performance.get('id', '') + ' at: {0}'.format(start_time))
                 self.unload_finished = unload_finished
                 self.running = True
                 self.start_time = start_time
@@ -325,7 +330,7 @@ class Runner:
                 self.paused = False
                 self.topics['tts_control'].publish('shutup')
 
-        logger.info('stop at: {0}'.format(stop_time))
+        logger.info('Stopping at: {0}'.format(stop_time))
         return stop_time
 
     def stop_callback(self, request=None):
@@ -361,7 +366,7 @@ class Runner:
     def interrupt(self):
         with self.lock:
             if self.running_performance:
-                self.interrupted.append({
+                self.interrupted_performances.append({
                     'performance': self.running_performance,
                     'time': self.get_run_time(),
                     # need to store this for node objects to stay alive and for callbacks to work
@@ -370,15 +375,36 @@ class Runner:
         self.stop()
 
     def resume_interrupted(self):
-        found = len(self.interrupted) > 0
+        found = len(self.interrupted_performances)
 
         if found:
-            data = self.interrupted.pop()
-            logger.info('resume interrupted: {0}'.format(data['performance'].get('id', 'NO ID')))
+            data = self.interrupted_performances.pop()
+            time = data['time']
+            logger.info('Resuming interrupted #{0} at {1}. {2} performances left'.format(data['performance']
+                                                                                       .get('id', ''), time, found - 1))
             self.load_performance(data['performance'])
-            self.run(data['time'])
+            self.run(time)
 
         return found
+
+    def append_to_queue(self, id, time=0):
+        logger.info('Adding performance #{0} to the queue scheduled to run at {1}'.format(id, time))
+        self.queue.append({'id': id, 'time': time})
+
+    def load_scheduled(self):
+        data = None
+        with self.lock:
+            not_empty = len(self.queue)
+            if not_empty:
+                data = self.queue.pop()
+
+        if not_empty:
+            logger.info('Loading performance #{0} at {1} from the queue'.format(data['id'], data['time']))
+            self.run_full_performance(data['id'], start_time=data['time'])
+        elif not self.resume_interrupted():
+            return False
+
+        return True
 
     def worker(self):
         self.run_condition.acquire()
@@ -407,9 +433,11 @@ class Runner:
                          timeline['nodes']]
                 pid = timeline.get('id', '')
                 finished = None
+                run_time = 0
                 pause = pid and self.get_property(os.path.dirname(pid), 'pause_behavior')
                 # Pause must be either enabled or not set (by default all performances are
                 # pausing behavior if its not set)
+
 
                 if (pause or pause is None) and behavior:
                     # Only pause behavior if its already running. Otherwise Pause behavior have no effect
@@ -447,6 +475,8 @@ class Runner:
                         # true if all performance nodes are already finished
                         finished = not running
 
+                logger.info('Performance finished at :{0}'.format(run_time))
+
                 offset += self.get_timeline_duration(timeline)
 
                 with self.lock:
@@ -458,9 +488,9 @@ class Runner:
             if not behavior:
                 self.topics['interaction'].publish('btree_on')
 
-                # if self.unload_finished:
-                #     self.unload_finished = False
-                #     self.unload()
+            # if self.unload_finished:
+            #     self.unload_finished = False
+            #     self.unload()
 
     def get_run_time(self):
         """
@@ -495,6 +525,7 @@ class Runner:
             self.observers[event] = []
         m = WeakMethod(cb)
         self.observers[event].append(m)
+        logger.info('Registering event for "{0}" which now has {1} handlers'.format(event, len(self.observers[event])))
         return m
 
     # Allows nodes to unsubscribe from events
@@ -502,6 +533,8 @@ class Runner:
         if event in self.observers:
             if ref in self.observers[event]:
                 self.observers[event].remove(ref)
+                logger.info('Unregistering event handler for "{0}" which now has {1} handlers'
+                            .format(event, len(self.observers[event])))
 
     def hand_callback(self, msg):
         self.notify('HAND', msg)
@@ -557,8 +590,10 @@ class Runner:
         self.notify('SPEECH', msg.utterance)
 
     def runner_event_callback(self, msg):
-        logger.info('runner: {0}'.format(msg.event))
+        logger.info('Runner event: {0}'.format(msg.event))
         self.notify('RUNNER', msg.event)
+        if msg.event == 'idle':
+            self.load_scheduled()
 
     @staticmethod
     def is_param(param):

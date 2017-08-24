@@ -44,7 +44,7 @@ class Node(object):
                         node.started = True
 
                 return node
-        print "Wrong node description"
+        logger.error("Wrong node description: {0}".format(str(data)))
 
     def replace_variables_text(self, text):
         variables = re.findall("{(.*?)}", text)
@@ -293,10 +293,8 @@ class kfanimation(Node):
 class pause(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
-        self.subscriber = False
+        self.event_callback_ref = False
         self.timer = False
-        self.resume_interrupted_ref = None
-        self.start_performance_ref = None
 
         if 'topic' not in self.data.keys():
             self.data['topic'] = False
@@ -305,29 +303,11 @@ class pause(Node):
         if 'event_param' not in self.data.keys():
             self.data['event_param'] = False
 
-    def resume_interrupted(self, event):
-        if event == 'idle':
-            self.runner.unregister('RUNNER', self.resume_interrupted_ref)
-            self.runner.resume_interrupted()
+    def start_performance(self):
+        if self.timer:
+            self.timer.cancel()
 
-    def start_performance(self, event):
-        if event == 'idle':
-            self.runner.unregister('RUNNER', self.start_performance_ref)
-
-            if self.subscriber:
-                self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-                self.subscriber = None
-
-            req = RunByNameRequest()
-            req.id = str(self.data['on_event'] or '').strip()
-            if self.timer:
-                self.timer.cancel()
-
-            response = self.runner.run_full_performance_callback(req)
-            if response.success:
-                self.resume_interrupted_ref = self.runner.register('RUNNER', self.resume_interrupted)
-            else:
-                self.runner.resume()
+        self.runner.append_to_queue(self.data['on_event'])
 
     # This function needs to be reused in wholeshow to make sure consistent matching
     @staticmethod
@@ -344,20 +324,20 @@ class pause(Node):
         return matched
 
     def event_callback(self, msg=None):
+        self.delete_callback_ref()
+
         if self.data['event_param']:
             # Check if any comma separated
             if not self.event_matched(self.data['event_param'], msg):
                 return False
+
         if self.data['on_event']:
             self.runner.interrupt()
-            self.start_performance_ref = self.runner.register('RUNNER', self.start_performance)
+            self.start_performance()
         else:
             self.resume()
 
     def resume(self):
-        if self.subscriber:
-            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-            self.subscriber = None
         if not self.finished:
             self.runner.resume()
         if self.timer:
@@ -369,7 +349,7 @@ class pause(Node):
         if 'topic' in self.data:
             topic = str(self.data['topic'] or '').strip()
             if topic != 'ROSPARAM':
-                self.subscriber = self.runner.register(topic, self.event_callback)
+                self.event_callback_ref = self.runner.register(topic, self.event_callback)
                 # Paused SPEECH event should not be forwarded to chatbot if its enabled.
                 # The filtering is in wholeshow node
                 if self.data['event_param']:
@@ -390,10 +370,13 @@ class pause(Node):
         except (ValueError, KeyError) as e:
             logger.error(e)
 
+    def delete_callback_ref(self):
+        if self.event_callback_ref:
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.event_callback_ref)
+            self.event_callback_ref = None
+
     def stop(self, run_time):
-        if self.subscriber:
-            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-            self.subscriber = None
+        self.delete_callback_ref()
         if self.timer:
             self.timer.cancel()
 
