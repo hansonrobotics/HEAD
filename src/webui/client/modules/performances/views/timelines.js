@@ -334,7 +334,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     })
                 }
 
-                Mousetrap.bind(['space', 'alt+a'], function(e) {
+                Mousetrap.bind(['ctrl+space', 'alt+a'], function(e) {
                     if (!self.running)
                         self.runAtIndicator()
                     else if (self.paused)
@@ -371,7 +371,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     Mousetrap.unbind('del')
                 }
 
-                Mousetrap.unbind(['space', 'alt+a'])
+                Mousetrap.unbind(['ctrl+space', 'alt+a'])
                 Mousetrap.unbind('[')
                 Mousetrap.unbind(']')
             },

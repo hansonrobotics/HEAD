@@ -1,8 +1,8 @@
 define(['application', 'marionette', './templates/node_select.tpl', '../entities/node',
         '../../settings/views/settings', '../../settings/entities/node_config_schema',
-        '../../settings/entities/node_config', 'lib/api', 'underscore', 'jquery', 'jquery-ui', 'lib/crosshair-slider',
+        '../../settings/entities/node_config', 'lib/api', 'underscore', 'mousetrap', 'jquery-ui', 'lib/crosshair-slider',
         'select2', 'select2-css'],
-    function(App, Marionette, template, Node, SettingsView, NodeConfigSchema, NodeConfig, api, _, $) {
+    function(App, Marionette, template, Node, SettingsView, NodeConfigSchema, NodeConfig, api, _, Mousetrap) {
         return Marionette.View.extend({
             template: template,
             ui: {
@@ -29,7 +29,8 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 removeListenResponseButton: '.app-remove-listen-response',
                 enableChatbotCheckbox: '.app-enable-chatbot-checkbox',
                 responsesProperty: '[data-node-property="responses"]',
-                ttsPreviewButton: '.app-tts-preview'
+                ttsPreviewButton: '.app-tts-preview',
+                filterText: '.app-filter-text'
             },
             events: {
                 'keyup @ui.textInput': 'setText',
@@ -57,6 +58,9 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                 this.initTypes()
                 this.initFields()
                 this.ui.container.perfectScrollbar()
+            },
+            onDestroy: function() {
+                this.destroyListFiltering()
             },
             initTypes: function() {
                 switch (this.model.get('name')) {
@@ -203,9 +207,12 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
             },
             initList: function(list, attr, container, options) {
                 if (this.isDestroyed()) return
+                this.resetFilter()
                 let self = this
                 options = options || {}
                 container.html('')
+
+                this.initListFiltering(container)
 
                 if (list && list.constructor === Array)
                     list = _.sortBy(list)
@@ -215,6 +222,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                         val = label
 
                     let thumbnail = $('<div>').addClass('app-node-thumbnail')
+                        .attr('data-filter-val', val.toLowerCase())
                         .attr('data-node-name', self.model.get('name')).attr('data-' + attr, val)
                         .html($('<span>').html(label)).click(function() {
                             self.model.set(attr, val)
@@ -267,6 +275,50 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
 
                 this.model.on('change:' + attr, update)
                 update()
+            },
+            filterText: '',
+            setFilterText: function(text) {
+                this.filterText = text
+                this.ui.filterText.html(text)
+            },
+            filter: function(text) {
+                if (typeof text !== 'undefined')
+                    this.setFilterText(text)
+
+                if (this.filterText) {
+                    let filter = '[data-filter-val^="' + this.filterText + '"]'
+                    this.filterContainer.find(filter).stop().fadeIn()
+                    this.filterContainer.find('.app-node-thumbnail:not(' + filter + ')').stop().fadeOut()
+                } else
+                    this.filterContainer.find('.app-node-thumbnail').fadeIn()
+            },
+            resetFilter: function() {
+                this.setFilterText('')
+            },
+            filterCallback: function(e) {
+                if (e.key.length === 1)
+                    this.filter(this.filterText + e.key)
+            },
+            initListFiltering: function(container) {
+                let self = this
+                this.destroyListFiltering()
+                this.filterContainer = container
+                this.filter_callback_ref = this.filterCallback.bind(this)
+                $(document).keypress(this.filter_callback_ref)
+                Mousetrap.bind('esc', function() {
+                    self.filter('')
+                })
+
+                Mousetrap.bind('backspace', function() {
+                    self.filter(self.filterText.length > 1 ? self.filterText.slice(0, -1) : '')
+                })
+            },
+            destroyListFiltering: function() {
+                if (this.filter_callback_ref)
+                    $(document).off('keypress', this.filter_callback_ref)
+
+                Mousetrap.unbind('esc')
+                Mousetrap.unbind('backspace')
             },
             updateEmotions: function(emotions) {
                 this.initList(emotions, 'emotion', this.ui.emotionList)

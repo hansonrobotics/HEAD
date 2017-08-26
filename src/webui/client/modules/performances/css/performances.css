@@ -662,3 +662,9 @@ li.app-performance .app-edit {
 .app-tts-preview {
     margin-top: 5px;
 }
+
+.app-filter-text {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}
