@@ -1,6 +1,6 @@
 define(['jquery', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in', 'bootbox', 'lib/api',
         'bootstrap-css', 'jquery-ui-css', 'font-awesome', 'css/application.css'],
-    function ($, Marionette, template, FadeInRegion, bootbox, api) {
+    function($, Marionette, template, FadeInRegion, bootbox, api) {
         return Marionette.View.extend({
             template: template,
             ui: {
@@ -25,57 +25,56 @@ define(['jquery', 'marionette', './templates/layout.tpl', 'lib/regions/fade_in',
                     regionClass: FadeInRegion
                 }
             },
-            onRender: function () {
-                this.setFluid(!!this.options.fluid);
-                this.ui.adminNav.hide();
-                this.ui.userNav.hide();
+            onRender: function() {
+                this.setFluid(this.options.fluid)
+                this.ui.adminNav.hide()
+                this.ui.userNav.hide()
             },
-            setTitle: function (title) {
-                this.ui.title.text(title);
+            setTitle: function(title) {
+                this.ui.title.text(title)
             },
-            reportClicked: function (e) {
-                e.preventDefault();
+            reportClicked: function(e) {
+                e.preventDefault()
                 bootbox.prompt({
                     title: "Describe the problem you have found",
                     inputType: 'textarea',
-                    callback: function (result) {
-                        if (result !== null) api.bugReport(result);
+                    callback: function(result) {
+                        if (result !== null) api.bugReport(result)
                     }
-                });
+                })
             },
-            showAdminNav: function () {
+            showAdminNav: function() {
                 if (!this.ui.adminNav.is(':visible')) {
-                    this.ui.adminNav.show();
-                    this.ui.userNav.hide();
+                    this.ui.adminNav.show()
+                    this.ui.userNav.hide()
                 }
             },
-            showNav: function () {
+            showNav: function() {
                 if (!this.ui.userNav.is(':visible')) {
-                    this.ui.userNav.show();
-                    this.ui.adminNav.hide();
+                    this.ui.userNav.show()
+                    this.ui.adminNav.hide()
                 }
             },
-            hideNav: function () {
-                this.ui.userNav.hide();
-                this.ui.adminNav.hide();
-                this.ui.notifications.hide();
-                this.ui.reportButton.hide();
+            hideNav: function() {
+                this.ui.userNav.hide()
+                this.ui.adminNav.hide()
+                this.ui.notifications.hide()
+                this.ui.reportButton.hide()
             },
-            navLinkClicked: function () {
-                $('.navbar-collapse.in').collapse('hide');
+            navLinkClicked: function() {
+                $('.navbar-collapse.in').collapse('hide')
             },
-            setFluid: function (enable) {
+            setFluid: function(enable) {
                 if (enable) {
-                    this.ui.navbarContainer.removeClass('container').addClass('container-fluid');
-                    this.ui.content.removeClass('container').addClass('container-fluid');
-
+                    this.ui.navbarContainer.removeClass('container').addClass('container-fluid')
+                    this.ui.content.removeClass('container').addClass('container-fluid')
                 } else {
-                    this.ui.navbarContainer.removeClass('container-fluid').addClass('container');
-                    this.ui.content.removeClass('container-fluid').addClass('container');
+                    this.ui.navbarContainer.removeClass('container-fluid').addClass('container')
+                    this.ui.content.removeClass('container-fluid').addClass('container')
                 }
             },
-            getContentHeight: function () {
-                return window.innerHeight - this.ui.navbar.outerHeight();
+            getContentHeight: function() {
+                return window.innerHeight - this.ui.navbar.outerHeight()
             }
-        });
-    });
+        })
+    })

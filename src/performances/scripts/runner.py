@@ -229,6 +229,9 @@ class Runner:
         offset = 0
 
         for timeline in timelines:
+            if 'enabled' in timeline and not timeline['enabled']:
+                continue
+
             duration = 0
             nodes = timeline.get('nodes', [])
             nodes = copy.deepcopy(nodes)
