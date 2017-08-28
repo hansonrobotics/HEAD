@@ -286,7 +286,7 @@ define(['application', 'marionette', './templates/node_select.tpl', '../entities
                     this.setFilterText(text)
 
                 if (this.filterText) {
-                    let filter = '[data-filter-val^="' + this.filterText + '"]'
+                    let filter = '[data-filter-val*="' + this.filterText + '"]'
                     this.filterContainer.find(filter).stop().fadeIn()
                     this.filterContainer.find('.app-node-thumbnail:not(' + filter + ')').stop().fadeOut()
                 } else
