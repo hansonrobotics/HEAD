@@ -371,6 +371,9 @@ class Runner:
                 self.running_performance]
 
             for i, timeline in enumerate(timelines):
+                if 'enabled' in timeline and not timeline['enabled']:
+                    continue
+
                 # check if performance is finished without starting
                 running = True
                 nodes = [Node.createNode(node, self, self.start_time - offset, timeline.get('id', '')) for node in
