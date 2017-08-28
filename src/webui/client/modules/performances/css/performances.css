@@ -445,6 +445,7 @@ textarea.form-control.app-node-text {
     cursor: pointer;
     border: 1px solid #182934;
     padding: 7px;
+    word-break: break-all;
 }
 
 .app-node-content .app-node-thumbnail span {
