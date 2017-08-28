@@ -4,7 +4,7 @@
             <label>Start time</label>
 
             <div class="input-group">
-                <input type="text" class="app-node-start-time form-control" title="Start time"/>
+                <input class="app-node-start-time form-control" title="Start time"/>
 
                 <div class="input-group-addon">s</div>
             </div>
@@ -14,7 +14,7 @@
             <label>Duration</label>
 
             <div class="input-group">
-                <input type="text" class="app-node-duration form-control" title="Duration"/>
+                <input class="app-node-duration form-control" title="Duration"/>
 
                 <div class="input-group-addon">s</div>
             </div>
@@ -45,7 +45,7 @@
             <label>Message</label>
 
             <div class="input-group">
-                <input type="text" class="app-node-message-input form-control" title="Message"/>
+                <input class="app-node-message-input form-control" title="Message"/>
             </div>
         </div>
 
@@ -63,19 +63,19 @@
 
         <div class="form-group" data-node-property="fps">
             <label title="FPS">FPS <span
-                        class="app-fps-label pull-right label label-default"></span></label>
+                    class="app-fps-label pull-right label label-default"></span></label>
             <div class="app-fps-slider"></div>
         </div>
 
         <div class="form-group" data-node-property="pitch">
             <label title="FPS">Pitch <span
-                        class="app-pitch-label pull-right label label-default"></span></label>
+                    class="app-pitch-label pull-right label label-default"></span></label>
             <div class="app-pitch-slider"></div>
         </div>
 
         <div class="form-group" data-node-property="volume">
             <label title="FPS">Volume <span
-                        class="app-volume-label pull-right label label-default"></span></label>
+                    class="app-volume-label pull-right label label-default"></span></label>
             <div class="app-volume-slider"></div>
         </div>
 
@@ -97,7 +97,7 @@
 
         <div class="form-group" data-node-property="magnitude">
             <label title="Magnitude">Magnitude <span
-                        class="app-magnitude-label pull-right label label-default"></span></label>
+                    class="app-magnitude-label pull-right label label-default"></span></label>
 
             <div class="app-magnitide-slider"></div>
         </div>
@@ -113,17 +113,24 @@
 
         <div class="form-group" data-node-property="no_match">
             <label>No match response</label>
-            <input type="text" class="app-no-match-input form-control">
+            <input class="app-no-match-input form-control">
         </div>
 
         <div class="form-group" data-node-property="no_speech">
             <label>No speech response</label>
-            <input type="text" class="app-no-speech-input form-control">
+            <input class="app-no-speech-input form-control">
         </div>
+
         <div class="form-group" data-node-property="on_event">
             <label>Performance to run if event happens</label>
-            <input type="text" class="app-on-event form-control">
+            <input class="app-on-event form-control">
         </div>
+
+        <label data-node-property="break">
+            <input type="checkbox" name="break">
+            Break performance after event
+        </label>
+
         <div class="form-group">
             <button class="app-create-button pull-right btn btn-primary">Create</button>
         </div>

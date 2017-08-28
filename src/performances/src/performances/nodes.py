@@ -307,7 +307,11 @@ class pause(Node):
         if self.timer:
             self.timer.cancel()
 
-        self.runner.append_to_queue(self.data['on_event'])
+        if 'break' in self.data and not self.data['break']:
+            self.runner.interrupt()
+            self.runner.append_to_queue(self.data['on_event'])
+        else:
+            self.runner.run_full_performance(self.data['on_event'])
 
     # This function needs to be reused in wholeshow to make sure consistent matching
     @staticmethod
@@ -332,7 +336,6 @@ class pause(Node):
                 return False
 
         if self.data['on_event']:
-            self.runner.interrupt()
             self.start_performance()
         else:
             self.resume()
