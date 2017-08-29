@@ -454,9 +454,13 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                         let offset = 0
 
                         self.queueCollection.find(function(item) {
-                            offset += item.get('performance').getDuration()
-                            let found = time < offset
+                            let performance = item.get('performance'),
+                                enabled = performance.get('enabled')
 
+                            enabled = typeof enabled === 'undefined' || enabled
+                            offset += performance.getDuration()
+
+                            let found = time < offset && enabled
                             if (found) self.highlight(item)
 
                             return found
