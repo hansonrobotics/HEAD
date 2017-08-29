@@ -573,6 +573,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
             },
             pasteSelectedNodes: function(offset) {
                 let nodes = app.state.get('node_clipboard')
+                this.deselectNodes()
 
                 if (nodes) {
                     if (nodes.constructor !== Array) nodes = [nodes]
@@ -582,6 +583,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                         let model = new Node(node)
                         model.set('start_time', model.get('start_time') + offset)
                         self.model.get('nodes').add(model)
+                        self.selectNode(model)
                     })
                 }
             },
