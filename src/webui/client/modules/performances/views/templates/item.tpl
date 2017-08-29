@@ -1,5 +1,8 @@
 <div class="controls-container">
     <span class="app-drag-handle pull-left ui-icon ui-icon-arrowthick-2-n-s"></span>
+    <label>
+        <input class="app-enable-checkbox" type="checkbox">
+    </label>
     <button type="button" class="app-play pull-left btn btn-primary">
         <span class="glyphicon glyphicon-play"></span>
     </button>

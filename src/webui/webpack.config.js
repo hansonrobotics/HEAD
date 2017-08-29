@@ -99,7 +99,7 @@ module.exports = {
             'natural-sort': 'javascript-natural-sort'
         },
         extensions: ['', '.js', '.css', '.yaml'],
-        root: [path.join(__dirname, './client')],
+        root: [path.join(__dirname, 'client'), path.join(__dirname, 'node_modules')],
         modulesDirectories: ['node_modules', 'client']
     },
     plugins: [

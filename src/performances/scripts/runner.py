@@ -238,6 +238,9 @@ class Runner:
         offset = 0
 
         for timeline in timelines:
+            if 'enabled' in timeline and not timeline['enabled']:
+                continue
+
             duration = 0
             nodes = timeline.get('nodes', [])
             nodes = copy.deepcopy(nodes)
@@ -427,6 +430,9 @@ class Runner:
                 self.running_performance]
 
             for i, timeline in enumerate(timelines):
+                if 'enabled' in timeline and not timeline['enabled']:
+                    continue
+
                 # check if performance is finished without starting
                 running = True
                 self.running_nodes = [Node.createNode(node, self, self.start_time - offset, timeline.get('id', '')) for node in

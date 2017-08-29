@@ -645,6 +645,10 @@ li.app-performance .app-edit {
     flex-shrink: 0;
 }
 
+.controls-container .icheckbox_polaris {
+    bottom: 2px;
+}
+
 .app-performance .app-description-container {
     white-space: nowrap;
     overflow: hidden;
