@@ -44,7 +44,7 @@ class Node(object):
                         node.started = True
 
                 return node
-        print "Wrong node description"
+        logger.error("Wrong node description: {0}".format(str(data)))
 
     def replace_variables_text(self, text):
         variables = re.findall("{(.*?)}", text)
@@ -245,7 +245,7 @@ class expression(Node):
         try:
             self.runner.topics['expression'].publish(
                 MakeFaceExpr('Neutral', self._magnitude(self.data['magnitude'])))
-            time.sleep(min(1,self.duration))
+            time.sleep(min(1, self.duration))
             logger.info("Neutral expression")
             self.runner.services['head_pau_mux']("/blender_api/get_pau")
             logger.info("Call head_pau_mux topic {}".format("/blender_api/get_pau"))
@@ -293,8 +293,9 @@ class kfanimation(Node):
 class pause(Node):
     def __init__(self, data, runner):
         Node.__init__(self, data, runner)
-        self.subscriber = False
+        self.event_callback_ref = False
         self.timer = False
+
         if 'topic' not in self.data.keys():
             self.data['topic'] = False
         if 'on_event' not in self.data.keys():
@@ -303,16 +304,14 @@ class pause(Node):
             self.data['event_param'] = False
 
     def start_performance(self):
-        if self.subscriber:
-            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-            self.subscriber = None
-        req = RunByNameRequest()
-        req.id = str(self.data['on_event'] or '').strip()
         if self.timer:
             self.timer.cancel()
-        response = self.runner.run_full_performance_callback(req)
-        if not response.success:
-            self.runner.resume()
+
+        if 'break' in self.data and not self.data['break']:
+            self.runner.interrupt()
+            self.runner.append_to_queue(self.data['on_event'])
+        else:
+            self.runner.run_full_performance(self.data['on_event'])
 
     # This function needs to be reused in wholeshow to make sure consistent matching
     @staticmethod
@@ -328,21 +327,20 @@ class pause(Node):
                 matched = matched or False
         return matched
 
-
     def event_callback(self, msg=None):
+        self.delete_callback_ref()
+
         if self.data['event_param']:
             # Check if any comma separated
             if not self.event_matched(self.data['event_param'], msg):
                 return False
+
         if self.data['on_event']:
             self.start_performance()
         else:
             self.resume()
 
     def resume(self):
-        if self.subscriber:
-            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-            self.subscriber = None
         if not self.finished:
             self.runner.resume()
         if self.timer:
@@ -350,10 +348,11 @@ class pause(Node):
 
     def start(self, run_time):
         self.runner.pause()
+
         if 'topic' in self.data:
             topic = str(self.data['topic'] or '').strip()
             if topic != 'ROSPARAM':
-                self.subscriber = self.runner.register(topic, self.event_callback)
+                self.event_callback_ref = self.runner.register(topic, self.event_callback)
                 # Paused SPEECH event should not be forwarded to chatbot if its enabled.
                 # The filtering is in wholeshow node
                 if self.data['event_param']:
@@ -374,10 +373,13 @@ class pause(Node):
         except (ValueError, KeyError) as e:
             logger.error(e)
 
+    def delete_callback_ref(self):
+        if self.event_callback_ref:
+            self.runner.unregister(str(self.data['topic'] or '').strip(), self.event_callback_ref)
+            self.event_callback_ref = None
+
     def stop(self, run_time):
-        if self.subscriber:
-            self.runner.unregister(str(self.data['topic'] or '').strip(), self.subscriber)
-            self.subscriber = None
+        self.delete_callback_ref()
         if self.timer:
             self.timer.cancel()
 
@@ -393,7 +395,8 @@ class chat_pause(Node):
     def start(self, run_time):
         if 'message' in self.data and self.data['message']:
             self.runner.pause()
-            self.runner.topics['chatbot'].publish(ChatMessage(utterance=self.data['message'], confidence=100, source='performances'))
+            self.runner.topics['chatbot'].publish(
+                ChatMessage(utterance=self.data['message'], confidence=100, source='performances'))
 
             def speech_event_callback(event):
                 if event.data == 'stop':
@@ -593,7 +596,8 @@ class attention(Node):
     @staticmethod
     # Gets x,y,z from given regions based on region type
     def get_point_from_regions(all_regions, region_type):
-        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in all_regions
+        regions = [{'x': r['x'], 'y': r['y'] - r['height'], 'width': r['width'], 'height': r['height']} for r in
+                   all_regions
                    if r['type'] == region_type]
         if regions:
             y, matched = attention.get_random_axis_position(regions, 'x')
@@ -611,10 +615,9 @@ class attention(Node):
     # returns random coordinate from the region
     def get_point(self, region):
         regions = rospy.get_param(
-            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id), "properties/regions"), [])
+            '/' + os.path.join(self.runner.robot_name, "webui/performances", os.path.dirname(self.id),
+                               "properties/regions"), [])
         return self.get_point_from_regions(regions, region)
-
-
 
     def set_point(self, point):
         speed = 1 if 'speed' not in self.data else self.data['speed']

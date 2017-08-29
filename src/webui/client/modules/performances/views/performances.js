@@ -307,7 +307,8 @@ define(['application', 'marionette', 'backbone', './templates/performances.tpl',
                         })
                         this.ui.nav.slideUp()
                         this.ui.backButton.show()
-                        this.layoutView.setCurrentPerformance(this.currentPerformance)
+                        if (!this.layoutView.currentPerformance || this.layoutView.currentPerformance.id !== this.currentPerformance.id)
+                            this.layoutView.setCurrentPerformance(this.currentPerformance)
                     } else {
                         this.updateVisiblePerformances(id)
                         this.updateTabs()
