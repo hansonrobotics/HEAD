@@ -387,7 +387,7 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 if (item instanceof Performance)
                     item = this.queueCollection.find({performance: item})
 
-                if (item instanceof QueueCollection) {
+                if (item instanceof QueueItem) {
                     let el = this.ui.queueContainer.find('[data-model-cid=' + item.cid + ']')
 
                     if (!el.hasClass('active')) {
