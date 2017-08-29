@@ -47,7 +47,7 @@ class Node(object):
         logger.error("Wrong node description: {0}".format(str(data)))
 
     def replace_variables_text(self, text):
-        variables = re.findall("{(.*?)}", text)
+        variables = re.findall("{(\w*?)}", text)
         for var in variables:
             val = self.runner.get_variable(self.id, var) or ''
             text = text.replace('{' + var + '}', val)
