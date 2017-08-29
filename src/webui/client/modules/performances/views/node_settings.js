@@ -32,7 +32,8 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 noMatchInput: '.app-no-match-input',
                 noSpeechInput: '.app-no-speech-input',
                 chatTimeoutModeSelect: '.app-chat-timeout-mode-select',
-                chatbotSelect: '.app-chatbot-select'
+                chatbotSelect: '.app-chatbot-select',
+                breakCheckbox: '[data-node-property="break"] input'
             },
             events: {
                 'change @ui.duration': 'setDuration',
@@ -48,7 +49,8 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 'change @ui.noSpeechInput': 'updateNoSpeech',
                 'change @ui.chatbotSelect': 'updateChatbot',
                 'change @ui.chatTimeoutModeSelect': 'updateChatTimeoutMode',
-                'change @ui.onEventInput': 'updateOnEvent'
+                'change @ui.onEventInput': 'updateOnEvent',
+                'change @ui.breakCheckbox': 'updateBreak'
             },
             modelEvents: {
                 change: 'modelChanged'
@@ -233,6 +235,10 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
                 if (this.model.hasProperty('attention_region'))
                     this.buildCrosshair()
 
+                if (this.model.hasProperty('break')) {
+                    let breakAfter = this.model.get('break')
+                    this.ui.breakCheckbox.prop('checked', typeof breakAfter === 'undefined' || breakAfter)
+                }
             },
             collectionUpdated: function() {
                 this.toggleButtons(true)
@@ -317,6 +323,9 @@ define(['application', 'marionette', './templates/node_settings.tpl', '../entiti
             },
             updateChatTimeoutMode: function() {
                 this.model.set('timeout_mode', this.ui.chatTimeoutModeSelect.val())
+            },
+            updateBreak: function() {
+                this.model.set('break', this.ui.breakCheckbox.is(':checked'))
             }
         })
     })

@@ -85,4 +85,6 @@
                                                                aria-hidden="true"></span> Add response</button>
         </div>
     </div>
+
+    <span class="app-filter-text label label-info"></span>
 </div>
