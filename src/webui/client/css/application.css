@@ -149,7 +149,7 @@ nav.navbar {
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus,
 .navbar-default .navbar-nav > li > button:hover,
-.navbar-default .navbar-nav > li > button:focus{
+.navbar-default .navbar-nav > li > button:focus {
     background: inherit;
     color: #FFF;
     border-bottom: 1px solid #6cadd3;
@@ -324,7 +324,6 @@ span.select2-selection.select2-selection--single {
     pointer-events: auto !important;
 }
 
-
 .hidden {
     display: none;
 }
@@ -354,4 +353,8 @@ span.select2-selection.select2-selection--single {
 .app-context-menu {
     border: 1px solid #182933;
     box-shadow: 2px 2px 2px 0 #182933;
+}
+
+.icheckbox_polaris {
+    position: relative;
 }

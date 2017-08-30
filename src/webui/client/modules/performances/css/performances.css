@@ -673,3 +673,8 @@ li.app-performance .app-edit {
     top: 5px;
     right: 10px;
 }
+
+.app-spinner-container {
+    height: 50px;
+    position: relative;
+}

@@ -51,7 +51,8 @@
     "underscore-tpl": "^0.3.3",
     "yaml-loader": "^0.4.0",
     "yargs": "^5.0.0",
-    "icheck": "^1.0.2"
+    "icheck": "^1.0.2",
+    "spin.js": "^2.3.2"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.7",

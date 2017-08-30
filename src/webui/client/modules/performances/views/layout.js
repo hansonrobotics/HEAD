@@ -166,8 +166,6 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
             refreshCurrentPerformance: function(options) {
                 options = options || {}
                 let self = this
-                if (!options.skipLoading)
-                    this.currentPerformance.nodes.reset()
                 this.clearQueue()
                 this.updateTimelineQueue(new PerformanceCollection(this.currentPerformance.get('timelines')))
                 this.listenTo(this.currentPerformance, 'change:timelines', function() {
@@ -338,6 +336,11 @@ define(['application', 'marionette', 'backbone', './templates/layout.tpl', 'lib/
                 }
             },
             updateTimeline: function(options) {
+                options = options || {}
+
+                if (!options.skipLoading)
+                    this.currentPerformance.nodes.reset()
+
                 this.timelinesView = this._showTimeline(_.extend({
                     model: this.currentPerformance,
                     readonly: true
