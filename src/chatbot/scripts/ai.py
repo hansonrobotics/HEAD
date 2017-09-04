@@ -83,6 +83,7 @@ class Chatbot():
         self.respond_worker.daemon = True
         self.respond_worker.start()
         self.delay_response = rospy.get_param('delay_response', False)
+        self.recover = False
         self.delay_time = rospy.get_param('delay_time', 5)
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
@@ -237,7 +238,10 @@ class Chatbot():
         t = Template(response)
         if hasattr(t.module, 'delay'):
             delay = t.module.delay
+            if not self.delay_response:
+                self.recover = True
             param = {
+                'delay_response': True,
                 'delay_time': delay,
             }
             update_parameter('chatbot', param, timeout=2)
@@ -263,6 +267,13 @@ class Chatbot():
         orig_text = response.get('orig_text')
         if orig_text:
             self.handle_control(orig_text)
+        elif self.recover:
+            param = {
+                'delay_response': False
+            }
+            update_parameter('chatbot', param, timeout=2)
+            self.recover = False
+            logger.info("Recovered delay response")
 
         # Add space after punctuation for multi-sentence responses
         text = text.replace('?', '? ')
