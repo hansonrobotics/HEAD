@@ -474,6 +474,7 @@ def _ask_characters(characters, question, lang, sid, query, request_id, **kwargs
     if answer and re.match('.*{.*}.*', answer):
         logger.info("Template answer {}".format(answer))
         try:
+            response['orig_text'] = answer
             answer = render(answer)
             response['text'] = answer
         except Exception as ex:

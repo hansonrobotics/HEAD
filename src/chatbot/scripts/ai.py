@@ -13,11 +13,15 @@ import uuid
 import pandas as pd
 import random
 
+from jinja2 import Template, Environment, meta
+
 from chatbot.polarity import Polarity
 from chatbot.msg import ChatMessage
 from std_msgs.msg import String
 from audio_stream.msg import audiodata
+import dynamic_reconfigure
 from dynamic_reconfigure.server import Server
+import dynamic_reconfigure.client
 from chatbot.cfg import ChatbotConfig
 from chatbot.client import Client
 
@@ -25,6 +29,15 @@ logger = logging.getLogger('hr.chatbot.ai')
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
 HR_CHATBOT_REQUEST_DIR = os.environ.get('HR_CHATBOT_REQUEST_DIR') or \
     os.path.expanduser('~/.hr/chatbot/requests')
+
+def update_parameter(node, param, *args, **kwargs):
+    client = dynamic_reconfigure.client.Client(node, *args, **kwargs)
+    try:
+        client.update_configuration(param)
+    except dynamic_reconfigure.DynamicReconfigureParameterException as ex:
+        logger.error("Updating {} parameter: {}".format(node, ex))
+        return False
+    return True
 
 class Console(object):
     def write(self, msg):
@@ -70,6 +83,7 @@ class Chatbot():
         self.respond_worker.daemon = True
         self.respond_worker.start()
         self.delay_response = rospy.get_param('delay_response', False)
+        self.recover = False
         self.delay_time = rospy.get_param('delay_time', 5)
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
@@ -220,6 +234,19 @@ class Chatbot():
             columns=columns)
         logger.info("Write request to {}".format(self.requests_fname))
 
+    def handle_control(self, response):
+        t = Template(response)
+        if hasattr(t.module, 'delay'):
+            delay = t.module.delay
+            if not self.delay_response:
+                self.recover = True
+            param = {
+                'delay_response': True,
+                'delay_time': delay,
+            }
+            update_parameter('chatbot', param, timeout=2)
+            logger.info("Set delay to {}".format(delay))
+
     def on_response(self, sid, response):
         if response is None:
             logger.error("No response")
@@ -236,6 +263,17 @@ class Chatbot():
 
         text = response.get('text')
         emotion = response.get('emotion')
+
+        orig_text = response.get('orig_text')
+        if orig_text:
+            self.handle_control(orig_text)
+        elif self.recover:
+            param = {
+                'delay_response': False
+            }
+            update_parameter('chatbot', param, timeout=2)
+            self.recover = False
+            logger.info("Recovered delay response")
 
         # Add space after punctuation for multi-sentence responses
         text = text.replace('?', '? ')

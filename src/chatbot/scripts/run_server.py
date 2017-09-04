@@ -8,6 +8,11 @@ import json
 import shutil
 import argparse
 
+try:
+    import colorlog
+except ImportError:
+    pass
+
 import sys
 import re
 CWD = os.path.dirname(os.path.realpath(__file__))
@@ -16,26 +21,41 @@ sys.path.insert(0, os.path.join(CWD, '../src'))
 if 'HR_CHARACTER_PATH' not in os.environ:
     os.environ['HR_CHARACTER_PATH'] = os.path.join(CWD, 'characters')
 
-from chatbot.server.config import CHATBOT_SERVER_LOG_DIR, HISTORY_DIR
+from chatbot.server.config import SERVER_LOG_DIR, HISTORY_DIR
 
-if not os.path.isdir(CHATBOT_SERVER_LOG_DIR):
-    os.makedirs(CHATBOT_SERVER_LOG_DIR)
-LOG_CONFIG_FILE = '{}/chatbot_server_{}.log'.format(CHATBOT_SERVER_LOG_DIR,
-                                                    dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
-link_log_fname = os.path.join(CHATBOT_SERVER_LOG_DIR, 'chatbot_server_latest.log')
-if os.path.islink(link_log_fname):
-    os.unlink(link_log_fname)
-os.symlink(LOG_CONFIG_FILE, link_log_fname)
-fh = logging.FileHandler(LOG_CONFIG_FILE)
-sh = logging.StreamHandler()
-formatter = logging.Formatter(
-    '[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
-fh.setFormatter(formatter)
-sh.setFormatter(formatter)
-root_logger = logging.getLogger()
-root_logger.setLevel(logging.INFO)
-root_logger.addHandler(fh)
-root_logger.addHandler(sh)
+def init_logging():
+    if not os.path.isdir(SERVER_LOG_DIR):
+        os.makedirs(SERVER_LOG_DIR)
+    log_config_file = '{}/{}.log'.format(
+        SERVER_LOG_DIR,
+        dt.datetime.strftime(dt.datetime.now(), '%Y%m%d%H%M%S'))
+    link_log_fname = os.path.join(SERVER_LOG_DIR, 'latest.log')
+    if os.path.islink(link_log_fname):
+        os.unlink(link_log_fname)
+    os.symlink(log_config_file, link_log_fname)
+    formatter = logging.Formatter(
+        '[%(name)s][%(levelname)s] %(asctime)s: %(message)s')
+    fh = logging.FileHandler(log_config_file)
+    fh.setFormatter(formatter)
+    sh = logging.StreamHandler()
+    if 'colorlog' in sys.modules and os.isatty(2):
+        cformat = '%(log_color)s' + formatter._fmt
+        formatter = colorlog.ColoredFormatter(
+            cformat,
+            log_colors={
+                'DEBUG':'reset',
+                'INFO': 'reset',
+                'WARNING': 'yellow',
+                'ERROR': 'red',
+                'CRITICAL': 'bold_red',
+            }
+        )
+    sh.setFormatter(formatter)
+    root_logger = logging.getLogger()
+    root_logger.setLevel(logging.INFO)
+    root_logger.addHandler(fh)
+    root_logger.addHandler(sh)
+    return sh, fh
 
 from chatbot.server.auth import requires_auth
 from chatbot.server.auth import check_auth, authenticate
@@ -403,7 +423,8 @@ def _stats():
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 
-if __name__ == '__main__':
+def main():
+    sh, fh = init_logging()
     parser = argparse.ArgumentParser('Chatbot Server')
 
     parser.add_argument(
@@ -428,3 +449,7 @@ if __name__ == '__main__':
         import ext
         ext.load(app, ROOT)
     app.run(host='0.0.0.0', debug=False, use_reloader=False, port=option.port)
+
+
+if __name__ == '__main__':
+    main()

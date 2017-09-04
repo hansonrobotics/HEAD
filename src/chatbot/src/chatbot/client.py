@@ -195,7 +195,7 @@ class Client(cmd.Cmd, object):
             self.timer = None
             logger.info("Timer canceled")
         else:
-            logger.info("Timer is None")
+            logger.debug("Timer is None")
 
     def default(self, line):
         try:
