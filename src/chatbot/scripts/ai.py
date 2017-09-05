@@ -24,6 +24,7 @@ from dynamic_reconfigure.server import Server
 import dynamic_reconfigure.client
 from chatbot.cfg import ChatbotConfig
 from chatbot.client import Client
+from blender_api_msgs.msg import SetGesture
 
 logger = logging.getLogger('hr.chatbot.ai')
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
@@ -78,16 +79,15 @@ class Chatbot():
             self.output_dir, '{}.csv'.format(str(uuid.uuid1())))
 
         self.input_stack = []
-        self.condition = threading.Condition()
-        self.respond_worker = threading.Thread(target=self.process_input)
-        self.respond_worker.daemon = True
-        self.respond_worker.start()
+        self.timer = None
         self.delay_response = rospy.get_param('delay_response', False)
         self.recover = False
         self.delay_time = rospy.get_param('delay_time', 5)
 
         rospy.Subscriber('chatbot_speech', ChatMessage, self._request_callback)
-        rospy.Subscriber('speech_events', String, self._speech_event_callback)
+        rospy.Subscriber('speech_events', String, self._speech_event_callback) # robot starts to speak
+        rospy.Subscriber('chat_events', String, self._chat_event_callback) # user starts to speak
+
         rospy.Subscriber('audio_sensors', audiodata, self._audio_sensors_callback)
         self.tts_ctrl_pub = rospy.Publisher(
             'tts_control', String, queue_size=1)
@@ -115,14 +115,8 @@ class Chatbot():
         self.btree_publisher = rospy.Publisher(
             '/behavior_switch', String, queue_size=1)
 
-        # the first message gets lost with using topic_tools
-        try:
-            rospy.wait_for_service('tts_select', 5)
-            rospy.sleep(0.1)
-            self._response_publisher.publish(String(' '))
-        except Exception as ex:
-            logger.error(ex)
-
+        self._gesture_publisher = rospy.Publisher(
+            '/blender_api/set_gesture', SetGesture, queue_size=1)
 
     def sentiment_active(self, active):
         self._sentiment_active = active
@@ -144,6 +138,7 @@ class Chatbot():
 
         request_id = str(uuid.uuid1())
         question = ' '.join([msg.utterance for msg in chatmessages])
+        logger.info("Asking {}".format(question))
         self.client.ask(question, query, request_id=request_id)
         logger.info("Sent request {}".format(request_id))
         self.write_request(request_id, chatmessages)
@@ -154,6 +149,11 @@ class Chatbot():
         if msg.data == 'stop':
             rospy.sleep(2)
             self.speech = False
+
+    def _chat_event_callback(self, msg):
+        if msg.data.startswith('speechstart'):
+            if self.delay_response:
+                self.reset_timer()
 
     def _audio_sensors_callback(self, msg):
         if msg.Speech:
@@ -192,28 +192,33 @@ class Chatbot():
         self._blink_publisher.publish('chat_heard')
 
         if self.delay_response:
-            with self.condition:
-                logger.info("Add input: {}".format(chat_message.utterance))
-                self.input_stack.append((time.clock(), chat_message))
-                self.condition.notify_all()
+            logger.info("Add input: {}".format(chat_message.utterance))
+            self.input_stack.append((time.clock(), chat_message))
+            msg = SetGesture()
+            msg.name = 'nod-1'
+            msg.speed = 1
+            msg.magnitude = 1
+            self._gesture_publisher.publish(msg)
+            self.reset_timer()
         else:
             self.ask([chat_message])
 
+    def reset_timer(self):
+        if self.timer is not None:
+            self.timer.cancel()
+            self.timer = None
+        self.timer = threading.Timer(self.delay_time, self.process_input)
+        self.timer.start()
+        logger.info("Timer is reset, {}".format(self.delay_time))
+
     def process_input(self):
-        while True:
-            time.sleep(0.1)
-            with self.condition:
-                if not self.input_stack:
-                    continue
-                num_input = len(self.input_stack)
-                questions = [i[1].utterance for i in self.input_stack]
-                question = ' '.join(questions)
-                logger.info("Current input: {}".format(question))
-                self.condition.wait(max(1, self.delay_time-len(self.input_stack)))
-                if len(self.input_stack) > num_input:
-                    continue
-                self.ask([i[1] for i in self.input_stack])
-                del self.input_stack[:]
+        if not self.input_stack:
+            return
+        questions = [i[1].utterance for i in self.input_stack]
+        question = ' '.join(questions)
+        logger.info("Joined input: {}".format(question))
+        self.ask([i[1] for i in self.input_stack])
+        del self.input_stack[:]
 
     def write_request(self, request_id, chatmessages):
         rows = []
