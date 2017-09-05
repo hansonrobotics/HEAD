@@ -265,6 +265,8 @@ install_ros() {
         || $SUDO apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116 \
         || $SUDO apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
 
+    $SUDO apt-get update
+
     local pkgs=(
         ros-indigo-desktop
         ros-indigo-tf
