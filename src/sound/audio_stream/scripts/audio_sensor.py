@@ -14,6 +14,10 @@ from std_msgs.msg import Float32, UInt8MultiArray, String
 from audio_stream.msg import audiodata
 from audio_stream.frequency_estimator import freq_from_fft
 
+if os.path.isdir('/opt/hansonrobotics/lib/python2.7/site-packages'):
+    import sys
+    sys.path.insert(0, '/opt/hansonrobotics/lib/python2.7/site-packages')
+
 from pocketsphinx.pocketsphinx import *
 from sphinxbase.sphinxbase import *
 
