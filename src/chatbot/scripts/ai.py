@@ -112,6 +112,9 @@ class Chatbot():
         rospy.Subscriber('chatbot_speech', ChatMessage, self._echo_callback)
         rospy.set_param('node_status/chatbot', 'running')
 
+        self.btree_publisher = rospy.Publisher(
+            '/behavior_switch', String, queue_size=1)
+
         # the first message gets lost with using topic_tools
         try:
             rospy.wait_for_service('tts_select', 5)
@@ -246,6 +249,16 @@ class Chatbot():
             }
             update_parameter('chatbot', param, timeout=2)
             logger.info("Set delay to {}".format(delay))
+        if hasattr(t.module, 'btree'):
+            btree = t.module.btree
+            if btree in ['btree_on', 'on', 'true', True]:
+                self.btree_publisher.publish('btree_on')
+                logger.info("Enable btree")
+            elif btree in ['btree_off', 'off', 'false', False]:
+                self.btree_publisher.publish('btree_off')
+                logger.info("Disable btree")
+            else:
+                logger.warn("Incorrect btree argument, {}".format(btree))
 
     def on_response(self, sid, response):
         if response is None:
@@ -266,7 +279,10 @@ class Chatbot():
 
         orig_text = response.get('orig_text')
         if orig_text:
-            self.handle_control(orig_text)
+            try:
+                self.handle_control(orig_text)
+            except Exception as ex:
+                logger.error(ex)
         elif self.recover:
             param = {
                 'delay_response': False
