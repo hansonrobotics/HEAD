@@ -492,6 +492,9 @@ install_other_deps() {
     # For webui
     $SUDO pip2 install ${PIP_OPTS} flask EasyProcess psutil natsort
 
+    # For audio stream vad
+    $SUDO pip2 install ${PIP_OPTS} webrtcvad==2.0.10
+
     info "Installing other dependencies is done"
 }
 
