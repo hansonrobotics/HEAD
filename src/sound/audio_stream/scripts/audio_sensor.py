@@ -128,9 +128,8 @@ class AudioSensor(object):
             text = self.get_text()
             if text:
                 logger.info('Best hypothesis segments: {}'.format(text))
-                if not self.chat_start:
-                    self.chat_event_pub.publish('speechstart:{}'.format(text))
-                    self.chat_start = True
+                self.chat_event_pub.publish('speechstart:{}'.format(text))
+                self.chat_start = True
 
         msg2 = audiodata()
         msg2.Decibel = Decibel
