@@ -115,14 +115,6 @@ class Chatbot():
         self.btree_publisher = rospy.Publisher(
             '/behavior_switch', String, queue_size=1)
 
-        # the first message gets lost with using topic_tools
-        try:
-            rospy.wait_for_service('tts_select', 5)
-            rospy.sleep(0.1)
-            self._response_publisher.publish(String(' '))
-        except Exception as ex:
-            logger.error(ex)
-
         self._gesture_publisher = rospy.Publisher(
             '/blender_api/set_gesture', SetGesture, queue_size=1)
 
