@@ -208,10 +208,11 @@ class Chatbot():
     def reset_timer(self):
         if self.timer is not None:
             self.timer.cancel()
+            logger.info("Canceled timer, {}".format(self.delay_time))
             self.timer = None
         self.timer = threading.Timer(self.delay_time, self.process_input)
         self.timer.start()
-        logger.info("Timer is reset, {}".format(self.delay_time))
+        logger.info("New timer, {}".format(self.delay_time))
 
     def process_input(self):
         if not self.input_stack:
@@ -328,7 +329,7 @@ class Chatbot():
                 logger.info('Chatbot perceived emo: {}'.format(emo.data))
             else:
                 p = self.polarity.get_polarity(text)
-                logger.info('Polarity for "{}" is {}'.format(
+                logger.debug('Polarity for "{}" is {}'.format(
                     text.encode('utf-8'), p))
                 # change emotion if polarity magnitude exceeds threshold defined in constructor
                 # otherwise let top level behaviors control
