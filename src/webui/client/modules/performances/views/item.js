@@ -44,10 +44,9 @@ define(['bootbox', 'icheck', 'icheck/skins/polaris/polaris.css'], function(bootb
                 checkboxClass: 'icheckbox_polaris',
                 labelHover: true
             }).iCheck(enabled ? 'check' : 'uncheck').on('ifToggled', function() {
-                performance.set('enabled', self.ui.enableCheckbox.is(':checked'))
-                performance.save({}, {
+                performance.save({'enabled': self.ui.enableCheckbox.is(':checked')}, {
                     success: function() {
-                        self.layoutView.refreshCurrentPerformance()
+                        self.layoutView.updateTimeline()
                     }
                 })
             })

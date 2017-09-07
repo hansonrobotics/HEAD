@@ -1,18 +1,20 @@
 define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox', './node',
         '../entities/node', 'jquery', '../entities/performance', 'lib/regions/fade_in', 'lib/speech_recognition',
-        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'mousetrap', 'jquery-ui', 'scrollbar',
+        'lib/api', 'annyang', 'modules/settings/entities/node_config', 'mousetrap', 'spin.js', 'jquery-ui', 'scrollbar',
         'scrollbar-css', 'scrollTo', 'font-awesome', 'jquery-mousewheel'],
     function(app, Marionette, template, d3, bootbox, NodeView, Node, $, Performance, FadeInRegion, speechRecognition,
-             api, annyang, NodeConfig, Mousetrap) {
+             api, annyang, NodeConfig, Mousetrap, Spinner) {
         return Marionette.View.extend({
             template: template,
             cssClass: 'app-timeline-editor-container',
             config: {
                 pxPerSec: 70,
                 minPxPerSec: 5,
-                maxPxPerSec: 300,
+                maxPxPerSec: 300
             },
             ui: {
+                wrapper: '.app-timelines-wrapper',
+                spinnerContainer: '.app-spinner-container',
                 addNewButton: '.app-add-new-button',
                 timelines: '.app-timelines',
                 timelinesContainer: '.app-timelines-container',
@@ -143,9 +145,13 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                                 self.listenTo(self.model.nodes, 'change add remove', self.markChanged)
                             }
 
+                            self.hideSpinner()
                             if (success) success()
                         }
                     }
+
+                if (!this.skipLoading)
+                    this.showSpinner()
 
                 if (this.model) {
                     if (this.skipLoading) {
@@ -158,6 +164,15 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                     this.model = new Performance()
                     this.model.fetchCurrent(loadOptions)
                 }
+            },
+            showSpinner: function() {
+                this.ui.wrapper.hide()
+                let spinner = new Spinner({color:'#fff'}).spin()
+                this.ui.spinnerContainer.html(spinner.el)
+            },
+            hideSpinner: function() {
+                this.ui.wrapper.fadeIn()
+                this.ui.spinnerContainer.hide()
             },
             onAttach: function() {
                 let self = this
@@ -186,7 +201,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             if (!self.model.nodes.includes(node)) {
                                 self.deselectNodes()
                                 let startTime = Math.round(($(this).scrollLeft() + ui.offset.left - $(this).offset().left) /
-                                        self.config.pxPerSec * 100) / 100
+                                    self.config.pxPerSec * 100) / 100
 
                                 self.model.nodes.add(node)
                                 node.set('start_time', startTime)
@@ -511,7 +526,7 @@ define(['application', 'marionette', './templates/timelines.tpl', 'd3', 'bootbox
                             $(this).show()
 
                             let offset = Math.round((ui.offset.left -
-                                    ui.originalPosition.left) / self.config.pxPerSec * 100) / 100
+                                ui.originalPosition.left) / self.config.pxPerSec * 100) / 100
 
                             if (self.selectedNodes.length) {
                                 let min = _.minBy(self.selectedNodes, function(node) {
