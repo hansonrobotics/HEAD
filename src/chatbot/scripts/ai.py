@@ -25,6 +25,7 @@ import dynamic_reconfigure.client
 from chatbot.cfg import ChatbotConfig
 from chatbot.client import Client
 from blender_api_msgs.msg import SetGesture
+from hr_msgs.msg import TTS
 
 logger = logging.getLogger('hr.chatbot.ai')
 HR_CHATBOT_AUTHKEY = os.environ.get('HR_CHATBOT_AUTHKEY', 'AAAAB3NzaC')
@@ -93,7 +94,9 @@ class Chatbot():
             'tts_control', String, queue_size=1)
 
         self._response_publisher = rospy.Publisher(
-            'chatbot_responses', String, queue_size=1)
+            'chatbot_responses', TTS, queue_size=1)
+        self._suggestion_publisher = rospy.Publisher(
+            'chatbot_suggestions', TTS, queue_size=1)
 
         # send communication non-verbal blink message to behavior
         self._blink_publisher = rospy.Publisher(
@@ -169,7 +172,7 @@ class Chatbot():
             rospy.sleep(0.5)
             self._affect_publisher.publish(String('sad'))
             if not self.mute:
-                self._response_publisher.publish(String('Okay'))
+                self._response_publisher.publish('Okay', 'en')
             return
 
         # Handle chatbot command
@@ -351,7 +354,12 @@ class Chatbot():
 
         if not self.mute:
             self._blink_publisher.publish('chat_saying')
-            self._response_publisher.publish(String(text))
+            if self.mode == 'automatic':
+                self._response_publisher.publish(text, 'en')
+            elif self.mode == 'semiautomatic':
+                self._suggestion_publisher.publish(text, 'en')
+            else:
+                pass
 
         if rospy.has_param('{}/context'.format(self.node_name)):
             rospy.delete_param('{}/context'.format(self.node_name))
@@ -389,6 +397,8 @@ class Chatbot():
         if config.reset_session:
             self.client.reset_session()
             config.reset_session = Fales
+
+        self.mode = config.mode
 
         return config
 
