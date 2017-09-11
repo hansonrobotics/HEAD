@@ -53,7 +53,7 @@
 
         <rosparam file="$(arg robots_config_dir)/$(arg name)/tts_animation_config.yaml" command="load"/>
         <param name="tts_topic" value="tts" />
-        <node name="tts_talker" pkg="tts" type="tts_talker.py" respawn="true"/>
+        <node name="tts_talker" pkg="ros_tts" type="tts_talker.py" respawn="true"/>
 
         <node name="audio_stream" pkg="audio_stream" type="run.py" respawn="true"/>
         <node name="audio_sensor" pkg="audio_stream" type="audio_sensor.py" respawn="true"/>
