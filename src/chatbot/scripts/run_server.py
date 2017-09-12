@@ -57,6 +57,7 @@ def init_logging():
     root_logger.addHandler(sh)
     return sh, fh
 
+sh, fh = init_logging()
 from chatbot.server.auth import requires_auth
 from chatbot.server.auth import check_auth, authenticate
 
@@ -424,7 +425,6 @@ def _stats():
                     mimetype="application/json")
 
 def main():
-    sh, fh = init_logging()
     parser = argparse.ArgumentParser('Chatbot Server')
 
     parser.add_argument(
