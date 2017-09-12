@@ -10,14 +10,14 @@ webui:
     - 'How is it going?'
     - "I'm a humanoid robot"
   attention_regions:
-    main: 'Main Person'
-    audience: 'Audience'
-    specific: 'Specific'
+    main: {label: 'Presenter', color: '#D9544F'}
+    audience: {label: 'Audience', color: '#5BB85D'}
+    specific: {label: 'Other', color: '#6CADD3'}
 
 botname: sophia
 
-tts_api_config:
-  en: festival # mary
+voice_en: festival:cmu_us_slt_arctic_hts
+voice_zh: festival:cmu_us_slt_arctic_hts
 
 chatbot:
   chatbot_url: http://localhost:8001
