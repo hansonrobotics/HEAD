@@ -1,6 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
-from __future__ import division
 import rospy
 from motors_safety import Safety
 import time
