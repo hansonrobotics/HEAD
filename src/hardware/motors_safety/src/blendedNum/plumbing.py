@@ -3,7 +3,7 @@ from copy import copy
 from math import sqrt, atan, tan
 import random
 
-class Pipes:
+class Pipes(object):
 
     """
     Pipes define how blended numbers should reach the given target in time.
@@ -110,7 +110,7 @@ class Pipes:
             target, time, dt = yield target
 
 
-class Wrappers:
+class Wrappers(object):
 
     """
     Pipes that come in pairs and should be placed in front and at the end of an
@@ -207,7 +207,7 @@ class WeightBuffer(deque):
             yield WeightBuffer(zip(dimension, weights))
 
 
-class Sources:
+class Sources(object):
 
     @staticmethod
     def constant(val):
@@ -216,7 +216,7 @@ class Sources:
         while True:
             yield val
 
-    class AdditiveTarget:
+    class AdditiveTarget(object):
 
         """
         A target that can be modified permenantly (base property) or temporarily,
@@ -269,7 +269,7 @@ class Sources:
             return self.blend(*tupl)
 
 
-class Plumbing:
+class Plumbing(object):
 
     def __init__(self, source=None, pipes=[]):
         self.source = source
