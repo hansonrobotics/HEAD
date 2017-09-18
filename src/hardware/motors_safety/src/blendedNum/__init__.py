@@ -10,7 +10,7 @@ All classes here should implement the method 'blend(time, dt)' and property
 'current' so they'd be interchangable from the playback's point of view.
 """
 
-class LiveTarget():
+class LiveTarget(object):
 
     """
     A number that chases a target in a fashion specified by pipes (the
@@ -77,7 +77,7 @@ class LiveTarget():
         self.plumbing.pipes = pipes
 
 
-class Trajectory:
+class Trajectory(object):
 
     """
     A number that moves in a pre-defined way specified by keyframes.
@@ -137,7 +137,7 @@ class Trajectory:
     def is_done(self):
         return len(self.keyframes) == 0
 
-    class Keyframe:
+    class Keyframe(object):
 
         def __init__(self, target, time=None, transitions=None):
             self.target = _vectorize(target)
