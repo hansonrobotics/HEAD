@@ -30,6 +30,10 @@
 
 """
 
+import sys
+# Only runs in opencv 2.4.x
+sys.path.insert(0, '/opt/hansonrobotics/lib/python2.7/dist-packages')
+
 import rospy
 import cv
 import cv2
