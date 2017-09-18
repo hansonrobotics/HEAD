@@ -10,8 +10,12 @@ from realsense_ros.cfg import TrackerConfig
 import math
 
 import time
+import traceback
+import logging
 
 ROS_RATE = 25
+
+logger = logging.getLogger('hr.motors_safety.safety')
 
 class Safety():
     def __init__(self):
@@ -20,7 +24,8 @@ class Safety():
         time.sleep(3)
         motors = rospy.get_param('motors')
         self.rules = rospy.get_param('safety_rules', {})
-        #self.rules = {}
+        self.initialized = False
+
         # subscribe
         self.motor_positions = {}
         self.subscribers = {}
@@ -54,6 +59,7 @@ class Safety():
         # Pauses motor sync while in config mode
         self.sync = True
         rospy.Subscriber("pololu_sync", String, self.pause_sync)
+
         # Init timing rules
         for m, rules in self.rules.items():
             for i,r in enumerate(rules):
@@ -76,6 +82,7 @@ class Safety():
                     self.rules[m][i]['started'] = False
                     self.rules[m][i]['func'] = lambda t, r=r: r['value_offset']+r['amplitude']*math.sin(r['phase_offset'] + t*r['phase_mult'])
                     self.rules[m][i]['base'] = self.motor_positions[m]
+        self.initialized = True
 
 
     def update_load(self, msg):
@@ -91,6 +98,8 @@ class Safety():
 
     def callback(self, motor, dynamixel, msg):
         # Republish message to safe topic
+        if not self.initialized:
+            return
         mname = motor['name']
         if not dynamixel:
             mname = msg.joint_name
@@ -136,8 +145,9 @@ class Safety():
         # Need to make sure it doesnt get executed on same time with timing rule.
         try:
             rule['target'].blend()
-        except ValueError:
-            pass
+        except ValueError as ex:
+            logger.error(ex)
+            logger.error(traceback.format_exc())
         v = rule['target'].current
         return v
 
@@ -157,8 +167,9 @@ class Safety():
             return
         try:
             self.rules[m][rule]['target'].blend()
-        except ValueError:
-            pass
+        except ValueError as ex:
+            logger.error(ex)
+            logger.error(traceback.format_exc())
         # Ensure the minimum commands are sent by ROS rate.
         if self.rules[m][rule]['target'].dt > (1.0/float(ROS_RATE)-0.01):
             self.set_motor_abs_pos(m, self.rules[m][rule]['target'].current)
