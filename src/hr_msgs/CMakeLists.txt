@@ -95,6 +95,7 @@ add_message_files(
   Trackers.msg
   Viseme.msg
   Visemes.msg
+  TTS.msg
 )
 
 ## Generate services in the 'srv' folder
