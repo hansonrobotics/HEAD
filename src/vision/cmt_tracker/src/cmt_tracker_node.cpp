@@ -174,6 +174,10 @@ This  function is a callback function that happens when an image update occurs.
 */
 void TrackerCMT::imageCb(const sensor_msgs::ImageConstPtr& msg,const sensor_msgs::CameraInfoConstPtr& camerainfo)
 {
+    if (!enable_tracker)
+    {
+    return;
+    }
 
   //std::cout<<"Enters imageCB"<<std::endl;
   //-//std::cout<<"Enters imageCB conversion"<<std::endl;
@@ -352,6 +356,7 @@ void TrackerCMT::callback(cmt_tracker_msgs::TrackerConfig &config, uint32_t leve
   factor = config.factor;
   //std::cout<<"config: "<<config.frame_counter;
   delete_counter = config.frame_counter;
+  enable_tracker = config.enable;
   //std::cout<<"Factor Updated to: "<<factor<<std::endl;
 }
 void TrackerCMT::list_of_faces_update(const cmt_tracker_msgs::Objects& faces_info)

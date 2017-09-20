@@ -209,7 +209,7 @@ private:
 	double factor;
 	int delete_counter;
 	int downgrade;
-
+    bool enable_tracker;
 	//for setting the tracking to higher levels.
 	std::vector<cv::Rect> locations_of_trackers;
 
