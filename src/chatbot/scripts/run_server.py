@@ -239,7 +239,8 @@ def _remove_context():
 def _get_context():
     data = request.args
     sid = data.get('session')
-    ret, response = get_context(sid)
+    lang = data.get('lang', 'en')
+    ret, response = get_context(sid, lang)
     return Response(json_encode({'ret': ret, 'response': response}),
                     mimetype="application/json")
 

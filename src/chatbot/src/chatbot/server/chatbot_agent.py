@@ -170,18 +170,19 @@ def remove_context(keys, sid):
             pass
     return True, "Context is updated"
 
-def get_context(sid):
+def get_context(sid, lang):
     sess = session_manager.get_session(sid)
     if sess is None:
         return False, "No session"
+    characters = get_responding_characters(lang, sid)
     context = {}
-    for c in CHARACTERS:
+    for c in characters:
         if c.type != TYPE_AIML and c.type != TYPE_CS:
             continue
         try:
             context.update(c.get_context(sess))
-        except Exception:
-            pass
+        except Exception as ex:
+            logger.error("Get context error, {}".format(ex))
     for k in context.keys():
         if k.startswith('_'):
             del context[k]

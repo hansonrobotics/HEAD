@@ -231,6 +231,7 @@ GET /v1.1/get_context
 Parameters:
 - *Auth* - Authorization token
 - *session* - Session ID
+- *lang* - Language
 
 Return:
 - *ret* - Return code

@@ -652,7 +652,8 @@ Syntax: rc key,key2,key3,...
             self.start_session()
         params = {
             "Auth": self.key,
-            "session": self.session
+            "session": self.session,
+            "lang": self.lang,
         }
         response = requests.get(
             '{}/get_context'.format(self.root_url), params=params)
