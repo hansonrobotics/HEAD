@@ -5,7 +5,7 @@ import logging
 import traceback
 from chatbot.server.character import AIMLCharacter, Character, TYPE_CS, TYPE_AIML
 from chatbot.utils import get_location, get_weather, parse_weather
-from chatbot.server.config import CS_HOST, CS_PORT
+from chatbot.server.config import CS_HOST, CS_PORT, CS_BOT
 from zipfile import ZipFile
 import pprint
 
@@ -58,6 +58,7 @@ def load_characters(character_path):
             if c.type == TYPE_CS:
                 c.set_host(CS_HOST)
                 c.set_port(CS_PORT)
+                c.set_bot(CS_BOT)
 
     logger.info("Add characters \n{}".format(pprint.pformat(characters)))
     return characters
